@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+Trigger that can receive any HTTP request, extract any JSONPath/XPath values and trigger a job with those values available as variables.
+</div>

@@ -1,0 +1,24 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <f:entry title="Variable" description="Name of variable">
+    <f:textbox field="key"/>
+  </f:entry>
+
+  <f:entry title="Expression" description="Expression to evaluate in POST content.">
+    <f:textbox field="value" />
+    <f:entry>
+     <f:radio name="expressionType" field="expressionType" value="JSONPath" title="JSONPath" checked="${instance.expressionType == 'JSONPath'}"/>
+    </f:entry>
+    <f:entry>
+     <f:radio name="expressionType" field="expressionType" value="XPath" title="XPath" checked="${instance.expressionType == 'XPath'}"/>
+    </f:entry>
+  </f:entry>
+
+  <f:entry title="Value filter" description="Optional. Anything in the evaluated value, matching this regexp, will be removed. Having [^0-9] would only allow numbers.">
+   <f:textbox field="regexpFilter" />
+  </f:entry>
+
+  <f:entry>
+    <f:repeatableDeleteButton />
+  </f:entry>
+</j:jelly>
