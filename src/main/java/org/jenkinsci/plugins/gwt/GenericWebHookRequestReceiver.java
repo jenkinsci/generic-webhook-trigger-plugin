@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Charsets.UTF_8;
 import static hudson.util.HttpResponses.okJSON;
+import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 
 import java.io.IOException;
@@ -50,6 +51,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     Map<String, String> triggerResults = new HashMap<>();
     for (GenericTrigger trigger : triggers) {
       try {
+        LOGGER.log(INFO, "Triggering " + trigger.toString() + " with:\n\n" + postContent + "\n\n");
         trigger.trigger(postContent);
         triggerResults.put(trigger.toString(), "OK");
       } catch (Exception e) {

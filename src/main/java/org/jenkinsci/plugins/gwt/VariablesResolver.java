@@ -7,6 +7,7 @@ import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,6 +22,7 @@ import com.google.common.collect.Lists;
 import com.jayway.jsonpath.JsonPath;
 
 public class VariablesResolver {
+  private static final Logger LOGGER = Logger.getLogger(VariablesResolver.class.getName());
 
   private List<GenericVariable> genericVariables = Lists.newArrayList();
   private final String postContent;
@@ -78,8 +80,7 @@ public class VariablesResolver {
         }
       }
     } catch (Exception e) {
-      throw new RuntimeException(
-          "Unable to resolve " + gv.getExpressionType() + " in:\n" + postContent, e);
+      LOGGER.info("Unable to resolve " + gv);
     }
     return "";
   }

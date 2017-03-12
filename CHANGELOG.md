@@ -4,7 +4,7 @@ Changelog of Generic Webhook Plugin.
 ### No issue
 **doc**
 
-[c1904e1e17a0ed8](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c1904e1e17a0ed8) Tomas Bjerre *2017-03-12 20:19:21*
+[6b2c43524f6f5b6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6b2c43524f6f5b6) Tomas Bjerre *2017-03-12 20:21:51*
 
 ## 1.1
 ### No issue

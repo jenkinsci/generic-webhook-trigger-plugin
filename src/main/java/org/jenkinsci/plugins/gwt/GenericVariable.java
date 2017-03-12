@@ -53,4 +53,17 @@ public class GenericVariable extends AbstractDescribableImpl<GenericVariable> {
   public String getValue() {
     return value;
   }
+
+  @Override
+  public String toString() {
+    return "GenericVariable [expressionType="
+        + expressionType
+        + ", key="
+        + key
+        + ", value="
+        + value
+        + ", regexpFilter="
+        + regexpFilter
+        + "]";
+  }
 }
