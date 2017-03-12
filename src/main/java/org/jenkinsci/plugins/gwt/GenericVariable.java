@@ -1,5 +1,8 @@
 package org.jenkinsci.plugins.gwt;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
+
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import hudson.Extension;
@@ -25,9 +28,13 @@ public class GenericVariable extends AbstractDescribableImpl<GenericVariable> {
   @DataBoundConstructor
   public GenericVariable(
       String key, String value, ExpressionType expressionType, String regexpFilter) {
-    this.key = key;
-    this.value = value;
-    this.expressionType = expressionType;
+    this.key = checkNotNull(key, "Variable name");
+    this.value = checkNotNull(value, "Variable expression");
+    if (expressionType == null) {
+      this.expressionType = JSONPath;
+    } else {
+      this.expressionType = expressionType;
+    }
     this.regexpFilter = regexpFilter;
   }
 

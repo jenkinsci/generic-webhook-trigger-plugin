@@ -39,8 +39,11 @@ Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+
 
 # Screenshots
 
-![Generic trigger](https://github.com/tomasbjerre/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
+![Generic trigger](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
 
+If you need the resolved values in pre build steps, like git clone, you need to add a parameter with the same name as the variable.
+
+![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/parameter-git-repo.png)
 
 ## Job DSL Plugin
 
