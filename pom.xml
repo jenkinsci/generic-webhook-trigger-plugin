@@ -136,10 +136,13 @@ Changelog of Generic Webhook Plugin.
   {{/hasIssue}}
   {{#commits}}
 **{{{messageTitle}}}**
+
 {{#messageBodyItems}}
  * {{.}} 
+
 {{/messageBodyItems}}
 [{{hash}}](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+
   {{/commits}}
  {{/issues}}
 {{/tags}}
