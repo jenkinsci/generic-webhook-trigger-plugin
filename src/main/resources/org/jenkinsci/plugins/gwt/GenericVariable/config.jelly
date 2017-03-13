@@ -14,8 +14,11 @@
     </f:entry>
   </f:entry>
 
-  <f:entry title="Value filter" description="Optional. Anything in the evaluated value, matching this regexp, will be removed. Having [^0-9] would only allow numbers.">
+  <f:entry title="Value filter">
    <f:textbox field="regexpFilter" />
+   <f:description>
+    Optional. Anything in the evaluated value, matching this <a href="https://jex.im/regulex/">regular expression</a>, will be removed. Having [^0-9] would only allow numbers.
+   </f:description>
   </f:entry>
 
   <f:entry>

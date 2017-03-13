@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Charsets.UTF_8;
 import static hudson.util.HttpResponses.okJSON;
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 
@@ -48,10 +49,16 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   @VisibleForTesting
   HttpResponse doInvoke(String postContent) {
     List<GenericTrigger> triggers = JobFinder.findAllJobsWithTrigger();
+    if (triggers.isEmpty()) {
+      LOGGER.log(
+          INFO,
+          "Did not find any jobs to trigger! The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered.");
+    }
     Map<String, String> triggerResults = new HashMap<>();
     for (GenericTrigger trigger : triggers) {
       try {
-        LOGGER.log(INFO, "Triggering " + trigger.toString() + " with:\n\n" + postContent + "\n\n");
+        LOGGER.log(INFO, "Triggering " + trigger.toString());
+        LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
         trigger.trigger(postContent);
         triggerResults.put(trigger.toString(), "OK");
       } catch (Exception e) {

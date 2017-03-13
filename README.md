@@ -60,6 +60,8 @@ job('example genericTrigger') {
      expressionType("JSONPath")
     }
    }
+   regexpFilterText("")
+   regexpFilterExpression("")
   }
  }
 }
@@ -71,13 +73,14 @@ This plugin can be used with the Pipeline Plugin:
 
 ```
 properties([
- gitLabConnection('gitlab'),
  pipelineTriggers([
   [$class: 'GenericTrigger',
    genericVariables: [
     [expressionType: 'JSONPath', key: 'variable1', value: 'expression1'],
     [expressionType: 'JSONPath', key: 'variable2', value: 'expression2']
-   ]
+   ],
+   regexpFilterText: '',
+   regexpFilterExpression: ''
   ]
  ])
 ])

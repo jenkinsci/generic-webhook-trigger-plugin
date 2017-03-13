@@ -80,7 +80,7 @@ public class VariablesResolver {
         }
       }
     } catch (Exception e) {
-      LOGGER.info("Unable to resolve " + gv);
+      LOGGER.info("Unable to resolve " + gv.getKey());
     }
     return "";
   }

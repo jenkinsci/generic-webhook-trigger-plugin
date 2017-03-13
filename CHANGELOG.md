@@ -1,5 +1,16 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/2) Conditional trigger
+**Adding filtering option #2**
+
+[09cce299ca606d0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/09cce299ca606d0) Tomas Bjerre *2017-03-13 07:19:26*
+
+### No issue
+**doc**
+
+[b80be7df1e2eb66](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b80be7df1e2eb66) Tomas Bjerre *2017-03-12 22:07:15*
+
 ## 1.2
 ### No issue
 **Avoiding duplicated logging info**

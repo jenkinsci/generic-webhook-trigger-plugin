@@ -4,4 +4,24 @@
  <f:entry title="Parameters" field="genericVariables">
   <f:repeatableProperty field="genericVariables"  minimum="1" />  
  </f:entry>
+
+ <f:section title="Optional filter">
+  <f:entry title="Expression">
+   <f:textbox field="regexpFilterExpression"/>
+   <f:description>
+    <a href="https://jex.im/regulex/">Regular expression</a> to test on the evaluated text specified below.
+   </f:description>
+  </f:entry>
+
+  <f:entry title="Text">
+   <f:textbox field="regexpFilterText"/>
+   <f:description>
+    Text to test for given <a href="https://jex.im/regulex/">regular expression</a>. You can use the variables you specified above.
+   </f:description>
+  </f:entry>
+
+  <f:description>
+   This is an optional feature. If specified, this job will only trigger when given expression matches given text.
+  </f:description>
+ </f:section>
 </j:jelly>
