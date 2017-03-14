@@ -16,20 +16,7 @@ This means it can trigger on any webhook, like:
 * [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
 * An many many more!
 
-The original use case was to build merge/pull requests. This is easily done with a shell script build step.
-
-```
-git clone $PULL_REQUEST_TO_HTTP_CLONE_URL  
-cd *  
-git reset --hard $PULL_REQUEST_TO_HASH  
-git status  
-git remote add from $PULL_REQUEST_FROM_HTTP_CLONE_URL  
-git fetch from
-git merge $PULL_REQUEST_FROM_HASH  
-git --no-pager log --max-count=10 --graph --abbrev-commit
-
-#compile command here ...
-```
+The original use case was to build merge/pull requests. You may use the Git Plugin as described in [this blog post](http://bjurr.com/continuous-integration-with-gitlab-and-jenkins/) to do that. There is also an example of this on the [Violation Comments to GitLab Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitLab+Plugin) page.
 
 You may want to report back to the invoking system. [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) is a very convenient plugin for that. 
 
