@@ -26,17 +26,35 @@ public class VariablesResolver {
 
   private List<GenericVariable> genericVariables = Lists.newArrayList();
   private final String postContent;
+  private final Map<String, String[]> parameterMap;
 
-  public VariablesResolver(String postContent, List<GenericVariable> genericVariables) {
+  public VariablesResolver(
+      Map<String, String[]> parameterMap,
+      String postContent,
+      List<GenericVariable> genericVariables) {
     this.postContent = postContent;
     this.genericVariables = genericVariables;
+    this.parameterMap = parameterMap;
   }
 
   public Map<String, String> getVariables() {
-    if (genericVariables == null) {
-      return newHashMap();
-    }
     Map<String, String> map = newHashMap();
+
+    for (String requestParamName : parameterMap.keySet()) {
+      String[] values = parameterMap.get(requestParamName);
+      if (values.length == 1) {
+        map.put(requestParamName, values[0]);
+      } else {
+        for (int i = 0; i < values.length; i++) {
+          map.put(requestParamName + "_" + i, values[i]);
+        }
+      }
+    }
+
+    if (genericVariables == null) {
+      return map;
+    }
+
     for (GenericVariable gv : genericVariables) {
       Object resolved = resolve(gv);
 

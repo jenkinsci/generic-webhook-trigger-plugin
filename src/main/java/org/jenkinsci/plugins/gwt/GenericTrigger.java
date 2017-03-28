@@ -55,23 +55,28 @@ public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
 
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
 
-  public void trigger(String postContent) {
+  public void trigger(Map<String, String[]> parameterMap, String postContent) {
     Map<String, String> resolvedVariables =
-        new VariablesResolver(postContent, genericVariables).getVariables();
-
-    List<ParameterValue> parameterList = newArrayList();
-    for (Entry<String, String> entry : resolvedVariables.entrySet()) {
-      ParameterValue parameter = new StringParameterValue(entry.getKey(), entry.getValue());
-      parameterList.add(parameter);
-    }
-    ParametersAction parameters = new ParametersAction(parameterList);
+        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
 
     boolean isMatching = isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
 
     if (isMatching) {
       GenericCause cause = new GenericCause(postContent, resolvedVariables);
+
+      ParametersAction parameters = createParameters(resolvedVariables);
+
       job.scheduleBuild2(0, cause, parameters);
     }
+  }
+
+  private ParametersAction createParameters(Map<String, String> resolvedVariables) {
+    List<ParameterValue> parameterList = newArrayList();
+    for (Entry<String, String> entry : resolvedVariables.entrySet()) {
+      ParameterValue parameter = new StringParameterValue(entry.getKey(), entry.getValue());
+      parameterList.add(parameter);
+    }
+    return new ParametersAction(parameterList);
   }
 
   @VisibleForTesting

@@ -37,17 +37,19 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
 
   public HttpResponse doInvoke(StaplerRequest request) {
     String postContent = null;
+    Map<String, String[]> parameterMap = null;
     try {
+      parameterMap = request.getParameterMap();
       postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
     } catch (IOException e) {
       LOGGER.log(SEVERE, "", e);
     }
 
-    return doInvoke(postContent);
+    return doInvoke(parameterMap, postContent);
   }
 
   @VisibleForTesting
-  HttpResponse doInvoke(String postContent) {
+  HttpResponse doInvoke(Map<String, String[]> parameterMap, String postContent) {
     List<GenericTrigger> triggers = JobFinder.findAllJobsWithTrigger();
     if (triggers.isEmpty()) {
       LOGGER.log(
@@ -59,7 +61,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       try {
         LOGGER.log(INFO, "Triggering " + trigger.toString());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
-        trigger.trigger(postContent);
+        trigger.trigger(parameterMap, postContent);
         triggerResults.put(trigger.toString(), "OK");
       } catch (Exception e) {
         LOGGER.log(SEVERE, trigger.toString(), e);
