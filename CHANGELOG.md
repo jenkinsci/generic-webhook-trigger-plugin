@@ -4,6 +4,19 @@ Changelog of Generic Webhook Plugin.
 ### No issue
 **doc**
 
+[fd938b99aa7a609](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fd938b99aa7a609) Tomas Bjerre *2017-03-30 19:34:23*
+
+## 1.6
+### GitHub [#3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/3) Lacks job selection
+**White list request parameters #3**
+
+ * To make it more secure. Also adding regexp filter for them. 
+
+[0c4b799015166cc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0c4b799015166cc) Tomas Bjerre *2017-03-29 19:57:13*
+
+### No issue
+**doc**
+
 [25d6448d957ca4f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/25d6448d957ca4f) Tomas Bjerre *2017-03-28 18:32:38*
 
 ## 1.5

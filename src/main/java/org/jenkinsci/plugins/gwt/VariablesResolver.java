@@ -72,28 +72,30 @@ public class VariablesResolver {
   private void addRequestParameters(Map<String, String> map) {
     if (parameterMap != null) {
       for (String requestParamName : parameterMap.keySet()) {
-        String[] values = parameterMap.get(requestParamName);
         Optional<String> mappedRequestParameterOpt =
             findMappedRequestParameter(genericRequestVariables, requestParamName);
         if (!mappedRequestParameterOpt.isPresent()) {
           continue;
         }
         String regexpFilter = mappedRequestParameterOpt.get();
+        String[] values = parameterMap.get(requestParamName);
         if (values.length == 1) {
           map.put(requestParamName, filter(values[0], regexpFilter));
         } else {
-          List<String> foundValues = new ArrayList<>();
-          for (String value2 : values) {
-            String value = filter(value2, regexpFilter);
-            if (!value.isEmpty()) {
-              foundValues.add(value);
+          List<String> foundFilteredValues = new ArrayList<>();
+          for (String valueCandidate : values) {
+            String filteredValue = filter(valueCandidate, regexpFilter);
+            if (!filteredValue.isEmpty()) {
+              foundFilteredValues.add(filteredValue);
             }
           }
-          if (foundValues.size() == 1) {
-            map.put(requestParamName, filter(foundValues.get(0), regexpFilter));
+          if (foundFilteredValues.size() == 1) {
+            String filteredValue = foundFilteredValues.get(0);
+            map.put(requestParamName, filteredValue);
           } else {
-            for (int i = 0; i < foundValues.size(); i++) {
-              map.put(requestParamName + "_" + i, foundValues.get(i));
+            for (int i = 0; i < foundFilteredValues.size(); i++) {
+              String filteredValue = foundFilteredValues.get(i);
+              map.put(requestParamName + "_" + i, filteredValue);
             }
           }
         }

@@ -37,19 +37,38 @@ If you need the resolved values in pre build steps, like git clone, you need to 
 This plugin can be used with the Job DSL Plugin.
 
 ```
-job('example genericTrigger') {
+job('Generic Job Example') {
+ parameters {
+  stringParam('VARIABLE_FROM_POST', '')
+  stringParam('VARIABLE_FROM_REQUEST', '')
+ }
+
  triggers {
   genericTrigger {
    genericVariables {
     genericVariable {
-     key("variable")
-     value("JSONPath or XPath expression")
+     key("VARIABLE_FROM_POST")
+     value("\$.something")
      expressionType("JSONPath")
+     regexpFilter("")
     }
    }
-   regexpFilterText("")
-   regexpFilterExpression("")
+   genericRequestVariables {
+    genericRequestVariable {
+     key("VARIABLE_FROM_REQUEST")
+     regexpFilter("")
+    }
+   }
+   regexpFilterText("\$VARIABLE_FROM_POST")
+   regexpFilterExpression("aRegExp")
   }
+ }
+
+ steps {
+  shell('''
+echo $VARIABLE_FROM_POST
+echo $VARIABLE_FROM_REQUEST
+  ''')
  }
 }
 ```
