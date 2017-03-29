@@ -4,7 +4,7 @@ Changelog of Generic Webhook Plugin.
 ### No issue
 **doc**
 
-[c0fb7148f318dea](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c0fb7148f318dea) Tomas Bjerre *2017-03-28 18:32:21*
+[25d6448d957ca4f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/25d6448d957ca4f) Tomas Bjerre *2017-03-28 18:32:38*
 
 ## 1.5
 ### GitHub [#3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/3) Lacks job selection

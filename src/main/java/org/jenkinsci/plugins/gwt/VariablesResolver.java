@@ -1,10 +1,13 @@
 package org.jenkinsci.plugins.gwt;
 
+import static com.google.common.base.Optional.absent;
+import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -18,6 +21,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.jayway.jsonpath.JsonPath;
 
@@ -25,50 +29,88 @@ public class VariablesResolver {
   private static final Logger LOGGER = Logger.getLogger(VariablesResolver.class.getName());
 
   private List<GenericVariable> genericVariables = Lists.newArrayList();
+  private final List<GenericRequestVariable> genericRequestVariables;
   private final String postContent;
   private final Map<String, String[]> parameterMap;
 
   public VariablesResolver(
       Map<String, String[]> parameterMap,
       String postContent,
-      List<GenericVariable> genericVariables) {
+      List<GenericVariable> genericVariables,
+      List<GenericRequestVariable> genericRequestVariables) {
     this.postContent = postContent;
     this.genericVariables = genericVariables;
     this.parameterMap = parameterMap;
+    this.genericRequestVariables = genericRequestVariables;
   }
 
   public Map<String, String> getVariables() {
     Map<String, String> map = newHashMap();
-
-    for (String requestParamName : parameterMap.keySet()) {
-      String[] values = parameterMap.get(requestParamName);
-      if (values.length == 1) {
-        map.put(requestParamName, values[0]);
-      } else {
-        for (int i = 0; i < values.length; i++) {
-          map.put(requestParamName + "_" + i, values[i]);
-        }
-      }
-    }
-
-    if (genericVariables == null) {
-      return map;
-    }
-
-    for (GenericVariable gv : genericVariables) {
-      Object resolved = resolve(gv);
-
-      if (resolved instanceof List) {
-        int i = 0;
-        for (Object o : (List<?>) resolved) {
-          map.put(gv.getKey() + "_" + i, filter(o.toString(), gv.getRegexpFilter()));
-          i++;
-        }
-      } else {
-        map.put(gv.getKey(), filter(resolved.toString(), gv.getRegexpFilter()));
-      }
-    }
+    addRequestParameters(map);
+    addPostContentParameters(map);
     return map;
+  }
+
+  private void addPostContentParameters(Map<String, String> map) {
+    if (genericVariables != null) {
+      for (GenericVariable gv : genericVariables) {
+        Object resolved = resolve(gv);
+
+        if (resolved instanceof List) {
+          int i = 0;
+          for (Object o : (List<?>) resolved) {
+            map.put(gv.getKey() + "_" + i, filter(o.toString(), gv.getRegexpFilter()));
+            i++;
+          }
+        } else {
+          map.put(gv.getKey(), filter(resolved.toString(), gv.getRegexpFilter()));
+        }
+      }
+    }
+  }
+
+  private void addRequestParameters(Map<String, String> map) {
+    if (parameterMap != null) {
+      for (String requestParamName : parameterMap.keySet()) {
+        String[] values = parameterMap.get(requestParamName);
+        Optional<String> mappedRequestParameterOpt =
+            findMappedRequestParameter(genericRequestVariables, requestParamName);
+        if (!mappedRequestParameterOpt.isPresent()) {
+          continue;
+        }
+        String regexpFilter = mappedRequestParameterOpt.get();
+        if (values.length == 1) {
+          map.put(requestParamName, filter(values[0], regexpFilter));
+        } else {
+          List<String> foundValues = new ArrayList<>();
+          for (String value2 : values) {
+            String value = filter(value2, regexpFilter);
+            if (!value.isEmpty()) {
+              foundValues.add(value);
+            }
+          }
+          if (foundValues.size() == 1) {
+            map.put(requestParamName, filter(foundValues.get(0), regexpFilter));
+          } else {
+            for (int i = 0; i < foundValues.size(); i++) {
+              map.put(requestParamName + "_" + i, foundValues.get(i));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private Optional<String> findMappedRequestParameter(
+      List<GenericRequestVariable> genericRequestVariables, String requestParamName) {
+    if (genericRequestVariables != null) {
+      for (GenericRequestVariable v : genericRequestVariables) {
+        if (v.getKey().equals(requestParamName)) {
+          return fromNullable(v.getRegexpFilter());
+        }
+      }
+    }
+    return absent();
   }
 
   private String filter(String string, String regexpFilter) {

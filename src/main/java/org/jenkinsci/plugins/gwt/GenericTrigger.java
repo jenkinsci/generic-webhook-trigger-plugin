@@ -29,6 +29,7 @@ public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
   private List<GenericVariable> genericVariables = newArrayList();
   private final String regexpFilterText;
   private final String regexpFilterExpression;
+  private List<GenericRequestVariable> genericRequestVariables = newArrayList();
 
   public static class GenericDescriptor extends TriggerDescriptor {
 
@@ -47,17 +48,20 @@ public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
   public GenericTrigger(
       List<GenericVariable> genericVariables,
       String regexpFilterText,
-      String regexpFilterExpression) {
+      String regexpFilterExpression,
+      List<GenericRequestVariable> genericRequestVariables) {
     this.genericVariables = genericVariables;
     this.regexpFilterExpression = regexpFilterExpression;
     this.regexpFilterText = regexpFilterText;
+    this.genericRequestVariables = genericRequestVariables;
   }
 
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
 
   public void trigger(Map<String, String[]> parameterMap, String postContent) {
     Map<String, String> resolvedVariables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     boolean isMatching = isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
 
@@ -117,6 +121,10 @@ public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
     return regexpFilterExpression;
   }
 
+  public List<GenericRequestVariable> getGenericRequestVariables() {
+    return genericRequestVariables;
+  }
+
   public String getRegexpFilterText() {
     return regexpFilterText;
   }
@@ -129,6 +137,8 @@ public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
         + regexpFilterText
         + ", regexpFilterExpression="
         + regexpFilterExpression
+        + ", genericRequestVariables="
+        + genericRequestVariables
         + "]";
   }
 }

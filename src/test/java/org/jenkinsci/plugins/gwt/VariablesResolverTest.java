@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,16 @@ public class VariablesResolverTest {
         newArrayList( //
             new GenericVariable("ids", "$..id", JSONPath, regexpFilter));
     Map<String, String[]> parameterMap = new HashMap<>();
-    String[] values = new String[] {"a", "b"};
-    parameterMap.put("reqp1", values);
+    String[] values1 = new String[] {"a", "b"};
+    parameterMap.put("reqp1", values1);
     String[] values2 = new String[] {"just one"};
     parameterMap.put("reqp2", values2);
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    genericRequestVariables.add(new GenericRequestVariable("reqp1", ""));
+    genericRequestVariables.add(new GenericRequestVariable("reqp2", ""));
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .containsEntry("ids_0", "28") //
@@ -44,6 +49,42 @@ public class VariablesResolverTest {
   }
 
   @Test
+  public void testGenericRequestParameters() throws Exception {
+    String postContent = null;
+
+    List<GenericVariable> genericVariables = newArrayList();
+
+    Map<String, String[]> parameterMap = new HashMap<>();
+    String[] values1 = new String[] {"abc123456cdef", "ABCdef"};
+    parameterMap.put("reqp1", values1);
+
+    String[] values2 = new String[] {"this one will be ignored"};
+    parameterMap.put("reqp2", values2);
+
+    String[] values3 = new String[] {"just one"};
+    parameterMap.put("reqp3", values3);
+
+    String[] values4 = new String[] {"just one", "just one again"};
+    parameterMap.put("reqp4", values4);
+
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    genericRequestVariables.add(new GenericRequestVariable("reqp1", "[^0-9]"));
+    genericRequestVariables.add(new GenericRequestVariable("reqp3", "[^a-z]"));
+    genericRequestVariables.add(new GenericRequestVariable("reqp4", ""));
+
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("reqp1", "123456") //
+        .containsEntry("reqp3", "justone") //
+        .containsEntry("reqp4_0", "just one") //
+        .containsEntry("reqp4_1", "just one again") //
+        .hasSize(4);
+  }
+
+  @Test
   public void testJSONPathGetZeroMatchingVariables() throws Exception {
     String resourceName = "gital-mergerequest-comment.json";
     String postContent = getContent(resourceName);
@@ -53,8 +94,10 @@ public class VariablesResolverTest {
         newArrayList( //
             new GenericVariable("ids", "$..abc", JSONPath, regexpFilter));
     Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .isEmpty();
@@ -70,8 +113,10 @@ public class VariablesResolverTest {
         newArrayList( //
             new GenericVariable("user_name", "$.user.name", JSONPath, regexpFilter));
     Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .containsEntry("user_name", "Administrator");
@@ -88,8 +133,10 @@ public class VariablesResolverTest {
             new GenericVariable("user_name", "$.user.name", JSONPath, "[aA]"), //
             new GenericVariable("project_id", "$.project_id", JSONPath, regexpFilter));
     Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .containsEntry("user_name", "dministrtor") //
@@ -106,8 +153,10 @@ public class VariablesResolverTest {
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[1]/title", XPath, regexpFilter));
     Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .containsEntry("book", "Harry Potter");
@@ -124,8 +173,10 @@ public class VariablesResolverTest {
             new GenericVariable("book1", "/bookstore/book[1]/title", XPath, "\\s"), //
             new GenericVariable("book2", "/bookstore/book[2]/title", XPath, regexpFilter));
     Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .containsEntry("book1", "HarryPotter") //
@@ -141,8 +192,10 @@ public class VariablesResolverTest {
         newArrayList( //
             new GenericVariable("book1", "/bookstore/book[1]/title123", XPath, "[a-z]"));
     Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables).getVariables();
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
 
     assertThat(variables) //
         .containsEntry("book1", "");
