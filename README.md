@@ -3,7 +3,7 @@
 [![Build Status](https://ci.jenkins.io/job/Plugins/job/generic-webhook-trigger-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/generic-webhook-trigger-plugin)
 
 This is a Jenkins plugin that can:
- 1. Receive any *HTTP POST* request, *http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke*
+ 1. Receive any *HTTP POST* request, *http://JENKINS_URL/generic-webhook-trigger/invoke*
  2. Extract values with [JSONPath](https://github.com/jayway/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
  3. Contribute those values as variables, along with any request parameters, to the build
 

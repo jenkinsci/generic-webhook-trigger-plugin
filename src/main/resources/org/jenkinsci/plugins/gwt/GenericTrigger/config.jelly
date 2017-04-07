@@ -4,14 +4,14 @@
  <f:entry title="Post content parameters" field="genericVariables">
   <f:repeatableProperty field="genericVariables"  minimum="0" />  
    <f:description>
-    If you want "param1" in post content { "param1": "value1" } posted to http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke to be contributed, you need to add "$.param1" here.
+    If you want "param1" in post content { "param1": "value1" } posted to http://JENKINS_URL/generic-webhook-trigger/invoke to be contributed, you need to add "$.param1" here.
    </f:description>
  </f:entry>
 
  <f:entry title="Request parameters" field="genericRequestVariables">
   <f:repeatableProperty field="genericRequestVariables"  minimum="0" />  
    <f:description>
-    If you want "param1" in http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke?param1=abc to be contributed, you need to add "param1" here.
+    If you want "param1" in http://JENKINS_URL/generic-webhook-trigger/invoke?param1=abc to be contributed, you need to add "param1" here.
    </f:description>
  </f:entry>
 
