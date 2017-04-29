@@ -24,6 +24,26 @@ There are websites to help fiddle with the expressions. You may want to checkout
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
 
+# Troubleshooting
+
+It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
+
+```
+curl -vs http://localhost:8080/generic-webhook-trigger/invoke 2>&1
+```
+
+This may start your job, if you have enabled "**Allow anonymous read access**" in global security config. If it does not, check the Jenkins log. It may say something like this.
+
+```
+INFO: Did not find any jobs to trigger! The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered.
+```
+
+And to authenticate in the request you may try this.
+
+```
+curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 2>&1
+```
+
 # Screenshots
 
 ![Generic trigger](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
