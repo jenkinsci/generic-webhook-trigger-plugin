@@ -1,5 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/4) Did not find any jobs to trigger!
+**Adding troubleshooting section to readme #4**
+
+[d1288153a6ae2ff](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d1288153a6ae2ff) Tomas Bjerre *2017-04-29 06:47:22*
+
+### GitHub [#5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/5) Doesn&#39;t work with Pipelines
+**Enabling pipeline multibranch to be triggered #5**
+
+[7d4aae360dcbf66](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7d4aae360dcbf66) Tomas Bjerre *2017-05-02 18:52:36*
+
+## 1.8
+### No issue
+**Only printing variables/post content once in the job log**
+
+[00bf4c75de19007](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/00bf4c75de19007) Tomas Bjerre *2017-04-10 17:28:55*
+
 ## 1.7
 ### No issue
 **Correcting invoke URL in docs**

@@ -16,14 +16,17 @@ import com.google.common.annotations.VisibleForTesting;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
+import hudson.model.CauseAction;
 import hudson.model.Item;
+import hudson.model.Job;
 import hudson.model.ParameterValue;
 import hudson.model.ParametersAction;
 import hudson.model.StringParameterValue;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
+import jenkins.model.ParameterizedJobMixIn;
 
-public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
+public class GenericTrigger extends Trigger<Job<?, ?>> {
 
   private static final Logger LOGGER = Logger.getLogger(GenericTrigger.class.getName());
   private List<GenericVariable> genericVariables = newArrayList();
@@ -69,9 +72,17 @@ public class GenericTrigger extends Trigger<AbstractProject<?, ?>> {
       GenericCause cause = new GenericCause(postContent, resolvedVariables);
 
       ParametersAction parameters = createParameters(resolvedVariables);
-
-      job.scheduleBuild2(0, cause, parameters);
+      retrieveScheduleJob(job).scheduleBuild2(job, 0, new CauseAction(cause), parameters);
     }
+  }
+
+  private ParameterizedJobMixIn<?, ?> retrieveScheduleJob(final Job<?, ?> job) {
+    return new ParameterizedJobMixIn() {
+      @Override
+      protected Job<?, ?> asJob() {
+        return job;
+      }
+    };
   }
 
   private ParametersAction createParameters(Map<String, String> resolvedVariables) {
