@@ -14,7 +14,7 @@ This means it can trigger on any webhook, like:
 * [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
 * [Gogs](https://gogs.io/docs/features/webhook)
 * [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
-* An many many more!
+* And many many more!
 
 The original use case was to build merge/pull requests. You may use the Git Plugin as described in [this blog post](http://bjurr.com/continuous-integration-with-gitlab-and-jenkins/) to do that. There is also an example of this on the [Violation Comments to GitLab Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitLab+Plugin) page.
 
@@ -93,24 +93,31 @@ echo $VARIABLE_FROM_REQUEST
 }
 ```
 
-## Pipeline Plugin
+## Pipeline
 
-This plugin can be used with the Pipeline Plugin:
+This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties):
 
 ```
-properties([
- pipelineTriggers([
-  [$class: 'GenericTrigger',
-   genericVariables: [
-    [expressionType: 'JSONPath', key: 'variable1', value: 'expression1'],
-    [expressionType: 'JSONPath', key: 'variable2', value: 'expression2']
-   ],
-   regexpFilterText: '',
-   regexpFilterExpression: ''
-  ]
+node {
+ properties([
+  pipelineTriggers([
+   [$class: 'GenericTrigger',
+    genericVariables: [
+     [expressionType: 'JSONPath', key: 'variable1', value: 'expression1'],
+     [expressionType: 'JSONPath', key: 'variable2', value: 'expression2']
+    ],
+    regexpFilterText: '',
+    regexpFilterExpression: ''
+   ]
+  ])
  ])
-])
 
+ stage("build") {
+  sh '''
+  echo Build
+  '''
+ }
+}
 ```
 
 # Plugin development
