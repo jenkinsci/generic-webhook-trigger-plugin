@@ -1,10 +1,10 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.10
 ### GitHub [#6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/6) After auth still can&#39;t trigger things
 **Avoid showing trigger for unsupported projects #6**
 
-[d5603bef3d182fa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d5603bef3d182fa) Tomas Bjerre *2017-05-09 19:26:10*
+[fd6d4e647ec939d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fd6d4e647ec939d) Tomas Bjerre *2017-05-09 19:26:31*
 
 ### No issue
 **doc**
