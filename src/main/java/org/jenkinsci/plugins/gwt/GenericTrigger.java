@@ -15,7 +15,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import com.google.common.annotations.VisibleForTesting;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
 import hudson.model.CauseAction;
 import hudson.model.Item;
 import hudson.model.Job;
@@ -38,7 +37,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
     @Override
     public boolean isApplicable(Item item) {
-      return true;
+      return Job.class.isAssignableFrom(item.getClass());
     }
 
     @Override
