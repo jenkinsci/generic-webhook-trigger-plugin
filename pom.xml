@@ -102,7 +102,7 @@
 			<plugin>
 				<groupId>se.bjurr.gitchangelog</groupId>
 				<artifactId>git-changelog-maven-plugin</artifactId>
-				<version>1.38</version>
+				<version>1.46</version>
 				<executions>
 					<execution>
 						<id>GenerateGitChangelog</id>
@@ -115,35 +115,37 @@
 							<gitHubApi>https://api.github.com/repos/jenkinsci/generic-webhook-trigger-plugin</gitHubApi>
 							<gitHubToken>${GITHUB_OAUTH2TOKEN}</gitHubToken>
 							<gitHubIssuePattern>#([0-9]*)</gitHubIssuePattern>
-							<filePath>CHANGELOG.md</filePath>
+							<file>CHANGELOG.md</file>
 							<templateContent>
         <![CDATA[
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
 {{#tags}}
-## {{name}}
+## {{name}}{{#hasTagTime}} ({{tagTime}}){{/hasTagTime}}
  {{#issues}}
   {{#hasIssue}}
    {{#hasLink}}
-### {{name}} [{{issue}}]({{link}}) {{title}}
+### {{name}} [{{issue}}]({{link}}) {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
    {{/hasLink}}
    {{^hasLink}}
-### {{name}} {{issue}} {{title}}
+### {{name}} {{issue}} {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
    {{/hasLink}}
   {{/hasIssue}}
   {{^hasIssue}}
 ### {{name}}
   {{/hasIssue}}
+
   {{#commits}}
 **{{{messageTitle}}}**
 
 {{#messageBodyItems}}
  * {{.}} 
-
 {{/messageBodyItems}}
-[{{hash}}](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+
+[{{hash}}](https://github.com/tomasbjerre/git-changelog-lib/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
   {{/commits}}
+
  {{/issues}}
 {{/tags}}
 ]]>

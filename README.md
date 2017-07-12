@@ -20,6 +20,8 @@ The original use case was to build merge/pull requests. You may use the Git Plug
 
 You may want to report back to the invoking system. [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) is a very convenient plugin for that. 
 
+If a node is selected, then all leafs in that node will be contributed. If a leaf is selected, then only that leaf will be contributed.
+
 There are websites to help fiddle with the expressions. You may want to checkout [this website](https://jsonpath.curiousconcept.com/) to fiddle with JSONPath. And [this website](http://www.freeformatter.com/xpath-tester.html) to fiddle with XPath.
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
@@ -122,8 +124,6 @@ node {
 
 # Plugin development
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
-
-There is a ```/build.sh``` that will perform a full build and test the plugin. You may have a look at sandbox/settings.xml on how to configure your Maven settings.
 
 A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.
 ```
