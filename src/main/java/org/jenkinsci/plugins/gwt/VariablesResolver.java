@@ -10,15 +10,19 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.google.common.base.Optional;
@@ -55,18 +59,88 @@ public class VariablesResolver {
     if (genericVariables != null) {
       for (GenericVariable gv : genericVariables) {
         Object resolved = resolve(gv);
-
-        if (resolved instanceof List) {
-          int i = 0;
-          for (Object o : (List<?>) resolved) {
-            map.put(gv.getKey() + "_" + i, filter(o.toString(), gv.getRegexpFilter()));
-            i++;
+        if (resolved instanceof NodeList) {
+          NodeList nodeList = (NodeList) resolved;
+          if (nodeList.getLength() > 0) {
+            for (int i = 0; i < nodeList.getLength(); i++) {
+              flattenNode(
+                  map,
+                  gv.getKey(),
+                  gv.getRegexpFilter(),
+                  nodeList.item(i),
+                  i,
+                  nodeList.getLength() == 1 ? true : false);
+            }
+          } else {
+            map.put(gv.getKey(), "");
           }
         } else {
-          map.put(gv.getKey(), filter(resolved.toString(), gv.getRegexpFilter()));
+          flatten(map, gv.getKey(), gv.getRegexpFilter(), resolved);
         }
       }
     }
+  }
+
+  void flatten(Map<String, String> map, String key, String regexFilter, Object resolved) {
+    if (resolved instanceof List) {
+      int i = 0;
+      for (Object o : (List<?>) resolved) {
+        flatten(map, key + "_" + i, regexFilter, o);
+        i++;
+      }
+    } else if (resolved instanceof Map) {
+      for (Entry<String, Object> entry : ((Map<String, Object>) resolved).entrySet()) {
+        flatten(map, key + "_" + entry.getKey(), regexFilter, entry.getValue());
+      }
+    } else if (resolved != null) {
+      map.put(key, filter(resolved.toString(), regexFilter));
+    }
+  }
+
+  void flattenNode(
+      Map<String, String> map,
+      String key,
+      String regexFilter,
+      Node node,
+      int level,
+      boolean fromRootLevel) {
+    if (isLeafNode(node)) {
+      flatten(map, key, regexFilter, node.getTextContent());
+    } else {
+      for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+        Node childNode = node.getChildNodes().item(i);
+        if (isLeafNode(childNode)) {
+          flatten(
+              map,
+              expandKey(key, level, fromRootLevel) + "_" + childNode.getNodeName(),
+              regexFilter,
+              childNode.getTextContent());
+        } else {
+          flattenNode(
+              map,
+              expandKey(key, level, fromRootLevel) + "_" + childNode.getNodeName(),
+              regexFilter,
+              childNode,
+              i / 2, //leafnode and text inside leafnode are 2 nodes, so /2 to keep counter in line
+              false);
+        }
+      }
+    }
+  }
+
+  private String expandKey(String key, int level, boolean fromRootLevel) {
+    if (fromRootLevel) {
+      return key;
+    } else {
+      return key + "_" + level;
+    }
+  }
+
+  private boolean isLeafNode(Node node) {
+    return node != null
+        && node.getNodeType() == Node.ELEMENT_NODE
+        && node.getChildNodes().getLength() == 1
+        && node.getFirstChild().getNodeType() == Node.TEXT_NODE;
   }
 
   private void addRequestParameters(Map<String, String> map) {
@@ -136,7 +210,7 @@ public class VariablesResolver {
           XPathFactory xPathfactory = XPathFactory.newInstance();
           XPath xpath = xPathfactory.newXPath();
           XPathExpression expr = xpath.compile(gv.getValue());
-          return expr.evaluate(doc);
+          return expr.evaluate(doc, XPathConstants.NODESET);
         } else {
           throw new IllegalStateException("Not recognizing " + gv.getExpressionType());
         }
