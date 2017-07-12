@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bookstore>
+	<book>
+		<page>
+			<number>1</number>
+			<content>content 1</content>
+		</page>
+		<page>
+			<number>2</number>
+			<content>content 2</content>
+		</page>
+	</book>
+	<book>
+		<page>
+			<number>21</number>
+			<content>content 21</content>
+		</page>
+	</book>
+</bookstore>

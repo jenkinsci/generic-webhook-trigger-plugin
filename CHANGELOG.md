@@ -1,7 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Refactoring**
+
+ * Also replacing space in keys with underscore (_). 
+
+[ca91121c7e88ca7](https://github.com/tomasbjerre/git-changelog-lib/commit/ca91121c7e88ca7) Tomas Bjerre *2017-07-13 14:15:38*
+
+**doc**
+
+
+[8de2365d832e07a](https://github.com/tomasbjerre/git-changelog-lib/commit/8de2365d832e07a) Tomas Bjerre *2017-07-12 18:41:20*
+
+
 ## 1.11 (2017-07-12 18:30:35)
-### GitHub [#7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/7) JSONPath params are always converted to String    *enhancement*  
+### GitHub [#7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/7) Contribute all leafs in node, if node is selected by expression    *enhancement*  
 
 **fixes #7: JSONPath params are always converted to String**
 

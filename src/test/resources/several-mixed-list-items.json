@@ -1,0 +1,12 @@
+{
+   "user":[
+	   { "name":"Administrator" },
+	   { "username":"root" },
+	   "a simple string",
+	   33333,
+	   { "a number": "a value" },
+	   "another simple string",
+	   66666,
+	   { "another number": "another value" }
+   ]
+}

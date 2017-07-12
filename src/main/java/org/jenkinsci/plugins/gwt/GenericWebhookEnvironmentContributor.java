@@ -1,5 +1,11 @@
 package org.jenkinsci.plugins.gwt;
 
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.model.TaskListener;
+import hudson.model.EnvironmentContributor;
+import hudson.model.Run;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,16 +13,11 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import hudson.EnvVars;
-import hudson.Extension;
-import hudson.model.EnvironmentContributor;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-
 @Extension
 public class GenericWebhookEnvironmentContributor extends EnvironmentContributor {
   private static final String CONTRIBUTING_VARIABLES = "Contributing variables:";
 
+  @SuppressWarnings("unchecked")
   @Override
   public void buildEnvironmentFor(
       @Nonnull Run r, @Nonnull EnvVars envs, @Nonnull TaskListener listener)
