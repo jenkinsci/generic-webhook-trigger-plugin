@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.11 (2017-07-12 18:30:35)
 ### GitHub [#7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/7) JSONPath params are always converted to String    *enhancement*  
 
 **fixes #7: JSONPath params are always converted to String**
@@ -14,7 +14,7 @@ Changelog of Generic Webhook Plugin.
 **Doc**
 
 
-[3283d5297d47a04](https://github.com/tomasbjerre/git-changelog-lib/commit/3283d5297d47a04) Tomas Bjerre *2017-07-12 17:46:32*
+[5a5b8e86caec71e](https://github.com/tomasbjerre/git-changelog-lib/commit/5a5b8e86caec71e) Tomas Bjerre *2017-07-12 18:28:27*
 
 **doc**
 
