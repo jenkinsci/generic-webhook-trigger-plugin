@@ -144,6 +144,44 @@ public class VariablesResolverTest {
   }
 
   @Test
+  public void testJSONPathGetNodeVariable() throws Exception {
+    String resourceName = "gital-mergerequest-comment.json";
+    String postContent = getContent(resourceName);
+
+    String regexpFilter = "";
+    List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("user", "$.user", JSONPath, regexpFilter));
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("user_name", "Administrator");
+  }
+
+  @Test
+  public void testJSONPathGetPayloadVariable() throws Exception {
+    String resourceName = "gital-mergerequest-comment.json";
+    String postContent = getContent(resourceName);
+
+    String regexpFilter = "";
+    List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("payload", "$", JSONPath, regexpFilter));
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("payload_user_name", "Administrator");
+  }
+
+  @Test
   public void testXPathGetOneVariable() throws Exception {
     String resourceName = "example.xml";
     String postContent = getContent(resourceName);
@@ -160,6 +198,86 @@ public class VariablesResolverTest {
 
     assertThat(variables) //
         .containsEntry("book", "Harry Potter");
+  }
+
+  @Test
+  public void testXPathGetOneNode() throws Exception {
+    String resourceName = "example.xml";
+    String postContent = getContent(resourceName);
+
+    String regexpFilter = "";
+    List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("book", "/bookstore/book[1]", XPath, regexpFilter));
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("book_title", "Harry Potter");
+  }
+
+  @Test
+  public void testXPathGetNodes() throws Exception {
+    String resourceName = "example.xml";
+    String postContent = getContent(resourceName);
+
+    String regexpFilter = "";
+    List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("book", "/bookstore/book[*]", XPath, regexpFilter));
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("book_0_title", "Harry Potter")
+        .containsEntry("book_1_title", "Learning XML");
+  }
+
+  @Test
+  public void testXPathGetPayload() throws Exception {
+    String resourceName = "example.xml";
+    String postContent = getContent(resourceName);
+
+    String regexpFilter = "";
+    List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("payload", "/*", XPath, regexpFilter));
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("payload_book_0_price", "29.99")
+        .containsEntry("payload_book_0_title", "Harry Potter")
+        .containsEntry("payload_book_1_title", "Learning XML");
+  }
+
+  @Test
+  public void testXPathGetNodeVariable() throws Exception {
+    String resourceName = "example.xml";
+    String postContent = getContent(resourceName);
+
+    String regexpFilter = "";
+    List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("book", "/bookstore/book[1]", XPath, regexpFilter));
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    Map<String, String> variables =
+        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("book_price", "29.99")
+        .containsEntry("book_title", "Harry Potter");
   }
 
   @Test
