@@ -44,10 +44,11 @@ public class VariablesResolverHeaderTest {
             .getVariables();
 
     assertThat(variables) //
+        .containsEntry("someparam", "some value") //
         .containsEntry("someparam_0", "some value") //
         .containsEntry("anotherparam_1", "eee") //
         .containsEntry("anotherparam_0", "ee") //
-        .hasSize(3);
+        .hasSize(4);
   }
 
   private Enumeration<String> enumeration(final String... string) {

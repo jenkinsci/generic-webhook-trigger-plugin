@@ -113,7 +113,8 @@ public class VariablesResolverJsonPathTest {
         .containsEntry("reqp1_0", "a") //
         .containsEntry("reqp1_1", "b") //
         .containsEntry("reqp2", "just one") //
-        .hasSize(6);
+        .containsEntry("reqp2_0", "just one") //
+        .hasSize(7);
   }
 
   @Test
@@ -151,11 +152,13 @@ public class VariablesResolverJsonPathTest {
             .getVariables();
 
     assertThat(variables) //
-        .containsEntry("reqp1", "123456") //
+        .containsEntry("reqp1_0", "123456") //
+        .containsEntry("reqp1_1", "") //
         .containsEntry("reqp3", "justone") //
+        .containsEntry("reqp3_0", "justone") //
         .containsEntry("reqp4_0", "just one") //
         .containsEntry("reqp4_1", "just one again") //
-        .hasSize(4);
+        .hasSize(6);
   }
 
   @Test

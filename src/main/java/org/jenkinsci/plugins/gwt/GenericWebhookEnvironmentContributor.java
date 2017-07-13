@@ -20,7 +20,9 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
   @SuppressWarnings("unchecked")
   @Override
   public void buildEnvironmentFor(
-      @Nonnull Run r, @Nonnull EnvVars envs, @Nonnull TaskListener listener)
+      @SuppressWarnings("rawtypes") @Nonnull Run r,
+      @Nonnull EnvVars envs,
+      @Nonnull TaskListener listener)
       throws IOException, InterruptedException {
     boolean shouldLog = shouldLog(r);
     GenericCause cause = (GenericCause) r.getCause(GenericCause.class);
@@ -51,7 +53,7 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
     }
   }
 
-  private boolean shouldLog(Run r) throws IOException {
+  private boolean shouldLog(@SuppressWarnings("rawtypes") Run r) throws IOException {
     try (BufferedReader br = new BufferedReader(new FileReader(r.getLogFile()))) {
       String line;
       while ((line = br.readLine()) != null) {

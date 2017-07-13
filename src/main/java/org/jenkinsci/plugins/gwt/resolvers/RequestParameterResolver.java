@@ -5,7 +5,6 @@ import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.jenkinsci.plugins.gwt.FlattenerUtils.filter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,24 +28,13 @@ public class RequestParameterResolver {
         }
         String regexpFilter = mappedRequestParameterOpt.get();
         String[] values = incomingParameterMap.get(requestParamName);
-        if (values.length == 1) {
-          resolvedVariables.put(requestParamName, filter(values[0], regexpFilter));
-        } else {
-          List<String> foundFilteredValues = new ArrayList<>();
-          for (String valueCandidate : values) {
-            String filteredValue = filter(valueCandidate, regexpFilter);
-            if (!filteredValue.isEmpty()) {
-              foundFilteredValues.add(filteredValue);
-            }
-          }
-          if (foundFilteredValues.size() == 1) {
-            String filteredValue = foundFilteredValues.get(0);
+        for (int i = 0; i < values.length; i++) {
+          String filteredValue = filter(values[i], regexpFilter);
+          resolvedVariables.put(requestParamName + "_" + i, filteredValue);
+          boolean firstAndOnlyValue = i == 0 && values.length == 1;
+          if (firstAndOnlyValue) {
+            //Users will probably expect this variable for parameters that are never a list
             resolvedVariables.put(requestParamName, filteredValue);
-          } else {
-            for (int i = 0; i < foundFilteredValues.size(); i++) {
-              String filteredValue = foundFilteredValues.get(i);
-              resolvedVariables.put(requestParamName + "_" + i, filteredValue);
-            }
           }
         }
       }

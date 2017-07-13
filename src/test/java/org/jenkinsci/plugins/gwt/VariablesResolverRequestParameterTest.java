@@ -51,10 +51,12 @@ public class VariablesResolverRequestParameterTest {
             .getVariables();
 
     assertThat(variables) //
-        .containsEntry("reqp1", "123456") //
+        .containsEntry("reqp1_0", "123456") //
+        .containsEntry("reqp1_1", "") //
         .containsEntry("reqp3", "justone") //
+        .containsEntry("reqp3_0", "justone") //
         .containsEntry("reqp4_0", "just one") //
         .containsEntry("reqp4_1", "just one again") //
-        .hasSize(4);
+        .hasSize(6);
   }
 }

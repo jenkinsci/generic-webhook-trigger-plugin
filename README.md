@@ -104,7 +104,7 @@ job('Generic Job Example') {
   shell('''
 echo $VARIABLE_FROM_POST
 echo $VARIABLE_FROM_REQUEST
-echo $VARIABLE_FROM_HEADER_0
+echo $VARIABLE_FROM_HEADER
   ''')
  }
 }

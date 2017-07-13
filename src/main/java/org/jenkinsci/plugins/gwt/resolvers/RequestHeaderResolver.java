@@ -33,6 +33,11 @@ public class RequestHeaderResolver {
         String regexpFilter = configuredVariable.get().getRegexpFilter();
         String filteredValue = filter(headerValue, regexpFilter);
         found.put(headerName + "_" + i, filteredValue);
+        boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
+        if (firstAndOnlyValue) {
+          //Users will probably expect this variable for parameters that are never a list
+          found.put(headerName, filteredValue);
+        }
         i++;
       }
     }
