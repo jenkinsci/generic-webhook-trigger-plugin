@@ -142,7 +142,7 @@ Changelog of Generic Webhook Plugin.
  * {{.}} 
 {{/messageBodyItems}}
 
-[{{hash}}](https://github.com/tomasbjerre/git-changelog-lib/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+[{{hash}}](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
   {{/commits}}
 
