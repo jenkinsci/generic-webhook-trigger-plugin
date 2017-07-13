@@ -1,13 +1,21 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
 ## Unreleased
+### GitHub [#9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/9) Enhancement: allow request headers to be set as variables too    *enhancement*  
+
+**Contribute headers to build #9**
+
+
+[8cecde36e5de2d3](https://github.com/tomasbjerre/git-changelog-lib/commit/8cecde36e5de2d3) Tomas Bjerre *2017-07-13 17:40:48*
+
+
 ### No issue
 
 **Refactoring**
 
  * Also replacing space in keys with underscore (_). 
 
-[ca91121c7e88ca7](https://github.com/tomasbjerre/git-changelog-lib/commit/ca91121c7e88ca7) Tomas Bjerre *2017-07-13 14:15:38*
+[23077594abea6a5](https://github.com/tomasbjerre/git-changelog-lib/commit/23077594abea6a5) Tomas Bjerre *2017-07-13 15:23:12*
 
 **doc**
 

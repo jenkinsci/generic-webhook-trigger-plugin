@@ -9,6 +9,7 @@ This is a Jenkins plugin that can:
 
   * From POST content with [JSONPath](https://github.com/json-path/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
   * From the query parameters
+  * From the headers
 
  3. Contribute those values as variables to the build
 
@@ -88,6 +89,12 @@ job('Generic Job Example') {
      regexpFilter("")
     }
    }
+   genericHeaderVariables {
+    genericHeaderVariable {
+     key("VARIABLE_FROM_HEADER")
+     regexpFilter("")
+    }
+   }
    regexpFilterText("\$VARIABLE_FROM_POST")
    regexpFilterExpression("aRegExp")
   }
@@ -97,6 +104,7 @@ job('Generic Job Example') {
   shell('''
 echo $VARIABLE_FROM_POST
 echo $VARIABLE_FROM_REQUEST
+echo $VARIABLE_FROM_HEADER_0
   ''')
  }
 }

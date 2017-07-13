@@ -5,8 +5,12 @@ import static hudson.util.HttpResponses.okJSON;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
+import hudson.Extension;
+import hudson.model.UnprotectedRootAction;
+import hudson.security.csrf.CrumbExclusion;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +28,6 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import hudson.Extension;
-import hudson.model.UnprotectedRootAction;
-import hudson.security.csrf.CrumbExclusion;
-
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {
 
@@ -38,18 +38,33 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   public HttpResponse doInvoke(StaplerRequest request) {
     String postContent = null;
     Map<String, String[]> parameterMap = null;
+    Map<String, Enumeration<String>> headers = null;
     try {
+      headers = getHeaders(request);
       parameterMap = request.getParameterMap();
       postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
     } catch (IOException e) {
       LOGGER.log(SEVERE, "", e);
     }
 
-    return doInvoke(parameterMap, postContent);
+    return doInvoke(headers, parameterMap, postContent);
+  }
+
+  private Map<String, Enumeration<String>> getHeaders(StaplerRequest request) {
+    Map<String, Enumeration<String>> headers = new HashMap<>();
+    Enumeration<String> headersEnumeration = request.getHeaderNames();
+    while (headersEnumeration.hasMoreElements()) {
+      String headerName = headersEnumeration.nextElement();
+      headers.put(headerName, request.getHeaders(headerName));
+    }
+    return headers;
   }
 
   @VisibleForTesting
-  HttpResponse doInvoke(Map<String, String[]> parameterMap, String postContent) {
+  HttpResponse doInvoke(
+      Map<String, Enumeration<String>> headers,
+      Map<String, String[]> parameterMap,
+      String postContent) {
     List<GenericTrigger> triggers = JobFinder.findAllJobsWithTrigger();
     if (triggers.isEmpty()) {
       LOGGER.log(
@@ -61,7 +76,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       try {
         LOGGER.log(INFO, "Triggering " + trigger.toString());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
-        trigger.trigger(parameterMap, postContent);
+        trigger.trigger(headers, parameterMap, postContent);
         triggerResults.put(trigger.toString(), "OK");
       } catch (Exception e) {
         LOGGER.log(SEVERE, trigger.toString(), e);

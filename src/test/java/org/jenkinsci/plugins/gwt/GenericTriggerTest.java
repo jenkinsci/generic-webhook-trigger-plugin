@@ -19,7 +19,7 @@ public class GenericTriggerTest {
     resolvedVariables = newHashMap();
     resolvedVariables.put("key1", "resolved1");
     resolvedVariables.put("key2", "resolved2");
-    this.sut = new GenericTrigger(null, null, null, null);
+    this.sut = new GenericTrigger(null, null, null, null, null);
   }
 
   @Test

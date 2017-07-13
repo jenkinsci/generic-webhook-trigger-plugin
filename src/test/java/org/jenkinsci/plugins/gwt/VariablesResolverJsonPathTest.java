@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 public class VariablesResolverJsonPathTest {
+  private final Map<String, Enumeration<String>> headers = new HashMap<>();
+  private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
 
   @Test
   public void testJSONPathGetOneLeaf() throws Exception {
@@ -94,7 +97,13 @@ public class VariablesResolverJsonPathTest {
     genericRequestVariables.add(new GenericRequestVariable("reqp1", ""));
     genericRequestVariables.add(new GenericRequestVariable("reqp2", ""));
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -132,7 +141,13 @@ public class VariablesResolverJsonPathTest {
     genericRequestVariables.add(new GenericRequestVariable("reqp4", ""));
 
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -155,7 +170,13 @@ public class VariablesResolverJsonPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -174,7 +195,13 @@ public class VariablesResolverJsonPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -194,7 +221,13 @@ public class VariablesResolverJsonPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -223,7 +256,13 @@ public class VariablesResolverJsonPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -240,7 +279,13 @@ public class VariablesResolverJsonPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
     return variables;
   }

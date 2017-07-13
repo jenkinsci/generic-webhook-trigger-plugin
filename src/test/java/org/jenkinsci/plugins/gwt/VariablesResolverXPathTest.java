@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 public class VariablesResolverXPathTest {
+  private final Map<String, Enumeration<String>> headers = new HashMap<>();
+  private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
 
   @Test
   public void testXPathGetOneVariable() throws Exception {
@@ -29,7 +32,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -48,7 +57,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -67,7 +82,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -87,7 +108,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -110,7 +137,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -131,7 +164,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -156,7 +195,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -179,7 +224,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -200,7 +251,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -222,7 +279,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //
@@ -241,7 +304,13 @@ public class VariablesResolverXPathTest {
     Map<String, String[]> parameterMap = new HashMap<>();
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     Map<String, String> variables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     assertThat(variables) //

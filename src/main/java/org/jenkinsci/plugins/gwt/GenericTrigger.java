@@ -3,28 +3,29 @@ package org.jenkinsci.plugins.gwt;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.INFO;
+import static java.util.regex.Pattern.compile;
+import hudson.Extension;
+import hudson.model.Item;
+import hudson.model.ParameterValue;
+import hudson.model.CauseAction;
+import hudson.model.Job;
+import hudson.model.ParametersAction;
+import hudson.model.StringParameterValue;
+import hudson.triggers.Trigger;
+import hudson.triggers.TriggerDescriptor;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
+
+import jenkins.model.ParameterizedJobMixIn;
 
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import com.google.common.annotations.VisibleForTesting;
-
-import hudson.Extension;
-import hudson.model.CauseAction;
-import hudson.model.Item;
-import hudson.model.Job;
-import hudson.model.ParameterValue;
-import hudson.model.ParametersAction;
-import hudson.model.StringParameterValue;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
-import jenkins.model.ParameterizedJobMixIn;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
@@ -33,6 +34,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private final String regexpFilterText;
   private final String regexpFilterExpression;
   private List<GenericRequestVariable> genericRequestVariables = newArrayList();
+  private List<GenericHeaderVariable> genericHeaderVariables = newArrayList();
 
   public static class GenericDescriptor extends TriggerDescriptor {
 
@@ -52,18 +54,30 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       List<GenericVariable> genericVariables,
       String regexpFilterText,
       String regexpFilterExpression,
-      List<GenericRequestVariable> genericRequestVariables) {
+      List<GenericRequestVariable> genericRequestVariables,
+      List<GenericHeaderVariable> genericHeaderVariables) {
     this.genericVariables = genericVariables;
     this.regexpFilterExpression = regexpFilterExpression;
     this.regexpFilterText = regexpFilterText;
     this.genericRequestVariables = genericRequestVariables;
+    this.genericHeaderVariables = genericHeaderVariables;
   }
 
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
 
-  public void trigger(Map<String, String[]> parameterMap, String postContent) {
+  @SuppressWarnings("static-access")
+  public void trigger(
+      Map<String, Enumeration<String>> headers,
+      Map<String, String[]> parameterMap,
+      String postContent) {
     Map<String, String> resolvedVariables =
-        new VariablesResolver(parameterMap, postContent, genericVariables, genericRequestVariables)
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
             .getVariables();
 
     boolean isMatching = isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
@@ -72,10 +86,12 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       GenericCause cause = new GenericCause(postContent, resolvedVariables);
 
       ParametersAction parameters = createParameters(resolvedVariables);
-      retrieveScheduleJob(job).scheduleBuild2(job, 0, new CauseAction(cause), parameters);
+      retrieveScheduleJob(job) //
+          .scheduleBuild2(job, 0, new CauseAction(cause), parameters);
     }
   }
 
+  @SuppressWarnings("rawtypes")
   private ParameterizedJobMixIn<?, ?> retrieveScheduleJob(final Job<?, ?> job) {
     return new ParameterizedJobMixIn() {
       @Override
@@ -99,7 +115,9 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       String regexpFilterText,
       String regexpFilterExpression,
       Map<String, String> resolvedVariables) {
-    if (isNullOrEmpty(regexpFilterText) || isNullOrEmpty(regexpFilterExpression)) {
+    boolean noFilterConfigured =
+        isNullOrEmpty(regexpFilterText) || isNullOrEmpty(regexpFilterExpression);
+    if (noFilterConfigured) {
       return true;
     }
     for (String variable : resolvedVariables.keySet()) {
@@ -111,7 +129,10 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
         throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
       }
     }
-    boolean isMatching = Pattern.compile(regexpFilterExpression).matcher(regexpFilterText).find();
+    boolean isMatching =
+        compile(regexpFilterExpression) //
+            .matcher(regexpFilterText) //
+            .find();
     if (!isMatching) {
       LOGGER.log(
           INFO,
@@ -136,6 +157,10 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     return genericRequestVariables;
   }
 
+  public List<GenericHeaderVariable> getGenericHeaderVariables() {
+    return genericHeaderVariables;
+  }
+
   public String getRegexpFilterText() {
     return regexpFilterText;
   }
@@ -150,6 +175,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
         + regexpFilterExpression
         + ", genericRequestVariables="
         + genericRequestVariables
+        + ", genericHeaderVariables="
+        + genericHeaderVariables
         + "]";
   }
 }

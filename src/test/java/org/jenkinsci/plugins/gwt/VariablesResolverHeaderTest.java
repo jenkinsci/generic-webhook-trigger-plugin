@@ -12,9 +12,7 @@ import java.util.Map;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.junit.Test;
 
-public class VariablesResolverRequestParameterTest {
-  private final Map<String, Enumeration<String>> headers = new HashMap<>();
-  private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+public class VariablesResolverHeaderTest {
 
   @Test
   public void testGenericRequestParameters() throws Exception {
@@ -23,23 +21,18 @@ public class VariablesResolverRequestParameterTest {
     List<GenericVariable> genericVariables = newArrayList();
 
     Map<String, String[]> parameterMap = new HashMap<>();
-    String[] values1 = new String[] {"abc123456cdef", "ABCdef"};
-    parameterMap.put("reqp1", values1);
-
-    String[] values2 = new String[] {"this one will be ignored"};
-    parameterMap.put("reqp2", values2);
-
-    String[] values3 = new String[] {"just one"};
-    parameterMap.put("reqp3", values3);
-
-    String[] values4 = new String[] {"just one", "just one again"};
-    parameterMap.put("reqp4", values4);
-
     List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     genericRequestVariables.add(new GenericRequestVariable("reqp1", "[^0-9]"));
     genericRequestVariables.add(new GenericRequestVariable("reqp3", "[^a-z]"));
     genericRequestVariables.add(new GenericRequestVariable("reqp4", ""));
 
+    Map<String, Enumeration<String>> headers = new HashMap<>();
+    headers.put("someparam", enumeration("some value"));
+    headers.put("anotherparam", enumeration("another value", "even more"));
+    headers.put("param_not_mapped", enumeration("do not include"));
+    List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+    genericHeaderVariables.add(new GenericHeaderVariable("someparam", ""));
+    genericHeaderVariables.add(new GenericHeaderVariable("anotherparam", "[^e]"));
     Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -51,10 +44,25 @@ public class VariablesResolverRequestParameterTest {
             .getVariables();
 
     assertThat(variables) //
-        .containsEntry("reqp1", "123456") //
-        .containsEntry("reqp3", "justone") //
-        .containsEntry("reqp4_0", "just one") //
-        .containsEntry("reqp4_1", "just one again") //
-        .hasSize(4);
+        .containsEntry("someparam_0", "some value") //
+        .containsEntry("anotherparam_1", "eee") //
+        .containsEntry("anotherparam_0", "ee") //
+        .hasSize(3);
+  }
+
+  private Enumeration<String> enumeration(final String... string) {
+    return new Enumeration<String>() {
+      private int i = 0;
+
+      @Override
+      public String nextElement() {
+        return string[i++];
+      }
+
+      @Override
+      public boolean hasMoreElements() {
+        return i < string.length;
+      }
+    };
   }
 }
