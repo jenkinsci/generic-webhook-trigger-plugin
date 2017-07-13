@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.gwt;
+package org.jenkinsci.plugins.gwt.resolvers;
 
 public class FlattenerUtils {
 

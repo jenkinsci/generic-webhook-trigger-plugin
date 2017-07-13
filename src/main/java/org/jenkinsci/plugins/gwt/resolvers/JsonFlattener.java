@@ -1,8 +1,8 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.collect.Maps.newHashMap;
-import static org.jenkinsci.plugins.gwt.FlattenerUtils.filter;
-import static org.jenkinsci.plugins.gwt.FlattenerUtils.noWhitespace;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.noWhitespace;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.collect.Maps.newHashMap;
-import static org.jenkinsci.plugins.gwt.FlattenerUtils.filter;
-import static org.jenkinsci.plugins.gwt.FlattenerUtils.noWhitespace;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.noWhitespace;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class XmlFlattener {
     return resolvedVariables;
   }
 
-  Map<String, String> flattenXmlNode(
+  private Map<String, String> flattenXmlNode(
       String parentKey, String regexFilter, Node node, int level, boolean fromRootLevel) {
     Map<String, String> resolvedVariables = newHashMap();
     if (isXmlLeafNode(node)) {

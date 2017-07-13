@@ -2,7 +2,7 @@ package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
-import static org.jenkinsci.plugins.gwt.FlattenerUtils.filter;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 
 import java.util.Enumeration;
 import java.util.HashMap;

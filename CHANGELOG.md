@@ -3,11 +3,20 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**Doc**
+
+
+[bc3eb085bc2543d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bc3eb085bc2543d) Tomas Bjerre *2017-07-13 19:59:27*
+
+
+## 1.13 (2017-07-13 19:46:13)
+### No issue
+
 **Both exact and "_0" if only one value**
 
  * If request, or header, expression matches only one value then both an exact variable and a variable with added _0 is now contributed. Users who expect only one value will probably expect the exact variable name. Users who expects several will probably want to always use the variableName_X varaibles. 
 
-[2ed09abb65eeef5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2ed09abb65eeef5) Tomas Bjerre *2017-07-13 19:37:12*
+[4cc63cc9fc5be42](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4cc63cc9fc5be42) Tomas Bjerre *2017-07-13 19:45:19*
 
 **doc**
 
