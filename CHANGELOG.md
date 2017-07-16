@@ -3,10 +3,10 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
-**Doc**
+**Refactoring**
 
 
-[bc3eb085bc2543d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bc3eb085bc2543d) Tomas Bjerre *2017-07-13 19:59:27*
+[bbd41960d1fc017](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bbd41960d1fc017) Tomas Bjerre *2017-07-14 05:52:08*
 
 
 ## 1.13 (2017-07-13 19:46:13)
