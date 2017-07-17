@@ -66,7 +66,7 @@ public class PostContentParameterResolver {
 
   private Map<String, String> resolveJsonPath(String incomingPostContent, GenericVariable gv) {
     Object resolved = JsonPath.read(incomingPostContent, gv.getValue());
-    return jsonFlattener.flatternJson(gv.getKey(), gv.getRegexpFilter(), resolved);
+    return jsonFlattener.flattenJson(gv.getKey(), gv.getRegexpFilter(), resolved);
   }
 
   private Map<String, String> resolveXPath(String incomingPostContent, GenericVariable gv)

@@ -9,7 +9,10 @@ public class FlattenerUtils {
     return string.replaceAll(regexpFilter, "");
   }
 
-  public static String noWhitespace(String mixedString) {
-    return mixedString.replaceAll("\\s", "_");
+  public static String toVariableName(String mixedString) {
+    if (mixedString == null) {
+      return null;
+    }
+    return mixedString.replaceAll("\\s", "_").replaceAll("-", "_");
   }
 }

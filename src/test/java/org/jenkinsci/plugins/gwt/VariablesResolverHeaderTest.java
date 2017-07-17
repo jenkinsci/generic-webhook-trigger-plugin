@@ -29,10 +29,12 @@ public class VariablesResolverHeaderTest {
     Map<String, Enumeration<String>> headers = new HashMap<>();
     headers.put("someparam", enumeration("some value"));
     headers.put("anotherparam", enumeration("another value", "even more"));
+    headers.put("content-type", enumeration("application/json"));
     headers.put("param_not_mapped", enumeration("do not include"));
     List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     genericHeaderVariables.add(new GenericHeaderVariable("someparam", ""));
     genericHeaderVariables.add(new GenericHeaderVariable("anotherparam", "[^e]"));
+    genericHeaderVariables.add(new GenericHeaderVariable("content-type", ""));
     Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -48,7 +50,8 @@ public class VariablesResolverHeaderTest {
         .containsEntry("someparam_0", "some value") //
         .containsEntry("anotherparam_1", "eee") //
         .containsEntry("anotherparam_0", "ee") //
-        .hasSize(4);
+        .containsEntry("content_type", "application/json") //
+        .hasSize(6);
   }
 
   private Enumeration<String> enumeration(final String... string) {

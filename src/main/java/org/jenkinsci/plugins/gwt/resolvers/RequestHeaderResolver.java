@@ -3,6 +3,7 @@ package org.jenkinsci.plugins.gwt.resolvers;
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.of;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,11 +33,11 @@ public class RequestHeaderResolver {
         String headerValue = headerEnumeration.nextElement();
         String regexpFilter = configuredVariable.get().getRegexpFilter();
         String filteredValue = filter(headerValue, regexpFilter);
-        found.put(headerName + "_" + i, filteredValue);
+        found.put(toVariableName(headerName) + "_" + i, filteredValue);
         boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
         if (firstAndOnlyValue) {
           //Users will probably expect this variable for parameters that are never a list
-          found.put(headerName, filteredValue);
+          found.put(toVariableName(headerName), filteredValue);
         }
         i++;
       }
