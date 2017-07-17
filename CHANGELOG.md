@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.14 (2017-07-17 16:06:52)
 ### GitHub [#10](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/10) replace &quot;-&quot; characters on header variable names  
 
 **#10: replace "-" characters on header variable names**
@@ -23,6 +23,12 @@ Changelog of Generic Webhook Plugin.
 
 
 ### No issue
+
+**Avoiding NPE after upgrade**
+
+ * As a result of headers and request parameters not being read from existing config. 
+
+[ad2317275276a5b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ad2317275276a5b) Tomas Bjerre *2017-07-17 16:02:38*
 
 **small typo: flatternJson -> flattenJson**
 
