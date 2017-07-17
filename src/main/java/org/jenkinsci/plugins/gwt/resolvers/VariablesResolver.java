@@ -2,7 +2,9 @@ package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.collect.Maps.newHashMap;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,10 +12,8 @@ import org.jenkinsci.plugins.gwt.GenericHeaderVariable;
 import org.jenkinsci.plugins.gwt.GenericRequestVariable;
 import org.jenkinsci.plugins.gwt.GenericVariable;
 
-import com.google.common.collect.Lists;
-
 public class VariablesResolver {
-  private List<GenericVariable> configuredGenericVariables = Lists.newArrayList();
+  private List<GenericVariable> configuredGenericVariables = new ArrayList<>();
   private final List<GenericRequestVariable> configuredGenericRequestVariables;
   private final String incomingPostContent;
   private final Map<String, String[]> incomingParameterMap;
@@ -31,12 +31,22 @@ public class VariablesResolver {
       List<GenericVariable> configuredGenericVariables,
       List<GenericRequestVariable> configuredGenericRequestVariables,
       List<GenericHeaderVariable> configuredGenericHeaderVariables) {
-    this.incomingPostContent = incomingPostContent;
-    this.configuredGenericVariables = configuredGenericVariables;
-    this.incomingParameterMap = incomingParameterMap;
-    this.configuredGenericRequestVariables = configuredGenericRequestVariables;
-    this.configuredGenericHeaderVariables = configuredGenericHeaderVariables;
+    this.incomingPostContent = firstNotNull(incomingPostContent, "");
+    this.configuredGenericVariables =
+        firstNotNull(configuredGenericVariables, new ArrayList<GenericVariable>());
+    this.incomingParameterMap = firstNotNull(incomingParameterMap, new HashMap<String, String[]>());
+    this.configuredGenericRequestVariables =
+        firstNotNull(configuredGenericRequestVariables, new ArrayList<GenericRequestVariable>());
+    this.configuredGenericHeaderVariables =
+        firstNotNull(configuredGenericHeaderVariables, new ArrayList<GenericHeaderVariable>());
     this.incomingHeaders = incomingHeaders;
+  }
+
+  private <T> T firstNotNull(T o1, T o2) {
+    if (o1 != null) {
+      return o1;
+    }
+    return o2;
   }
 
   public Map<String, String> getVariables() {

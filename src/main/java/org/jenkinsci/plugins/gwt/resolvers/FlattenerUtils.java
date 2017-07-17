@@ -1,5 +1,7 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class FlattenerUtils {
 
   public static String filter(String string, String regexpFilter) {
@@ -9,10 +11,9 @@ public class FlattenerUtils {
     return string.replaceAll(regexpFilter, "");
   }
 
-  public static String toVariableName(String mixedString) {
-    if (mixedString == null) {
-      return null;
-    }
-    return mixedString.replaceAll("\\s", "_").replaceAll("-", "_");
+  public static String toVariableName(String variableName) {
+    return checkNotNull(variableName, "variable name must be set") //
+        .replaceAll("\\s", "_") //
+        .replaceAll("-", "_");
   }
 }

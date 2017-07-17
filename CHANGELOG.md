@@ -1,7 +1,38 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
 ## Unreleased
+### GitHub [#10](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/10) replace &quot;-&quot; characters on header variable names  
+
+**#10: replace "-" characters on header variable names**
+
+
+[13802b842bc50d2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/13802b842bc50d2) Juan Pablo Santos Rodríguez *2017-07-17 11:42:55*
+
+
+### GitHub [#11](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/11) fix #10: replace &quot;-&quot; characters on header variable names  
+
+**follow-up on #11, suggested description no longer makes sense here, as it applies to all kind of variables**
+
+
+[c6ffa25abb7236a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c6ffa25abb7236a) Juan Pablo Santos Rodríguez *2017-07-17 14:32:34*
+
+**follow -up on #11, transform noWhitespace(String) from FlattenerUtils into  toVariableName, and use it also on headers and request params**
+
+
+[895979680dd8c03](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/895979680dd8c03) Juan Pablo Santos Rodríguez *2017-07-17 14:31:39*
+
+
 ### No issue
+
+**small typo: flatternJson -> flattenJson**
+
+
+[72169e5af5d0451](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/72169e5af5d0451) Juan Pablo Santos Rodríguez *2017-07-17 14:33:19*
+
+**Cleaning**
+
+
+[bedc35d535ae00f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bedc35d535ae00f) Tomas Bjerre *2017-07-16 05:09:54*
 
 **Refactoring**
 

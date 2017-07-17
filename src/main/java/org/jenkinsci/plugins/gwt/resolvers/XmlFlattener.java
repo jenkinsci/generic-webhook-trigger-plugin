@@ -39,8 +39,8 @@ public class XmlFlattener {
         String childKey =
             expandKey(parentKey, level, fromRootLevel) + "_" + childNode.getNodeName();
         if (isXmlLeafNode(childNode)) {
-          String noWhitespace = toVariableName(childKey);
-          resolvedVariables.put(noWhitespace, filter(childNode.getTextContent(), regexFilter));
+          String variableName = toVariableName(childKey);
+          resolvedVariables.put(variableName, filter(childNode.getTextContent(), regexFilter));
         } else {
           //leafnode and text inside leafnode are 2 nodes, so /2 to keep counter in line
           int leafNodeLevel = i / 2;

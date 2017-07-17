@@ -26,8 +26,8 @@ public class JsonFlattener {
             flattenJson(key + "_" + entry.getKey(), regexFilter, entry.getValue()));
       }
     } else if (resolved != null) {
-      String noWhitespaces = toVariableName(key);
-      resolvedVariables.put(noWhitespaces, filter(resolved.toString(), regexFilter));
+      String variableName = toVariableName(key);
+      resolvedVariables.put(variableName, filter(resolved.toString(), regexFilter));
     }
     return resolvedVariables;
   }
