@@ -12,18 +12,18 @@ public class JsonFlattener {
   public JsonFlattener() {}
 
   @SuppressWarnings("unchecked")
-  public Map<String, String> flatternJson(String key, String regexFilter, Object resolved) {
+  public Map<String, String> flattenJson(String key, String regexFilter, Object resolved) {
     Map<String, String> resolvedVariables = newHashMap();
     if (resolved instanceof List) {
       int i = 0;
       for (Object o : (List<?>) resolved) {
-        resolvedVariables.putAll(flatternJson(key + "_" + i, regexFilter, o));
+        resolvedVariables.putAll(flattenJson(key + "_" + i, regexFilter, o));
         i++;
       }
     } else if (resolved instanceof Map) {
       for (Entry<String, Object> entry : ((Map<String, Object>) resolved).entrySet()) {
         resolvedVariables.putAll(
-            flatternJson(key + "_" + entry.getKey(), regexFilter, entry.getValue()));
+            flattenJson(key + "_" + entry.getKey(), regexFilter, entry.getValue()));
       }
     } else if (resolved != null) {
       String noWhitespaces = toVariableName(key);
