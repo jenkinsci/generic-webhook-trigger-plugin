@@ -2,7 +2,7 @@ package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
-import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.noWhitespace;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class JsonFlattener {
             flatternJson(key + "_" + entry.getKey(), regexFilter, entry.getValue()));
       }
     } else if (resolved != null) {
-      String noWhitespaces = noWhitespace(key);
+      String noWhitespaces = toVariableName(key);
       resolvedVariables.put(noWhitespaces, filter(resolved.toString(), regexFilter));
     }
     return resolvedVariables;
