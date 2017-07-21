@@ -47,7 +47,9 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       LOGGER.log(SEVERE, "", e);
     }
 
-    return doInvoke(headers, parameterMap, postContent);
+    String token =
+        request.getParameter("token") != null ? request.getParameter("token").trim() : null;
+    return doInvoke(headers, parameterMap, postContent, token);
   }
 
   private Map<String, Enumeration<String>> getHeaders(StaplerRequest request) {
@@ -64,8 +66,10 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   HttpResponse doInvoke(
       Map<String, Enumeration<String>> headers,
       Map<String, String[]> parameterMap,
-      String postContent) {
-    List<GenericTrigger> triggers = JobFinder.findAllJobsWithTrigger();
+      String postContent,
+      String token) {
+
+    List<GenericTrigger> triggers = JobFinder.findAllJobsWithTrigger(token);
     if (triggers.isEmpty()) {
       LOGGER.log(
           INFO,
