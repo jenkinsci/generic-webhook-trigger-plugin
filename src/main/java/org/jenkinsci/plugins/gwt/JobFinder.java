@@ -1,19 +1,19 @@
 package org.jenkinsci.plugins.gwt;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.kohsuke.stapler.StaplerRequest;
-
 import hudson.model.Job;
 import hudson.security.ACL;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import jenkins.model.Jenkins;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
+
+import org.acegisecurity.context.SecurityContext;
+import org.acegisecurity.context.SecurityContextHolder;
 
 public final class JobFinder {
   private JobFinder() {}
@@ -44,8 +44,7 @@ public final class JobFinder {
           // Try search again the job with the authentication context
           // of the user to make sure it only can find it if
           // authenticated
-          Job<?, ?> j;
-          j = Jenkins.getInstance().getItemByFullName(candidateJob.getName(), Job.class);
+          Job<?, ?> j= Jenkins.getInstance().getItemByFullName(candidateJob.getName(), Job.class);
           if (j == null) {
             continue;
           }
@@ -64,9 +63,14 @@ public final class JobFinder {
   }
 
   private static GenericTrigger findGenericTrigger(Map<TriggerDescriptor, Trigger<?>> triggers) {
-    if (triggers == null) return null;
-    for (Trigger<?> candidate : triggers.values())
-      if (candidate instanceof GenericTrigger) return (GenericTrigger) candidate;
+    if (triggers == null) {
+		return null;
+	}
+    for (Trigger<?> candidate : triggers.values()) {
+		if (candidate instanceof GenericTrigger) {
+			return (GenericTrigger) candidate;
+		}
+	}
     return null;
   }
 }

@@ -1,5 +1,24 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**doc**
+
+
+[b66b53ee30e4636](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b66b53ee30e4636) Tomas Bjerre *2017-07-21 12:33:28*
+
+**Add impersonalization to execute Webhook as anonymous user using only Authentication Token**
+
+
+[8a98d57c06952fa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8a98d57c06952fa) Pedro Juarez *2017-07-21 02:34:50*
+
+**doc**
+
+
+[40eb716a1bbe7ac](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/40eb716a1bbe7ac) Tomas Bjerre *2017-07-20 18:58:21*
+
+
 ## 1.14 (2017-07-17 16:06:52)
 ### GitHub [#10](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/10) replace &quot;-&quot; characters on header variable names  
 
