@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.15 (2017-07-21 12:38:27)
 ### No issue
 
 **doc**
 
 
-[b66b53ee30e4636](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b66b53ee30e4636) Tomas Bjerre *2017-07-21 12:33:28*
+[8ac068c484022d7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8ac068c484022d7) Tomas Bjerre *2017-07-21 12:33:57*
 
 **Add impersonalization to execute Webhook as anonymous user using only Authentication Token**
 
