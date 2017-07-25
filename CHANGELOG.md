@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.16 (2017-07-25 18:10:46)
+### GitHub [#13](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/13) Generic Webhook hook stops working on  v1.15    *bug*  
+
+**Simplifying job finding algorithm #13**
+
+
+[90984b4b8d06cdd](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/90984b4b8d06cdd) Tomas Bjerre *2017-07-25 18:08:42*
+
+
 ### No issue
 
 **Removing trigger config from invocation response**

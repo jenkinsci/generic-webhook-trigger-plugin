@@ -30,7 +30,7 @@ You may want to report back to the invoking system. [HTTP Request Plugin](https:
 
 If a node is selected, then all leafs in that node will be contributed. If a leaf is selected, then only that leaf will be contributed.
 
-There are websites to help fiddle with the expressions. You may want to checkout [this website](https://jsonpath.curiousconcept.com/) to fiddle with JSONPath. And [this website](http://www.freeformatter.com/xpath-tester.html) to fiddle with XPath.
+There are websites to help fiddle with the expressions. You may want to checkout [this website](https://jsonpath.curiousconcept.com/) to fiddle with JSONPath. And [this website](http://www.freeformatter.com/xpath-tester.html) to fiddle with XPath. Regular expressions can be developed with [this website](https://jex.im/regulex/).
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
 
