@@ -73,18 +73,21 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     if (foundJobs.isEmpty()) {
       LOGGER.log(
           INFO,
-          "Did not find any jobs to trigger! The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered.");
+          "Did not find any jobs to trigger! "
+              + "The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered. "
+              + "You may try adding http://user:passw@url... "
+              + "or configuring and passing an authentication token like ...trigger/invoke?token=TOKENHERE");
     }
     Map<String, String> triggerResults = new HashMap<>();
     for (FoundJob foundJob : foundJobs) {
       try {
-        LOGGER.log(INFO, "Triggering " + foundJob.getJobName());
+        LOGGER.log(INFO, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
         foundJob.getGenericTrigger().trigger(headers, parameterMap, postContent);
-        triggerResults.put(foundJob.getJobName(), "OK");
+        triggerResults.put(foundJob.getFullName(), "OK");
       } catch (Exception e) {
-        LOGGER.log(SEVERE, foundJob.getJobName(), e);
-        triggerResults.put(foundJob.getJobName(), ExceptionUtils.getStackTrace(e));
+        LOGGER.log(SEVERE, foundJob.getFullName(), e);
+        triggerResults.put(foundJob.getFullName(), ExceptionUtils.getStackTrace(e));
       }
     }
     Map<String, Object> response = new HashMap<>();

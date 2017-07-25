@@ -3,6 +3,11 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**Removing trigger config from invocation response**
+
+
+[c665aefd504ca82](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c665aefd504ca82) Tomas Bjerre *2017-07-25 17:11:44*
+
 **doc**
 
 
