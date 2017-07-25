@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**doc**
+
+
+[fec2f6e88d5e4f4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fec2f6e88d5e4f4) Tomas Bjerre *2017-07-21 12:42:34*
+
+
 ## 1.15 (2017-07-21 12:38:27)
 ### No issue
 

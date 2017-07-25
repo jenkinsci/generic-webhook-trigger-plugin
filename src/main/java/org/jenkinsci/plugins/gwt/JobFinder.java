@@ -18,9 +18,9 @@ import org.acegisecurity.context.SecurityContextHolder;
 public final class JobFinder {
   private JobFinder() {}
 
-  public static List<GenericTrigger> findAllJobsWithTrigger(String queryStringToken) {
+  public static List<FoundJob> findAllJobsWithTrigger(String queryStringToken) {
 
-    List<GenericTrigger> found = new ArrayList<>();
+    List<FoundJob> found = new ArrayList<>();
     // Impersinate to get all jobs even without read grants
     SecurityContext orig = ACL.impersonate(ACL.SYSTEM);
     List<ParameterizedJob> candidateProjects =
@@ -56,7 +56,7 @@ public final class JobFinder {
       }
       GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
-        found.add(genericTriggerOpt);
+        found.add(new FoundJob(candidateJob.getFullDisplayName(), genericTriggerOpt));
       }
     }
     return found;
