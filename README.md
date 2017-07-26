@@ -13,7 +13,20 @@ This is a Jenkins plugin that can:
 
  3. Contribute those values as variables to the build
 
-There is an optional feature to trigger jobs only if a supplied regular expression matches the extracted variables.
+There is an optional feature to trigger jobs only if a supplied regular expression matches the extracted variables. Here is an example, let's say the post content looks like this:
+```
+{
+  "before": "1848f1236ae15769e6b31e9c4477d8150b018453",
+  "after": "5cab18338eaa83240ab86c7b775a9b27b51ef11d",
+  "ref": "refs/heads/develop"
+}
+```
+
+Then you can have a variable, resolved from post content, named `reference` of type `JSONPath` and with expression like `$.ref` .
+
+The optional filter text can be set to `$reference` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)$﻿](https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24) to trigger builds only for develop and feature-branches.
+
+## Use case
 
 This means it can trigger on any webhook, like:
 * [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html)
@@ -34,7 +47,7 @@ There are websites to help fiddle with the expressions. You may want to checkout
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
 
-# Troubleshooting
+## Troubleshooting
 
 It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 
@@ -56,7 +69,7 @@ curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 
 
 There is also a special request parameter named `token`. When supplied it is used to authenticate with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html).
 
-# Screenshots
+## Screenshots
 
 ![Generic trigger](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
 
@@ -139,7 +152,7 @@ node {
 }
 ```
 
-# Plugin development
+## Plugin development
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
 
 A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.

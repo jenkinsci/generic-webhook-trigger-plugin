@@ -1,7 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.17 (2017-07-26 14:58:32)
 ### No issue
+
+**Helpful response if no jobs found**
+
+
+[ff3514909f3363d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ff3514909f3363d) Tomas Bjerre *2017-07-26 14:57:36*
 
 **doc**
 

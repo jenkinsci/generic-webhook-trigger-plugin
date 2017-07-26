@@ -14,7 +14,7 @@
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
-	<version>1.17</version>
+	<version>1.18-SNAPSHOT</version>
 	<name>Generic Webhook Trigger Plugin</name>
 	<description>Trigger that can receive any HTTP request, extract any JSONPath/XPath values and trigger a job with those values available as variables.</description>
 	<url>https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin</url>
@@ -57,7 +57,7 @@
 		<connection>scm:git:ssh://github.com:jenkinsci/generic-webhook-trigger-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/generic-webhook-trigger-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/generic-webhook-trigger-plugin</url>
-		<tag>generic-webhook-trigger-1.17</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<repositories>
