@@ -127,7 +127,7 @@ echo $VARIABLE_FROM_HEADER
 
 ## Pipeline
 
-This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties):
+This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties). Here is an example:
 
 ```
 node {
@@ -135,8 +135,8 @@ node {
   pipelineTriggers([
    [$class: 'GenericTrigger',
     genericVariables: [
-     [expressionType: 'JSONPath', key: 'variable1', value: 'expression1'],
-     [expressionType: 'JSONPath', key: 'variable2', value: 'expression2']
+     [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
+     [expressionType: 'JSONPath', key: 'before', value: '$.before']
     ],
     regexpFilterText: '',
     regexpFilterExpression: ''
@@ -146,10 +146,16 @@ node {
 
  stage("build") {
   sh '''
-  echo Build
+  echo Build $reference before $before
   '''
  }
 }
+```
+
+It can be triggered with something like:
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke
 ```
 
 ## Plugin development
