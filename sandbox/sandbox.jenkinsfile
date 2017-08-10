@@ -1,0 +1,24 @@
+/*
+ * curl -X POST -H "Content-Type: application/json" -d '{ "before": "1848f12", "after": "5cab1", "ref": "master" }' -vs http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke
+ */
+node {
+ def jobName = env.JOB_NAME.split("/")[1]
+ properties([
+  pipelineTriggers([
+   [$class: 'GenericTrigger',
+    genericVariables: [
+     [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
+     [expressionType: 'JSONPath', key: 'before', value: '$.before']
+    ],
+    regexpFilterText: '$reference',
+    regexpFilterExpression: jobName
+   ]
+  ])
+ ])
+
+ stage("build") {
+  sh '''
+  echo Build $jobName ref $reference before $before
+  '''
+ }
+}

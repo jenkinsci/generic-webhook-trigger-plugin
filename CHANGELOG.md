@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.18 (2017-08-10 18:13:06)
+### GitHub [#18](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/18) How to access request header variables?  
+
+**Correcting name/descriptions #18**
+
+
+[2643526ce361183](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2643526ce361183) Tomas Bjerre *2017-08-10 18:12:12*
+
+
 ### No issue
 
 **doc**
