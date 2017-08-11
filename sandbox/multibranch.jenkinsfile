@@ -15,7 +15,8 @@ node {
     ],
     genericHeaderVariables: [
      [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
-     [key: 'headerWithString', regexpFilter: '']
+     [key: 'headerWithString', regexpFilter: ''],
+     [key: 'X-GitHub-Event', regexpFilter: '']
     ],
     regexpFilterText: '',
     regexpFilterExpression: ''
@@ -32,6 +33,7 @@ node {
   echo requestWithString $requestWithString
   echo headerWithNumber $headerWithNumber
   echo headerWithString $headerWithString
+  echo X_GitHub_Event $X_GitHub_Event
   '''
  }
 }

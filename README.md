@@ -79,7 +79,7 @@ If you need the resolved values in pre build steps, like git clone, you need to 
 
 ## Job DSL Plugin
 
-This plugin can be used with the Job DSL Plugin.
+This plugin can be used with the Job DSL Plugin. There is also an example int he [Violation Comments to GitLab Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitLab+Plugin) wiki page.
 
 ```
 job('Generic Job Example') {

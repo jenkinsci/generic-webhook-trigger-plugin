@@ -3,10 +3,15 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**Refactoring**
+
+
+[63ca30f7c54ab75](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/63ca30f7c54ab75) Tomas Bjerre *2017-08-11 14:24:25*
+
 **doc**
 
 
-[be36ae24d0c2a4d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/be36ae24d0c2a4d) Tomas Bjerre *2017-08-11 08:37:56*
+[dba825f8f189251](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/dba825f8f189251) Tomas Bjerre *2017-08-11 08:54:20*
 
 **Adding sandbox jenkinsfile**
 

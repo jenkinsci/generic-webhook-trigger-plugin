@@ -20,21 +20,21 @@ public class RequestHeaderResolver {
   public Map<String, String> getRequestHeaders(
       List<GenericHeaderVariable> configuredGenericHeaderVariables,
       Map<String, Enumeration<String>> incomingHeaders) {
-    Map<String, String> found = new HashMap<>();
-    for (String headerName : incomingHeaders.keySet()) {
-      Optional<GenericHeaderVariable> configuredVariable =
+    final Map<String, String> found = new HashMap<>();
+    for (final String headerName : incomingHeaders.keySet()) {
+      final Optional<GenericHeaderVariable> configuredVariable =
           findConfiguredVariable(configuredGenericHeaderVariables, headerName);
       if (!configuredVariable.isPresent()) {
         continue;
       }
-      Enumeration<String> headerEnumeration = incomingHeaders.get(headerName);
+      final Enumeration<String> headerEnumeration = incomingHeaders.get(headerName);
       int i = 0;
       while (headerEnumeration.hasMoreElements()) {
-        String headerValue = headerEnumeration.nextElement();
-        String regexpFilter = configuredVariable.get().getRegexpFilter();
-        String filteredValue = filter(headerValue, regexpFilter);
+        final String headerValue = headerEnumeration.nextElement();
+        final String regexpFilter = configuredVariable.get().getRegexpFilter();
+        final String filteredValue = filter(headerValue, regexpFilter);
         found.put(toVariableName(headerName) + "_" + i, filteredValue);
-        boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
+        final boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
         if (firstAndOnlyValue) {
           //Users will probably expect this variable for parameters that are never a list
           found.put(toVariableName(headerName), filteredValue);
@@ -47,8 +47,8 @@ public class RequestHeaderResolver {
 
   private Optional<GenericHeaderVariable> findConfiguredVariable(
       List<GenericHeaderVariable> configuredGenericHeaderVariables, String headerName) {
-    for (GenericHeaderVariable ghv : configuredGenericHeaderVariables) {
-      if (ghv.getKey().equals(headerName)) {
+    for (final GenericHeaderVariable ghv : configuredGenericHeaderVariables) {
+      if (ghv.getHeaderName().equals(headerName)) {
         return of(ghv);
       }
     }

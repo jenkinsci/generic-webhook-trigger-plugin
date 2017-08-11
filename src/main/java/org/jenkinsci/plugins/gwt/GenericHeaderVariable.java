@@ -27,11 +27,15 @@ public class GenericHeaderVariable extends AbstractDescribableImpl<GenericHeader
     this.regexpFilter = regexpFilter;
   }
 
+  public String getKey() {
+    return key;
+  }
+
   public String getRegexpFilter() {
     return regexpFilter;
   }
 
-  public String getKey() {
+  public String getHeaderName() {
     return key;
   }
 

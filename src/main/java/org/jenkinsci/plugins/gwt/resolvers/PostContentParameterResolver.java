@@ -38,9 +38,9 @@ public class PostContentParameterResolver {
 
   public Map<String, String> getPostContentParameters(
       List<GenericVariable> configuredGenericVariables, String incomingPostContent) {
-    Map<String, String> resolvedVariables = newHashMap();
+    final Map<String, String> resolvedVariables = newHashMap();
     if (configuredGenericVariables != null) {
-      for (GenericVariable gv : configuredGenericVariables) {
+      for (final GenericVariable gv : configuredGenericVariables) {
         resolvedVariables.putAll(resolve(incomingPostContent, gv));
       }
     }
@@ -49,7 +49,7 @@ public class PostContentParameterResolver {
 
   private Map<String, String> resolve(String incomingPostContent, GenericVariable gv) {
     try {
-      if (gv != null && gv.getValue() != null && !gv.getValue().isEmpty()) {
+      if (gv != null && gv.getExpression() != null && !gv.getExpression().isEmpty()) {
         if (gv.getExpressionType() == JSONPath) {
           return resolveJsonPath(incomingPostContent, gv);
         } else if (gv.getExpressionType() == XPath) {
@@ -58,28 +58,28 @@ public class PostContentParameterResolver {
           throw new IllegalStateException("Not recognizing " + gv.getExpressionType());
         }
       }
-    } catch (Exception e) {
-      LOGGER.info("Unable to resolve " + gv.getKey());
+    } catch (final Exception e) {
+      LOGGER.info("Unable to resolve " + gv.getVariableName());
     }
     return new HashMap<>();
   }
 
   private Map<String, String> resolveJsonPath(String incomingPostContent, GenericVariable gv) {
-    Object resolved = JsonPath.read(incomingPostContent, gv.getValue());
-    return jsonFlattener.flattenJson(gv.getKey(), gv.getRegexpFilter(), resolved);
+    final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
+    return jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
   }
 
   private Map<String, String> resolveXPath(String incomingPostContent, GenericVariable gv)
       throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    InputSource inputSource =
+    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    final DocumentBuilder builder = factory.newDocumentBuilder();
+    final InputSource inputSource =
         new InputSource(new ByteArrayInputStream(incomingPostContent.getBytes()));
-    Document doc = builder.parse(inputSource);
-    XPathFactory xPathfactory = XPathFactory.newInstance();
-    XPath xpath = xPathfactory.newXPath();
-    XPathExpression expr = xpath.compile(gv.getValue());
-    Object resolved = expr.evaluate(doc, XPathConstants.NODESET);
+    final Document doc = builder.parse(inputSource);
+    final XPathFactory xPathfactory = XPathFactory.newInstance();
+    final XPath xpath = xPathfactory.newXPath();
+    final XPathExpression expr = xpath.compile(gv.getExpression());
+    final Object resolved = expr.evaluate(doc, XPathConstants.NODESET);
     return xmlFlattener.flatternXmlNode(gv, (NodeList) resolved);
   }
 }
