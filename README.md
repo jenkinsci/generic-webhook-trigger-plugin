@@ -85,7 +85,6 @@ This plugin can be used with the Job DSL Plugin.
 job('Generic Job Example') {
  parameters {
   stringParam('VARIABLE_FROM_POST', '')
-  stringParam('VARIABLE_FROM_REQUEST', '')
  }
 
  triggers {
@@ -100,13 +99,13 @@ job('Generic Job Example') {
    }
    genericRequestVariables {
     genericRequestVariable {
-     key("VARIABLE_FROM_REQUEST")
+     key("requestParameterName")
      regexpFilter("")
     }
    }
    genericHeaderVariables {
     genericHeaderVariable {
-     key("VARIABLE_FROM_HEADER")
+     key("requestHeaderName")
      regexpFilter("")
     }
    }
@@ -118,16 +117,18 @@ job('Generic Job Example') {
  steps {
   shell('''
 echo $VARIABLE_FROM_POST
-echo $VARIABLE_FROM_REQUEST
-echo $VARIABLE_FROM_HEADER
+echo $requestParameterName
+echo $requestHeaderName
   ''')
  }
 }
 ```
 
-## Pipeline
+## Pipeline Multibranch
 
 This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties). Here is an example:
+
+With a Jenkinsfile like this:
 
 ```
 node {
@@ -138,6 +139,14 @@ node {
      [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
      [expressionType: 'JSONPath', key: 'before', value: '$.before']
     ],
+    genericRequestVariables: [
+     [key: 'requestWithNumber', regexpFilter: '[^0-9]'],
+     [key: 'requestWithString', regexpFilter: '']
+    ],
+    genericHeaderVariables: [
+     [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
+     [key: 'headerWithString', regexpFilter: '']
+    ],
     regexpFilterText: '',
     regexpFilterExpression: ''
    ]
@@ -146,7 +155,13 @@ node {
 
  stage("build") {
   sh '''
-  echo Build $reference before $before
+  echo Variables from shell:
+  echo reference $reference
+  echo before $before
+  echo requestWithNumber $requestWithNumber
+  echo requestWithString $requestWithString
+  echo headerWithNumber $headerWithNumber
+  echo headerWithString $headerWithString
   '''
  }
 }
@@ -155,8 +170,26 @@ node {
 It can be triggered with something like:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke
+curl -X POST -H "Content-Type: application/json" -H "headerWithNumber: nbr123" -H "headerWithString: a b c" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke?requestWithNumber=nbr%20123\&requestWithString=a%20string
 ```
+
+And the job will have this in the log:
+
+```
+Contributing variables:
+
+    headerWithString_0 = a b c
+    requestWithNumber_0 = 123
+    reference = refs/heads/develop
+    headerWithNumber = 123
+    requestWithNumber = 123
+    before = 1848f12
+    requestWithString_0 = a string
+    headerWithNumber_0 = 123
+    headerWithString = a b c
+    requestWithString = a string
+```
+
 
 ## Plugin development
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
