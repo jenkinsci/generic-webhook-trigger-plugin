@@ -48,10 +48,11 @@ public class VariablesResolverHeaderTest {
     assertThat(variables) //
         .containsEntry("someparam", "some value") //
         .containsEntry("someparam_0", "some value") //
-        .containsEntry("anotherparam_1", "eee") //
+        .containsEntry("anotherparam", "ee") //
         .containsEntry("anotherparam_0", "ee") //
+        .containsEntry("anotherparam_1", "eee") //
         .containsEntry("content_type", "application/json") //
-        .hasSize(6);
+        .hasSize(7);
   }
 
   @Test
@@ -86,10 +87,11 @@ public class VariablesResolverHeaderTest {
     assertThat(variables) //
         .containsEntry("someparam", "some value") //
         .containsEntry("someparam_0", "some value") //
-        .containsEntry("anotherparam_1", "eee") //
+        .containsEntry("anotherparam", "ee") //
         .containsEntry("anotherparam_0", "ee") //
+        .containsEntry("anotherparam_1", "eee") //
         .containsEntry("content_type", "application/json") //
-        .hasSize(6);
+        .hasSize(7);
   }
 
   @Test
