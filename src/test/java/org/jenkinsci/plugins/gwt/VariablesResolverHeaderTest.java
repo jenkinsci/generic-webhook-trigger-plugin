@@ -48,10 +48,11 @@ public class VariablesResolverHeaderTest {
     assertThat(variables) //
         .containsEntry("someparam", "some value") //
         .containsEntry("someparam_0", "some value") //
-        .containsEntry("anotherparam_1", "eee") //
+        .containsEntry("anotherparam", "ee") //
         .containsEntry("anotherparam_0", "ee") //
+        .containsEntry("anotherparam_1", "eee") //
         .containsEntry("content_type", "application/json") //
-        .hasSize(6);
+        .hasSize(7);
   }
 
   @Test
@@ -86,10 +87,11 @@ public class VariablesResolverHeaderTest {
     assertThat(variables) //
         .containsEntry("someparam", "some value") //
         .containsEntry("someparam_0", "some value") //
-        .containsEntry("anotherparam_1", "eee") //
+        .containsEntry("anotherparam", "ee") //
         .containsEntry("anotherparam_0", "ee") //
+        .containsEntry("anotherparam_1", "eee") //
         .containsEntry("content_type", "application/json") //
-        .hasSize(6);
+        .hasSize(7);
   }
 
   @Test
@@ -119,6 +121,49 @@ public class VariablesResolverHeaderTest {
     assertThat(variables) //
         .containsEntry("someparam", "some value") //
         .hasSize(2);
+  }
+
+  @Test
+  public void testHeaderResolvesCanBeReused() throws Exception {
+    String postContent = null;
+
+    List<GenericVariable> genericVariables = newArrayList();
+
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+
+    Map<String, Enumeration<String>> headers = new HashMap<>();
+    headers.put("someparam", enumeration("some value"));
+
+    List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+    genericHeaderVariables.add(new GenericHeaderVariable("someparam", null));
+    Map<String, String> variables =
+            new VariablesResolver(
+                    headers,
+                    parameterMap,
+                    postContent,
+                    genericVariables,
+                    genericRequestVariables,
+                    genericHeaderVariables)
+                .getVariables();
+
+        assertThat(variables) //
+            .containsEntry("someparam", "some value") //
+            .hasSize(2);
+
+    variables =
+            new VariablesResolver(
+                    headers,
+                    parameterMap,
+                    postContent,
+                    genericVariables,
+                    genericRequestVariables,
+                    genericHeaderVariables)
+                .getVariables();
+
+        assertThat(variables) //
+            .containsEntry("someparam", "some value") //
+            .hasSize(2);
   }
 
   @Test
