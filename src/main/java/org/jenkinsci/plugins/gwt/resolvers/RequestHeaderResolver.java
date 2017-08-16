@@ -31,18 +31,21 @@ public class RequestHeaderResolver {
       final Enumeration<String> headerEnumeration = incomingHeaders.get(headerName);
       List<String> headers = Collections.list(headerEnumeration); // "depletes" headerEnumeration
       int i = 0;
-      for(String headerValue : headers) {
-          final String regexpFilter = configuredVariable.get().getRegexpFilter();
-          final String filteredValue = filter(headerValue, regexpFilter);
-          found.put(toVariableName(headerName) + "_" + i, filteredValue);
-          final boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
-          if (firstAndOnlyValue) {
-            //Users will probably expect this variable for parameters that are never a list
-            found.put(toVariableName(headerName), filteredValue);
-          }
-          i++;
+      for (String headerValue : headers) {
+        final String regexpFilter = configuredVariable.get().getRegexpFilter();
+        final String filteredValue = filter(headerValue, regexpFilter);
+        found.put(toVariableName(headerName) + "_" + i, filteredValue);
+        final boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
+        if (firstAndOnlyValue) {
+          //Users will probably expect this variable for parameters that are never a list
+          found.put(toVariableName(headerName), filteredValue);
+        }
+        i++;
       }
-      incomingHeaders.put(headerName, Collections.enumeration(headers)); // "replete" headerEnumeration, so it can be reused by other jobs later on
+      incomingHeaders.put(
+          headerName,
+          Collections.enumeration(
+              headers)); // "replete" headerEnumeration, so it can be reused by other jobs later on
     }
     return found;
   }

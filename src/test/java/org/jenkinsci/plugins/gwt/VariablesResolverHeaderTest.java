@@ -138,32 +138,32 @@ public class VariablesResolverHeaderTest {
     List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     genericHeaderVariables.add(new GenericHeaderVariable("someparam", null));
     Map<String, String> variables =
-            new VariablesResolver(
-                    headers,
-                    parameterMap,
-                    postContent,
-                    genericVariables,
-                    genericRequestVariables,
-                    genericHeaderVariables)
-                .getVariables();
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
 
-        assertThat(variables) //
-            .containsEntry("someparam", "some value") //
-            .hasSize(2);
+    assertThat(variables) //
+        .containsEntry("someparam", "some value") //
+        .hasSize(2);
 
     variables =
-            new VariablesResolver(
-                    headers,
-                    parameterMap,
-                    postContent,
-                    genericVariables,
-                    genericRequestVariables,
-                    genericHeaderVariables)
-                .getVariables();
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
 
-        assertThat(variables) //
-            .containsEntry("someparam", "some value") //
-            .hasSize(2);
+    assertThat(variables) //
+        .containsEntry("someparam", "some value") //
+        .hasSize(2);
   }
 
   @Test
