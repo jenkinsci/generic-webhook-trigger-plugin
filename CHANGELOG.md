@@ -1,5 +1,96 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Refactoring**
+
+
+[63ca30f7c54ab75](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/63ca30f7c54ab75) Tomas Bjerre *2017-08-11 14:24:25*
+
+**doc**
+
+
+[dba825f8f189251](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/dba825f8f189251) Tomas Bjerre *2017-08-11 08:54:20*
+
+**Adding sandbox jenkinsfile**
+
+
+[7468387fbc3791e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7468387fbc3791e) Tomas Bjerre *2017-08-10 18:52:28*
+
+
+## 1.18 (2017-08-10 18:13:06)
+### GitHub [#18](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/18) How to access request header variables?  
+
+**Correcting name/descriptions #18**
+
+
+[2643526ce361183](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2643526ce361183) Tomas Bjerre *2017-08-10 18:12:12*
+
+
+### No issue
+
+**doc**
+
+
+[8eacab3e02d3680](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8eacab3e02d3680) Tomas Bjerre *2017-07-28 20:27:43*
+
+
+## 1.17 (2017-07-26 14:58:32)
+### No issue
+
+**Helpful response if no jobs found**
+
+
+[ff3514909f3363d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ff3514909f3363d) Tomas Bjerre *2017-07-26 14:57:36*
+
+**doc**
+
+
+[b0fad3a4ff5f110](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b0fad3a4ff5f110) Tomas Bjerre *2017-07-26 04:15:15*
+
+
+## 1.16 (2017-07-25 18:10:46)
+### GitHub [#13](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/13) Generic Webhook hook stops working on  v1.15    *bug*  
+
+**Simplifying job finding algorithm #13**
+
+
+[90984b4b8d06cdd](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/90984b4b8d06cdd) Tomas Bjerre *2017-07-25 18:08:42*
+
+
+### No issue
+
+**Removing trigger config from invocation response**
+
+
+[c665aefd504ca82](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c665aefd504ca82) Tomas Bjerre *2017-07-25 17:11:44*
+
+**doc**
+
+
+[fec2f6e88d5e4f4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fec2f6e88d5e4f4) Tomas Bjerre *2017-07-21 12:42:34*
+
+
+## 1.15 (2017-07-21 12:38:27)
+### No issue
+
+**doc**
+
+
+[8ac068c484022d7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8ac068c484022d7) Tomas Bjerre *2017-07-21 12:33:57*
+
+**Add impersonalization to execute Webhook as anonymous user using only Authentication Token**
+
+
+[8a98d57c06952fa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8a98d57c06952fa) Pedro Juarez *2017-07-21 02:34:50*
+
+**doc**
+
+
+[40eb716a1bbe7ac](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/40eb716a1bbe7ac) Tomas Bjerre *2017-07-20 18:58:21*
+
+
 ## 1.14 (2017-07-17 16:06:52)
 ### GitHub [#10](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/10) replace &quot;-&quot; characters on header variable names  
 

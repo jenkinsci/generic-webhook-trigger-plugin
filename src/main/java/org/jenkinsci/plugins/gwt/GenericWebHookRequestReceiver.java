@@ -31,6 +31,11 @@ import com.google.common.annotations.VisibleForTesting;
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {
 
+  private static final String NO_JOBS_MSG =
+      "Did not find any jobs to trigger! "
+          + "The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered. "
+          + "You may try adding http://user:passw@url... "
+          + "or configuring and passing an authentication token like ...trigger/invoke?token=TOKENHERE";
   private static final String URL_NAME = "generic-webhook-trigger";
   private static final Logger LOGGER =
       Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
@@ -47,7 +52,9 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       LOGGER.log(SEVERE, "", e);
     }
 
-    return doInvoke(headers, parameterMap, postContent);
+    String token =
+        request.getParameter("token") != null ? request.getParameter("token").trim() : null;
+    return doInvoke(headers, parameterMap, postContent, token);
   }
 
   private Map<String, Enumeration<String>> getHeaders(StaplerRequest request) {
@@ -64,23 +71,24 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   HttpResponse doInvoke(
       Map<String, Enumeration<String>> headers,
       Map<String, String[]> parameterMap,
-      String postContent) {
-    List<GenericTrigger> triggers = JobFinder.findAllJobsWithTrigger();
-    if (triggers.isEmpty()) {
-      LOGGER.log(
-          INFO,
-          "Did not find any jobs to trigger! The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered.");
-    }
+      String postContent,
+      String token) {
+
+    List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(token);
     Map<String, String> triggerResults = new HashMap<>();
-    for (GenericTrigger trigger : triggers) {
+    if (foundJobs.isEmpty()) {
+      LOGGER.log(INFO, NO_JOBS_MSG);
+      triggerResults.put("ANY", NO_JOBS_MSG);
+    }
+    for (FoundJob foundJob : foundJobs) {
       try {
-        LOGGER.log(INFO, "Triggering " + trigger.toString());
+        LOGGER.log(INFO, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
-        trigger.trigger(headers, parameterMap, postContent);
-        triggerResults.put(trigger.toString(), "OK");
+        foundJob.getGenericTrigger().trigger(headers, parameterMap, postContent);
+        triggerResults.put(foundJob.getFullName(), "OK");
       } catch (Exception e) {
-        LOGGER.log(SEVERE, trigger.toString(), e);
-        triggerResults.put(trigger.toString(), ExceptionUtils.getStackTrace(e));
+        LOGGER.log(SEVERE, foundJob.getFullName(), e);
+        triggerResults.put(foundJob.getFullName(), ExceptionUtils.getStackTrace(e));
       }
     }
     Map<String, Object> response = new HashMap<>();

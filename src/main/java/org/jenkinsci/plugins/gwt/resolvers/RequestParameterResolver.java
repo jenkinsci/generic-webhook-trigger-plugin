@@ -18,19 +18,20 @@ public class RequestParameterResolver {
   public Map<String, String> getRequestParameters(
       List<GenericRequestVariable> configuredGenericRequestVariables,
       Map<String, String[]> incomingParameterMap) {
-    Map<String, String> resolvedVariables = newHashMap();
+    final Map<String, String> resolvedVariables = newHashMap();
     if (incomingParameterMap != null) {
-      for (String requestParamName : incomingParameterMap.keySet()) {
-        Optional<GenericRequestVariable> configuredVariable =
+      for (final String requestParamName : incomingParameterMap.keySet()) {
+        final Optional<GenericRequestVariable> configuredVariable =
             findConfiguredVariable(configuredGenericRequestVariables, requestParamName);
         if (!configuredVariable.isPresent()) {
           continue;
         }
-        String[] values = incomingParameterMap.get(requestParamName);
+        final String[] values = incomingParameterMap.get(requestParamName);
         for (int i = 0; i < values.length; i++) {
-          String filteredValue = filter(values[i], configuredVariable.get().getRegexpFilter());
+          final String filteredValue =
+              filter(values[i], configuredVariable.get().getRegexpFilter());
           resolvedVariables.put(toVariableName(requestParamName) + "_" + i, filteredValue);
-          boolean firstAndOnlyValue = i == 0 && values.length == 1;
+          final boolean firstAndOnlyValue = i == 0 && values.length == 1;
           if (firstAndOnlyValue) {
             //Users will probably expect this variable for parameters that are never a list
             resolvedVariables.put(toVariableName(requestParamName), filteredValue);
@@ -44,8 +45,8 @@ public class RequestParameterResolver {
   private Optional<GenericRequestVariable> findConfiguredVariable(
       List<GenericRequestVariable> genericRequestVariables, String requestParamName) {
     if (genericRequestVariables != null) {
-      for (GenericRequestVariable v : genericRequestVariables) {
-        if (v.getKey().equals(requestParamName)) {
+      for (final GenericRequestVariable v : genericRequestVariables) {
+        if (v.getParameterName().equals(requestParamName)) {
           return Optional.of(v);
         }
       }

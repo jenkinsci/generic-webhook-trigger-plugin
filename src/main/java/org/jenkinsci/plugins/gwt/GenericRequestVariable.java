@@ -1,12 +1,11 @@
 package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
-import org.kohsuke.stapler.DataBoundConstructor;
-
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
+
+import org.kohsuke.stapler.DataBoundConstructor;
 
 public class GenericRequestVariable extends AbstractDescribableImpl<GenericRequestVariable> {
 
@@ -33,6 +32,10 @@ public class GenericRequestVariable extends AbstractDescribableImpl<GenericReque
   }
 
   public String getKey() {
+    return key;
+  }
+
+  public String getParameterName() {
     return key;
   }
 

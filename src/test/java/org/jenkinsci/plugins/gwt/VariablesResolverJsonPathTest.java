@@ -81,7 +81,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetAllVariable() throws Exception {
-    String resourceName = "gital-mergerequest-comment.json";
+    String resourceName = "gitlab-mergerequest-comment.json";
     String postContent = getContent(resourceName);
 
     String regexpFilter = "";
@@ -163,7 +163,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetZeroMatchingVariables() throws Exception {
-    String resourceName = "gital-mergerequest-comment.json";
+    String resourceName = "gitlab-mergerequest-comment.json";
     String postContent = getContent(resourceName);
 
     String regexpFilter = "";
@@ -188,7 +188,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetOneVariable() throws Exception {
-    String resourceName = "gital-mergerequest-comment.json";
+    String resourceName = "gitlab-mergerequest-comment.json";
     String postContent = getContent(resourceName);
 
     String regexpFilter = "";
@@ -213,7 +213,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetTwoVariables() throws Exception {
-    String resourceName = "gital-mergerequest-comment.json";
+    String resourceName = "gitlab-mergerequest-comment.json";
     String postContent = getContent(resourceName);
 
     String regexpFilter = "";
@@ -240,7 +240,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetNodeVariable() throws Exception {
-    String resourceName = "gital-mergerequest-comment.json";
+    String resourceName = "gitlab-mergerequest-comment.json";
     Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables) //
@@ -249,7 +249,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetPayloadVariable() throws Exception {
-    String resourceName = "gital-mergerequest-comment.json";
+    String resourceName = "gitlab-mergerequest-comment.json";
     String postContent = getContent(resourceName);
 
     String regexpFilter = "";

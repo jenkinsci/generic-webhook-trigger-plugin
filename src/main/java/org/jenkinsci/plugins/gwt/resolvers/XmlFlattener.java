@@ -14,36 +14,37 @@ public class XmlFlattener {
   public XmlFlattener() {}
 
   public Map<String, String> flatternXmlNode(GenericVariable gv, NodeList nodeList) {
-    Map<String, String> resolvedVariables = newHashMap();
+    final Map<String, String> resolvedVariables = newHashMap();
     if (nodeList.getLength() > 0) {
       for (int i = 0; i < nodeList.getLength(); i++) {
-        boolean fromRootLevel = nodeList.getLength() == 1 ? true : false;
+        final boolean fromRootLevel = nodeList.getLength() == 1 ? true : false;
         resolvedVariables.putAll(
-            flattenXmlNode(gv.getKey(), gv.getRegexpFilter(), nodeList.item(i), i, fromRootLevel));
+            flattenXmlNode(
+                gv.getVariableName(), gv.getRegexpFilter(), nodeList.item(i), i, fromRootLevel));
       }
     } else {
-      resolvedVariables.put(gv.getKey(), "");
+      resolvedVariables.put(gv.getVariableName(), "");
     }
     return resolvedVariables;
   }
 
   private Map<String, String> flattenXmlNode(
       String parentKey, String regexFilter, Node node, int level, boolean fromRootLevel) {
-    Map<String, String> resolvedVariables = newHashMap();
+    final Map<String, String> resolvedVariables = newHashMap();
     if (isXmlLeafNode(node)) {
-      String noWhitespaces = toVariableName(parentKey);
+      final String noWhitespaces = toVariableName(parentKey);
       resolvedVariables.put(noWhitespaces, filter(node.getTextContent(), regexFilter));
     } else {
       for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-        Node childNode = node.getChildNodes().item(i);
-        String childKey =
+        final Node childNode = node.getChildNodes().item(i);
+        final String childKey =
             expandKey(parentKey, level, fromRootLevel) + "_" + childNode.getNodeName();
         if (isXmlLeafNode(childNode)) {
-          String variableName = toVariableName(childKey);
+          final String variableName = toVariableName(childKey);
           resolvedVariables.put(variableName, filter(childNode.getTextContent(), regexFilter));
         } else {
           //leafnode and text inside leafnode are 2 nodes, so /2 to keep counter in line
-          int leafNodeLevel = i / 2;
+          final int leafNodeLevel = i / 2;
           resolvedVariables.putAll(
               flattenXmlNode(childKey, regexFilter, childNode, leafNodeLevel, false));
         }
