@@ -122,6 +122,49 @@ public class VariablesResolverHeaderTest {
   }
 
   @Test
+  public void testHeaderResolvesCanBeReused() throws Exception {
+    String postContent = null;
+
+    List<GenericVariable> genericVariables = newArrayList();
+
+    Map<String, String[]> parameterMap = new HashMap<>();
+    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+
+    Map<String, Enumeration<String>> headers = new HashMap<>();
+    headers.put("someparam", enumeration("some value"));
+
+    List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+    genericHeaderVariables.add(new GenericHeaderVariable("someparam", null));
+    Map<String, String> variables =
+            new VariablesResolver(
+                    headers,
+                    parameterMap,
+                    postContent,
+                    genericVariables,
+                    genericRequestVariables,
+                    genericHeaderVariables)
+                .getVariables();
+
+        assertThat(variables) //
+            .containsEntry("someparam", "some value") //
+            .hasSize(2);
+
+    variables =
+            new VariablesResolver(
+                    headers,
+                    parameterMap,
+                    postContent,
+                    genericVariables,
+                    genericRequestVariables,
+                    genericHeaderVariables)
+                .getVariables();
+
+        assertThat(variables) //
+            .containsEntry("someparam", "some value") //
+            .hasSize(2);
+  }
+
+  @Test
   public void testHeadersButNoneConfigured() throws Exception {
     String postContent = null;
 
