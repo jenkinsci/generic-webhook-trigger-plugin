@@ -29,14 +29,15 @@ public class RequestHeaderResolver {
         continue;
       }
       final Enumeration<String> headerEnumeration = incomingHeaders.get(headerName);
-      List<String> headers = Collections.list(headerEnumeration); // "depletes" headerEnumeration
+      final List<String> headers =
+          Collections.list(headerEnumeration); // "depletes" headerEnumeration
       int i = 0;
-      for (String headerValue : headers) {
+      for (final String headerValue : headers) {
         final String regexpFilter = configuredVariable.get().getRegexpFilter();
         final String filteredValue = filter(headerValue, regexpFilter);
         found.put(toVariableName(headerName) + "_" + i, filteredValue);
-        final boolean firstAndOnlyValue = i == 0 && !headerEnumeration.hasMoreElements();
-        if (firstAndOnlyValue) {
+        final boolean firstValue = i == 0;
+        if (firstValue) {
           //Users will probably expect this variable for parameters that are never a list
           found.put(toVariableName(headerName), filteredValue);
         }

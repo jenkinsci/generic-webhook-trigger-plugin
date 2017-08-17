@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.19 (2017-08-16 14:41:37)
 ### GitHub [#20](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/20) Header Variables cannot be reused through several webhook triggered jobs  
 
 **fix #20: Header Variables cannot be reused through several webhook triggered jobs**
@@ -10,6 +10,11 @@ Changelog of Generic Webhook Plugin.
 
 
 ### No issue
+
+**doc**
+
+
+[a54279dd885a976](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a54279dd885a976) Tomas Bjerre *2017-08-16 14:39:30*
 
 **fix failing tests, should ran them before; seems they were checking for incorrect number of parameters, regardless(?) the previous Enumeration -> List change**
 
