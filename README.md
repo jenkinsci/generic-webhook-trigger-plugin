@@ -69,6 +69,14 @@ curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 
 
 There is also a special request parameter named `token`. When supplied it is used to authenticate with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html).
 
+![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
+
+The job can then be triggered with that token like this.
+
+```
+curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123
+```
+
 ## Screenshots
 
 ![Generic trigger](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
