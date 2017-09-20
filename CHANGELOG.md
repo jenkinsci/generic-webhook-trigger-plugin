@@ -3,6 +3,11 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**doc**
+
+
+[34da1337c863b15](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/34da1337c863b15) Tomas Bjerre *2017-08-23 16:16:10*
+
 **Correcting how first value is determined**
 
 

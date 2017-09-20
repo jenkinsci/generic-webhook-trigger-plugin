@@ -3,6 +3,9 @@ package org.jenkinsci.plugins.gwt.resolvers;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
+import static org.w3c.dom.Node.ATTRIBUTE_NODE;
+import static org.w3c.dom.Node.ELEMENT_NODE;
+import static org.w3c.dom.Node.TEXT_NODE;
 
 import java.util.Map;
 
@@ -43,7 +46,8 @@ public class XmlFlattener {
           final String variableName = toVariableName(childKey);
           resolvedVariables.put(variableName, filter(childNode.getTextContent(), regexFilter));
         } else {
-          //leafnode and text inside leafnode are 2 nodes, so /2 to keep counter in line
+          // leafnode and text inside leafnode are 2 nodes, so /2 to
+          // keep counter in line
           final int leafNodeLevel = i / 2;
           resolvedVariables.putAll(
               flattenXmlNode(childKey, regexFilter, childNode, leafNodeLevel, false));
@@ -55,9 +59,9 @@ public class XmlFlattener {
 
   private boolean isXmlLeafNode(Node node) {
     return node != null
-        && node.getNodeType() == Node.ELEMENT_NODE
+        && (node.getNodeType() == ELEMENT_NODE || node.getNodeType() == ATTRIBUTE_NODE)
         && node.getChildNodes().getLength() == 1
-        && node.getFirstChild().getNodeType() == Node.TEXT_NODE;
+        && node.getFirstChild().getNodeType() == TEXT_NODE;
   }
 
   private String expandKey(String key, int level, boolean fromRootLevel) {

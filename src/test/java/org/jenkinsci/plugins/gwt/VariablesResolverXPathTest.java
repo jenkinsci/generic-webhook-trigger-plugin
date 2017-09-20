@@ -22,16 +22,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathGetOneVariable() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[1]/title", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -47,16 +47,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathGetOneNode() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[1]", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -72,16 +72,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathGetNodes() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[*]", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -97,17 +97,69 @@ public class VariablesResolverXPathTest {
   }
 
   @Test
-  public void testXPathTwoListItems() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+  public void testXPathGetAttribute() throws Exception {
+    final String resourceName = "attribute.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable(
+                "variablename", "/attribute[@name='thekey']/@value", XPath, regexpFilter));
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("variablename", "thevalue");
+  }
+
+  @Test
+  public void testXPathGetAbsentAttribute() throws Exception {
+    final String resourceName = "attribute.xml";
+    final String postContent = getContent(resourceName);
+
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable(
+                "variablename", "/attribute[@name='thekey']/@anothervalue", XPath, regexpFilter));
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("variablename", "");
+  }
+
+  @Test
+  public void testXPathTwoListItems() throws Exception {
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
+
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("payload", "/*", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -127,16 +179,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathOneListItem() throws Exception {
-    String resourceName = "one-list-item.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "one-list-item.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("payload", "/*", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -154,16 +206,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathTwoListListItems() throws Exception {
-    String resourceName = "two-list-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -185,16 +237,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathTwoListListItemsFirstBook() throws Exception {
-    String resourceName = "two-list-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[1]", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -214,16 +266,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathTwoListListItemsSecondBook() throws Exception {
-    String resourceName = "two-list-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[2]", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -241,16 +293,16 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathTwoListItemsFirstBook() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book", "/bookstore/book[1]", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -268,17 +320,17 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathGetTwoVariable() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    String regexpFilter = "";
-    List<GenericVariable> genericVariables =
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book1", "/bookstore/book[1]/title", XPath, "\\s"), //
             new GenericVariable("book2", "/bookstore/book[2]/title", XPath, regexpFilter));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -295,15 +347,15 @@ public class VariablesResolverXPathTest {
 
   @Test
   public void testXPathGetZeroMatchingVariables() throws Exception {
-    String resourceName = "two-list-items.xml";
-    String postContent = getContent(resourceName);
+    final String resourceName = "two-list-items.xml";
+    final String postContent = getContent(resourceName);
 
-    List<GenericVariable> genericVariables =
+    final List<GenericVariable> genericVariables =
         newArrayList( //
             new GenericVariable("book1", "/bookstore/book[1]/title123", XPath, "[a-z]"));
-    Map<String, String[]> parameterMap = new HashMap<>();
-    List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    Map<String, String> variables =
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -321,7 +373,7 @@ public class VariablesResolverXPathTest {
     try {
       return Resources.toString(
           Resources.getResource(resourceName).toURI().toURL(), Charsets.UTF_8);
-    } catch (Exception e) {
+    } catch (final Exception e) {
       throw new RuntimeException(e);
     }
   }
