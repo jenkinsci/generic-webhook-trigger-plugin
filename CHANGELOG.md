@@ -3,6 +3,23 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**Doc**
+
+
+[5a7ffb15abd41ea](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/5a7ffb15abd41ea) Tomas Bjerre *2017-09-20 19:26:33*
+
+
+## 1.20 (2017-09-20 19:25:18)
+### GitHub [#25](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/25) XmlFlattener doesn&#39;t work with Attribute nodes  
+
+**Enabling attributes with XPath #25**
+
+
+[53f924177b85314](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/53f924177b85314) Tomas Bjerre *2017-09-20 19:21:03*
+
+
+### No issue
+
 **doc**
 
 
