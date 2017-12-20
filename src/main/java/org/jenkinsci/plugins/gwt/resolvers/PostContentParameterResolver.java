@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.collect.Maps.newHashMap;
+import static java.util.logging.Level.INFO;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
@@ -59,7 +60,17 @@ public class PostContentParameterResolver {
         }
       }
     } catch (final Exception e) {
-      LOGGER.info("Unable to resolve " + gv.getVariableName());
+      LOGGER.log(
+          INFO,
+          "Unable to resolve "
+              + gv.getVariableName()
+              + " with "
+              + gv.getExpressionType()
+              + " "
+              + gv.getExpression()
+              + " in\n"
+              + incomingPostContent,
+          e);
     }
     return new HashMap<>();
   }

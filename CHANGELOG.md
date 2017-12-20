@@ -1,6 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
 ## Unreleased
+### GitHub [#26](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/26) JSONPath processing seems to not handle &quot;,&quot; operator  
+
+**Test case with comma operator #26**
+
+
+[ad58a6aadbdaf32](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ad58a6aadbdaf32) Tomas Bjerre *2017-11-15 18:37:55*
+
+
+### GitHub [#29](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/29) Unable to resolve variable   
+
+**More information in log if variable cannot be resolved #29**
+
+
+[41d34ee48f05639](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/41d34ee48f05639) Tomas Bjerre *2017-12-20 18:49:24*
+
+
 ### No issue
 
 **Doc**
