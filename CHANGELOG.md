@@ -1,6 +1,18 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
 ## Unreleased
+### GitHub [#30](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/30) Request: Supporting of JSON header without flattening   
+
+**Contributing the actual JSON/XML #30**
+
+ * Will now contribute the actual JSON, or XML, in the configured variable, if expression does not resolve to a string. So that it is possible to contribute the, or a part of, the JSON/XML that was read. 
+ * Correctly readning streams with UTF-8, not default encodings. 
+ * Adding Violations Maven Plugin to monitor Findbugs findings. 
+
+[bb32a7cc82d7174](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bb32a7cc82d7174) Tomas Bjerre *2018-01-03 12:10:05*
+
+
+## 1.21 (2017-12-20 18:52:26)
 ### GitHub [#26](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/26) JSONPath processing seems to not handle &quot;,&quot; operator  
 
 **Test case with comma operator #26**
@@ -14,7 +26,7 @@ Changelog of Generic Webhook Plugin.
 **More information in log if variable cannot be resolved #29**
 
 
-[41d34ee48f05639](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/41d34ee48f05639) Tomas Bjerre *2017-12-20 18:49:24*
+[19443b4e072acc4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/19443b4e072acc4) Tomas Bjerre *2017-12-20 18:51:29*
 
 
 ### No issue

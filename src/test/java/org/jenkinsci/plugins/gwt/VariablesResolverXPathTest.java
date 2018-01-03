@@ -174,7 +174,7 @@ public class VariablesResolverXPathTest {
         .containsEntry("payload_book_0_title", "Harry Potter")
         .containsEntry("payload_book_1_price", "39.95")
         .containsEntry("payload_book_1_title", "Learning XML")
-        .hasSize(4);
+        .hasSize(5);
   }
 
   @Test
@@ -201,7 +201,7 @@ public class VariablesResolverXPathTest {
     assertThat(variables) //
         .containsEntry("payload_book_0_price", "29.99")
         .containsEntry("payload_book_0_title", "Harry Potter")
-        .hasSize(2);
+        .hasSize(3);
   }
 
   @Test
@@ -232,7 +232,28 @@ public class VariablesResolverXPathTest {
         .containsEntry("book_book_0_page_1_number", "2")
         .containsEntry("book_book_1_page_0_content", "content 21")
         .containsEntry("book_book_1_page_0_number", "21")
-        .hasSize(6);
+        .hasSize(7);
+
+    assertThat(variables.get("book").trim()) //
+        .isEqualTo(
+            "<bookstore>\n"
+                + "	<book>\n"
+                + "		<page>\n"
+                + "			<number>1</number>\n"
+                + "			<content>content 1</content>\n"
+                + "		</page>\n"
+                + "		<page>\n"
+                + "			<number>2</number>\n"
+                + "			<content>content 2</content>\n"
+                + "		</page>\n"
+                + "	</book>\n"
+                + "	<book>\n"
+                + "		<page>\n"
+                + "			<number>21</number>\n"
+                + "			<content>content 21</content>\n"
+                + "		</page>\n"
+                + "	</book>\n"
+                + "</bookstore>");
   }
 
   @Test
@@ -261,7 +282,66 @@ public class VariablesResolverXPathTest {
         .containsEntry("book_page_0_number", "1")
         .containsEntry("book_page_1_content", "content 2")
         .containsEntry("book_page_1_number", "2")
-        .hasSize(4);
+        .hasSize(5);
+
+    assertThat(variables.get("book").trim()) //
+        .isEqualTo(
+            "<book>\n"
+                + "		<page>\n"
+                + "			<number>1</number>\n"
+                + "			<content>content 1</content>\n"
+                + "		</page>\n"
+                + "		<page>\n"
+                + "			<number>2</number>\n"
+                + "			<content>content 2</content>\n"
+                + "		</page>\n"
+                + "	</book>");
+  }
+
+  @Test
+  public void testXPathRootElement() throws Exception {
+    final String resourceName = "two-list-list-items.xml";
+    final String postContent = getContent(resourceName);
+
+    final String regexpFilter = "";
+    final List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("book", "/", XPath, regexpFilter));
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .hasSize(7);
+
+    assertThat(variables.get("book").trim()) //
+        .isEqualTo(
+            "<bookstore>\n"
+                + "	<book>\n"
+                + "		<page>\n"
+                + "			<number>1</number>\n"
+                + "			<content>content 1</content>\n"
+                + "		</page>\n"
+                + "		<page>\n"
+                + "			<number>2</number>\n"
+                + "			<content>content 2</content>\n"
+                + "		</page>\n"
+                + "	</book>\n"
+                + "	<book>\n"
+                + "		<page>\n"
+                + "			<number>21</number>\n"
+                + "			<content>content 21</content>\n"
+                + "		</page>\n"
+                + "	</book>\n"
+                + "</bookstore>");
   }
 
   @Test
@@ -288,7 +368,7 @@ public class VariablesResolverXPathTest {
     assertThat(variables) //
         .containsEntry("book_page_0_content", "content 21")
         .containsEntry("book_page_0_number", "21")
-        .hasSize(2);
+        .hasSize(3);
   }
 
   @Test
@@ -315,7 +395,7 @@ public class VariablesResolverXPathTest {
     assertThat(variables) //
         .containsEntry("book_price", "29.99")
         .containsEntry("book_title", "Harry Potter")
-        .hasSize(2);
+        .hasSize(3);
   }
 
   @Test
@@ -369,7 +449,7 @@ public class VariablesResolverXPathTest {
         .containsEntry("book1", "");
   }
 
-  private String getContent(String resourceName) {
+  private String getContent(final String resourceName) {
     try {
       return Resources.toString(
           Resources.getResource(resourceName).toURI().toURL(), Charsets.UTF_8);

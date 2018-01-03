@@ -27,7 +27,10 @@ public class VariablesResolverJsonPathTest {
 
     assertThat(variables) //
         .containsEntry("variableName_name", "Administrator") //
-        .hasSize(1);
+        .hasSize(2);
+
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("{\"name\":\"Administrator\"}");
   }
 
   @Test
@@ -38,7 +41,10 @@ public class VariablesResolverJsonPathTest {
     assertThat(variables) //
         .containsEntry("variableName_name", "Administrator") //
         .containsEntry("variableName_username", "root") //
-        .hasSize(2);
+        .hasSize(3);
+
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("{\"name\":\"Administrator\",\"username\":\"root\"}");
   }
 
   @Test
@@ -46,9 +52,26 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "one-list-item.json";
     final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
 
-    assertThat(variables) //
-        .containsEntry("variableName_0_name", "Administrator") //
-        .hasSize(1);
+    assertThat(variables.keySet()) //
+        .containsOnly("variableName", "variableName_0_name");
+
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("[{\"name\":\"Administrator\"}]");
+    assertThat(variables.get("variableName_0_name")) //
+        .isEqualTo("Administrator");
+  }
+
+  @Test
+  public void testJSONPathGetRootItem() throws Exception {
+    final String resourceName = "one-list-item.json";
+    final Map<String, String> variables = getJsonPathVariables(resourceName, "$");
+
+    assertThat(variables.keySet()) //
+        .containsOnly("variableName", "variableName_user_0_name");
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("{\"user\":[{\"name\":\"Administrator\"}]}");
+    assertThat(variables.get("variableName_user_0_name")) //
+        .isEqualTo("Administrator");
   }
 
   @Test
@@ -56,10 +79,15 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "two-list-items.json";
     final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
 
-    assertThat(variables) //
-        .containsEntry("variableName_0_name", "Administrator") //
-        .containsEntry("variableName_1_username", "root") //
-        .hasSize(2);
+    assertThat(variables.keySet()) //
+        .containsOnly("variableName", "variableName_0_name", "variableName_1_username");
+
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("[{\"name\":\"Administrator\"},{\"username\":\"root\"}]");
+    assertThat(variables.get("variableName_0_name")) //
+        .isEqualTo("Administrator");
+    assertThat(variables.get("variableName_1_username")) //
+        .isEqualTo("root");
   }
 
   @Test
@@ -76,7 +104,11 @@ public class VariablesResolverJsonPathTest {
         .containsEntry("variableName_5", "another simple string") //
         .containsEntry("variableName_6", "66666") //
         .containsEntry("variableName_7_another_number", "another value") //
-        .hasSize(8);
+        .hasSize(9);
+
+    assertThat(variables.get("variableName")) //
+        .isEqualTo(
+            "[{\"name\":\"Administrator\"},{\"username\":\"root\"},\"a simple string\",33333,{\"a number\":\"a value\"},\"another simple string\",66666,{\"another number\":\"another value\"}]");
   }
 
   @Test
@@ -114,7 +146,10 @@ public class VariablesResolverJsonPathTest {
         .containsEntry("reqp1_1", "b") //
         .containsEntry("reqp2", "just one") //
         .containsEntry("reqp2_0", "just one") //
-        .hasSize(7);
+        .hasSize(8);
+
+    assertThat(variables.get("ids")) //
+        .isEqualTo("[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]");
   }
 
   @Test
@@ -183,7 +218,10 @@ public class VariablesResolverJsonPathTest {
             .getVariables();
 
     assertThat(variables) //
-        .isEmpty();
+        .hasSize(1);
+
+    assertThat(variables.get("ids")) //
+        .isEqualTo("[]");
   }
 
   @Test
@@ -208,6 +246,7 @@ public class VariablesResolverJsonPathTest {
             .getVariables();
 
     assertThat(variables) //
+        .hasSize(1) //
         .containsEntry("user_name", "Administrator");
   }
 
@@ -234,6 +273,7 @@ public class VariablesResolverJsonPathTest {
             .getVariables();
 
     assertThat(variables) //
+        .hasSize(2) //
         .containsEntry("user_name", "dministrtor") //
         .containsEntry("project_id", "1");
   }
@@ -278,9 +318,12 @@ public class VariablesResolverJsonPathTest {
     final Map<String, String> variables =
         getJsonPathVariables(resourceName, "$.commits[*].modified[*]");
 
-    assertThat(variables) //
-        .containsEntry("variableName_0", "README.md") //
-        .hasSize(1);
+    assertThat(variables.keySet()) //
+        .containsOnly("variableName", "variableName_0");
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("[\"README.md\"]");
+    assertThat(variables.get("variableName_0")) //
+        .isEqualTo("README.md");
   }
 
   @Test
@@ -289,12 +332,16 @@ public class VariablesResolverJsonPathTest {
     final Map<String, String> variables =
         getJsonPathVariables(resourceName, "$.commits[*].['modified','added','removed'][*]");
 
-    assertThat(variables) //
-        .containsEntry("variableName_0", "README.md") //
-        .hasSize(1);
+    assertThat(variables.keySet()) //
+        .containsOnly("variableName", "variableName_0");
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("[\"README.md\"]");
+    assertThat(variables.get("variableName_0")) //
+        .isEqualTo("README.md");
   }
 
-  private Map<String, String> getJsonPathVariables(String resourceName, String jsonPath) {
+  private Map<String, String> getJsonPathVariables(
+      final String resourceName, final String jsonPath) {
     final String postContent = getContent(resourceName);
 
     final String regexpFilter = "";
@@ -315,7 +362,7 @@ public class VariablesResolverJsonPathTest {
     return variables;
   }
 
-  private String getContent(String resourceName) {
+  private String getContent(final String resourceName) {
     try {
       return Resources.toString(
           Resources.getResource(resourceName).toURI().toURL(), Charsets.UTF_8);

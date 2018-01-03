@@ -8,27 +8,51 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class JsonFlattener {
+  private static Gson GSON = new GsonBuilder().create();
+
   public JsonFlattener() {}
 
+  public Map<String, String> flattenJson(
+      final String key, final String regexFilter, final Object resolved) {
+    final Map<String, String> resolvedVariables = newHashMap();
+    doFlatternJson(key, regexFilter, resolved, resolvedVariables);
+
+    if (resolved != null && !(resolved instanceof String)) {
+      final String variableName = toVariableName(key);
+      resolvedVariables.put(variableName, filter(GSON.toJson(resolved).toString(), regexFilter));
+    }
+
+    return resolvedVariables;
+  }
+
   @SuppressWarnings("unchecked")
-  public Map<String, String> flattenJson(String key, String regexFilter, Object resolved) {
-    Map<String, String> resolvedVariables = newHashMap();
+  private void doFlatternJson(
+      final String key,
+      final String regexFilter,
+      final Object resolved,
+      final Map<String, String> resolvedVariables) {
     if (resolved instanceof List) {
       int i = 0;
-      for (Object o : (List<?>) resolved) {
-        resolvedVariables.putAll(flattenJson(key + "_" + i, regexFilter, o));
+      for (final Object o : (List<?>) resolved) {
+        doFlatternJson(key + "_" + i, regexFilter, o, resolvedVariables);
         i++;
       }
     } else if (resolved instanceof Map) {
-      for (Entry<String, Object> entry : ((Map<String, Object>) resolved).entrySet()) {
-        resolvedVariables.putAll(
-            flattenJson(key + "_" + entry.getKey(), regexFilter, entry.getValue()));
+      for (final Entry<String, Object> entry : ((Map<String, Object>) resolved).entrySet()) {
+        doFlatternJson(
+            key + "_" + entry.getKey(), regexFilter, entry.getValue(), resolvedVariables);
       }
     } else if (resolved != null) {
-      String variableName = toVariableName(key);
-      resolvedVariables.put(variableName, filter(resolved.toString(), regexFilter));
+      final String variableName = toVariableName(key);
+      String string = resolved.toString();
+      if (!(resolved instanceof String)) {
+        string = GSON.toJson(resolved).toString();
+      }
+      resolvedVariables.put(variableName, filter(string, regexFilter));
     }
-    return resolvedVariables;
   }
 }

@@ -6,7 +6,6 @@ import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +13,17 @@ import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.jenkinsci.plugins.gwt.GenericVariable;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
+import com.google.common.base.Charsets;
 import com.jayway.jsonpath.JsonPath;
 
 public class PostContentParameterResolver {
@@ -38,7 +35,7 @@ public class PostContentParameterResolver {
   public PostContentParameterResolver() {}
 
   public Map<String, String> getPostContentParameters(
-      List<GenericVariable> configuredGenericVariables, String incomingPostContent) {
+      final List<GenericVariable> configuredGenericVariables, final String incomingPostContent) {
     final Map<String, String> resolvedVariables = newHashMap();
     if (configuredGenericVariables != null) {
       for (final GenericVariable gv : configuredGenericVariables) {
@@ -48,7 +45,7 @@ public class PostContentParameterResolver {
     return resolvedVariables;
   }
 
-  private Map<String, String> resolve(String incomingPostContent, GenericVariable gv) {
+  private Map<String, String> resolve(final String incomingPostContent, final GenericVariable gv) {
     try {
       if (gv != null && gv.getExpression() != null && !gv.getExpression().isEmpty()) {
         if (gv.getExpressionType() == JSONPath) {
@@ -59,7 +56,7 @@ public class PostContentParameterResolver {
           throw new IllegalStateException("Not recognizing " + gv.getExpressionType());
         }
       }
-    } catch (final Exception e) {
+    } catch (final Throwable e) {
       LOGGER.log(
           INFO,
           "Unable to resolve "
@@ -75,17 +72,18 @@ public class PostContentParameterResolver {
     return new HashMap<>();
   }
 
-  private Map<String, String> resolveJsonPath(String incomingPostContent, GenericVariable gv) {
+  private Map<String, String> resolveJsonPath(
+      final String incomingPostContent, final GenericVariable gv) {
     final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
     return jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
   }
 
-  private Map<String, String> resolveXPath(String incomingPostContent, GenericVariable gv)
-      throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+  private Map<String, String> resolveXPath(
+      final String incomingPostContent, final GenericVariable gv) throws Exception {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     final DocumentBuilder builder = factory.newDocumentBuilder();
     final InputSource inputSource =
-        new InputSource(new ByteArrayInputStream(incomingPostContent.getBytes()));
+        new InputSource(new ByteArrayInputStream(incomingPostContent.getBytes(Charsets.UTF_8)));
     final Document doc = builder.parse(inputSource);
     final XPathFactory xPathfactory = XPathFactory.newInstance();
     final XPath xpath = xPathfactory.newXPath();

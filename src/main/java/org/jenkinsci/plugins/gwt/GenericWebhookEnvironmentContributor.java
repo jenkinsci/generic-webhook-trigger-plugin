@@ -1,17 +1,20 @@
 package org.jenkinsci.plugins.gwt;
 
-import hudson.EnvVars;
-import hudson.Extension;
-import hudson.model.TaskListener;
-import hudson.model.EnvironmentContributor;
-import hudson.model.Run;
-
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+
+import com.google.common.base.Charsets;
+
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.model.EnvironmentContributor;
+import hudson.model.Run;
+import hudson.model.TaskListener;
 
 @Extension
 public class GenericWebhookEnvironmentContributor extends EnvironmentContributor {
@@ -20,12 +23,12 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
   @SuppressWarnings("unchecked")
   @Override
   public void buildEnvironmentFor(
-      @SuppressWarnings("rawtypes") @Nonnull Run r,
-      @Nonnull EnvVars envs,
-      @Nonnull TaskListener listener)
+      @SuppressWarnings("rawtypes") @Nonnull final Run r,
+      @Nonnull final EnvVars envs,
+      @Nonnull final TaskListener listener)
       throws IOException, InterruptedException {
-    boolean shouldLog = shouldLog(r);
-    GenericCause cause = (GenericCause) r.getCause(GenericCause.class);
+    final boolean shouldLog = shouldLog(r);
+    final GenericCause cause = (GenericCause) r.getCause(GenericCause.class);
     if (cause != null) {
       if (shouldLog) {
         listener
@@ -36,12 +39,12 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
                     + cause.getPostContent()
                     + "\n\n");
       }
-      Map<String, String> resolvedVariables = cause.getResolvedVariables();
+      final Map<String, String> resolvedVariables = cause.getResolvedVariables();
       if (shouldLog) {
         listener.getLogger().println(CONTRIBUTING_VARIABLES + "\n");
       }
-      for (String variable : resolvedVariables.keySet()) {
-        String resolved = cause.getResolvedVariables().get(variable);
+      for (final String variable : resolvedVariables.keySet()) {
+        final String resolved = cause.getResolvedVariables().get(variable);
         if (shouldLog) {
           listener.getLogger().println("    " + variable + " = " + resolved);
         }
@@ -53,8 +56,10 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
     }
   }
 
-  private boolean shouldLog(@SuppressWarnings("rawtypes") Run r) throws IOException {
-    try (BufferedReader br = new BufferedReader(new FileReader(r.getLogFile()))) {
+  private boolean shouldLog(@SuppressWarnings("rawtypes") final Run r) throws IOException {
+    try (BufferedReader br =
+        new BufferedReader(
+            new InputStreamReader(new FileInputStream(r.getLogFile()), Charsets.UTF_8))) {
       String line;
       while ((line = br.readLine()) != null) {
         if (line.contains(CONTRIBUTING_VARIABLES)) {
