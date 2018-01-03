@@ -234,26 +234,9 @@ public class VariablesResolverXPathTest {
         .containsEntry("book_book_1_page_0_number", "21")
         .hasSize(7);
 
-    assertThat(variables.get("book").trim()) //
+    assertThat(variables.get("book").replaceAll("\\r|\\n|\\s", "")) //
         .isEqualTo(
-            "<bookstore>\n"
-                + "	<book>\n"
-                + "		<page>\n"
-                + "			<number>1</number>\n"
-                + "			<content>content 1</content>\n"
-                + "		</page>\n"
-                + "		<page>\n"
-                + "			<number>2</number>\n"
-                + "			<content>content 2</content>\n"
-                + "		</page>\n"
-                + "	</book>\n"
-                + "	<book>\n"
-                + "		<page>\n"
-                + "			<number>21</number>\n"
-                + "			<content>content 21</content>\n"
-                + "		</page>\n"
-                + "	</book>\n"
-                + "</bookstore>");
+            "<bookstore><book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book><book><page><number>21</number><content>content21</content></page></book></bookstore>");
   }
 
   @Test
@@ -284,18 +267,9 @@ public class VariablesResolverXPathTest {
         .containsEntry("book_page_1_number", "2")
         .hasSize(5);
 
-    assertThat(variables.get("book").trim()) //
+    assertThat(variables.get("book").replaceAll("\\r|\\n|\\s", "")) //
         .isEqualTo(
-            "<book>\n"
-                + "		<page>\n"
-                + "			<number>1</number>\n"
-                + "			<content>content 1</content>\n"
-                + "		</page>\n"
-                + "		<page>\n"
-                + "			<number>2</number>\n"
-                + "			<content>content 2</content>\n"
-                + "		</page>\n"
-                + "	</book>");
+        		"<book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book>");
   }
 
   @Test
@@ -322,26 +296,9 @@ public class VariablesResolverXPathTest {
     assertThat(variables) //
         .hasSize(7);
 
-    assertThat(variables.get("book").trim()) //
+    assertThat(variables.get("book").replaceAll("\\r|\\n|\\s", "")) //
         .isEqualTo(
-            "<bookstore>\n"
-                + "	<book>\n"
-                + "		<page>\n"
-                + "			<number>1</number>\n"
-                + "			<content>content 1</content>\n"
-                + "		</page>\n"
-                + "		<page>\n"
-                + "			<number>2</number>\n"
-                + "			<content>content 2</content>\n"
-                + "		</page>\n"
-                + "	</book>\n"
-                + "	<book>\n"
-                + "		<page>\n"
-                + "			<number>21</number>\n"
-                + "			<content>content 21</content>\n"
-                + "		</page>\n"
-                + "	</book>\n"
-                + "</bookstore>");
+        		"<bookstore><book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book><book><page><number>21</number><content>content21</content></page></book></bookstore>");
   }
 
   @Test
