@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.22 (2018-01-03 12:22:47)
 ### GitHub [#30](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/30) Request: Supporting of JSON header without flattening   
 
 **Contributing the actual JSON/XML #30**
@@ -9,7 +9,7 @@ Changelog of Generic Webhook Plugin.
  * Correctly readning streams with UTF-8, not default encodings. 
  * Adding Violations Maven Plugin to monitor Findbugs findings. 
 
-[bb32a7cc82d7174](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bb32a7cc82d7174) Tomas Bjerre *2018-01-03 12:10:05*
+[4a60c3cd9350e49](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4a60c3cd9350e49) Tomas Bjerre *2018-01-03 12:18:32*
 
 
 ## 1.21 (2017-12-20 18:52:26)
