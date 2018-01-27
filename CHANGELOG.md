@@ -1,5 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#31](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/31) Wanna get all request body that payload body including null value  
+
+**Including null attributes #31**
+
+
+[6829688da6c3d17](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6829688da6c3d17) Tomas Bjerre *2018-01-27 13:07:46*
+
+
+### No issue
+
+**Removing newlines from assert in test**
+
+
+[92ced8a3dc25a34](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/92ced8a3dc25a34) Tomas Bjerre *2018-01-03 12:33:36*
+
+
 ## 1.22 (2018-01-03 12:22:47)
 ### GitHub [#30](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/30) Request: Supporting of JSON header without flattening   
 

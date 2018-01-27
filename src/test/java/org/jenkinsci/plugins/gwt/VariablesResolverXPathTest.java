@@ -269,7 +269,7 @@ public class VariablesResolverXPathTest {
 
     assertThat(variables.get("book").replaceAll("\\r|\\n|\\s", "")) //
         .isEqualTo(
-        		"<book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book>");
+            "<book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book>");
   }
 
   @Test
@@ -298,7 +298,7 @@ public class VariablesResolverXPathTest {
 
     assertThat(variables.get("book").replaceAll("\\r|\\n|\\s", "")) //
         .isEqualTo(
-        		"<bookstore><book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book><book><page><number>21</number><content>content21</content></page></book></bookstore>");
+            "<bookstore><book><page><number>1</number><content>content1</content></page><page><number>2</number><content>content2</content></page></book><book><page><number>21</number><content>content21</content></page></book></bookstore>");
   }
 
   @Test

@@ -112,6 +112,15 @@ public class VariablesResolverJsonPathTest {
   }
 
   @Test
+  public void testJSONPathGetNullValues() throws Exception {
+    final Map<String, String> variables =
+        getJsonPathVariablesFromContent("$", "{\"a\": null,\"b\": \"value\"}");
+
+    assertThat(variables.get("variableName")) //
+        .isEqualTo("{\"a\":null,\"b\":\"value\"}");
+  }
+
+  @Test
   public void testJSONPathGetAllVariable() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = getContent(resourceName);
@@ -344,6 +353,11 @@ public class VariablesResolverJsonPathTest {
       final String resourceName, final String jsonPath) {
     final String postContent = getContent(resourceName);
 
+    return getJsonPathVariablesFromContent(jsonPath, postContent);
+  }
+
+  private Map<String, String> getJsonPathVariablesFromContent(
+      final String jsonPath, final String postContent) {
     final String regexpFilter = "";
     final List<GenericVariable> genericVariables =
         newArrayList( //

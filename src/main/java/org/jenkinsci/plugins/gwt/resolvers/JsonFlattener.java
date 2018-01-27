@@ -12,7 +12,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class JsonFlattener {
-  private static Gson GSON = new GsonBuilder().create();
+  private static Gson GSON =
+      new GsonBuilder() //
+          .serializeNulls() //
+          .create();
 
   public JsonFlattener() {}
 
