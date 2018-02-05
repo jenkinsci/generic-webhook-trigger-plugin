@@ -3,14 +3,14 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>2.23</version>
+		<version>3.2</version>
 	</parent>
 
 	<properties>
+		<java.level>7</java.level>
 		<jenkins.version>2.7.4</jenkins.version>
-		<hpi-plugin.version>1.115</hpi-plugin.version>
-		<jenkins-test-harness.version>2.19</jenkins-test-harness.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -78,10 +78,6 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 			<plugin>
@@ -90,19 +86,6 @@
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -216,11 +199,6 @@ Changelog of Generic Webhook Plugin.
 
 
 	<dependencies>
-		<dependency>
-			<groupId>org.jenkins-ci.main</groupId>
-			<artifactId>maven-plugin</artifactId>
-			<version>2.9</version>
-		</dependency>
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>

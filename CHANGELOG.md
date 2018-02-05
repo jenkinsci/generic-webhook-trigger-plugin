@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.23 (2018-01-27 13:10:21)
 ### GitHub [#31](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/31) Wanna get all request body that payload body including null value  
 
 **Including null attributes #31**
 
 
-[6829688da6c3d17](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6829688da6c3d17) Tomas Bjerre *2018-01-27 13:07:46*
+[632b93761a17e48](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/632b93761a17e48) Tomas Bjerre *2018-01-27 13:09:28*
 
 
 ### No issue
