@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.24 (2018-02-05 20:06:59)
 ### GitHub [#32](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/32) Do not show received payload in Jenkins job    *enhancement*  
 
 **Optional logging in job log #32 #33**
@@ -9,7 +9,7 @@ Changelog of Generic Webhook Plugin.
  * More details in trigger response. Including queue ID. 
  * Avoiding exposure of entire exception stacktrace in response on crash. 
 
-[8f6657190a43df9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f6657190a43df9) Tomas Bjerre *2018-02-05 19:51:38*
+[8580bf8aaf52b2d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8580bf8aaf52b2d) Tomas Bjerre *2018-02-05 19:52:22*
 
 
 ### GitHub [#33](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/33) Receive additional info after job trigger    *enhancement*  
@@ -20,7 +20,7 @@ Changelog of Generic Webhook Plugin.
  * More details in trigger response. Including queue ID. 
  * Avoiding exposure of entire exception stacktrace in response on crash. 
 
-[8f6657190a43df9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f6657190a43df9) Tomas Bjerre *2018-02-05 19:51:38*
+[8580bf8aaf52b2d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8580bf8aaf52b2d) Tomas Bjerre *2018-02-05 19:52:22*
 
 
 ### No issue
