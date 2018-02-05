@@ -24,6 +24,7 @@ import jenkins.model.ParameterizedJobMixIn;
 
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -35,6 +36,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private final String regexpFilterExpression;
   private List<GenericRequestVariable> genericRequestVariables = newArrayList();
   private List<GenericHeaderVariable> genericHeaderVariables = newArrayList();
+  private boolean printPostContent;
+  private boolean printContributedVariables;
 
   public static class GenericDescriptor extends TriggerDescriptor {
 
@@ -63,14 +66,32 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     this.genericHeaderVariables = genericHeaderVariables;
   }
 
+  @DataBoundSetter
+  public void setPrintContributedVariables(boolean printContributedVariables) {
+    this.printContributedVariables = printContributedVariables;
+  }
+
+  @DataBoundSetter
+  public void setPrintPostContent(boolean printPostContent) {
+    this.printPostContent = printPostContent;
+  }
+
+  public boolean isPrintContributedVariables() {
+    return printContributedVariables;
+  }
+
+  public boolean isPrintPostContent() {
+    return printPostContent;
+  }
+
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
 
   @SuppressWarnings("static-access")
-  public void trigger(
+  public GenericTriggerResults trigger(
       Map<String, Enumeration<String>> headers,
       Map<String, String[]> parameterMap,
       String postContent) {
-    Map<String, String> resolvedVariables =
+    final Map<String, String> resolvedVariables =
         new VariablesResolver(
                 headers,
                 parameterMap,
@@ -80,15 +101,22 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
                 genericHeaderVariables)
             .getVariables();
 
-    boolean isMatching = isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
+    final String renderedRegexpFilterText = renderText(regexpFilterText, resolvedVariables);
+    final boolean isMatching = isMatching(renderedRegexpFilterText, regexpFilterExpression);
 
+    hudson.model.Queue.Item item = null;
     if (isMatching) {
-      GenericCause cause = new GenericCause(postContent, resolvedVariables);
+      final GenericCause cause =
+          new GenericCause(
+              postContent, resolvedVariables, printContributedVariables, printPostContent);
 
-      ParametersAction parameters = createParameters(resolvedVariables);
-      retrieveScheduleJob(job) //
-          .scheduleBuild2(job, 0, new CauseAction(cause), parameters);
+      final ParametersAction parameters = createParameters(resolvedVariables);
+      item =
+          retrieveScheduleJob(job) //
+              .scheduleBuild2(job, 0, new CauseAction(cause), parameters);
     }
+    return new GenericTriggerResults(
+        item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);
   }
 
   @SuppressWarnings("rawtypes")
@@ -102,36 +130,24 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   private ParametersAction createParameters(Map<String, String> resolvedVariables) {
-    List<ParameterValue> parameterList = newArrayList();
-    for (Entry<String, String> entry : resolvedVariables.entrySet()) {
-      ParameterValue parameter = new StringParameterValue(entry.getKey(), entry.getValue());
+    final List<ParameterValue> parameterList = newArrayList();
+    for (final Entry<String, String> entry : resolvedVariables.entrySet()) {
+      final ParameterValue parameter = new StringParameterValue(entry.getKey(), entry.getValue());
       parameterList.add(parameter);
     }
     return new ParametersAction(parameterList);
   }
 
   @VisibleForTesting
-  boolean isMatching(
-      String regexpFilterText,
-      String regexpFilterExpression,
-      Map<String, String> resolvedVariables) {
-    boolean noFilterConfigured =
-        isNullOrEmpty(regexpFilterText) || isNullOrEmpty(regexpFilterExpression);
+  boolean isMatching(String renderedRegexpFilterText, String regexpFilterExpression) {
+    final boolean noFilterConfigured =
+        isNullOrEmpty(renderedRegexpFilterText) || isNullOrEmpty(regexpFilterExpression);
     if (noFilterConfigured) {
       return true;
     }
-    for (String variable : resolvedVariables.keySet()) {
-      String key = "\\$" + variable;
-      String resolvedVariable = resolvedVariables.get(variable);
-      try {
-        regexpFilterText = regexpFilterText.replaceAll(key, resolvedVariable);
-      } catch (IllegalArgumentException e) {
-        throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
-      }
-    }
-    boolean isMatching =
+    final boolean isMatching =
         compile(regexpFilterExpression) //
-            .matcher(regexpFilterText) //
+            .matcher(renderedRegexpFilterText) //
             .find();
     if (!isMatching) {
       LOGGER.log(
@@ -139,10 +155,27 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
           "Not triggering \""
               + regexpFilterExpression
               + "\" not matching \""
-              + regexpFilterText
+              + renderedRegexpFilterText
               + "\".");
     }
     return isMatching;
+  }
+
+  @VisibleForTesting
+  String renderText(String regexpFilterText, Map<String, String> resolvedVariables) {
+    if (isNullOrEmpty(regexpFilterText)) {
+      return "";
+    }
+    for (final Entry<String, String> variableEntry : resolvedVariables.entrySet()) {
+      final String key = "\\$" + variableEntry.getKey();
+      final String resolvedVariable = variableEntry.getValue();
+      try {
+        regexpFilterText = regexpFilterText.replaceAll(key, resolvedVariable);
+      } catch (final IllegalArgumentException e) {
+        throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
+      }
+    }
+    return regexpFilterText;
   }
 
   public List<GenericVariable> getGenericVariables() {

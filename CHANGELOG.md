@@ -1,5 +1,36 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#32](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/32) Do not show received payload in Jenkins job    *enhancement*  
+
+**Optional logging in job log #32 #33**
+
+ * Also: 
+ * More details in trigger response. Including queue ID. 
+ * Avoiding exposure of entire exception stacktrace in response on crash. 
+
+[8f6657190a43df9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f6657190a43df9) Tomas Bjerre *2018-02-05 19:51:38*
+
+
+### GitHub [#33](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/33) Receive additional info after job trigger    *enhancement*  
+
+**Optional logging in job log #32 #33**
+
+ * Also: 
+ * More details in trigger response. Including queue ID. 
+ * Avoiding exposure of entire exception stacktrace in response on crash. 
+
+[8f6657190a43df9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f6657190a43df9) Tomas Bjerre *2018-02-05 19:51:38*
+
+
+### No issue
+
+**Cleaning pom**
+
+
+[4ac53820dbca918](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4ac53820dbca918) Tomas Bjerre *2018-02-05 16:59:30*
+
+
 ## 1.23 (2018-01-27 13:10:21)
 ### GitHub [#31](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/31) Wanna get all request body that payload body including null value  
 

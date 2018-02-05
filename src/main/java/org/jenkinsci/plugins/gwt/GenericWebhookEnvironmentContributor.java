@@ -1,5 +1,11 @@
 package org.jenkinsci.plugins.gwt;
 
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.model.TaskListener;
+import hudson.model.EnvironmentContributor;
+import hudson.model.Run;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,15 +16,10 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Charsets;
 
-import hudson.EnvVars;
-import hudson.Extension;
-import hudson.model.EnvironmentContributor;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-
 @Extension
 public class GenericWebhookEnvironmentContributor extends EnvironmentContributor {
-  private static final String CONTRIBUTING_VARIABLES = "Contributing variables:";
+  private static final String CONTRIBUTING_VARIABLES =
+      GenericWebhookEnvironmentContributor.class.getSimpleName();
 
   @SuppressWarnings("unchecked")
   @Override
@@ -27,36 +28,32 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
       @Nonnull final EnvVars envs,
       @Nonnull final TaskListener listener)
       throws IOException, InterruptedException {
-    final boolean shouldLog = shouldLog(r);
     final GenericCause cause = (GenericCause) r.getCause(GenericCause.class);
     if (cause != null) {
-      if (shouldLog) {
-        listener
-            .getLogger()
-            .println(
-                GenericWebhookEnvironmentContributor.class.getSimpleName()
-                    + " Received:\n\n"
-                    + cause.getPostContent()
-                    + "\n\n");
+      final boolean shouldLog =
+          (cause.isPrintContributedVariables() || cause.isPrintPostContent()) && notLogged(r);
+      listener.getLogger().println(CONTRIBUTING_VARIABLES);
+      if (shouldLog && cause.isPrintPostContent()) {
+        listener.getLogger().println(" Received:\n\n" + cause.getPostContent() + "\n\n");
       }
       final Map<String, String> resolvedVariables = cause.getResolvedVariables();
-      if (shouldLog) {
-        listener.getLogger().println(CONTRIBUTING_VARIABLES + "\n");
+      if (shouldLog && cause.isPrintContributedVariables()) {
+        listener.getLogger().println("Contributing variables:\n");
       }
       for (final String variable : resolvedVariables.keySet()) {
         final String resolved = cause.getResolvedVariables().get(variable);
-        if (shouldLog) {
+        if (shouldLog && cause.isPrintContributedVariables()) {
           listener.getLogger().println("    " + variable + " = " + resolved);
         }
         envs.override(variable, resolved);
       }
-      if (shouldLog) {
+      if (shouldLog && cause.isPrintContributedVariables()) {
         listener.getLogger().println("\n");
       }
     }
   }
 
-  private boolean shouldLog(@SuppressWarnings("rawtypes") final Run r) throws IOException {
+  private boolean notLogged(@SuppressWarnings("rawtypes") final Run r) throws IOException {
     try (BufferedReader br =
         new BufferedReader(
             new InputStreamReader(new FileInputStream(r.getLogFile()), Charsets.UTF_8))) {

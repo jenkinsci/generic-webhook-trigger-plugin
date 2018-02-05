@@ -24,7 +24,7 @@ public class GenericTriggerTest {
 
   @Test
   public void testThatIsMatchingAcceptsEverythingIfNoFilter() {
-    boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
+    final boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression);
 
     assertThat(actual) //
         .isTrue();
@@ -35,7 +35,8 @@ public class GenericTriggerTest {
     regexpFilterText = "$key1";
     regexpFilterExpression = "resolved1";
 
-    boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
+    final boolean actual =
+        sut.isMatching(sut.renderText(regexpFilterText, resolvedVariables), regexpFilterExpression);
 
     assertThat(actual) //
         .isTrue();
@@ -46,7 +47,7 @@ public class GenericTriggerTest {
 
     regexpFilterText = "resolved2";
     regexpFilterExpression = "$key1";
-    boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression, resolvedVariables);
+    final boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression);
 
     assertThat(actual) //
         .isFalse();

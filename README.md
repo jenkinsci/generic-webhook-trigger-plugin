@@ -117,6 +117,8 @@ job('Generic Job Example') {
      regexpFilter("")
     }
    }
+   printContributedVariables(true)
+   printPostContent(true)
    regexpFilterText("\$VARIABLE_FROM_POST")
    regexpFilterExpression("aRegExp")
   }
@@ -155,6 +157,8 @@ node {
      [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
      [key: 'headerWithString', regexpFilter: '']
     ],
+    printContributedVariables: true,
+    printPostContent: true,
     regexpFilterText: '',
     regexpFilterExpression: ''
    ]

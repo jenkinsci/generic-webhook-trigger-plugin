@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jenkinsci.plugins.gwt.GenericHeaderVariable;
 
@@ -22,13 +23,14 @@ public class RequestHeaderResolver {
       List<GenericHeaderVariable> configuredGenericHeaderVariables,
       Map<String, Enumeration<String>> incomingHeaders) {
     final Map<String, String> found = new HashMap<>();
-    for (final String headerName : incomingHeaders.keySet()) {
+    for (final Entry<String, Enumeration<String>> headersEntry : incomingHeaders.entrySet()) {
+      final String headerName = headersEntry.getKey();
       final Optional<GenericHeaderVariable> configuredVariable =
           findConfiguredVariable(configuredGenericHeaderVariables, headerName);
       if (!configuredVariable.isPresent()) {
         continue;
       }
-      final Enumeration<String> headerEnumeration = incomingHeaders.get(headerName);
+      final Enumeration<String> headerEnumeration = headersEntry.getValue();
       final List<String> headers =
           Collections.list(headerEnumeration); // "depletes" headerEnumeration
       int i = 0;

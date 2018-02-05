@@ -10,6 +10,8 @@ node {
      [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
      [expressionType: 'JSONPath', key: 'before', value: '$.before']
     ],
+    printContributedVariables: true,
+    printPostContent: true,
     regexpFilterText: '$reference',
     regexpFilterExpression: jobName
    ]

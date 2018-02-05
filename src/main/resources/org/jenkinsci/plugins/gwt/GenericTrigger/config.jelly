@@ -22,6 +22,22 @@
    </f:description>
  </f:entry>
 
+
+ <f:entry title="Print post content" field="printPostContent">
+   <f:checkbox/>
+   <f:description>
+    Print post content in job log.
+   </f:description>
+ </f:entry>
+
+ <f:entry title="Print contributed variables" field="printContributedVariables">
+   <f:checkbox/>
+   <f:description>
+    Print contributed variables in job log.
+   </f:description>
+ </f:entry>
+
+
  <f:section title="Optional filter">
   <f:entry title="Expression">
    <f:textbox field="regexpFilterExpression"/>

@@ -18,6 +18,8 @@ node {
      [key: 'headerWithString', regexpFilter: ''],
      [key: 'X-GitHub-Event', regexpFilter: '']
     ],
+    printContributedVariables: true,
+    printPostContent: true,
     regexpFilterText: '',
     regexpFilterExpression: ''
    ]

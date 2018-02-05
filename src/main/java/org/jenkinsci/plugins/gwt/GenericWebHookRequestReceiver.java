@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -48,20 +47,20 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       headers = getHeaders(request);
       parameterMap = request.getParameterMap();
       postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
-    } catch (IOException e) {
+    } catch (final IOException e) {
       LOGGER.log(SEVERE, "", e);
     }
 
-    String token =
+    final String token =
         request.getParameter("token") != null ? request.getParameter("token").trim() : null;
     return doInvoke(headers, parameterMap, postContent, token);
   }
 
   private Map<String, Enumeration<String>> getHeaders(StaplerRequest request) {
-    Map<String, Enumeration<String>> headers = new HashMap<>();
-    Enumeration<String> headersEnumeration = request.getHeaderNames();
+    final Map<String, Enumeration<String>> headers = new HashMap<>();
+    final Enumeration<String> headersEnumeration = request.getHeaderNames();
     while (headersEnumeration.hasMoreElements()) {
-      String headerName = headersEnumeration.nextElement();
+      final String headerName = headersEnumeration.nextElement();
       headers.put(headerName, request.getHeaders(headerName));
     }
     return headers;
@@ -74,25 +73,31 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       String postContent,
       String token) {
 
-    List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(token);
-    Map<String, String> triggerResults = new HashMap<>();
+    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(token);
+    final Map<String, Object> triggerResultsMap = new HashMap<>();
     if (foundJobs.isEmpty()) {
       LOGGER.log(INFO, NO_JOBS_MSG);
-      triggerResults.put("ANY", NO_JOBS_MSG);
+      triggerResultsMap.put("ANY", NO_JOBS_MSG);
     }
-    for (FoundJob foundJob : foundJobs) {
+    for (final FoundJob foundJob : foundJobs) {
       try {
         LOGGER.log(INFO, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
-        foundJob.getGenericTrigger().trigger(headers, parameterMap, postContent);
-        triggerResults.put(foundJob.getFullName(), "OK");
-      } catch (Exception e) {
-        LOGGER.log(SEVERE, foundJob.getFullName(), e);
-        triggerResults.put(foundJob.getFullName(), ExceptionUtils.getStackTrace(e));
+        final GenericTriggerResults triggerResults =
+            foundJob.getGenericTrigger().trigger(headers, parameterMap, postContent);
+        triggerResultsMap.put(foundJob.getFullName(), triggerResults);
+      } catch (final Throwable t) {
+        LOGGER.log(SEVERE, foundJob.getFullName(), t);
+        final String msg =
+            "Exception occurred, full stack trace in Jenkins server log. Thrown in: "
+                + t.getStackTrace()[0].getClassName()
+                + ":"
+                + t.getStackTrace()[0].getLineNumber();
+        triggerResultsMap.put(foundJob.getFullName(), msg);
       }
     }
-    Map<String, Object> response = new HashMap<>();
-    response.put("triggerResults", triggerResults);
+    final Map<String, Object> response = new HashMap<>();
+    response.put("triggerResults", triggerResultsMap);
     return okJSON(response);
   }
 
@@ -115,7 +120,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   public boolean process(
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    String pathInfo = request.getPathInfo();
+    final String pathInfo = request.getPathInfo();
     if (pathInfo != null && pathInfo.startsWith("/" + URL_NAME + "/")) {
       chain.doFilter(request, response);
       return true;

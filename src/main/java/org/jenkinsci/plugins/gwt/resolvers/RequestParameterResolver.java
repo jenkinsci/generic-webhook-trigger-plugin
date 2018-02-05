@@ -7,6 +7,7 @@ import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jenkinsci.plugins.gwt.GenericRequestVariable;
 
@@ -20,13 +21,14 @@ public class RequestParameterResolver {
       Map<String, String[]> incomingParameterMap) {
     final Map<String, String> resolvedVariables = newHashMap();
     if (incomingParameterMap != null) {
-      for (final String requestParamName : incomingParameterMap.keySet()) {
+      for (final Entry<String, String[]> paramenterMapEntry : incomingParameterMap.entrySet()) {
+        final String requestParamName = paramenterMapEntry.getKey();
         final Optional<GenericRequestVariable> configuredVariable =
             findConfiguredVariable(configuredGenericRequestVariables, requestParamName);
         if (!configuredVariable.isPresent()) {
           continue;
         }
-        final String[] values = incomingParameterMap.get(requestParamName);
+        final String[] values = paramenterMapEntry.getValue();
         for (int i = 0; i < values.length; i++) {
           final String filteredValue =
               filter(values[i], configuredVariable.get().getRegexpFilter());
