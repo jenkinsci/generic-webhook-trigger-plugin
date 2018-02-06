@@ -1,5 +1,25 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#35](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/35) Add defaultValue attribute to GenericVariables    *enhancement*  
+
+**Adding defaultValue #35**
+
+ * Also making regexpFilter optional. 
+ * Making expressionType optional and defaulting to JSONPath. 
+ * Found stacktrace in log when JSONPath does not match, avoiding that now. 
+
+[78747111ca8b976](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/78747111ca8b976) Tomas Bjerre *2018-02-06 19:42:21*
+
+
+### No issue
+
+**Doc**
+
+
+[a87bb57241904a5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a87bb57241904a5) Tomas Bjerre *2018-02-06 18:35:46*
+
+
 ## 1.24 (2018-02-05 20:06:59)
 ### GitHub [#32](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/32) Do not show received payload in Jenkins job    *enhancement*  
 

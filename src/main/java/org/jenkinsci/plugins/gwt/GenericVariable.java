@@ -7,6 +7,7 @@ import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
 
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 public class GenericVariable extends AbstractDescribableImpl<GenericVariable> {
 
@@ -19,21 +20,34 @@ public class GenericVariable extends AbstractDescribableImpl<GenericVariable> {
     }
   }
 
-  private final ExpressionType expressionType;
+  private ExpressionType expressionType;
   private final String key;
   private final String value;
-  private final String regexpFilter;
+  private String regexpFilter;
+  private String defaultValue;
 
   @DataBoundConstructor
-  public GenericVariable(
-      String key, String value, ExpressionType expressionType, String regexpFilter) {
+  public GenericVariable(String key, String value) {
     this.key = checkNotNull(key, "Variable name");
     this.value = checkNotNull(value, "Variable expression");
-    if (expressionType == null) {
-      this.expressionType = JSONPath;
-    } else {
-      this.expressionType = expressionType;
-    }
+  }
+
+  @DataBoundSetter
+  public void setDefaultValue(String defaultValue) {
+    this.defaultValue = defaultValue;
+  }
+
+  public String getDefaultValue() {
+    return defaultValue;
+  }
+
+  @DataBoundSetter
+  public void setExpressionType(ExpressionType expressionType) {
+    this.expressionType = expressionType;
+  }
+
+  @DataBoundSetter
+  public void setRegexpFilter(String regexpFilter) {
     this.regexpFilter = regexpFilter;
   }
 
@@ -42,6 +56,9 @@ public class GenericVariable extends AbstractDescribableImpl<GenericVariable> {
   }
 
   public ExpressionType getExpressionType() {
+    if (expressionType == null) {
+      return JSONPath;
+    }
     return expressionType;
   }
 

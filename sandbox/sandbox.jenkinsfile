@@ -8,7 +8,13 @@ node {
    [$class: 'GenericTrigger',
     genericVariables: [
      [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
-     [expressionType: 'JSONPath', key: 'before', value: '$.before']
+     [
+      key: 'before',
+      value: '$.before',
+      expressionType: 'JSONPath', //Optional, defaults to JSONPath
+      regexpFilter: '', //Optional, defaults to empty string
+      defaultValue: '' //Optional, defaults to empty string
+     ]
     ],
     printContributedVariables: true,
     printPostContent: true,

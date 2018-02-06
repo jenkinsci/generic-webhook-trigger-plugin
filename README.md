@@ -110,8 +110,9 @@ job('Generic Job Example') {
     genericVariable {
      key("VARIABLE_FROM_POST")
      value("\$.something")
-     expressionType("JSONPath")
-     regexpFilter("")
+     expressionType("JSONPath") //Optional, defaults to JSONPath
+     regexpFilter("") //Optional, defaults to empty string
+     defaultValue("") //Optional, defaults to empty string
     }
    }
    genericRequestVariables {
@@ -155,8 +156,14 @@ node {
   pipelineTriggers([
    [$class: 'GenericTrigger',
     genericVariables: [
-     [expressionType: 'JSONPath', key: 'reference', value: '$.ref'],
-     [expressionType: 'JSONPath', key: 'before', value: '$.before']
+     [key: 'reference', value: '$.ref'],
+     [
+      key: 'before',
+      value: '$.before',
+      expressionType: 'JSONPath', //Optional, defaults to JSONPath
+      regexpFilter: '', //Optional, defaults to empty string
+      defaultValue: '' //Optional, defaults to empty string
+     ]
     ],
     genericRequestVariables: [
      [key: 'requestWithNumber', regexpFilter: '[^0-9]'],

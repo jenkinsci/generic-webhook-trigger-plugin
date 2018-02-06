@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Maps.newHashMap;
 import static java.util.logging.Level.INFO;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
@@ -25,6 +26,7 @@ import org.xml.sax.InputSource;
 
 import com.google.common.base.Charsets;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 
 public class PostContentParameterResolver {
   private static final Logger LOGGER = Logger.getLogger(VariablesResolver.class.getName());
@@ -39,7 +41,15 @@ public class PostContentParameterResolver {
     final Map<String, String> resolvedVariables = newHashMap();
     if (configuredGenericVariables != null) {
       for (final GenericVariable gv : configuredGenericVariables) {
-        resolvedVariables.putAll(resolve(incomingPostContent, gv));
+        final Map<String, String> resolvedMap = resolve(incomingPostContent, gv);
+        final boolean notResolved =
+            resolvedMap.isEmpty()
+                || resolvedMap.containsKey(gv.getVariableName())
+                    && resolvedMap.get(gv.getVariableName()).isEmpty();
+        if (notResolved && !isNullOrEmpty(gv.getDefaultValue())) {
+          resolvedMap.put(gv.getVariableName(), gv.getDefaultValue());
+        }
+        resolvedVariables.putAll(resolvedMap);
       }
     }
     return resolvedVariables;
@@ -74,8 +84,12 @@ public class PostContentParameterResolver {
 
   private Map<String, String> resolveJsonPath(
       final String incomingPostContent, final GenericVariable gv) {
-    final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
-    return jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+    try {
+      final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
+      return jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+    } catch (final PathNotFoundException e) {
+      return new HashMap<>();
+    }
   }
 
   private Map<String, String> resolveXPath(

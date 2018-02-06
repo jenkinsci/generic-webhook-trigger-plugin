@@ -21,6 +21,13 @@
    </f:description>
   </f:entry>
 
+  <f:entry title="Default value">
+   <f:textbox field="defaultValue" />
+   <f:description>
+    Optional. This value will be used if expression does not match anything.
+   </f:description>
+  </f:entry>
+
   <f:entry>
     <f:repeatableDeleteButton />
   </f:entry>

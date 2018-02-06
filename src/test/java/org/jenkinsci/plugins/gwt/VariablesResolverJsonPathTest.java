@@ -2,7 +2,6 @@ package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -125,10 +124,9 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = getContent(resourceName);
 
-    final String regexpFilter = "";
     final List<GenericVariable> genericVariables =
         newArrayList( //
-            new GenericVariable("ids", "$..id", JSONPath, regexpFilter));
+            new GenericVariable("ids", "$..id"));
     final Map<String, String[]> parameterMap = new HashMap<>();
     final String[] values1 = new String[] {"a", "b"};
     parameterMap.put("reqp1", values1);
@@ -210,10 +208,9 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = getContent(resourceName);
 
-    final String regexpFilter = "";
     final List<GenericVariable> genericVariables =
         newArrayList( //
-            new GenericVariable("ids", "$..abc", JSONPath, regexpFilter));
+            new GenericVariable("ids", "$..abc"));
     final Map<String, String[]> parameterMap = new HashMap<>();
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
@@ -238,10 +235,9 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = getContent(resourceName);
 
-    final String regexpFilter = "";
     final List<GenericVariable> genericVariables =
         newArrayList( //
-            new GenericVariable("user_name", "$.user.name", JSONPath, regexpFilter));
+            new GenericVariable("user_name", "$.user.name"));
     final Map<String, String[]> parameterMap = new HashMap<>();
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
@@ -264,11 +260,12 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = getContent(resourceName);
 
-    final String regexpFilter = "";
+    final GenericVariable genericVariable1 = new GenericVariable("user_name", "$.user.name");
+    genericVariable1.setRegexpFilter("[aA]");
     final List<GenericVariable> genericVariables =
         newArrayList( //
-            new GenericVariable("user_name", "$.user.name", JSONPath, "[aA]"), //
-            new GenericVariable("project_id", "$.project_id", JSONPath, regexpFilter));
+            genericVariable1, //
+            new GenericVariable("project_id", "$.project_id"));
     final Map<String, String[]> parameterMap = new HashMap<>();
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
@@ -301,10 +298,9 @@ public class VariablesResolverJsonPathTest {
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = getContent(resourceName);
 
-    final String regexpFilter = "";
     final List<GenericVariable> genericVariables =
         newArrayList( //
-            new GenericVariable("payload", "$", JSONPath, regexpFilter));
+            new GenericVariable("payload", "$"));
     final Map<String, String[]> parameterMap = new HashMap<>();
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
@@ -319,6 +315,32 @@ public class VariablesResolverJsonPathTest {
 
     assertThat(variables) //
         .containsEntry("payload_user_name", "Administrator");
+  }
+
+  @Test
+  public void testJSONPathGetPayloadVariableDefault() throws Exception {
+    final String resourceName = "gitlab-mergerequest-comment.json";
+    final String postContent = getContent(resourceName);
+
+    final GenericVariable genericVariable = new GenericVariable("payload", "$.doesnotexist");
+    genericVariable.setDefaultValue("this is the default");
+    final List<GenericVariable> genericVariables =
+        newArrayList( //
+            genericVariable);
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    final Map<String, String> variables =
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsEntry("payload", "this is the default");
   }
 
   @Test
@@ -358,10 +380,9 @@ public class VariablesResolverJsonPathTest {
 
   private Map<String, String> getJsonPathVariablesFromContent(
       final String jsonPath, final String postContent) {
-    final String regexpFilter = "";
     final List<GenericVariable> genericVariables =
         newArrayList( //
-            new GenericVariable("variableName", jsonPath, JSONPath, regexpFilter));
+            new GenericVariable("variableName", jsonPath));
     final Map<String, String[]> parameterMap = new HashMap<>();
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
