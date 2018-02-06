@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.25 (2018-02-06 19:45:30)
 ### GitHub [#35](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/35) Add defaultValue attribute to GenericVariables    *enhancement*  
 
 **Adding defaultValue #35**
@@ -9,7 +9,7 @@ Changelog of Generic Webhook Plugin.
  * Making expressionType optional and defaulting to JSONPath. 
  * Found stacktrace in log when JSONPath does not match, avoiding that now. 
 
-[78747111ca8b976](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/78747111ca8b976) Tomas Bjerre *2018-02-06 19:42:21*
+[429a3e253966b59](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/429a3e253966b59) Tomas Bjerre *2018-02-06 19:44:40*
 
 
 ### No issue
