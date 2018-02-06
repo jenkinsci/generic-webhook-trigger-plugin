@@ -30,7 +30,7 @@ The optional filter text can be set to `$reference` and the filter regexp set to
 
 This means it can trigger on any webhook, like:
 * [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html)
-* [Bitbucket Server](https://marketplace.atlassian.com/plugins/com.nerdwin15.stash-stash-webhook-jenkins/server/overview)
+* [Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html)
 * [GitHub](https://developer.github.com/webhooks/)
 * [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
 * [Gogs](https://gogs.io/docs/features/webhook)
@@ -43,7 +43,16 @@ You may want to report back to the invoking system. [HTTP Request Plugin](https:
 
 If a node is selected, then all leafs in that node will be contributed. If a leaf is selected, then only that leaf will be contributed.
 
-There are websites to help fiddle with the expressions. You may want to checkout [this website](https://jsonpath.curiousconcept.com/) to fiddle with JSONPath. And [this website](http://www.freeformatter.com/xpath-tester.html) to fiddle with XPath. Regular expressions can be developed with [this website](https://jex.im/regulex/).
+There are websites to help fiddle with the expressions. You may want to checkout:
+
+* [This website](https://jsonpath.curiousconcept.com/) to fiddle with JSONPath.
+* [This website](http://www.freeformatter.com/xpath-tester.html) to fiddle with XPath.
+* [This website](https://jex.im/regulex/) to fiddle with regexp.
+
+When using the plugin in several jobs, you will have the same URL trigger all jobs. If you want to trigger only a certain job you can:
+
+* Use the `token`-parameter and have different tokens for different jobs.
+* Add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
 
@@ -67,14 +76,14 @@ And to authenticate in the request you may try this.
 curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 2>&1
 ```
 
-There is also a special request parameter named `token`. When supplied it is used to authenticate with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html).
+There is also a special request parameter named `token`. When supplied, it is used to authenticate with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html).
 
 ![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
 
 The job can then be triggered with that token like this.
 
 ```
-curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123
+curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1
 ```
 
 ## Screenshots
