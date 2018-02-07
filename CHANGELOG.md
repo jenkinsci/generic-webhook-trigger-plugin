@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#37](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/37) NullPointerException at GenericTriggerResults (version 1.25)    *bug*  
+
+**Avoiding NPE #37**
+
+
+[e904e3361b46c8b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e904e3361b46c8b) Tomas Bjerre *2018-02-07 15:17:59*
+
+
 ## 1.25 (2018-02-06 19:45:30)
 ### GitHub [#35](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/35) Add defaultValue attribute to GenericVariables    *enhancement*  
 
