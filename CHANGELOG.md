@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.26 (2018-02-07 15:23:32)
 ### GitHub [#37](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/37) NullPointerException at GenericTriggerResults (version 1.25)    *bug*  
 
 **Avoiding NPE #37**
 
 
-[e904e3361b46c8b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e904e3361b46c8b) Tomas Bjerre *2018-02-07 15:17:59*
+[02c4d68a5871f2d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/02c4d68a5871f2d) Tomas Bjerre *2018-02-07 15:21:47*
 
 
 ## 1.25 (2018-02-06 19:45:30)

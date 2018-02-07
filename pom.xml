@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
@@ -14,7 +15,7 @@
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
-	<version>1.26</version>
+	<version>1.27-SNAPSHOT</version>
 	<name>Generic Webhook Trigger Plugin</name>
 	<description>Trigger that can receive any HTTP request, extract any JSONPath/XPath values and trigger a job with those values available as variables.</description>
 	<url>https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin</url>
@@ -57,7 +58,7 @@
 		<connection>scm:git:ssh://github.com:jenkinsci/generic-webhook-trigger-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/generic-webhook-trigger-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/generic-webhook-trigger-plugin</url>
-		<tag>generic-webhook-trigger-1.26</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<repositories>
@@ -220,6 +221,12 @@ Changelog of Generic Webhook Plugin.
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<version>2.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.13.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
