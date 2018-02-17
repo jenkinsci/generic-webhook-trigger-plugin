@@ -33,7 +33,7 @@ This means it can trigger on any webhook, like:
 * [Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html)
 * [GitHub](https://developer.github.com/webhooks/)
 * [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
-* [Gogs](https://gogs.io/docs/features/webhook)
+* [Gogs](https://gogs.io/docs/features/webhook) and [Gitea](https://gitea.io/)
 * [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
 * And many many more!
 
@@ -84,6 +84,11 @@ The job can then be triggered with that token like this.
 
 ```
 curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1
+```
+
+If you want to trigger with some post content, curl can dot that like this.
+```
+curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"GitHub API", "url":"http://developer.github.com/v3/oauth/" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=sometoken
 ```
 
 ## Screenshots
