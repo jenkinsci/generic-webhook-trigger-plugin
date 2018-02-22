@@ -1,5 +1,19 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Doc**
+
+
+[911aca914fcfb79](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/911aca914fcfb79) Tomas Bjerre *2018-02-22 17:05:26*
+
+**Helpful node about underscores for HTTP Header vars**
+
+
+[52b9b5258c9a2e3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/52b9b5258c9a2e3) Gmanfunky *2018-02-17 02:22:25*
+
+
 ## 1.26 (2018-02-07 15:23:32)
 ### GitHub [#37](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/37) NullPointerException at GenericTriggerResults (version 1.25)    *bug*  
 

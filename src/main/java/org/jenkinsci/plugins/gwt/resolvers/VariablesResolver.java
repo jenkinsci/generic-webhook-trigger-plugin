@@ -1,12 +1,11 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
-import static com.google.common.collect.Maps.newHashMap;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.jenkinsci.plugins.gwt.GenericHeaderVariable;
 import org.jenkinsci.plugins.gwt.GenericRequestVariable;
@@ -50,7 +49,7 @@ public class VariablesResolver {
   }
 
   public Map<String, String> getVariables() {
-    Map<String, String> resolvedVariables = newHashMap();
+    final Map<String, String> resolvedVariables = new TreeMap<>();
     resolvedVariables.putAll(
         requestHeaderResolver.getRequestHeaders(configuredGenericHeaderVariables, incomingHeaders));
     resolvedVariables.putAll(

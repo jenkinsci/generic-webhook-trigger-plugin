@@ -14,10 +14,14 @@ import hudson.model.StringParameterValue;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import jenkins.model.ParameterizedJobMixIn;
@@ -166,16 +170,38 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     if (isNullOrEmpty(regexpFilterText)) {
       return "";
     }
-    for (final Entry<String, String> variableEntry : resolvedVariables.entrySet()) {
-      final String key = "\\$" + variableEntry.getKey();
-      final String resolvedVariable = variableEntry.getValue();
+    final List<String> variables = getVariablesInResolveOrder(resolvedVariables.keySet());
+    for (final String variable : variables) {
+      final String key = "\\$" + variable;
+      final String resolvedVariable = resolvedVariables.get(variable);
       try {
-        regexpFilterText = regexpFilterText.replaceAll(key, resolvedVariable);
+        regexpFilterText =
+            regexpFilterText //
+                .replaceAll(key, resolvedVariable);
       } catch (final IllegalArgumentException e) {
         throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
       }
     }
     return regexpFilterText;
+  }
+
+  @VisibleForTesting
+  List<String> getVariablesInResolveOrder(Set<String> unsorted) {
+    final List<String> variables = new ArrayList<String>(unsorted);
+    Collections.sort(
+        variables,
+        new Comparator<String>() {
+          @Override
+          public int compare(String o1, String o2) {
+            if (o1.length() == o2.length()) {
+              return o1.compareTo(o2);
+            } else if (o1.length() > o2.length()) {
+              return -1;
+            }
+            return 1;
+          }
+        });
+    return variables;
   }
 
   public List<GenericVariable> getGenericVariables() {
