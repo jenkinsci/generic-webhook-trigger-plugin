@@ -1,7 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.27 (2018-02-22 17:53:45)
 ### No issue
+
+**Avoid resolve variables in random order**
+
+
+[d602b6bd7a77d87](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d602b6bd7a77d87) Tomas Bjerre *2018-02-22 17:52:47*
 
 **Doc**
 
