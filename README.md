@@ -84,7 +84,7 @@ This may start your job, if you have enabled "**Allow anonymous read access**" i
 INFO: Did not find any jobs to trigger! The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered.
 ```
 
-And to authenticate in the request you may try this.
+And to authenticate in the request you may use a *token*, or try this:
 
 ```
 curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 2>&1

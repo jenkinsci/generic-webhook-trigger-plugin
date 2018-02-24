@@ -1,12 +1,13 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.28 (2018-02-24 13:41:42)
 ### GitHub [#43](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/43) Add suport for Authorization Bearer  
 
 **Authorization Bearer #43**
 
+ * Also transforming headers to lower case to make them case insensitive (RFC 2616 and 7230). 
 
-[c35998fdc6c0eeb](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c35998fdc6c0eeb) Tomas Bjerre *2018-02-24 13:16:54*
+[c2620541b8c48d3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c2620541b8c48d3) Tomas Bjerre *2018-02-24 13:39:01*
 
 
 ## 1.27 (2018-02-22 17:53:45)
