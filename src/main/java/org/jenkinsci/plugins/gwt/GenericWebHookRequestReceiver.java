@@ -5,11 +5,9 @@ import static hudson.util.HttpResponses.okJSON;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
-import hudson.Extension;
-import hudson.model.UnprotectedRootAction;
-import hudson.security.csrf.CrumbExclusion;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +25,10 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import hudson.Extension;
+import hudson.model.UnprotectedRootAction;
+import hudson.security.csrf.CrumbExclusion;
+
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {
 
@@ -39,10 +41,10 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   private static final Logger LOGGER =
       Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
 
-  public HttpResponse doInvoke(StaplerRequest request) {
+  public HttpResponse doInvoke(final StaplerRequest request) {
     String postContent = null;
     Map<String, String[]> parameterMap = null;
-    Map<String, Enumeration<String>> headers = null;
+    Map<String, List<String>> headers = null;
     try {
       headers = getHeaders(request);
       parameterMap = request.getParameterMap();
@@ -51,29 +53,48 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       LOGGER.log(SEVERE, "", e);
     }
 
-    final String token =
-        request.getParameter("token") != null ? request.getParameter("token").trim() : null;
-    return doInvoke(headers, parameterMap, postContent, token);
+    final String givenToken = getGivenToken(headers, parameterMap);
+    return doInvoke(headers, parameterMap, postContent, givenToken);
   }
 
-  private Map<String, Enumeration<String>> getHeaders(StaplerRequest request) {
-    final Map<String, Enumeration<String>> headers = new HashMap<>();
+  @VisibleForTesting
+  String getGivenToken(
+      final Map<String, List<String>> headers, final Map<String, String[]> parameterMap) {
+    if (parameterMap.containsKey("token")) {
+      return parameterMap.get("token")[0];
+    }
+    if (headers.containsKey("token")) {
+      return headers.get("token").get(0);
+    }
+    if (headers.containsKey("authorization")) {
+      for (final String candidateValue : headers.get("authorization")) {
+        if (candidateValue.startsWith("Bearer ")) {
+          return candidateValue.substring(7);
+        }
+      }
+    }
+    return null;
+  }
+
+  @VisibleForTesting
+  Map<String, List<String>> getHeaders(final StaplerRequest request) {
+    final Map<String, List<String>> headers = new HashMap<>();
     final Enumeration<String> headersEnumeration = request.getHeaderNames();
     while (headersEnumeration.hasMoreElements()) {
       final String headerName = headersEnumeration.nextElement();
-      headers.put(headerName, request.getHeaders(headerName));
+      headers.put(headerName.toLowerCase(), Collections.list(request.getHeaders(headerName)));
     }
     return headers;
   }
 
   @VisibleForTesting
   HttpResponse doInvoke(
-      Map<String, Enumeration<String>> headers,
-      Map<String, String[]> parameterMap,
-      String postContent,
-      String token) {
+      final Map<String, List<String>> headers,
+      final Map<String, String[]> parameterMap,
+      final String postContent,
+      final String givenToken) {
 
-    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(token);
+    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
     final Map<String, Object> triggerResultsMap = new HashMap<>();
     if (foundJobs.isEmpty()) {
       LOGGER.log(INFO, NO_JOBS_MSG);
@@ -118,7 +139,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
 
   @Override
   public boolean process(
-      HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+      final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
       throws IOException, ServletException {
     final String pathInfo = request.getPathInfo();
     if (pathInfo != null && pathInfo.startsWith("/" + URL_NAME + "/")) {

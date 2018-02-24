@@ -4,33 +4,32 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.INFO;
 import static java.util.regex.Pattern.compile;
-import hudson.Extension;
-import hudson.model.Item;
-import hudson.model.ParameterValue;
-import hudson.model.CauseAction;
-import hudson.model.Job;
-import hudson.model.ParametersAction;
-import hudson.model.StringParameterValue;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import jenkins.model.ParameterizedJobMixIn;
-
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 import com.google.common.annotations.VisibleForTesting;
+
+import hudson.Extension;
+import hudson.model.CauseAction;
+import hudson.model.Item;
+import hudson.model.Job;
+import hudson.model.ParameterValue;
+import hudson.model.ParametersAction;
+import hudson.model.StringParameterValue;
+import hudson.triggers.Trigger;
+import hudson.triggers.TriggerDescriptor;
+import jenkins.model.ParameterizedJobMixIn;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
@@ -46,7 +45,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   public static class GenericDescriptor extends TriggerDescriptor {
 
     @Override
-    public boolean isApplicable(Item item) {
+    public boolean isApplicable(final Item item) {
       return Job.class.isAssignableFrom(item.getClass());
     }
 
@@ -58,11 +57,11 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
   @DataBoundConstructor
   public GenericTrigger(
-      List<GenericVariable> genericVariables,
-      String regexpFilterText,
-      String regexpFilterExpression,
-      List<GenericRequestVariable> genericRequestVariables,
-      List<GenericHeaderVariable> genericHeaderVariables) {
+      final List<GenericVariable> genericVariables,
+      final String regexpFilterText,
+      final String regexpFilterExpression,
+      final List<GenericRequestVariable> genericRequestVariables,
+      final List<GenericHeaderVariable> genericHeaderVariables) {
     this.genericVariables = genericVariables;
     this.regexpFilterExpression = regexpFilterExpression;
     this.regexpFilterText = regexpFilterText;
@@ -71,12 +70,12 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @DataBoundSetter
-  public void setPrintContributedVariables(boolean printContributedVariables) {
+  public void setPrintContributedVariables(final boolean printContributedVariables) {
     this.printContributedVariables = printContributedVariables;
   }
 
   @DataBoundSetter
-  public void setPrintPostContent(boolean printPostContent) {
+  public void setPrintPostContent(final boolean printPostContent) {
     this.printPostContent = printPostContent;
   }
 
@@ -92,9 +91,9 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
   @SuppressWarnings("static-access")
   public GenericTriggerResults trigger(
-      Map<String, Enumeration<String>> headers,
-      Map<String, String[]> parameterMap,
-      String postContent) {
+      final Map<String, List<String>> headers,
+      final Map<String, String[]> parameterMap,
+      final String postContent) {
     final Map<String, String> resolvedVariables =
         new VariablesResolver(
                 headers,
@@ -133,7 +132,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     };
   }
 
-  private ParametersAction createParameters(Map<String, String> resolvedVariables) {
+  private ParametersAction createParameters(final Map<String, String> resolvedVariables) {
     final List<ParameterValue> parameterList = newArrayList();
     for (final Entry<String, String> entry : resolvedVariables.entrySet()) {
       final ParameterValue parameter = new StringParameterValue(entry.getKey(), entry.getValue());
@@ -143,7 +142,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @VisibleForTesting
-  boolean isMatching(String renderedRegexpFilterText, String regexpFilterExpression) {
+  boolean isMatching(final String renderedRegexpFilterText, final String regexpFilterExpression) {
     final boolean noFilterConfigured =
         isNullOrEmpty(renderedRegexpFilterText) || isNullOrEmpty(regexpFilterExpression);
     if (noFilterConfigured) {
@@ -166,7 +165,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @VisibleForTesting
-  String renderText(String regexpFilterText, Map<String, String> resolvedVariables) {
+  String renderText(String regexpFilterText, final Map<String, String> resolvedVariables) {
     if (isNullOrEmpty(regexpFilterText)) {
       return "";
     }
@@ -186,13 +185,13 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @VisibleForTesting
-  List<String> getVariablesInResolveOrder(Set<String> unsorted) {
-    final List<String> variables = new ArrayList<String>(unsorted);
+  List<String> getVariablesInResolveOrder(final Set<String> unsorted) {
+    final List<String> variables = new ArrayList<>(unsorted);
     Collections.sort(
         variables,
         new Comparator<String>() {
           @Override
-          public int compare(String o1, String o2) {
+          public int compare(final String o1, final String o2) {
             if (o1.length() == o2.length()) {
               return o1.compareTo(o2);
             } else if (o1.length() > o2.length()) {

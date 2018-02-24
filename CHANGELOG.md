@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#43](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/43) Add suport for Authorization Bearer  
+
+**Authorization Bearer #43**
+
+
+[c35998fdc6c0eeb](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c35998fdc6c0eeb) Tomas Bjerre *2018-02-24 13:16:54*
+
+
 ## 1.27 (2018-02-22 17:53:45)
 ### No issue
 

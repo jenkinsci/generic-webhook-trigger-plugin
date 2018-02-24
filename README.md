@@ -56,6 +56,20 @@ When using the plugin in several jobs, you will have the same URL trigger all jo
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
 
+## Authentication
+
+There is a special `token` parameter. When supplied, it is used with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html) to authenticate.
+
+It might be a good idea to have a different token for each job. Then only that job will be visible for that request. This will increase performance and reduce responses of each invocation.
+
+![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
+
+The token can be supplied as a:
+
+* Request parameter: `curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1`
+* Token header: `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+* *Authorization* header of type *Bearer* : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+
 ## Troubleshooting
 
 It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
@@ -74,16 +88,6 @@ And to authenticate in the request you may try this.
 
 ```
 curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 2>&1
-```
-
-There is also a special request parameter named `token`. When supplied, it is used to authenticate with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html).
-
-![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
-
-The job can then be triggered with that token like this.
-
-```
-curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1
 ```
 
 If you want to trigger with some post content, curl can dot that like this.

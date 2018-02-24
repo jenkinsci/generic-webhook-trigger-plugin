@@ -1,7 +1,6 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +20,15 @@ public class VariablesResolver {
   private final PostContentParameterResolver postContentParameterResolver =
       new PostContentParameterResolver();
   private final List<GenericHeaderVariable> configuredGenericHeaderVariables;
-  private final Map<String, Enumeration<String>> incomingHeaders;
+  private final Map<String, List<String>> incomingHeaders;
 
   public VariablesResolver(
-      Map<String, Enumeration<String>> incomingHeaders,
-      Map<String, String[]> incomingParameterMap,
-      String incomingPostContent,
-      List<GenericVariable> configuredGenericVariables,
-      List<GenericRequestVariable> configuredGenericRequestVariables,
-      List<GenericHeaderVariable> configuredGenericHeaderVariables) {
+      final Map<String, List<String>> incomingHeaders,
+      final Map<String, String[]> incomingParameterMap,
+      final String incomingPostContent,
+      final List<GenericVariable> configuredGenericVariables,
+      final List<GenericRequestVariable> configuredGenericRequestVariables,
+      final List<GenericHeaderVariable> configuredGenericHeaderVariables) {
     this.incomingPostContent = firstNotNull(incomingPostContent, "");
     this.configuredGenericVariables =
         firstNotNull(configuredGenericVariables, new ArrayList<GenericVariable>());
@@ -41,7 +40,7 @@ public class VariablesResolver {
     this.incomingHeaders = incomingHeaders;
   }
 
-  private <T> T firstNotNull(T o1, T o2) {
+  private <T> T firstNotNull(final T o1, final T o2) {
     if (o1 != null) {
       return o1;
     }

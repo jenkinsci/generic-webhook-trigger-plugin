@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 public class VariablesResolverXPathTest {
-  private final Map<String, Enumeration<String>> headers = new HashMap<>();
+  private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
 
   @Test
@@ -155,7 +154,7 @@ public class VariablesResolverXPathTest {
   }
 
   private Map<String, String> getVariables(
-      final String resourceName, GenericVariable genericVariable) {
+      final String resourceName, final GenericVariable genericVariable) {
     final String postContent = getContent(resourceName);
 
     genericVariable.setExpressionType(XPath);

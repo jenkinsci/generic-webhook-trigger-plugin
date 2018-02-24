@@ -5,8 +5,6 @@ import static com.google.common.base.Optional.of;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,43 +18,38 @@ public class RequestHeaderResolver {
   public RequestHeaderResolver() {}
 
   public Map<String, String> getRequestHeaders(
-      List<GenericHeaderVariable> configuredGenericHeaderVariables,
-      Map<String, Enumeration<String>> incomingHeaders) {
+      final List<GenericHeaderVariable> configuredGenericHeaderVariables,
+      final Map<String, List<String>> incomingHeaders) {
     final Map<String, String> found = new HashMap<>();
-    for (final Entry<String, Enumeration<String>> headersEntry : incomingHeaders.entrySet()) {
+    for (final Entry<String, List<String>> headersEntry : incomingHeaders.entrySet()) {
       final String headerName = headersEntry.getKey();
       final Optional<GenericHeaderVariable> configuredVariable =
           findConfiguredVariable(configuredGenericHeaderVariables, headerName);
       if (!configuredVariable.isPresent()) {
         continue;
       }
-      final Enumeration<String> headerEnumeration = headersEntry.getValue();
-      final List<String> headers =
-          Collections.list(headerEnumeration); // "depletes" headerEnumeration
+      final List<String> headers = headersEntry.getValue();
       int i = 0;
       for (final String headerValue : headers) {
         final String regexpFilter = configuredVariable.get().getRegexpFilter();
         final String filteredValue = filter(headerValue, regexpFilter);
-        found.put(toVariableName(headerName) + "_" + i, filteredValue);
+        found.put(toVariableName(headerName).toLowerCase() + "_" + i, filteredValue);
         final boolean firstValue = i == 0;
         if (firstValue) {
           //Users will probably expect this variable for parameters that are never a list
-          found.put(toVariableName(headerName), filteredValue);
+          found.put(toVariableName(headerName).toLowerCase(), filteredValue);
         }
         i++;
       }
-      incomingHeaders.put(
-          headerName,
-          Collections.enumeration(
-              headers)); // "replete" headerEnumeration, so it can be reused by other jobs later on
+      incomingHeaders.put(headerName, headers);
     }
     return found;
   }
 
   private Optional<GenericHeaderVariable> findConfiguredVariable(
-      List<GenericHeaderVariable> configuredGenericHeaderVariables, String headerName) {
+      final List<GenericHeaderVariable> configuredGenericHeaderVariables, final String headerName) {
     for (final GenericHeaderVariable ghv : configuredGenericHeaderVariables) {
-      if (ghv.getHeaderName().equals(headerName)) {
+      if (ghv.getHeaderName().equalsIgnoreCase(headerName)) {
         return of(ghv);
       }
     }

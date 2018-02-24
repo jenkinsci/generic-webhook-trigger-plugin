@@ -1,25 +1,25 @@
 package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import hudson.security.ACL;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import jenkins.model.Jenkins;
-import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
-
 import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
+
+import hudson.security.ACL;
+import hudson.triggers.Trigger;
+import hudson.triggers.TriggerDescriptor;
+import jenkins.model.Jenkins;
+import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 
 public final class JobFinder {
 
   private JobFinder() {}
 
-  public static List<FoundJob> findAllJobsWithTrigger(String queryStringToken) {
+  public static List<FoundJob> findAllJobsWithTrigger(final String givenToken) {
 
     final List<FoundJob> found = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public final class JobFinder {
     candidateProjects = getAllParameterizedJobsByImpersonation();
     for (final ParameterizedJob candidateJob : candidateProjects) {
       if (!isIncluded(candidateJob.getFullName(), found)
-          && authenticationTokenMatches(candidateJob, queryStringToken)) {
+          && authenticationTokenMatches(candidateJob, givenToken)) {
         final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
         if (genericTriggerOpt != null) {
           found.add(new FoundJob(candidateJob.getFullName(), genericTriggerOpt));
@@ -45,7 +45,7 @@ public final class JobFinder {
     return found;
   }
 
-  private static boolean isIncluded(String searchFor, List<FoundJob> includedJobs) {
+  private static boolean isIncluded(final String searchFor, final List<FoundJob> includedJobs) {
     for (final FoundJob includedJob : includedJobs) {
       if (includedJob.getFullName().equals(searchFor)) {
         return true;
@@ -62,12 +62,12 @@ public final class JobFinder {
 
   @SuppressWarnings("deprecation")
   private static boolean authenticationTokenMatches(
-      ParameterizedJob candidateJob, String queryStringToken) {
+      final ParameterizedJob candidateJob, final String givenToken) {
     final hudson.model.BuildAuthorizationToken authToken = candidateJob.getAuthToken();
 
     final boolean jobHasAuthToken = authToken != null && !isNullOrEmpty(authToken.getToken());
-    if (jobHasAuthToken) {
-      final boolean authTokenMatchesQueryToken = authToken.getToken().equals(queryStringToken);
+    if (jobHasAuthToken && givenToken != null) {
+      final boolean authTokenMatchesQueryToken = authToken.getToken().equals(givenToken);
       if (authTokenMatchesQueryToken) {
         return true;
       } else {
@@ -86,7 +86,8 @@ public final class JobFinder {
     return jobs;
   }
 
-  private static GenericTrigger findGenericTrigger(Map<TriggerDescriptor, Trigger<?>> triggers) {
+  private static GenericTrigger findGenericTrigger(
+      final Map<TriggerDescriptor, Trigger<?>> triggers) {
     if (triggers == null) {
       return null;
     }

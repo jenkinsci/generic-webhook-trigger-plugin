@@ -4,7 +4,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 public class VariablesResolverJsonPathTest {
-  private final Map<String, Enumeration<String>> headers = new HashMap<>();
+  private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
 
   @Test
