@@ -4,6 +4,17 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.INFO;
 import static java.util.regex.Pattern.compile;
+import hudson.Extension;
+import hudson.model.Item;
+import hudson.model.ParameterValue;
+import hudson.model.CauseAction;
+import hudson.model.Job;
+import hudson.model.ParameterDefinition;
+import hudson.model.ParametersAction;
+import hudson.model.ParametersDefinitionProperty;
+import hudson.model.StringParameterValue;
+import hudson.triggers.Trigger;
+import hudson.triggers.TriggerDescriptor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,22 +25,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import jenkins.model.ParameterizedJobMixIn;
+
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 import com.google.common.annotations.VisibleForTesting;
-
-import hudson.Extension;
-import hudson.model.CauseAction;
-import hudson.model.Item;
-import hudson.model.Job;
-import hudson.model.ParameterValue;
-import hudson.model.ParametersAction;
-import hudson.model.StringParameterValue;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
-import jenkins.model.ParameterizedJobMixIn;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
@@ -113,7 +115,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
           new GenericCause(
               postContent, resolvedVariables, printContributedVariables, printPostContent);
 
-      final ParametersAction parameters = createParameters(resolvedVariables);
+      final ParametersAction parameters = createParameters(job, resolvedVariables);
       item =
           retrieveScheduleJob(job) //
               .scheduleBuild2(job, 0, new CauseAction(cause), parameters);
@@ -132,13 +134,53 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     };
   }
 
-  private ParametersAction createParameters(final Map<String, String> resolvedVariables) {
-    final List<ParameterValue> parameterList = newArrayList();
-    for (final Entry<String, String> entry : resolvedVariables.entrySet()) {
-      final ParameterValue parameter = new StringParameterValue(entry.getKey(), entry.getValue());
-      parameterList.add(parameter);
+  private ParametersAction createParameters(
+      final Job<?, ?> job, final Map<String, String> resolvedVariables) {
+    final List<StringParameterValue> parameterList = newArrayList();
+    addAllParametersFromParameterizedJob(job, parameterList);
+    addAllResolvedVariables(resolvedVariables, parameterList);
+    return new ParametersAction(toParameterValueList(parameterList));
+  }
+
+  private List<ParameterValue> toParameterValueList(
+      final List<StringParameterValue> parameterList) {
+    final List<ParameterValue> t = new ArrayList<>();
+    for (final StringParameterValue f : parameterList) {
+      t.add(f);
     }
-    return new ParametersAction(parameterList);
+    return t;
+  }
+
+  private void addAllResolvedVariables(
+      final Map<String, String> resolvedVariables, final List<StringParameterValue> parameterList) {
+    for (final Entry<String, String> entry : resolvedVariables.entrySet()) {
+      if (!isNullOrEmpty(entry.getValue())) {
+        final StringParameterValue parameter =
+            new StringParameterValue(entry.getKey(), entry.getValue());
+        parameterList.add(parameter);
+      }
+    }
+  }
+
+  /** To keep any default values set there. */
+  private void addAllParametersFromParameterizedJob(
+      final Job<?, ?> job, final List<StringParameterValue> parameterList) {
+    final ParametersDefinitionProperty parametersDefinitionProperty =
+        job.getProperty(ParametersDefinitionProperty.class);
+    if (parametersDefinitionProperty != null) {
+      for (final ParameterDefinition parameterDefinition :
+          parametersDefinitionProperty.getParameterDefinitions()) {
+        final String param = parameterDefinition.getName();
+        final ParameterValue defaultParameterValue = parameterDefinition.getDefaultParameterValue();
+        if (defaultParameterValue != null) {
+          final String value = defaultParameterValue.getValue().toString();
+          if (!isNullOrEmpty(value)) {
+            final StringParameterValue parameter = new StringParameterValue(param, value);
+            parameterList.add(parameter);
+          }
+        }
+      }
+    }
   }
 
   @VisibleForTesting

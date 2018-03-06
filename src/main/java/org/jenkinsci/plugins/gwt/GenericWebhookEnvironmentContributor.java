@@ -32,8 +32,8 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
     if (cause != null) {
       final boolean shouldLog =
           (cause.isPrintContributedVariables() || cause.isPrintPostContent()) && notLogged(r);
-      listener.getLogger().println(CONTRIBUTING_VARIABLES);
       if (shouldLog && cause.isPrintPostContent()) {
+        listener.getLogger().println(CONTRIBUTING_VARIABLES);
         listener.getLogger().println(" Received:\n\n" + cause.getPostContent() + "\n\n");
       }
       final Map<String, String> resolvedVariables = cause.getResolvedVariables();
