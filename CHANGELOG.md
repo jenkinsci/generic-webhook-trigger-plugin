@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.29 (2018-03-06 20:26:35)
+### GitHub [#45](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/45) &quot;This project is parameterized&quot; parameters are being ignored if triggered    *bug*  
+
+**Keeping default values in parameterized jobs #45**
+
+
+[602ea1fd613abd2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/602ea1fd613abd2) Tomas Bjerre *2018-03-06 20:25:41*
+
+
 ## 1.28 (2018-02-24 13:41:42)
 ### GitHub [#43](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/43) Add suport for Authorization Bearer  
 
