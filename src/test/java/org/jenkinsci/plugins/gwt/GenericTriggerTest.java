@@ -45,8 +45,8 @@ public class GenericTriggerTest {
 
   @Test
   public void testThatIsMatchingWorksDevelopNotCorrectUser() {
-    regexpFilterText = "jenkins refs/heads/develop";
-    regexpFilterExpression = "^((?!jenkins)) refs/heads/develop$";
+    regexpFilterText = "refs/heads/develop jenkins";
+    regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";
     final boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression);
 
     assertThat(actual) //
