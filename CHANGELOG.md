@@ -1,5 +1,17 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.30 (2018-03-08 17:59:01)
+### No issue
+
+**improve header variable name description**
+
+ * Version 1.28 introduced RFC 2616 compatibility making all headers lowercase. 
+ * This patch adds a note to make this fact more obvious. 
+ * Example situation where this matters: a CI systems that checks for X-GitHub-Event header to make further decisions. Since 1.28 the resulting variable changes from X_GitHub_Event to x_github_event effectively breaking this process. 
+
+[0fd81969349a1d0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0fd81969349a1d0) jekader *2018-03-08 17:28:09*
+
+
 ## 1.29 (2018-03-06 20:26:35)
 ### GitHub [#45](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/45) &quot;This project is parameterized&quot; parameters are being ignored if triggered    *bug*  
 

@@ -34,6 +34,26 @@ public class GenericTriggerTest {
   }
 
   @Test
+  public void testThatIsMatchingWorksDevelopCorrectUser() {
+    regexpFilterText = "refs/heads/develop tomabje";
+    regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";
+    final boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression);
+
+    assertThat(actual) //
+        .isTrue();
+  }
+
+  @Test
+  public void testThatIsMatchingWorksDevelopNotCorrectUser() {
+    regexpFilterText = "jenkins refs/heads/develop";
+    regexpFilterExpression = "^((?!jenkins)) refs/heads/develop$";
+    final boolean actual = sut.isMatching(regexpFilterText, regexpFilterExpression);
+
+    assertThat(actual) //
+        .isFalse();
+  }
+
+  @Test
   public void testThatIsMatchingAcceptsIfMatching() {
     regexpFilterText = "$key1";
     regexpFilterExpression = "resolved1";
