@@ -1,0 +1,7 @@
+When reporting a bug, please try to provide as much information as possible.
+
+ * Plugin version used.
+ * Your configuration:
+   * A response of an invocation with `curl`, there are examples in the README.
+   * Or other detailed information of the configuration.
+ * Expected result and actual result.

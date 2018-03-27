@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## 1.30 (2018-03-08 17:59:01)
+## Unreleased
 ### No issue
 
 **improve header variable name description**
