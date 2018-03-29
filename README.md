@@ -11,7 +11,7 @@ This is a Jenkins plugin that can:
   * From the query parameters
   * From the headers
 
- 3. Contribute those values as variables to the build
+ 3. Trigger a build with those values contribute as variables
 
 There is an optional feature to trigger jobs only if a supplied regular expression matches the extracted variables. Here is an example, let's say the post content looks like this:
 ```
@@ -22,18 +22,16 @@ There is an optional feature to trigger jobs only if a supplied regular expressi
 }
 ```
 
-Then you can have a variable, resolved from post content, named `reference` of type `JSONPath` and with expression like `$.ref` .
+Then you can have a variable, resolved from post content, named `reference` of type `JSONPath` and with expression like `$.ref` . The optional filter text can be set to `$reference` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)$﻿](https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24) to trigger builds only for develop and feature-branches.
 
-The optional filter text can be set to `$reference` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)$﻿](https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24) to trigger builds only for develop and feature-branches.
+There are more [examples of use cases here](src/test/resources/org/jenkinsci/plugins/gwt/bdd).
 
-## Use case
-
-This means it can trigger on any webhook, like:
+It can trigger on any webhook, like:
 * [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html)
 * [Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html)
 * [GitHub](https://developer.github.com/webhooks/)
 * [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
-* [Gogs](https://gogs.io/docs/features/webhook) and [Gitea](https://gitea.io/)
+* [Gogs](https://gogs.io/docs/features/webhook) and [Gitea](https://docs.gitea.io/en-us/webhooks/)
 * [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
 * And many many more!
 
@@ -43,24 +41,18 @@ You may want to report back to the invoking system. [HTTP Request Plugin](https:
 
 If a node is selected, then all leafs in that node will be contributed. If a leaf is selected, then only that leaf will be contributed.
 
-There are websites to help fiddle with the expressions. You may want to checkout:
 
-* [This website](https://jsonpath.curiousconcept.com/) to fiddle with JSONPath.
-* [This website](http://www.freeformatter.com/xpath-tester.html) to fiddle with XPath.
-* [This website](https://jex.im/regulex/) to fiddle with regexp.
+## Trigger only specific job
 
 When using the plugin in several jobs, you will have the same URL trigger all jobs. If you want to trigger only a certain job you can:
 
-* Use the `token`-parameter and have different tokens for different jobs.
-* Add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
+* Use the `token`-parameter have different tokens for different jobs. **Don't combine it with any other authentication!** Using only the token means only jobs with that exact token will be visible for that request. This will increase performance and reduce responses of each invocation.
+* Or, add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
 
-Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin).
 
 ## Authentication
 
 There is a special `token` parameter. When supplied, it is used with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html) to authenticate.
-
-It might be a good idea to have a different token for each job. Then only that job will be visible for that request. This will increase performance and reduce responses of each invocation.
 
 ![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
 
@@ -70,7 +62,14 @@ The token can be supplied as a:
 * Token header: `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 * *Authorization* header of type *Bearer* : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 
+
 ## Troubleshooting
+
+If you are fiddling with expressions, you may want to checkout:
+
+* [This JSONPath site](https://jsonpath.curiousconcept.com/)
+* [This XPath site](http://www.freeformatter.com/xpath-tester.html)
+* [This regexp site](https://jex.im/regulex/)
 
 It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 

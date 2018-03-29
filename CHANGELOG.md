@@ -3,6 +3,16 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**BDD**
+
+
+[e273e1ee8ba0446](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e273e1ee8ba0446) Tomas Bjerre *2018-04-01 17:54:51*
+
+**Issue template**
+
+
+[f6be97728349dfa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f6be97728349dfa) Tomas Bjerre *2018-03-27 20:15:32*
+
 **improve header variable name description**
 
  * Version 1.28 introduced RFC 2616 compatibility making all headers lowercase. 

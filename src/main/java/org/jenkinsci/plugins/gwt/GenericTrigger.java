@@ -184,7 +184,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @VisibleForTesting
-  boolean isMatching(final String renderedRegexpFilterText, final String regexpFilterExpression) {
+  public static boolean isMatching(
+      final String renderedRegexpFilterText, final String regexpFilterExpression) {
     final boolean noFilterConfigured =
         isNullOrEmpty(renderedRegexpFilterText) || isNullOrEmpty(regexpFilterExpression);
     if (noFilterConfigured) {
@@ -207,7 +208,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @VisibleForTesting
-  String renderText(String regexpFilterText, final Map<String, String> resolvedVariables) {
+  public static String renderText(
+      String regexpFilterText, final Map<String, String> resolvedVariables) {
     if (isNullOrEmpty(regexpFilterText)) {
       return "";
     }
@@ -227,7 +229,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   @VisibleForTesting
-  List<String> getVariablesInResolveOrder(final Set<String> unsorted) {
+  static List<String> getVariablesInResolveOrder(final Set<String> unsorted) {
     final List<String> variables = new ArrayList<>(unsorted);
     Collections.sort(
         variables,
