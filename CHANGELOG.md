@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.31 (2018-04-07 08:59:46)
+### GitHub [#55](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/55) When token used, only trigger if token supplied    *enhancement*  *opinions-needed*  
+
+**Only trigger if token matches #55**
+
+
+[23afc4b6ba81617](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/23afc4b6ba81617) Tomas Bjerre *2018-04-07 08:51:48*
+
+
 ### No issue
 
 **BDD**
