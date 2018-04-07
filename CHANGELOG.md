@@ -6,7 +6,7 @@ Changelog of Generic Webhook Plugin.
 **BDD**
 
 
-[e273e1ee8ba0446](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e273e1ee8ba0446) Tomas Bjerre *2018-04-01 17:54:51*
+[fc5306ce0fe9a71](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fc5306ce0fe9a71) Tomas Bjerre *2018-04-03 18:15:38*
 
 **Issue template**
 

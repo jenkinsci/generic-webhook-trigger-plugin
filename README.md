@@ -46,7 +46,7 @@ If a node is selected, then all leafs in that node will be contributed. If a lea
 
 When using the plugin in several jobs, you will have the same URL trigger all jobs. If you want to trigger only a certain job you can:
 
-* Use the `token`-parameter have different tokens for different jobs. **Don't combine it with any other authentication!** Using only the token means only jobs with that exact token will be visible for that request. This will increase performance and reduce responses of each invocation.
+* Use the `token`-parameter have different tokens for different jobs. Using only the token means only jobs with that exact token will be visible for that request. This will increase performance and reduce responses of each invocation.
 * Or, add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
 
 

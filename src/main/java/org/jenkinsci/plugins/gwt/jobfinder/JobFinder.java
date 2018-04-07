@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.gwt;
+package org.jenkinsci.plugins.gwt.jobfinder;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -6,24 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.jenkinsci.plugins.gwt.FoundJob;
+import org.jenkinsci.plugins.gwt.GenericTrigger;
 
-import hudson.security.ACL;
+import com.google.common.annotations.VisibleForTesting;
+
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
-import jenkins.model.Jenkins;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 
 public final class JobFinder {
 
   private JobFinder() {}
 
+  private static JobFinderImpersonater jobFinderImpersonater = new JobFinderImpersonater();
+
+  @VisibleForTesting
+  static void setJobFinderImpersonater(final JobFinderImpersonater jobFinderImpersonater) {
+    JobFinder.jobFinderImpersonater = jobFinderImpersonater;
+  }
+
   public static List<FoundJob> findAllJobsWithTrigger(final String givenToken) {
 
     final List<FoundJob> found = new ArrayList<>();
 
-    List<ParameterizedJob> candidateProjects = getAllParameterizedJobs();
+    List<ParameterizedJob> candidateProjects = getAllParameterizedJobs(givenToken);
     for (final ParameterizedJob candidateJob : candidateProjects) {
       final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
@@ -31,7 +38,7 @@ public final class JobFinder {
       }
     }
 
-    candidateProjects = getAllParameterizedJobsByImpersonation();
+    candidateProjects = jobFinderImpersonater.getAllParameterizedJobsByImpersonation();
     for (final ParameterizedJob candidateJob : candidateProjects) {
       if (!isIncluded(candidateJob.getFullName(), found)
           && authenticationTokenMatches(candidateJob, givenToken)) {
@@ -54,10 +61,17 @@ public final class JobFinder {
     return false;
   }
 
-  private static List<ParameterizedJob> getAllParameterizedJobs() {
+  private static List<ParameterizedJob> getAllParameterizedJobs(final String givenToken) {
     final List<ParameterizedJob> candidateProjects =
-        Jenkins.getInstance().getAllItems(ParameterizedJob.class);
-    return candidateProjects;
+        jobFinderImpersonater.getAllParameterizedJobs();
+
+    final List<ParameterizedJob> candidateProjectsWithoutToken = new ArrayList<>();
+    for (final ParameterizedJob candidate : candidateProjects) {
+      if (authenticationTokenMatches(candidate, givenToken)) {
+        candidateProjectsWithoutToken.add(candidate);
+      }
+    }
+    return candidateProjectsWithoutToken;
   }
 
   @SuppressWarnings("deprecation")
@@ -65,8 +79,9 @@ public final class JobFinder {
       final ParameterizedJob candidateJob, final String givenToken) {
     final hudson.model.BuildAuthorizationToken authToken = candidateJob.getAuthToken();
 
-    final boolean jobHasAuthToken = authToken != null && !isNullOrEmpty(authToken.getToken());
-    if (jobHasAuthToken && givenToken != null) {
+    final boolean jobHasAuthToken = jobHasAuthToken(authToken);
+    final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
+    if (jobHasAuthToken && authTokenWasGiven) {
       final boolean authTokenMatchesQueryToken = authToken.getToken().equals(givenToken);
       if (authTokenMatchesQueryToken) {
         return true;
@@ -74,16 +89,15 @@ public final class JobFinder {
         return false;
       }
     }
+    if (!jobHasAuthToken && !authTokenWasGiven) {
+      return true;
+    }
     return false;
   }
 
-  private static List<ParameterizedJob> getAllParameterizedJobsByImpersonation() {
-    // Impersinate to get all jobs even without read grants
-    final SecurityContext orig = ACL.impersonate(ACL.SYSTEM);
-    final List<ParameterizedJob> jobs = getAllParameterizedJobs();
-    // Return to previous authentication context
-    SecurityContextHolder.setContext(orig);
-    return jobs;
+  @SuppressWarnings("deprecation")
+  private static boolean jobHasAuthToken(final hudson.model.BuildAuthorizationToken authToken) {
+    return authToken != null && !isNullOrEmpty(authToken.getToken());
   }
 
   private static GenericTrigger findGenericTrigger(
