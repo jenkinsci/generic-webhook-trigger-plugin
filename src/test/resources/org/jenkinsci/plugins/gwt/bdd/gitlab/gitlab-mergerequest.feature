@@ -9,7 +9,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
       | MR_TO_URL       | $.object_attributes.target.git_http_url  | JSONPath        |              |               |
       | MR_TO_BRANCH    | $.object_attributes.target_branch        | JSONPath        |              |               |
       | MR_PROJECT_ID   | $.object_attributes.target_project_id    | JSONPath        |              |               |
-      | MR_ID           | $.object_attributes.id                   | JSONPath        |              |               |
+      | MR_IID          | $.object_attributes.iid                   | JSONPath        |              |               |
       | MR_OLD_REV      | $.object_attributes.oldrev               | JSONPath        |              |               |
       | MR_ACTION       | $.object_attributes.action               | JSONPath        |              |               |
       | MR_TITLE        | $.object_attributes.title                | JSONPath        |              |               |
@@ -24,7 +24,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
     {  
        "object_kind":"merge_request",
        "object_attributes":{  
-          "id":1,
+          "id":11234,
           "iid":1,
           "target_branch":"master",
           "source_branch":"feature/addingcrap",
@@ -54,7 +54,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
       | MR_TO_URL        | http://846c453ea620/root/violations-test.git |
       | MR_TO_BRANCH     | master                                       |
       | MR_PROJECT_ID    | 1                                            |
-      | MR_ID            | 1                                            |
+      | MR_IID           | 1                                            |
       | MR_OLD_REV       | 7e23c9a980197fe49fae67fb23687c857ff42f86     |
       | MR_ACTION        | update                                       |
       | MR_TITLE         | some crap 2                                  |
@@ -67,7 +67,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
     {  
        "object_kind":"note",
        "object_attributes":{  
-          "id":1,
+          "iid":1,
           "source":{  
              "git_ssh_url":"git@846c453ea620:root/violations-test.git",
              "git_http_url":"http://846c453ea620/root/violations-test.git",
@@ -89,7 +89,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
       | MR_TO_URL        | http://846c453ea620/root/violations-test.git |
       | MR_TO_BRANCH     |                                              |
       | MR_PROJECT_ID    |                                              |
-      | MR_ID            | 1                                            |
+      | MR_IID           | 1                                            |
       | MR_OLD_REV       |                                              |
       | MR_ACTION        |                                              |
       | MR_TITLE         |                                              |

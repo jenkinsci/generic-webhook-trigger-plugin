@@ -14,7 +14,7 @@ This is a Jenkins plugin that can:
  3. Trigger a build with those values contribute as variables
 
 There is an optional feature to trigger jobs only if a supplied regular expression matches the extracted variables. Here is an example, let's say the post content looks like this:
-```
+```javascript
 {
   "before": "1848f1236ae15769e6b31e9c4477d8150b018453",
   "after": "5cab18338eaa83240ab86c7b775a9b27b51ef11d",
@@ -33,6 +33,7 @@ It can trigger on any webhook, like:
 * [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
 * [Gogs](https://gogs.io/docs/features/webhook) and [Gitea](https://docs.gitea.io/en-us/webhooks/)
 * [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
+* [Jira](https://developer.atlassian.com/server/jira/platform/webhooks/)
 * And many many more!
 
 The original use case was to build merge/pull requests. You may use the Git Plugin as described in [this blog post](http://bjurr.com/continuous-integration-with-gitlab-and-jenkins/) to do that. There is also an example of this on the [Violation Comments to GitLab Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitLab+Plugin) page.
@@ -73,7 +74,7 @@ If you are fiddling with expressions, you may want to checkout:
 
 It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 
-```
+```bash
 curl -vs http://localhost:8080/generic-webhook-trigger/invoke 2>&1
 ```
 
@@ -85,12 +86,12 @@ INFO: Did not find any jobs to trigger! The user invoking /generic-webhook-trigg
 
 And to authenticate in the request you may use a *token*, or try this:
 
-```
+```bash
 curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 2>&1
 ```
 
 If you want to trigger with some post content, curl can dot that like this.
-```
+```bash
 curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"GitHub API", "url":"http://developer.github.com/v3/oauth/" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=sometoken
 ```
 
@@ -106,7 +107,7 @@ If you need the resolved values in pre build steps, like git clone, you need to 
 
 This plugin can be used with the Job DSL Plugin. There is also an example int he [Violation Comments to GitLab Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitLab+Plugin) wiki page.
 
-```
+```groovy
 job('Generic Job Example') {
  parameters {
   stringParam('VARIABLE_FROM_POST', '')
@@ -158,7 +159,7 @@ This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.i
 
 With a Jenkinsfile like this:
 
-```
+```groovy
 node {
  properties([
   pipelineTriggers([
@@ -205,7 +206,7 @@ node {
 
 It can be triggered with something like:
 
-```
+```bash
 curl -X POST -H "Content-Type: application/json" -H "headerWithNumber: nbr123" -H "headerWithString: a b c" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke?requestWithNumber=nbr%20123\&requestWithString=a%20string
 ```
 

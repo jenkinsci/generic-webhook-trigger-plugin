@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.32 (2018-04-18 15:31:31)
+### GitHub [#57](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/57) When building using a token, the cause parameter has no effect    *enhancement*  
+
+**Custom cause #57**
+
+
+[1f0006795ab6941](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/1f0006795ab6941) Tomas Bjerre *2018-04-18 15:30:40*
+
+
 ## 1.31 (2018-04-07 08:59:46)
 ### GitHub [#55](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/55) When token used, only trigger if token supplied    *enhancement*  *opinions-needed*  
 
