@@ -22,6 +22,12 @@
    </f:description>
  </f:entry>
 
+ <f:entry title="Cause">
+   <f:textbox field="causeString" default="Generic Cause"/>
+   <f:description>
+    This will be displayed in any triggered job. You can use the variables here to create a custom cause like <i>"$name committed to $branch"</i>, if you have configured variables named <b>name</b> and <b>branch</b>.
+   </f:description>
+ </f:entry>
 
  <f:entry title="Print post content" field="printPostContent">
    <f:checkbox/>

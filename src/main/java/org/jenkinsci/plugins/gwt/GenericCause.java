@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.gwt;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import hudson.model.Cause;
 
 import java.util.Map;
@@ -10,16 +11,23 @@ public class GenericCause extends Cause {
   private final String postContent;
   private final boolean printContributedVariables;
   private final boolean printPostContent;
+  private final String cause;
 
   public GenericCause(
-      String postContent,
-      Map<String, String> resolvedVariables,
-      boolean printContributedVariables,
-      boolean printPostContent) {
+      final String postContent,
+      final Map<String, String> resolvedVariables,
+      final boolean printContributedVariables,
+      final boolean printPostContent,
+      final String cause) {
     this.postContent = postContent;
     this.resolvedVariables = resolvedVariables;
     this.printContributedVariables = printContributedVariables;
     this.printPostContent = printPostContent;
+    if (!isNullOrEmpty(cause)) {
+      this.cause = cause;
+    } else {
+      this.cause = "Generic Cause";
+    }
   }
 
   public boolean isPrintContributedVariables() {
@@ -40,6 +48,6 @@ public class GenericCause extends Cause {
 
   @Override
   public String getShortDescription() {
-    return "Generic Cause";
+    return cause;
   }
 }

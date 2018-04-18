@@ -43,6 +43,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private List<GenericHeaderVariable> genericHeaderVariables = newArrayList();
   private boolean printPostContent;
   private boolean printContributedVariables;
+  private String causeString;
 
   public static class GenericDescriptor extends TriggerDescriptor {
 
@@ -69,6 +70,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     this.regexpFilterText = regexpFilterText;
     this.genericRequestVariables = genericRequestVariables;
     this.genericHeaderVariables = genericHeaderVariables;
+  }
+
+  @DataBoundSetter
+  public void setCauseString(final String causeString) {
+    this.causeString = causeString;
+  }
+
+  public String getCauseString() {
+    return causeString;
   }
 
   @DataBoundSetter
@@ -111,14 +121,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
     hudson.model.Queue.Item item = null;
     if (isMatching) {
-      final GenericCause cause =
+      final String cause = renderText(causeString, resolvedVariables);
+      final GenericCause genericCause =
           new GenericCause(
-              postContent, resolvedVariables, printContributedVariables, printPostContent);
+              postContent, resolvedVariables, printContributedVariables, printPostContent, cause);
 
       final ParametersAction parameters = createParameters(job, resolvedVariables);
       item =
           retrieveScheduleJob(job) //
-              .scheduleBuild2(job, 0, new CauseAction(cause), parameters);
+              .scheduleBuild2(job, 0, new CauseAction(genericCause), parameters);
     }
     return new GenericTriggerResults(
         item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);
