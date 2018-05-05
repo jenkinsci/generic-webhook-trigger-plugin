@@ -1,12 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.34 (2018-05-05 21:21:30)
+### GitHub [#45](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/45) &quot;This project is parameterized&quot; parameters are being ignored if triggered    *bug*  
+
+**Avoiding warning about skipped parameters #45**
+
+ * Got a lot of: WARNING: Skipped parameter &#39;X&#39;... 
+ * Changed code to only add parameters that does exist. 
+
+[759fc7070ce7942](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/759fc7070ce7942) Tomas Bjerre *2018-05-05 21:19:45*
+
+
 ### No issue
 
 **Adding declarative example**
 
 
-[ed551dea8d774bc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ed551dea8d774bc) Tomas Bjerre *2018-05-05 20:05:30*
+[23e3e03ab5e815b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/23e3e03ab5e815b) Tomas Bjerre *2018-05-05 20:50:46*
 
 
 ## 1.33 (2018-05-05 19:13:39)
