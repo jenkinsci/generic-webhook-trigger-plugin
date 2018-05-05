@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Adding declarative example**
+
+
+[ed551dea8d774bc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ed551dea8d774bc) Tomas Bjerre *2018-05-05 20:05:30*
+
+
 ## 1.33 (2018-05-05 19:13:39)
 ### GitHub [#47](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/47) Declarative Pipeline support    *enhancement*  
 

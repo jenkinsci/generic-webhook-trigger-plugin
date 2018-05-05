@@ -157,7 +157,7 @@ echo $requestHeaderName
 
 This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties). Here is an example:
 
-With a Jenkinsfile like this:
+With a scripted Jenkinsfile like this:
 
 ```groovy
 node {
@@ -201,6 +201,32 @@ node {
   echo headerWithString $headerWithString
   '''
  }
+}
+```
+
+With a declarative Jenkinsfile like this:
+```groovy
+pipeline {
+  agent any
+  triggers {
+    GenericTrigger(
+     genericVariables: [
+      [key: 'ref', value: '$.ref']
+     ],
+     causeString: 'Triggered on $ref',
+     regexpFilterExpression: '',
+     regexpFilterText: '',
+     printContributedVariables: true,
+     printPostContent: true
+    )
+  }
+  stages {
+    stage('Some step') {
+      steps {
+        sh "echo $ref"
+      }
+    }
+  }
 }
 ```
 
