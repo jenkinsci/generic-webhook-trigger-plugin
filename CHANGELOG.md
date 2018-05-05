@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.33 (2018-05-05 19:13:39)
+### GitHub [#47](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/47) Declarative Pipeline support    *enhancement*  
+
+**Declarative Pipeline support #47**
+
+
+[9d29aa90ffc2996](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9d29aa90ffc2996) Tomas Bjerre *2018-05-05 19:11:38*
+
+
 ## 1.32 (2018-04-18 15:31:31)
 ### GitHub [#57](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/57) When building using a token, the cause parameter has no effect    *enhancement*  
 
