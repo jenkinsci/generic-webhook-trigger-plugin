@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import jenkins.model.ParameterizedJobMixIn;
 
+import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
@@ -45,6 +46,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private boolean printContributedVariables;
   private String causeString;
 
+  @Symbol("GenericTrigger")
   public static class GenericDescriptor extends TriggerDescriptor {
 
     @Override
