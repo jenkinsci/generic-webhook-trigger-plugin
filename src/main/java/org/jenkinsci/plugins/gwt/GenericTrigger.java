@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -149,10 +148,10 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
   private ParametersAction createParameters(
       final Job<?, ?> job, final Map<String, String> resolvedVariables) {
-    final List<StringParameterValue> parameterList = newArrayList();
-    addAllParametersFromParameterizedJob(job, parameterList);
-    addAllResolvedVariables(resolvedVariables, parameterList);
-    return new ParametersAction(toParameterValueList(parameterList));
+    final List<StringParameterValue> parameterList =
+        getParametersFromParameterizedJob(job, resolvedVariables);
+    final List<ParameterValue> parameterValueList = toParameterValueList(parameterList);
+    return new ParametersAction(parameterValueList);
   }
 
   private List<ParameterValue> toParameterValueList(
@@ -164,20 +163,10 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     return t;
   }
 
-  private void addAllResolvedVariables(
-      final Map<String, String> resolvedVariables, final List<StringParameterValue> parameterList) {
-    for (final Entry<String, String> entry : resolvedVariables.entrySet()) {
-      if (!isNullOrEmpty(entry.getValue())) {
-        final StringParameterValue parameter =
-            new StringParameterValue(entry.getKey(), entry.getValue());
-        parameterList.add(parameter);
-      }
-    }
-  }
-
   /** To keep any default values set there. */
-  private void addAllParametersFromParameterizedJob(
-      final Job<?, ?> job, final List<StringParameterValue> parameterList) {
+  private List<StringParameterValue> getParametersFromParameterizedJob(
+      final Job<?, ?> job, final Map<String, String> resolvedVariables) {
+    final List<StringParameterValue> parameterList = newArrayList();
     final ParametersDefinitionProperty parametersDefinitionProperty =
         job.getProperty(ParametersDefinitionProperty.class);
     if (parametersDefinitionProperty != null) {
@@ -186,7 +175,12 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
         final String param = parameterDefinition.getName();
         final ParameterValue defaultParameterValue = parameterDefinition.getDefaultParameterValue();
         if (defaultParameterValue != null) {
-          final String value = defaultParameterValue.getValue().toString();
+          String value = null;
+          if (!isNullOrEmpty(resolvedVariables.get(param))) {
+            value = resolvedVariables.get(param);
+          } else {
+            value = defaultParameterValue.getValue().toString();
+          }
           if (!isNullOrEmpty(value)) {
             final StringParameterValue parameter = new StringParameterValue(param, value);
             parameterList.add(parameter);
@@ -194,6 +188,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
         }
       }
     }
+    return parameterList;
   }
 
   @VisibleForTesting
