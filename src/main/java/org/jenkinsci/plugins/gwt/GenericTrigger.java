@@ -1,28 +1,20 @@
 package org.jenkinsci.plugins.gwt;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
-import static java.util.logging.Level.INFO;
-import static java.util.regex.Pattern.compile;
+import static org.jenkinsci.plugins.gwt.ParameterActionUtil.createParameterAction;
+import static org.jenkinsci.plugins.gwt.Renderer.isMatching;
+import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 import hudson.Extension;
 import hudson.model.Item;
-import hudson.model.ParameterValue;
 import hudson.model.CauseAction;
 import hudson.model.Job;
-import hudson.model.ParameterDefinition;
 import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
-import hudson.model.StringParameterValue;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Logger;
 
 import jenkins.model.ParameterizedJobMixIn;
 
@@ -31,11 +23,8 @@ import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
-import com.google.common.annotations.VisibleForTesting;
-
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
-  private static final Logger LOGGER = Logger.getLogger(GenericTrigger.class.getName());
   private List<GenericVariable> genericVariables = newArrayList();
   private final String regexpFilterText;
   private final String regexpFilterExpression;
@@ -126,8 +115,10 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       final GenericCause genericCause =
           new GenericCause(
               postContent, resolvedVariables, printContributedVariables, printPostContent, cause);
-
-      final ParametersAction parameters = createParameters(job, resolvedVariables);
+      final ParametersDefinitionProperty parametersDefinitionProperty =
+          job.getProperty(ParametersDefinitionProperty.class);
+      final ParametersAction parameters =
+          createParameterAction(parametersDefinitionProperty, resolvedVariables);
       item =
           retrieveScheduleJob(job) //
               .scheduleBuild2(job, 0, new CauseAction(genericCause), parameters);
@@ -144,115 +135,6 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
         return job;
       }
     };
-  }
-
-  private ParametersAction createParameters(
-      final Job<?, ?> job, final Map<String, String> resolvedVariables) {
-    final List<StringParameterValue> parameterList =
-        getParametersFromParameterizedJob(job, resolvedVariables);
-    final List<ParameterValue> parameterValueList = toParameterValueList(parameterList);
-    return new ParametersAction(parameterValueList);
-  }
-
-  private List<ParameterValue> toParameterValueList(
-      final List<StringParameterValue> parameterList) {
-    final List<ParameterValue> t = new ArrayList<>();
-    for (final StringParameterValue f : parameterList) {
-      t.add(f);
-    }
-    return t;
-  }
-
-  /** To keep any default values set there. */
-  private List<StringParameterValue> getParametersFromParameterizedJob(
-      final Job<?, ?> job, final Map<String, String> resolvedVariables) {
-    final List<StringParameterValue> parameterList = newArrayList();
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        job.getProperty(ParametersDefinitionProperty.class);
-    if (parametersDefinitionProperty != null) {
-      for (final ParameterDefinition parameterDefinition :
-          parametersDefinitionProperty.getParameterDefinitions()) {
-        final String param = parameterDefinition.getName();
-        final ParameterValue defaultParameterValue = parameterDefinition.getDefaultParameterValue();
-        if (defaultParameterValue != null) {
-          String value = null;
-          if (!isNullOrEmpty(resolvedVariables.get(param))) {
-            value = resolvedVariables.get(param);
-          } else {
-            value = defaultParameterValue.getValue().toString();
-          }
-          if (!isNullOrEmpty(value)) {
-            final StringParameterValue parameter = new StringParameterValue(param, value);
-            parameterList.add(parameter);
-          }
-        }
-      }
-    }
-    return parameterList;
-  }
-
-  @VisibleForTesting
-  public static boolean isMatching(
-      final String renderedRegexpFilterText, final String regexpFilterExpression) {
-    final boolean noFilterConfigured =
-        isNullOrEmpty(renderedRegexpFilterText) || isNullOrEmpty(regexpFilterExpression);
-    if (noFilterConfigured) {
-      return true;
-    }
-    final boolean isMatching =
-        compile(regexpFilterExpression) //
-            .matcher(renderedRegexpFilterText) //
-            .find();
-    if (!isMatching) {
-      LOGGER.log(
-          INFO,
-          "Not triggering \""
-              + regexpFilterExpression
-              + "\" not matching \""
-              + renderedRegexpFilterText
-              + "\".");
-    }
-    return isMatching;
-  }
-
-  @VisibleForTesting
-  public static String renderText(
-      String regexpFilterText, final Map<String, String> resolvedVariables) {
-    if (isNullOrEmpty(regexpFilterText)) {
-      return "";
-    }
-    final List<String> variables = getVariablesInResolveOrder(resolvedVariables.keySet());
-    for (final String variable : variables) {
-      final String key = "\\$" + variable;
-      final String resolvedVariable = resolvedVariables.get(variable);
-      try {
-        regexpFilterText =
-            regexpFilterText //
-                .replaceAll(key, resolvedVariable);
-      } catch (final IllegalArgumentException e) {
-        throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
-      }
-    }
-    return regexpFilterText;
-  }
-
-  @VisibleForTesting
-  static List<String> getVariablesInResolveOrder(final Set<String> unsorted) {
-    final List<String> variables = new ArrayList<>(unsorted);
-    Collections.sort(
-        variables,
-        new Comparator<String>() {
-          @Override
-          public int compare(final String o1, final String o2) {
-            if (o1.length() == o2.length()) {
-              return o1.compareTo(o2);
-            } else if (o1.length() > o2.length()) {
-              return -1;
-            }
-            return 1;
-          }
-        });
-    return variables;
   }
 
   public List<GenericVariable> getGenericVariables() {

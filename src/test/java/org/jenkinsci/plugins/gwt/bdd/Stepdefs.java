@@ -2,14 +2,15 @@ package org.jenkinsci.plugins.gwt.bdd;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.jenkinsci.plugins.gwt.ExpressionType;
-import org.jenkinsci.plugins.gwt.GenericTrigger;
 import org.jenkinsci.plugins.gwt.GenericVariable;
+import org.jenkinsci.plugins.gwt.Renderer;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 
 import com.google.gson.GsonBuilder;
@@ -92,10 +93,9 @@ public class Stepdefs {
     final Map<String, String> resolvedVariables = getResolvedVariables();
 
     final String renderedRegexpFilterText =
-        GenericTrigger.renderText(featureState.getRegexpFilterText(), resolvedVariables);
+        renderText(featureState.getRegexpFilterText(), resolvedVariables);
     final boolean isMatching =
-        GenericTrigger.isMatching(
-            renderedRegexpFilterText, featureState.getRegexpFilterExpression());
+        Renderer.isMatching(renderedRegexpFilterText, featureState.getRegexpFilterExpression());
     return isMatching;
   }
 
