@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.35 (2018-05-09 10:04:15)
+### GitHub [#58](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/58) Boolean parameter becomes string  
+
+**Respect boolean parameter datatype #58**
+
+
+[5b36c5a8ca9b832](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/5b36c5a8ca9b832) Tomas Bjerre *2018-05-08 16:08:55*
+
+
 ## 1.34 (2018-05-05 21:21:30)
 ### GitHub [#45](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/45) &quot;This project is parameterized&quot; parameters are being ignored if triggered    *bug*  
 
