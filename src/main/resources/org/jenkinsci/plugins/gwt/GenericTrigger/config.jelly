@@ -1,24 +1,40 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-
+   <f:description>
+    <div>
+     <p>
+      Is triggered by HTTP requests to <b>http://JENKINS_URL/generic-webhook-trigger/invoke</b>
+     </p>
+     <p>
+      You can fiddle with JSONPath <a href="https://jsonpath.curiousconcept.com/">here</a>. You may also want to checkout the syntax <a href="https://github.com/jayway/JsonPath">here</a>.
+     </p>
+     <p>
+      You can fiddle with XPath <a href="http://www.freeformatter.com/xpath-tester.html">here</a>. You may also want to checkout the syntax <a href="https://www.w3schools.com/xml/xpath_syntax.asp">here</a>.
+     </p>
+     <p>
+      If your job <b>is not parameterized</b>, then the resolved variables will just be contributed to the build. If your job <b>is parameterized</b>, and you resolve variables that have the same name as those parameters, then the plugin will populate the parameters when triggering job. That means you can, for example, use the parameters in combination with an SCM plugin, like GIT Plugin, to pick a branch.
+     </p>
+    </div>
+   </f:description>
+   
  <f:entry title="Post content parameters" field="genericVariables">
   <f:repeatableProperty field="genericVariables"  minimum="0" />  
    <f:description>
-    If you want "param1" in post content { "param1": "value1" } posted to http://JENKINS_URL/generic-webhook-trigger/invoke to be contributed, you need to add "$.param1" here.
+    If you want value of <b>param1</b> from post content <code>{ "param1": "value1" }</code> to be contributed, you need to add <b>$.param1</b> here.
    </f:description>
  </f:entry>
 
  <f:entry title="Header parameters" field="genericHeaderVariables">
   <f:repeatableProperty field="genericHeaderVariables"  minimum="0" />  
    <f:description>
-    If you want header "param" in http://JENKINS_URL/generic-webhook-trigger/invoke to be contributed, you need to add "param_0" here. If there are two headers with same name, the second one will be named "param_1".
+    If you want value of header <b>param1</b> to be contributed, you need to add "param1" here.
    </f:description>
  </f:entry>
 
  <f:entry title="Request parameters" field="genericRequestVariables">
   <f:repeatableProperty field="genericRequestVariables"  minimum="0" />  
    <f:description>
-    If you want "param1" in http://JENKINS_URL/generic-webhook-trigger/invoke?param1=abc to be contributed, you need to add "param1" here.
+    If you want value of query parameter <b>param1</b> to be contributed, you need to add "param1" here.
    </f:description>
  </f:entry>
 
