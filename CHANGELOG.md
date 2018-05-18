@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.36 (2018-05-18 18:02:15)
+### No issue
+
+**Doc**
+
+
+[8c5910820cbd9a8](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8c5910820cbd9a8) Tomas Bjerre *2018-05-18 18:01:27*
+
+
 ## 1.35 (2018-05-09 10:04:15)
 ### GitHub [#58](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/58) Boolean parameter becomes string  
 
