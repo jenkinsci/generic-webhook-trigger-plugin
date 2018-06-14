@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.37 (2018-06-14 15:19:40)
 ### GitHub [#60](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/60) Value from token Param is not evaluated   
 
 **Remvoing searchUrl and searchName from response #60**
 
 
-[ab155846ea67ea1](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ab155846ea67ea1) Tomas Bjerre *2018-06-14 15:18:01*
+[76bb41ae584ca78](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/76bb41ae584ca78) Tomas Bjerre *2018-06-14 15:18:49*
 
 
 ## 1.36 (2018-05-18 18:02:15)
