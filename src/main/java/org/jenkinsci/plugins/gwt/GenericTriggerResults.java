@@ -7,17 +7,15 @@ public class GenericTriggerResults {
   private final Map<String, String> resolvedVariables;
   private final String regexpFilterText;
   private final String regexpFilterExpression;
-  private final String searchUrl;
   private final String url;
   private final long id;
   private final boolean triggered;
-  private final String searchName;
 
   public GenericTriggerResults(
-      hudson.model.Queue.Item item,
-      Map<String, String> resolvedVariables,
-      String regexpFilterText,
-      String regexpFilterExpression) {
+      final hudson.model.Queue.Item item,
+      final Map<String, String> resolvedVariables,
+      final String regexpFilterText,
+      final String regexpFilterExpression) {
     if (item != null) {
       this.url = item.getUrl();
       this.id = item.getId();
@@ -26,14 +24,6 @@ public class GenericTriggerResults {
       this.url = null;
       this.id = 0;
       this.triggered = false;
-    }
-
-    if (item != null && item.getApi() != null) {
-      this.searchUrl = item.getApi().getSearchUrl();
-      this.searchName = item.getApi().getSearchName();
-    } else {
-      this.searchUrl = null;
-      this.searchName = null;
     }
 
     this.resolvedVariables = resolvedVariables;
@@ -47,10 +37,6 @@ public class GenericTriggerResults {
 
   public long getId() {
     return id;
-  }
-
-  public String getSearchUrl() {
-    return searchUrl;
   }
 
   public String getUrl() {
@@ -67,9 +53,5 @@ public class GenericTriggerResults {
 
   public Map<String, String> getResolvedVariables() {
     return resolvedVariables;
-  }
-
-  public String getSearchName() {
-    return searchName;
   }
 }
