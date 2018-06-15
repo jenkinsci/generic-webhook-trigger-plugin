@@ -9,7 +9,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
       | MR_TO_URL       | $.object_attributes.target.git_http_url  | JSONPath        |              |               |
       | MR_TO_BRANCH    | $.object_attributes.target_branch        | JSONPath        |              |               |
       | MR_PROJECT_ID   | $.object_attributes.target_project_id    | JSONPath        |              |               |
-      | MR_IID          | $.object_attributes.iid                   | JSONPath        |              |               |
+      | MR_IID          | $.object_attributes.iid                  | JSONPath        |              |               |
       | MR_OLD_REV      | $.object_attributes.oldrev               | JSONPath        |              |               |
       | MR_ACTION       | $.object_attributes.action               | JSONPath        |              |               |
       | MR_TITLE        | $.object_attributes.title                | JSONPath        |              |               |
