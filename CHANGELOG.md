@@ -1,7 +1,24 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#61](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/61) Credentials Parameter converted to String rather than Credentials    *enhancement*  
+
+**Supporting Credentials Parameter #61**
+
+
+[52cfbcb06f35bbb](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/52cfbcb06f35bbb) Tomas Bjerre *2018-06-24 12:07:51*
+
+
+### No issue
+
+**Doc**
+
+
+[b7e8b47e1d7b4cc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b7e8b47e1d7b4cc) Tomas Bjerre *2018-06-15 14:49:28*
+
+
 ## 1.37 (2018-06-14 15:19:40)
-### GitHub [#60](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/60) Value from token Param is not evaluated   
+### GitHub [#60](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/60) Value from token Param is not evaluated     *bug*  
 
 **Remvoing searchUrl and searchName from response #60**
 
@@ -19,7 +36,7 @@ Changelog of Generic Webhook Plugin.
 
 
 ## 1.35 (2018-05-09 10:04:15)
-### GitHub [#58](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/58) Boolean parameter becomes string  
+### GitHub [#58](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/58) Boolean parameter becomes string    *bug*  
 
 **Respect boolean parameter datatype #58**
 

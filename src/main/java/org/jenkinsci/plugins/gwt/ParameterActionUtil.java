@@ -2,15 +2,18 @@ package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
-import hudson.model.ParameterValue;
-import hudson.model.BooleanParameterValue;
-import hudson.model.ParameterDefinition;
-import hudson.model.ParametersAction;
-import hudson.model.ParametersDefinitionProperty;
-import hudson.model.StringParameterValue;
 
 import java.util.List;
 import java.util.Map;
+
+import com.cloudbees.plugins.credentials.CredentialsParameterValue;
+
+import hudson.model.BooleanParameterValue;
+import hudson.model.ParameterDefinition;
+import hudson.model.ParameterValue;
+import hudson.model.ParametersAction;
+import hudson.model.ParametersDefinitionProperty;
+import hudson.model.StringParameterValue;
 
 public class ParameterActionUtil {
 
@@ -30,26 +33,43 @@ public class ParameterActionUtil {
     if (parametersDefinitionProperty != null) {
       for (final ParameterDefinition parameterDefinition :
           parametersDefinitionProperty.getParameterDefinitions()) {
-        final String param = parameterDefinition.getName();
+        final String paramName = parameterDefinition.getName();
         final ParameterValue defaultParameterValue = parameterDefinition.getDefaultParameterValue();
         if (defaultParameterValue != null) {
-          String value = null;
-          if (!isNullOrEmpty(resolvedVariables.get(param))) {
-            value = resolvedVariables.get(param);
-          } else {
-            value = defaultParameterValue.getValue().toString();
-          }
-          if (defaultParameterValue.getValue() instanceof Boolean) {
-            parameterList.add(
-                new BooleanParameterValue(
-                    param, Boolean.parseBoolean(value), parameterDefinition.getDescription()));
-          } else {
-            parameterList.add(
-                new StringParameterValue(param, value, parameterDefinition.getDescription()));
-          }
+          final ParameterValue parameterValue =
+              getParameterValue(
+                  resolvedVariables, parameterDefinition, paramName, defaultParameterValue);
+          parameterList.add(parameterValue);
         }
       }
     }
     return parameterList;
+  }
+
+  private static ParameterValue getParameterValue(
+      final Map<String, String> resolvedVariables,
+      final ParameterDefinition parameterDefinition,
+      final String paramName,
+      final ParameterValue defaultParameterValue) {
+    final String stringValue = getStringValue(resolvedVariables, paramName, defaultParameterValue);
+    if (defaultParameterValue.getValue() instanceof Boolean) {
+      return new BooleanParameterValue(
+          paramName, Boolean.parseBoolean(stringValue), parameterDefinition.getDescription());
+    }
+    if (defaultParameterValue instanceof CredentialsParameterValue) {
+      return new CredentialsParameterValue(
+          paramName, stringValue, parameterDefinition.getDescription());
+    }
+    return new StringParameterValue(paramName, stringValue, parameterDefinition.getDescription());
+  }
+
+  private static String getStringValue(
+      final Map<String, String> resolvedVariables,
+      final String param,
+      final ParameterValue defaultParameterValue) {
+    if (!isNullOrEmpty(resolvedVariables.get(param))) {
+      return resolvedVariables.get(param);
+    }
+    return defaultParameterValue.getValue().toString();
   }
 }
