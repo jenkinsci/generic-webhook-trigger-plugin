@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.39 (2018-06-25 18:17:02)
 ### No issue
 
 **Also resolving variables with curly brackets**
 
 
-[275be373c1d0c2f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/275be373c1d0c2f) Tomas Bjerre *2018-06-25 18:01:08*
+[603642cf5d3af95](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/603642cf5d3af95) Tomas Bjerre *2018-06-25 18:15:43*
 
 
 ## 1.38 (2018-06-24 16:51:38)
