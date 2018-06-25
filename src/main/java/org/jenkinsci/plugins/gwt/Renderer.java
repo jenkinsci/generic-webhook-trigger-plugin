@@ -49,15 +49,23 @@ public class Renderer {
     }
     final List<String> variables = getVariablesInResolveOrder(resolvedVariables.keySet());
     for (final String variable : variables) {
-      final String key = "\\$" + variable;
-      final String resolvedVariable = resolvedVariables.get(variable);
-      try {
-        regexpFilterText =
-            regexpFilterText //
-                .replaceAll(key, resolvedVariable);
-      } catch (final IllegalArgumentException e) {
-        throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
-      }
+      regexpFilterText =
+          replaceKey(regexpFilterText, resolvedVariables.get(variable), "\\$" + variable);
+      regexpFilterText =
+          replaceKey(
+              regexpFilterText, resolvedVariables.get(variable), "\\$\\{" + variable + "\\}");
+    }
+    return regexpFilterText;
+  }
+
+  private static String replaceKey(
+      String regexpFilterText, final String resolvedVariable, final String key) {
+    try {
+      regexpFilterText =
+          regexpFilterText //
+              .replaceAll(key, resolvedVariable);
+    } catch (final IllegalArgumentException e) {
+      throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
     }
     return regexpFilterText;
   }

@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Also resolving variables with curly brackets**
+
+
+[275be373c1d0c2f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/275be373c1d0c2f) Tomas Bjerre *2018-06-25 18:01:08*
+
+
 ## 1.38 (2018-06-24 16:51:38)
 ### GitHub [#61](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/61) Credentials Parameter converted to String rather than Credentials    *enhancement*  
 

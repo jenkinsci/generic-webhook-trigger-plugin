@@ -81,6 +81,20 @@ public class RendererTest {
   }
 
   @Test
+  public void testThatVariablesCanUseBrackets() {
+    resolvedVariables = new TreeMap<>();
+    resolvedVariables.put("key1", "resolved1");
+    resolvedVariables.put("key2", "resolved2only");
+    resolvedVariables.put("key2andthensome", "resolved2andmore");
+
+    final String text = "${key1} $key2 ${key2andthensome} $key2";
+    final String actual = renderText(text, resolvedVariables);
+
+    assertThat(actual) //
+        .isEqualTo("resolved1 resolved2only resolved2andmore resolved2only");
+  }
+
+  @Test
   public void testThatVariablesAreResolvedInOrder() {
     final List<String> actual =
         getVariablesInResolveOrder(
