@@ -1,0 +1,33 @@
+#!groovy
+properties([
+  parameters([
+    string(name: 'APP_ID', defaultValue: ''),
+    choice(name: 'APP_ENV', defaultValue: 'testing'),
+    string(name: 'DATABASES_BRANCH', defaultValue: 'master'),
+    string(name: 'DATABASES', defaultValue: ''),
+    booleanParam(name: 'DROP_DATABASES', defaultValue: new Boolean(true)),
+    booleanParam(name: 'AUTO_DISCOVER_DATABASES', defaultValue: new Boolean(false)),
+    booleanParam(name: 'DEBUG', defaultValue: new Boolean(false)),
+  ]),
+  pipelineTriggers([
+    [$class: 'GenericTrigger',
+     genericVariables: [
+      [expressionType: 'JSONPath', key: 'APP_ID', value: '$.app_id', defaultValue: ''],
+      [expressionType: 'JSONPath', key: 'APP_ENV', value: '$.app_env', defaultValue: ''],
+      [expressionType: 'JSONPath', key: 'DATABASES', value: '$.databases', defaultValue: ''],
+      [expressionType: 'JSONPath', key: 'AUTO_DISCOVER_DATABASES', value: '$.auto_discover_databases', defaultValue: ''],
+      [expressionType: 'JSONPath', key: 'DEBUG', value: '$.debug', defaultValue: ''],
+      [expressionType: 'JSONPath', key: 'DROP_DATABASES', value: '$.drop_databases', defaultValue: ''],
+      [expressionType: 'JSONPath', key: 'DATABASES_BRANCH', value: '$.databases_branch', defaultValue: ''],
+     ],
+     regexpFilterText: '',
+     regexpFilterExpression: ''
+    ]
+  ])
+])
+
+node {
+  stage('test') {
+    sh('echo hello')
+  }
+}

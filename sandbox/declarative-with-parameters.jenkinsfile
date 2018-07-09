@@ -1,0 +1,33 @@
+pipeline {
+  agent any
+  
+  parameters { 
+    string name: 'APP_ID', defaultValue: ''
+    choice name: 'APP_ENV', defaultValue: 'testing'
+    string name: 'DATABASES_BRANCH', defaultValue: 'master'
+    string name: 'DATABASES', defaultValue: ''
+    booleanParam name: 'DROP_DATABASES', defaultValue: true
+    booleanParam name: 'AUTO_DISCOVER_DATABASES', defaultValue: false
+    booleanParam name: 'DEBUG', defaultValue: false
+  }
+  
+  triggers {
+    GenericTrigger(
+     genericVariables: [
+      [key: 'ref', value: '$.ref']
+     ],
+     causeString: 'Triggered on $ref',
+     regexpFilterExpression: '',
+     regexpFilterText: '',
+     printContributedVariables: true,
+     printPostContent: true
+    )
+  }
+  stages {
+    stage('Some step') {
+      steps {
+        sh "echo $ref"
+      }
+    }
+  }
+}
