@@ -70,6 +70,9 @@ public class ParameterActionUtil {
     if (!isNullOrEmpty(resolvedVariables.get(param))) {
       return resolvedVariables.get(param);
     }
+    if (defaultParameterValue.getValue() == null) {
+      return "";
+    }
     return defaultParameterValue.getValue().toString();
   }
 }
