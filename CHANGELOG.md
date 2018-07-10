@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.40 (2018-07-10 12:21:16)
+### GitHub [#62](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/62) NullPointerException when trying to trigger job  
+
+**Avoiding NPE for parameters without value #62**
+
+
+[3dcdd664bbbb74a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3dcdd664bbbb74a) Tomas Bjerre *2018-07-10 12:20:20*
+
+
 ### No issue
 
 **Adding a jenkinsfile with defaults**
