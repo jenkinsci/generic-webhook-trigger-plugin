@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#65](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/65) [Question] Multibranch pipeline trigger specific branch/pr job possibility  
+
+**Updating doc #65**
+
+
+[c29909e607270bf](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c29909e607270bf) Tomas Bjerre *2018-08-07 11:05:35*
+
+
 ## 1.40 (2018-07-10 12:21:16)
 ### GitHub [#62](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/62) NullPointerException when trying to trigger job  
 

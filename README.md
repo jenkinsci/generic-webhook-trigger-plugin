@@ -22,7 +22,7 @@ There is an optional feature to trigger jobs only if a supplied regular expressi
 }
 ```
 
-Then you can have a variable, resolved from post content, named `reference` of type `JSONPath` and with expression like `$.ref` . The optional filter text can be set to `$reference` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)$﻿](https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24) to trigger builds only for develop and feature-branches.
+Then you can have a variable, resolved from post content, named `ref` of type `JSONPath` and with expression like `$.ref` . The optional filter text can be set to `$ref` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)$](https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24) to trigger builds only for develop and feature-branches.
 
 There are more [examples of use cases here](src/test/resources/org/jenkinsci/plugins/gwt/bdd).
 
@@ -53,7 +53,7 @@ When using the plugin in several jobs, you will have the same URL trigger all jo
 
 ## Authentication
 
-There is a special `token` parameter. When supplied, it is used with [BuildAuthorizationToken](http://javadoc.jenkins-ci.org/hudson/model/BuildAuthorizationToken.html) to authenticate.
+There is a special `token` parameter. When supplied, it is used with [Build Token Root Plugin](https://wiki.jenkins.io/display/JENKINS/Build+Token+Root+Plugin) to authenticate.
 
 ![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
 
@@ -165,7 +165,7 @@ node {
   pipelineTriggers([
    [$class: 'GenericTrigger',
     genericVariables: [
-     [key: 'reference', value: '$.ref'],
+     [key: 'ref', value: '$.ref'],
      [
       key: 'before',
       value: '$.before',
@@ -182,10 +182,12 @@ node {
      [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
      [key: 'headerWithString', regexpFilter: '']
     ],
+    
     printContributedVariables: true,
     printPostContent: true,
-    regexpFilterText: '',
-    regexpFilterExpression: ''
+    
+    regexpFilterText: '$ref',
+    regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
    ]
   ])
  ])
@@ -193,7 +195,7 @@ node {
  stage("build") {
   sh '''
   echo Variables from shell:
-  echo reference $reference
+  echo ref $ref
   echo before $before
   echo requestWithNumber $requestWithNumber
   echo requestWithString $requestWithString
@@ -216,8 +218,12 @@ pipeline {
      causeString: 'Triggered on $ref',
      regexpFilterExpression: '',
      regexpFilterText: '',
+     
      printContributedVariables: true,
-     printPostContent: true
+     printPostContent: true,
+    
+     regexpFilterText: '$ref',
+     regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
     )
   }
   stages {
@@ -243,7 +249,7 @@ Contributing variables:
 
     headerWithString_0 = a b c
     requestWithNumber_0 = 123
-    reference = refs/heads/develop
+    ref = refs/heads/develop
     headerWithNumber = 123
     requestWithNumber = 123
     before = 1848f12
