@@ -23,51 +23,45 @@ import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 
 public class JobFinderTest {
   private final AtomicInteger atomicInteger = new AtomicInteger(0);
-  private List<ParameterizedJob> allParameterizedJobs;
   private List<ParameterizedJob> allParameterizedJobsByImpersonation;
-  private final ParameterizedJob job1WithNoToken = createJob("");
-  private final ParameterizedJob job2WithNoToken = createJob("");
-  private final ParameterizedJob job3WithTokenAbc = createJob("ABC");
-  private final ParameterizedJob job4WithTokenAbc = createJob("ABC");
-  private final ParameterizedJob job5WithTokenDef = createJob("DEF");
-  private final ParameterizedJob job6WithTokenDef = createJob("DEF");
+  private final ParameterizedJob job1WithNoToken = createJob("", "");
+  private final ParameterizedJob job2WithNoToken = createJob("", "");
+  private final ParameterizedJob job3WithAuthTokenAbc = createJob("ABC", "");
+  private final ParameterizedJob job4WithAuthTokenDef = createJob("DEF", "");
+  private final ParameterizedJob job5WithGenericTokenAbc = createJob("", "ABC");
+  private final ParameterizedJob job6WithGenericTokenDef = createJob("", "DEF");
 
   @Before
   public void before() {
-    allParameterizedJobs = new ArrayList<>();
     allParameterizedJobsByImpersonation = new ArrayList<>();
     final JobFinderImpersonater jobFinderImpersonater =
         new JobFinderImpersonater() {
-          @Override
-          public List<ParameterizedJob> getAllParameterizedJobs() {
-            return allParameterizedJobs;
-          }
-
           @Override
           public List<ParameterizedJob> getAllParameterizedJobsByImpersonation() {
             return allParameterizedJobsByImpersonation;
           }
         };
-    allParameterizedJobs.add(job1WithNoToken);
+    allParameterizedJobsByImpersonation.add(job1WithNoToken);
     allParameterizedJobsByImpersonation.add(job2WithNoToken);
-    allParameterizedJobs.add(job3WithTokenAbc);
-    allParameterizedJobsByImpersonation.add(job4WithTokenAbc);
-    allParameterizedJobs.add(job5WithTokenDef);
-    allParameterizedJobsByImpersonation.add(job6WithTokenDef);
+    allParameterizedJobsByImpersonation.add(job3WithAuthTokenAbc);
+    allParameterizedJobsByImpersonation.add(job4WithAuthTokenDef);
+    allParameterizedJobsByImpersonation.add(job5WithGenericTokenAbc);
+    allParameterizedJobsByImpersonation.add(job6WithGenericTokenDef);
 
     JobFinder.setJobFinderImpersonater(jobFinderImpersonater);
   }
 
   @SuppressWarnings("deprecation")
-  private ParameterizedJob createJob(final String token) {
+  private ParameterizedJob createJob(final String authToken, final String genericToken) {
     final ParameterizedJob mock = mock(ParameterizedJob.class);
     when(mock.getAuthToken()) //
-        .thenReturn(new BuildAuthorizationToken(token));
+        .thenReturn(new BuildAuthorizationToken(authToken));
     when(mock.getFullName()) //
         .thenReturn("name-" + atomicInteger.incrementAndGet());
     final Map<TriggerDescriptor, Trigger<?>> triggers = new HashMap<>();
     final TriggerDescriptor typeDescr = mock(TriggerDescriptor.class);
-    final Trigger<?> genericTrigger = new GenericTrigger(null, null, null, null, null);
+    final GenericTrigger genericTrigger = new GenericTrigger(null, null, null, null, null);
+    genericTrigger.setToken(genericToken);
     triggers.put(typeDescr, genericTrigger);
     when(mock.getTriggers()) //
         .thenReturn(triggers);
@@ -86,16 +80,6 @@ public class JobFinderTest {
   }
 
   @Test
-  public void testThatJobsWithoutTokenIsFoundWhenNoTokenSupplied() {
-    final String givenToken = "";
-
-    final List<String> actual = findAllJobs(givenToken);
-
-    assertThat(actual) //
-        .containsExactly(job1WithNoToken.getFullName(), job2WithNoToken.getFullName());
-  }
-
-  @Test
   public void testThatJobsWithoutTokenIsNotFoundWhenTokenSupplied() {
     final String givenToken = "some-token";
 
@@ -106,62 +90,42 @@ public class JobFinderTest {
   }
 
   @Test
-  public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatches() {
+  public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesABC() {
     final String givenToken = "ABC";
 
     final List<String> actual = findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job3WithTokenAbc.getFullName(), job4WithTokenAbc.getFullName());
+        .containsExactly(job3WithAuthTokenAbc.getFullName(), job5WithGenericTokenAbc.getFullName());
   }
 
   @Test
-  public void testThatJobsWithTokenIsFoundWhenOtherTokenSuppliedAndMatches() {
+  public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesDEF() {
     final String givenToken = "DEF";
 
     final List<String> actual = findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job5WithTokenDef.getFullName(), job6WithTokenDef.getFullName());
+        .containsExactly(job4WithAuthTokenDef.getFullName(), job6WithGenericTokenDef.getFullName());
   }
 
   @Test
-  public void testThatJobsOnlyInImpersonateIsFound() {
-    allParameterizedJobs.clear();
-    allParameterizedJobsByImpersonation.clear();
-    allParameterizedJobsByImpersonation.add(job1WithNoToken);
+  public void testThatJobsWithoutTokenIsFoundWhenTokenNotSupplied() {
     final String givenToken = "";
 
     final List<String> actual = findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job1WithNoToken.getFullName());
+        .containsExactly(job1WithNoToken.getFullName(), job2WithNoToken.getFullName());
   }
 
   @Test
-  public void testThatJobsOnlyNotInImpersonateIsFound() {
-    allParameterizedJobs.clear();
-    allParameterizedJobs.add(job1WithNoToken);
-    allParameterizedJobsByImpersonation.clear();
-    final String givenToken = "";
+  public void testThatNoJobsAreFoundWhenTokenSuppliedButDoesNotMatch() {
+    final String givenToken = "QWE";
 
     final List<String> actual = findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job1WithNoToken.getFullName());
-  }
-
-  @Test
-  public void testThatJobsInBothImpersonateAndNotIsFound() {
-    allParameterizedJobs.clear();
-    allParameterizedJobs.add(job1WithNoToken);
-    allParameterizedJobsByImpersonation.clear();
-    allParameterizedJobsByImpersonation.add(job1WithNoToken);
-    final String givenToken = "";
-
-    final List<String> actual = findAllJobs(givenToken);
-
-    assertThat(actual) //
-        .containsExactly(job1WithNoToken.getFullName());
+        .isEmpty();
   }
 }

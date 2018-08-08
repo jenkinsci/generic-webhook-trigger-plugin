@@ -37,6 +37,18 @@
     If you want value of query parameter <b>param1</b> to be contributed, you need to add "param1" here.
    </f:description>
  </f:entry>
+ 
+ <f:entry title="Token">
+   <f:textbox field="token"/>
+   <f:description>
+    Optional token. If it is specified then this job will can only be triggered if that token is supplied when invoking <b>http://JENKINS_URL/generic-webhook-trigger/invoke</b>. It can be supplid as a:
+    <ul>
+     <li>Query parameter <b>/invoke?token=TOKEN_HERE</b></li>
+     <li>A token header <b>token: TOKEN_HERE</b></li>
+     <li>A Authorization: Bearer header <b>Authorization: Bearer TOKEN_HERE</b></li>
+    </ul>
+   </f:description>
+ </f:entry>
 
  <f:entry title="Cause">
    <f:textbox field="causeString" default="Generic Cause"/>

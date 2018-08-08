@@ -4,24 +4,24 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.jenkinsci.plugins.gwt.ParameterActionUtil.createParameterAction;
 import static org.jenkinsci.plugins.gwt.Renderer.isMatching;
 import static org.jenkinsci.plugins.gwt.Renderer.renderText;
-import hudson.Extension;
-import hudson.model.Item;
-import hudson.model.CauseAction;
-import hudson.model.Job;
-import hudson.model.ParametersAction;
-import hudson.model.ParametersDefinitionProperty;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
 
 import java.util.List;
 import java.util.Map;
-
-import jenkins.model.ParameterizedJobMixIn;
 
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
+
+import hudson.Extension;
+import hudson.model.CauseAction;
+import hudson.model.Item;
+import hudson.model.Job;
+import hudson.model.ParametersAction;
+import hudson.model.ParametersDefinitionProperty;
+import hudson.triggers.Trigger;
+import hudson.triggers.TriggerDescriptor;
+import jenkins.model.ParameterizedJobMixIn;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
@@ -33,6 +33,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private boolean printPostContent;
   private boolean printContributedVariables;
   private String causeString;
+  private String token;
 
   @Symbol("GenericTrigger")
   public static class GenericDescriptor extends TriggerDescriptor {
@@ -87,6 +88,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
   public boolean isPrintPostContent() {
     return printPostContent;
+  }
+
+  @DataBoundSetter
+  public void setToken(final String token) {
+    this.token = token;
+  }
+
+  public String getToken() {
+    return token;
   }
 
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
