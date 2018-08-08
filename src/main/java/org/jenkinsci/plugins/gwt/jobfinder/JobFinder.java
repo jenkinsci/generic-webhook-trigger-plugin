@@ -11,6 +11,7 @@ import org.jenkinsci.plugins.gwt.GenericTrigger;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import hudson.model.BuildAuthorizationToken;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
@@ -30,20 +31,13 @@ public final class JobFinder {
 
     final List<FoundJob> found = new ArrayList<>();
 
-    List<ParameterizedJob> candidateProjects = getAllParameterizedJobs(givenToken);
+    final List<ParameterizedJob> candidateProjects =
+        jobFinderImpersonater.getAllParameterizedJobsByImpersonation();
     for (final ParameterizedJob candidateJob : candidateProjects) {
       final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
-        found.add(new FoundJob(candidateJob.getFullName(), genericTriggerOpt));
-      }
-    }
-
-    candidateProjects = jobFinderImpersonater.getAllParameterizedJobsByImpersonation();
-    for (final ParameterizedJob candidateJob : candidateProjects) {
-      if (!isIncluded(candidateJob.getFullName(), found)
-          && authenticationTokenMatches(candidateJob, givenToken)) {
-        final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
-        if (genericTriggerOpt != null) {
+        if (authenticationTokenMatches(
+            givenToken, candidateJob.getAuthToken(), genericTriggerOpt.getToken())) {
           found.add(new FoundJob(candidateJob.getFullName(), genericTriggerOpt));
         }
       }
@@ -52,42 +46,43 @@ public final class JobFinder {
     return found;
   }
 
-  private static boolean isIncluded(final String searchFor, final List<FoundJob> includedJobs) {
-    for (final FoundJob includedJob : includedJobs) {
-      if (includedJob.getFullName().equals(searchFor)) {
-        return true;
-      }
+  private static boolean authenticationTokenMatches(
+      final String givenToken,
+      @SuppressWarnings("deprecation") final BuildAuthorizationToken authToken,
+      final String genericToken) {
+    final boolean noTokenGiven = isNullOrEmpty(givenToken);
+    final boolean noKindOfTokenConfigured =
+        isNullOrEmpty(genericToken) && !jobHasAuthToken(authToken);
+    final boolean genericTokenNotConfigured = isNullOrEmpty(genericToken);
+    final boolean authTokenNotConfigured = !jobHasAuthToken(authToken);
+    return genericTokenNotConfigured && authenticationTokenMatches(authToken, givenToken)
+        || authTokenNotConfigured && authenticationTokenMatchesGeneric(genericToken, givenToken)
+        || noTokenGiven && noKindOfTokenConfigured;
+  }
+
+  /** This is the token configured in this plugin. */
+  private static boolean authenticationTokenMatchesGeneric(
+      final String token, final String givenToken) {
+    final boolean jobHasAuthToken = !isNullOrEmpty(token);
+    final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
+    if (jobHasAuthToken && authTokenWasGiven) {
+      return token.equals(givenToken);
+    }
+    if (!jobHasAuthToken && !authTokenWasGiven) {
+      return true;
     }
     return false;
   }
 
-  private static List<ParameterizedJob> getAllParameterizedJobs(final String givenToken) {
-    final List<ParameterizedJob> candidateProjects =
-        jobFinderImpersonater.getAllParameterizedJobs();
-
-    final List<ParameterizedJob> candidateProjectsWithoutToken = new ArrayList<>();
-    for (final ParameterizedJob candidate : candidateProjects) {
-      if (authenticationTokenMatches(candidate, givenToken)) {
-        candidateProjectsWithoutToken.add(candidate);
-      }
-    }
-    return candidateProjectsWithoutToken;
-  }
-
+  /** This is the token configured in the job. A feature found in Jenkins core. */
   @SuppressWarnings("deprecation")
   private static boolean authenticationTokenMatches(
-      final ParameterizedJob candidateJob, final String givenToken) {
-    final hudson.model.BuildAuthorizationToken authToken = candidateJob.getAuthToken();
+      final hudson.model.BuildAuthorizationToken authToken, final String givenToken) {
 
     final boolean jobHasAuthToken = jobHasAuthToken(authToken);
     final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
     if (jobHasAuthToken && authTokenWasGiven) {
-      final boolean authTokenMatchesQueryToken = authToken.getToken().equals(givenToken);
-      if (authTokenMatchesQueryToken) {
-        return true;
-      } else {
-        return false;
-      }
+      return authToken.getToken().equals(givenToken);
     }
     if (!jobHasAuthToken && !authTokenWasGiven) {
       return true;

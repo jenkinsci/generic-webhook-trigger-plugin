@@ -51,9 +51,9 @@ When using the plugin in several jobs, you will have the same URL trigger all jo
 * Or, add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
 
 
-## Authentication
+### Token parameter
 
-There is a special `token` parameter. When supplied, it is used with [Build Token Root Plugin](https://wiki.jenkins.io/display/JENKINS/Build+Token+Root+Plugin) to authenticate.
+There is a special `token` parameter. When supplied, the invocation will only trigger jobs with that exact token.
 
 ![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
 
@@ -75,24 +75,19 @@ If you are fiddling with expressions, you may want to checkout:
 It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 
 ```bash
-curl -vs http://localhost:8080/generic-webhook-trigger/invoke 2>&1
+curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1
 ```
 
-This may start your job, if you have enabled "**Allow anonymous read access**" in global security config. If it does not, check the Jenkins log. It may say something like this.
-
-```
-INFO: Did not find any jobs to trigger! The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered.
-```
-
-And to authenticate in the request you may use a *token*, or try this:
+This should start your job, if the job has no `token` configured. If your job has a `token` you can specify that like this.
 
 ```bash
-curl -vs http://username:password@localhost:8080/generic-webhook-trigger/invoke 2>&1
+curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE 2>&1
 ```
 
-If you want to trigger with some post content, curl can dot that like this.
+If you want to trigger with some post content, `curl` can dot that like this.
+
 ```bash
-curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"GitHub API", "url":"http://developer.github.com/v3/oauth/" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=sometoken
+curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"GitHub API", "url":"http://developer.github.com/v3/oauth/" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE
 ```
 
 ## Screenshots
@@ -182,6 +177,10 @@ node {
      [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
      [key: 'headerWithString', regexpFilter: '']
     ],
+     
+    causeString: 'Triggered on $ref',
+    
+    token: 'abc123',
     
     printContributedVariables: true,
     printPostContent: true,
@@ -207,6 +206,7 @@ node {
 ```
 
 With a declarative Jenkinsfile like this:
+
 ```groovy
 pipeline {
   agent any
@@ -215,9 +215,10 @@ pipeline {
      genericVariables: [
       [key: 'ref', value: '$.ref']
      ],
+     
      causeString: 'Triggered on $ref',
-     regexpFilterExpression: '',
-     regexpFilterText: '',
+     
+     token: 'abc123',
      
      printContributedVariables: true,
      printPostContent: true,

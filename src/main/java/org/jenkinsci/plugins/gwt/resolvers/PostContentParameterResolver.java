@@ -57,7 +57,10 @@ public class PostContentParameterResolver {
 
   private Map<String, String> resolve(final String incomingPostContent, final GenericVariable gv) {
     try {
-      if (gv != null && gv.getExpression() != null && !gv.getExpression().isEmpty()) {
+      if (!isNullOrEmpty(incomingPostContent)
+          && gv != null
+          && gv.getExpression() != null
+          && !gv.getExpression().isEmpty()) {
         if (gv.getExpressionType() == JSONPath) {
           return resolveJsonPath(incomingPostContent, gv);
         } else if (gv.getExpressionType() == XPath) {

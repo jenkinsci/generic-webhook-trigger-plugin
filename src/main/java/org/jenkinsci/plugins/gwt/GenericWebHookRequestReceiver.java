@@ -35,9 +35,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
 
   private static final String NO_JOBS_MSG =
       "Did not find any jobs to trigger! "
-          + "The user invoking /generic-webhook-trigger/invoke must have read permission to any jobs that should be triggered. "
-          + "You may try adding http://user:passw@url... "
-          + "or configuring and passing an authentication token like ...trigger/invoke?token=TOKENHERE";
+          + "If the job that you intend to trigger has a configured token, you need to pass it like ...trigger/invoke?token=TOKENHERE";
   private static final String URL_NAME = "generic-webhook-trigger";
   private static final Logger LOGGER =
       Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
