@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.41 (2018-08-09 09:04:59)
 ### GitHub [#63](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/63) Specifying the authentication token in a scripted pipeline    *question*  
 
 **Token support without Build Token Root Plugin #63**
@@ -8,7 +8,7 @@ Changelog of Generic Webhook Plugin.
  * This enables token support when using multibranch pipelines. 
  * Also code cleanup. 
 
-[9275192f09e9b11](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9275192f09e9b11) Tomas Bjerre *2018-08-09 08:53:13*
+[0fd195da51d7832](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0fd195da51d7832) Tomas Bjerre *2018-08-09 09:04:33*
 
 
 ### GitHub [#65](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/65) Multibranch pipeline trigger specific branch/pr job possibility    *question*  
