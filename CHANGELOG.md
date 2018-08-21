@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.42 (2018-08-21 05:07:14)
+### No issue
+
+**Update JSONPath dependency**
+
+
+[d6e1eaa7fc7df99](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d6e1eaa7fc7df99) Volodymyr Tsykun *2018-08-20 16:28:19*
+
+
 ## 1.41 (2018-08-09 09:04:59)
 ### GitHub [#63](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/63) Specifying the authentication token in a scripted pipeline    *question*  
 
