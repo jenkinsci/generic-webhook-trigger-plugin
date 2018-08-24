@@ -39,6 +39,8 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   private static final String URL_NAME = "generic-webhook-trigger";
   private static final Logger LOGGER =
       Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
+  public static final String PARAM_TOKEN = "token";
+  public static final String PARAM_WAIT = "wait_for_completion";
 
   public HttpResponse doInvoke(final StaplerRequest request) {
     String postContent = null;
@@ -53,17 +55,27 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     }
 
     final String givenToken = getGivenToken(headers, parameterMap);
-    return doInvoke(headers, parameterMap, postContent, givenToken);
+    final boolean shouldWaitForJobs = shouldWaitForJobs(parameterMap);
+    return doInvoke(headers, parameterMap, postContent, givenToken, shouldWaitForJobs);
+  }
+
+  private boolean shouldWaitForJobs(Map<String, String[]> parameterMap) {
+    boolean paramExists = parameterMap.containsKey(PARAM_WAIT);
+    if (paramExists) {
+      String paramWaitValue = parameterMap.get(PARAM_WAIT)[0];
+      return paramWaitValue.equalsIgnoreCase("true") || paramWaitValue.equalsIgnoreCase("yes");
+    }
+    return false;
   }
 
   @VisibleForTesting
   String getGivenToken(
       final Map<String, List<String>> headers, final Map<String, String[]> parameterMap) {
-    if (parameterMap.containsKey("token")) {
-      return parameterMap.get("token")[0];
+    if (parameterMap.containsKey(PARAM_TOKEN)) {
+      return parameterMap.get(PARAM_TOKEN)[0];
     }
-    if (headers.containsKey("token")) {
-      return headers.get("token").get(0);
+    if (headers.containsKey(PARAM_TOKEN)) {
+      return headers.get(PARAM_TOKEN).get(0);
     }
     if (headers.containsKey("authorization")) {
       for (final String candidateValue : headers.get("authorization")) {
@@ -91,7 +103,8 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       final Map<String, List<String>> headers,
       final Map<String, String[]> parameterMap,
       final String postContent,
-      final String givenToken) {
+      final String givenToken,
+      boolean shouldWaitForJobs) {
 
     final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
     final Map<String, Object> triggerResultsMap = new HashMap<>();
@@ -104,7 +117,9 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         LOGGER.log(INFO, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
         final GenericTriggerResults triggerResults =
-            foundJob.getGenericTrigger().trigger(headers, parameterMap, postContent);
+            foundJob
+                .getGenericTrigger()
+                .trigger(headers, parameterMap, postContent, shouldWaitForJobs);
         triggerResultsMap.put(foundJob.getFullName(), triggerResults);
       } catch (final Throwable t) {
         LOGGER.log(SEVERE, foundJob.getFullName(), t);

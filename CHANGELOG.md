@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#70](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/70) How to specify the TOKEN using Job DSL?    *question*  
+
+**Documenting token in DSL #70**
+
+
+[d88bd14417d6922](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d88bd14417d6922) Tomas Bjerre *2018-08-24 09:14:45*
+
+
 ## 1.42 (2018-08-21 05:07:14)
 ### No issue
 

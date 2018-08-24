@@ -7,6 +7,9 @@ import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
@@ -24,7 +27,7 @@ import hudson.triggers.TriggerDescriptor;
 import jenkins.model.ParameterizedJobMixIn;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
-
+  private static Logger LOG = Logger.getLogger(GenericTrigger.class.getName());
   private List<GenericVariable> genericVariables = newArrayList();
   private final String regexpFilterText;
   private final String regexpFilterExpression;
@@ -105,7 +108,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   public GenericTriggerResults trigger(
       final Map<String, List<String>> headers,
       final Map<String, String[]> parameterMap,
-      final String postContent) {
+      final String postContent,
+      boolean shouldWaitForJobs) {
     final Map<String, String> resolvedVariables =
         new VariablesResolver(
                 headers,
@@ -132,6 +136,13 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       item =
           retrieveScheduleJob(job) //
               .scheduleBuild2(job, 0, new CauseAction(genericCause), parameters);
+      if (shouldWaitForJobs) {
+        try {
+          item.getFuture().get();
+        } catch (InterruptedException | ExecutionException e) {
+          LOG.log(Level.SEVERE, "Exception when trying to wait for " + job.getFullName(), e);
+        }
+      }
     }
     return new GenericTriggerResults(
         item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);
