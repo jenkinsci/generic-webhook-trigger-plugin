@@ -131,6 +131,7 @@ job('Generic Job Example') {
      regexpFilter("")
     }
    }
+   token('abc123')
    printContributedVariables(true)
    printPostContent(true)
    regexpFilterText("\$VARIABLE_FROM_POST")
