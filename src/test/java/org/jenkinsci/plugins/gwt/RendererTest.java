@@ -81,6 +81,19 @@ public class RendererTest {
   }
 
   @Test
+  public void testThatExceptionNotThrownWithBadResolvedVariable() {
+    resolvedVariables = new TreeMap<>();
+    resolvedVariables.put("key1", "resolved1");
+    resolvedVariables.put("key2", "resolved2($this)");
+
+    final String text = "$key1 $key2";
+    final String actual = renderText(text, resolvedVariables);
+
+    assertThat(actual) //
+        .isEqualTo("resolved1 resolved2($this)");
+  }
+
+  @Test
   public void testThatVariablesCanUseBrackets() {
     resolvedVariables = new TreeMap<>();
     resolvedVariables.put("key1", "resolved1");
