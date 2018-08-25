@@ -50,10 +50,9 @@ public class Renderer {
     final List<String> variables = getVariablesInResolveOrder(resolvedVariables.keySet());
     for (final String variable : variables) {
       regexpFilterText =
-          replaceKey(regexpFilterText, resolvedVariables.get(variable), "\\$" + variable);
+          replaceKey(regexpFilterText, resolvedVariables.get(variable), "$" + variable);
       regexpFilterText =
-          replaceKey(
-              regexpFilterText, resolvedVariables.get(variable), "\\$\\{" + variable + "\\}");
+          replaceKey(regexpFilterText, resolvedVariables.get(variable), "${" + variable + "}");
     }
     return regexpFilterText;
   }
@@ -63,7 +62,7 @@ public class Renderer {
     try {
       regexpFilterText =
           regexpFilterText //
-              .replaceAll(key, resolvedVariable);
+              .replace(key, resolvedVariable);
     } catch (final IllegalArgumentException e) {
       throw new RuntimeException("Tried to replace " + key + " with " + resolvedVariable, e);
     }
