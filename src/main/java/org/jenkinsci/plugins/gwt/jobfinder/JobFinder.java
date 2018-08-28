@@ -2,19 +2,16 @@ package org.jenkinsci.plugins.gwt.jobfinder;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.jenkinsci.plugins.gwt.FoundJob;
-import org.jenkinsci.plugins.gwt.GenericTrigger;
-
 import com.google.common.annotations.VisibleForTesting;
-
 import hudson.model.BuildAuthorizationToken;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
+import org.jenkinsci.plugins.gwt.FoundJob;
+import org.jenkinsci.plugins.gwt.GenericTrigger;
 
 public final class JobFinder {
 

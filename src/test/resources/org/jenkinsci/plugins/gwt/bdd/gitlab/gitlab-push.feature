@@ -12,7 +12,7 @@ Feature: It should be possible to trigger for GitLab push events.
     Given filter is configured with text: $object_kind $after
     Given filter is configured with expression: ^push\s.{40}$
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "push",
@@ -32,7 +32,7 @@ Feature: It should be possible to trigger for GitLab push events.
       | git_ssh_url      | git@example.com:mike/diaspora.git        |
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "note",
@@ -58,7 +58,7 @@ Feature: It should be possible to trigger for GitLab push events.
     Given filter is configured with text: $object_kind $after $ref
     Given filter is configured with expression: ^push\s.{40}\srefs/heads/(develop|feature/.*)$
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "push",
@@ -77,7 +77,7 @@ Feature: It should be possible to trigger for GitLab push events.
       | ref              | refs/heads/develop                       |
       | git_ssh_url      | git@example.com:mike/diaspora.git        |
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "push",
@@ -90,7 +90,7 @@ Feature: It should be possible to trigger for GitLab push events.
     """
     Then the job is triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "push",

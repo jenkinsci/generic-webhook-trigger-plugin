@@ -5,14 +5,6 @@ import static org.jenkinsci.plugins.gwt.ParameterActionUtil.createParameterActio
 import static org.jenkinsci.plugins.gwt.Renderer.isMatching;
 import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
-import java.util.List;
-import java.util.Map;
-
-import org.jenkinsci.Symbol;
-import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
-
 import hudson.Extension;
 import hudson.model.CauseAction;
 import hudson.model.Item;
@@ -21,7 +13,13 @@ import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
+import java.util.List;
+import java.util.Map;
 import jenkins.model.ParameterizedJobMixIn;
+import org.jenkinsci.Symbol;
+import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 

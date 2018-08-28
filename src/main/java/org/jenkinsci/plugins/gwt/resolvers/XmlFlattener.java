@@ -9,13 +9,11 @@ import static org.w3c.dom.Node.TEXT_NODE;
 
 import java.io.StringWriter;
 import java.util.Map;
-
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.jenkinsci.plugins.gwt.GenericVariable;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

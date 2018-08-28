@@ -4,20 +4,18 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
+import com.google.gson.GsonBuilder;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import org.jenkinsci.plugins.gwt.ExpressionType;
 import org.jenkinsci.plugins.gwt.GenericVariable;
 import org.jenkinsci.plugins.gwt.Renderer;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
-
-import com.google.gson.GsonBuilder;
-
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 
 public class Stepdefs {
 
@@ -29,7 +27,7 @@ public class Stepdefs {
     featureState = new FeatureState();
   }
 
-  @Given("^received post content is:$")
+  @When("^received post content is:$")
   public void postContentReceived(final String postContent) {
     featureState.setPostContent(postContent);
   }
@@ -96,6 +94,14 @@ public class Stepdefs {
         renderText(featureState.getRegexpFilterText(), resolvedVariables);
     final boolean isMatching =
         Renderer.isMatching(renderedRegexpFilterText, featureState.getRegexpFilterExpression());
+    if (!isMatching) {
+      LOG.info(
+          "Text: \""
+              + renderedRegexpFilterText
+              + "\" does not match \""
+              + featureState.getRegexpFilterExpression()
+              + "\"");
+    }
     return isMatching;
   }
 

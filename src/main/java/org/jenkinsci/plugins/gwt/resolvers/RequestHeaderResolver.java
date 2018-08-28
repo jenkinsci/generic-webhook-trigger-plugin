@@ -5,14 +5,12 @@ import static com.google.common.base.Optional.of;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
+import com.google.common.base.Optional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.jenkinsci.plugins.gwt.GenericHeaderVariable;
-
-import com.google.common.base.Optional;
 
 public class RequestHeaderResolver {
   public RequestHeaderResolver() {}
@@ -36,7 +34,7 @@ public class RequestHeaderResolver {
         found.put(toVariableName(headerName).toLowerCase() + "_" + i, filteredValue);
         final boolean firstValue = i == 0;
         if (firstValue) {
-          //Users will probably expect this variable for parameters that are never a list
+          // Users will probably expect this variable for parameters that are never a list
           found.put(toVariableName(headerName).toLowerCase(), filteredValue);
         }
         i++;

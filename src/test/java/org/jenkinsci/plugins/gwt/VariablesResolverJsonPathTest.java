@@ -3,16 +3,14 @@ package org.jenkinsci.plugins.gwt;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.junit.Test;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 
 public class VariablesResolverJsonPathTest {
   private final Map<String, List<String>> headers = new HashMap<>();

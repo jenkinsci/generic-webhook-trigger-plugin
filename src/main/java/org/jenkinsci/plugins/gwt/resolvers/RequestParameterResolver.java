@@ -5,13 +5,11 @@ import static com.google.common.collect.Maps.newHashMap;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
+import com.google.common.base.Optional;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.jenkinsci.plugins.gwt.GenericRequestVariable;
-
-import com.google.common.base.Optional;
 
 public class RequestParameterResolver {
   public RequestParameterResolver() {}
@@ -35,7 +33,7 @@ public class RequestParameterResolver {
           resolvedVariables.put(toVariableName(requestParamName) + "_" + i, filteredValue);
           final boolean firstAndOnlyValue = i == 0 && values.length == 1;
           if (firstAndOnlyValue) {
-            //Users will probably expect this variable for parameters that are never a list
+            // Users will probably expect this variable for parameters that are never a list
             resolvedVariables.put(toVariableName(requestParamName), filteredValue);
           }
         }

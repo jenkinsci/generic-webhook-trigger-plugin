@@ -8,7 +8,7 @@ Feature: It should be possible to use variables resolved from post content.
       | committer_username  | $.head_commit.committer.username  | JSONPath        |              |               |
       | ref                 | $.ref                             | JSONPath        |              |               |
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/develop",

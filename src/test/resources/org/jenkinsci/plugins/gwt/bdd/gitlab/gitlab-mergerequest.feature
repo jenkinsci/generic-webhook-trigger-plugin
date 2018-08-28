@@ -19,7 +19,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
     Given filter is configured with text: $MR_OBJECT_KIND $MR_ACTION $MR_OLD_REV
     Given filter is configured with expression: ^merge_request\s(update\s.{40}$|open.*)
 
-    Given received post content is:
+    When received post content is:
     """
     {  
        "object_kind":"merge_request",
@@ -62,7 +62,7 @@ Feature: It should be possible to trigger for GitLab merge request events.
       | MR_OBJECT_KIND   | merge_request                                |
 
 
-    Given received post content is:
+    When received post content is:
     """
     {  
        "object_kind":"note",

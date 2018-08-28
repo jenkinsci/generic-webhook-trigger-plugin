@@ -10,7 +10,7 @@ Feature: It should be possible to trigger for GitHub push events and filter out 
       | text   | expression   |
       | $user  | ^((?!build)) |
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "pusher": {
@@ -20,7 +20,7 @@ Feature: It should be possible to trigger for GitHub push events and filter out 
     """
     Then the job is triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "pusher": {
@@ -42,7 +42,7 @@ Feature: It should be possible to trigger for GitHub push events and filter out 
       | text        | expression                                                     |
       | $ref $user  | ^(refs/heads/develop\|refs/heads/feature/[^\s]+?)\s((?!build)) |
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/develop",
@@ -53,7 +53,7 @@ Feature: It should be possible to trigger for GitHub push events and filter out 
     """
     Then the job is triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/feature/jira-123-stuff",
@@ -64,7 +64,7 @@ Feature: It should be possible to trigger for GitHub push events and filter out 
     """
     Then the job is triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/feature/jira-123-stuff",
@@ -75,7 +75,7 @@ Feature: It should be possible to trigger for GitHub push events and filter out 
     """
     Then the job is not triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/jira-123-stuff",

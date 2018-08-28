@@ -9,7 +9,7 @@ Feature: It should be possible to trigger for GitHub push events to specific bra
     Given filter is configured with text: $ref
     Given filter is configured with expression: ^(refs/heads/develop|refs/heads/feature/.+)$
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/develop",
@@ -17,7 +17,7 @@ Feature: It should be possible to trigger for GitHub push events to specific bra
     """
     Then the job is triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/feature/jira-123-impl-stuff",
@@ -25,7 +25,7 @@ Feature: It should be possible to trigger for GitHub push events to specific bra
     """
     Then the job is triggered
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/master",

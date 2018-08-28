@@ -2,7 +2,7 @@ Feature: It should be possible to parse JSON post content with JSONPath.
 
   Scenario: JSONPath is used to extract values from post content
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "ref": "refs/heads/develop",

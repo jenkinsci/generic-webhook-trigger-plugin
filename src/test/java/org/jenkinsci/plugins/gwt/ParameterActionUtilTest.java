@@ -2,16 +2,14 @@ package org.jenkinsci.plugins.gwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.ParameterActionUtil.createParameterAction;
+
+import com.google.common.collect.ImmutableMap;
 import hudson.model.BooleanParameterDefinition;
 import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
-
 import java.util.Map;
-
 import org.junit.Test;
-
-import com.google.common.collect.ImmutableMap;
 
 public class ParameterActionUtilTest {
 

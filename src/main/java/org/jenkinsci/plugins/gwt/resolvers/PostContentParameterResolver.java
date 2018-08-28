@@ -6,27 +6,24 @@ import static java.util.logging.Level.INFO;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
 import static org.jenkinsci.plugins.gwt.ExpressionType.XPath;
 
+import com.google.common.base.Charsets;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
-
 import org.jenkinsci.plugins.gwt.GenericVariable;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
-import com.google.common.base.Charsets;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.PathNotFoundException;
 
 public class PostContentParameterResolver {
   private static final Logger LOGGER = Logger.getLogger(VariablesResolver.class.getName());

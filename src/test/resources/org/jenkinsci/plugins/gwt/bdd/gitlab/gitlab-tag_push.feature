@@ -13,7 +13,7 @@ Feature: It should be possible to trigger for GitLab tag events.
     Given filter is configured with text: $object_kind $before $after
     Given filter is configured with expression: ^tag_push\s0{40}\s.{40}$
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "tag_push",
@@ -35,7 +35,7 @@ Feature: It should be possible to trigger for GitLab tag events.
       | git_ssh_url      | git@example.com:jsmith/example.git       |
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "object_kind": "tag_push",

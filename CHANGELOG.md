@@ -1,5 +1,21 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Adding more testcases on Bitbucket Server and Cloud**
+
+
+[f0309fe0263be8b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f0309fe0263be8b) Tomas Bjerre *2018-09-04 09:04:58*
+
+**Updating fmt-maven-plugin**
+
+ * Adding another simpler test case on request parameters 
+ * Testing github tag push 
+
+[a1522b6680bcf99](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a1522b6680bcf99) Tomas Bjerre *2018-09-02 06:38:31*
+
+
 ## 1.43 (2018-08-25 14:03:35)
 ### GitHub [#70](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/70) How to specify the TOKEN using Job DSL?    *question*  
 

@@ -3,17 +3,15 @@ package org.jenkinsci.plugins.gwt;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 
-import java.util.List;
-import java.util.Map;
-
 import com.cloudbees.plugins.credentials.CredentialsParameterValue;
-
 import hudson.model.BooleanParameterValue;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
 import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterValue;
+import java.util.List;
+import java.util.Map;
 
 public class ParameterActionUtil {
 

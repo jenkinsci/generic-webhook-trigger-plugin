@@ -4,22 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import hudson.model.BuildAuthorizationToken;
+import hudson.triggers.Trigger;
+import hudson.triggers.TriggerDescriptor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 import org.jenkinsci.plugins.gwt.FoundJob;
 import org.jenkinsci.plugins.gwt.GenericTrigger;
 import org.junit.Before;
 import org.junit.Test;
-
-import hudson.model.BuildAuthorizationToken;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
-import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 
 public class JobFinderTest {
   private final AtomicInteger atomicInteger = new AtomicInteger(0);

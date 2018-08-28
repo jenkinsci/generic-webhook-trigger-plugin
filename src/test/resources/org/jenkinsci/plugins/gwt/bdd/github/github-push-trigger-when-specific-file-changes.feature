@@ -11,7 +11,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
       | $changed_files  | "this_file_is_special.md" |
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [
@@ -30,7 +30,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
     Then the job is triggered
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [
@@ -53,7 +53,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
     Then the job is triggered
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [
@@ -76,7 +76,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
     Then the job is not triggered
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [
@@ -106,7 +106,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
       | $changed_files  | "folder/subfolder/[^"]+?" |
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [
@@ -125,7 +125,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
     Then the job is triggered
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [
@@ -148,7 +148,7 @@ Feature: It should be possible to trigger for GitHub push events when a specific
     Then the job is triggered
 
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [

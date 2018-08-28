@@ -4,12 +4,11 @@ import static com.google.common.collect.Maps.newHashMap;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.toVariableName;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class JsonFlattener {
   private static Gson GSON =

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.junit.Test;
 
@@ -16,7 +15,7 @@ public class VariablesResolverRequestParameterTest {
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
 
   @Test
-  public void testGenericRequestParameters() throws Exception {
+  public void testGenericRequestParametersWithFilters() throws Exception {
     final String postContent = null;
 
     final List<GenericVariable> genericVariables = newArrayList();
@@ -57,5 +56,40 @@ public class VariablesResolverRequestParameterTest {
         .containsEntry("reqp4_0", "just one") //
         .containsEntry("reqp4_1", "just one again") //
         .hasSize(6);
+  }
+
+  @Test
+  public void testGenericRequestParameters() throws Exception {
+    final String postContent = null;
+
+    final List<GenericVariable> genericVariables = newArrayList();
+
+    final Map<String, String[]> parameterMap = new HashMap<>();
+    final String[] values1 = new String[] {"p1value"};
+    parameterMap.put("param1", values1);
+
+    final String[] values2 = new String[] {"p2value"};
+    parameterMap.put("param2", values2);
+
+    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+    genericRequestVariables.add(new GenericRequestVariable("param1", ""));
+    genericRequestVariables.add(new GenericRequestVariable("param2", ""));
+
+    final Map<String, String> variables =
+        new VariablesResolver(
+                headers,
+                parameterMap,
+                postContent,
+                genericVariables,
+                genericRequestVariables,
+                genericHeaderVariables)
+            .getVariables();
+
+    assertThat(variables) //
+        .hasSize(4) //
+        .containsEntry("param1", "p1value") //
+        .containsEntry("param1_0", "p1value") //
+        .containsEntry("param2", "p2value") //
+        .containsEntry("param2_0", "p2value");
   }
 }

@@ -1,8 +1,11 @@
-When reporting a bug, please try to provide as much information as possible.
+When reporting a bug, please **try** to provide as much information as possible.
 
  * Plugin version used.
+ * Jenkins version used.
  * Your configuration.
-  * Variables configured, names, expressions...
+   * Variables configured, names, expressions...
+   * Pipeline script
+ * Build job log
  * Post content received. It can be found in the job execution log. People using GitHub often forget to set the content type in "Manage webhook" when configuring the webhook at GitHub.
  * A `curl` command and its response.
  * Expected result and actual result.
@@ -13,7 +16,7 @@ You may also have a look at the test cases as they should answer the most common
 
 If you are fiddling with expressions, you may want to checkout:
 
-* [This JSONPath site](https://jsonpath.curiousconcept.com/)
+* [This JSONPath site](http://jsonpath.herokuapp.com/)
 * [This XPath site](http://www.freeformatter.com/xpath-tester.html)
 * [This regexp site](https://jex.im/regulex/)
 

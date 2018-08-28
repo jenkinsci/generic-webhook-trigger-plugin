@@ -6,6 +6,10 @@ import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 
+import com.google.common.annotations.VisibleForTesting;
+import hudson.Extension;
+import hudson.model.UnprotectedRootAction;
+import hudson.security.csrf.CrumbExclusion;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -13,22 +17,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.IOUtils;
 import org.jenkinsci.plugins.gwt.jobfinder.JobFinder;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
-
-import com.google.common.annotations.VisibleForTesting;
-
-import hudson.Extension;
-import hudson.model.UnprotectedRootAction;
-import hudson.security.csrf.CrumbExclusion;
 
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {

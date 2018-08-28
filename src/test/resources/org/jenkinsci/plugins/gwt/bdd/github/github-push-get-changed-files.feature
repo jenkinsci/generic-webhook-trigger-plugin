@@ -6,7 +6,7 @@ Feature: It should be possible to trigger for GitHub push events and get the cha
       | variable            | expression                                     | expressionType  | defaultValue | regexpFilter  |
       | changed_files       | $.commits[*].['modified','added','removed'][*] | JSONPath        |              |               |
 
-    Given received post content is:
+    When received post content is:
     """
     {
       "commits": [

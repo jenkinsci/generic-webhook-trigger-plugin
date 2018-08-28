@@ -1,8 +1,8 @@
 package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import hudson.model.Cause;
 
+import hudson.model.Cause;
 import java.util.Map;
 
 public class GenericCause extends Cause {

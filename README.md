@@ -4,12 +4,12 @@
 
 This is a Jenkins plugin that can:
 
- 1. Receive any HTTP request, JENKINS_URL/generic-webhook-trigger/invoke
+ 1. Receive any HTTP request, `JENKINS_URL/generic-webhook-trigger/invoke`
  2. Extract values
 
-  * From POST content with [JSONPath](https://github.com/json-path/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
-  * From the query parameters
-  * From the headers
+  * From `POST` content with [JSONPath](https://github.com/json-path/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
+  * From the `query` parameters
+  * From the `headers`
 
  3. Trigger a build with those values contribute as variables
 
@@ -68,7 +68,7 @@ The token can be supplied as a:
 
 If you are fiddling with expressions, you may want to checkout:
 
-* [This JSONPath site](https://jsonpath.curiousconcept.com/)
+* [This JSONPath site](http://jsonpath.herokuapp.com/)
 * [This XPath site](http://www.freeformatter.com/xpath-tester.html)
 * [This regexp site](https://jex.im/regulex/)
 

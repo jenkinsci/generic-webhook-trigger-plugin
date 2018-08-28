@@ -4,6 +4,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.util.logging.Level.FINE;
 import static java.util.regex.Pattern.compile;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import com.google.common.annotations.VisibleForTesting;
 
 public class Renderer {
   private static Logger LOGGER = Logger.getLogger(Renderer.class.getSimpleName());

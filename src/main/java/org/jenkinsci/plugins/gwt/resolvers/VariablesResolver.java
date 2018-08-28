@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.jenkinsci.plugins.gwt.GenericHeaderVariable;
 import org.jenkinsci.plugins.gwt.GenericRequestVariable;
 import org.jenkinsci.plugins.gwt.GenericVariable;

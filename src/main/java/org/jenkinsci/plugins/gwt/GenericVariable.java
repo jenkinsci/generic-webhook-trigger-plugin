@@ -2,10 +2,10 @@ package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
+
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
-
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 

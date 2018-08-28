@@ -1,13 +1,11 @@
 package org.jenkinsci.plugins.gwt.jobfinder;
 
-import java.util.List;
-
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
-
 import hudson.security.ACL;
+import java.util.List;
 import jenkins.model.Jenkins;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
+import org.acegisecurity.context.SecurityContext;
+import org.acegisecurity.context.SecurityContextHolder;
 
 public class JobFinderImpersonater {
   public List<ParameterizedJob> getAllParameterizedJobsByImpersonation() {
