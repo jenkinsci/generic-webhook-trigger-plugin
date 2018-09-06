@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.44 (2018-09-06 16:48:37)
+### GitHub [#77](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/77) Auth/security: can the GWT end point be reached without authenticating?    *question*  
+
+**Only impersonating if token supplied #77**
+
+
+[fe9232eb83b1895](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fe9232eb83b1895) Tomas Bjerre *2018-09-06 16:47:52*
+
+
 ### No issue
 
 **Updating fmt-maven-plugin**

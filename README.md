@@ -53,7 +53,7 @@ When using the plugin in several jobs, you will have the same URL trigger all jo
 
 ### Token parameter
 
-There is a special `token` parameter. When supplied, the invocation will only trigger jobs with that exact token.
+There is a special `token` parameter. When supplied, the invocation will only trigger jobs with that exact token. The token also allows invocations without any other authentication credentials.
 
 ![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
 
@@ -72,22 +72,28 @@ If you are fiddling with expressions, you may want to checkout:
 * [This XPath site](http://www.freeformatter.com/xpath-tester.html)
 * [This regexp site](https://jex.im/regulex/)
 
-It's probably easiest to do with curl. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
+It's probably easiest to do with `curl`. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 
 ```bash
 curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1
 ```
 
-This should start your job, if the job has no `token` configured. If your job has a `token` you can specify that like this.
+This should start your job, if the job has no `token` configured and no security enabled. If you have security enabled you may need to authenticate:
+
+```bash
+curl -vs http://theusername:thepasssword@localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1
+```
+
+If your job has a `token` you don't need to supply other credentials. You can specify the `token` like this:
 
 ```bash
 curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE 2>&1
 ```
 
-If you want to trigger with some post content, `curl` can dot that like this.
+If you want to trigger with `token` and some post content, `curl` can dot that like this.
 
 ```bash
-curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"GitHub API", "url":"http://developer.github.com/v3/oauth/" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE
+curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some value" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE
 ```
 
 ## Screenshots
