@@ -3,17 +3,13 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
-**Adding more testcases on Bitbucket Server and Cloud**
-
-
-[f0309fe0263be8b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f0309fe0263be8b) Tomas Bjerre *2018-09-04 09:04:58*
-
 **Updating fmt-maven-plugin**
 
  * Adding another simpler test case on request parameters 
  * Testing github tag push 
+ * Adding more testcases on Bitbucket Server and Cloud 
 
-[a1522b6680bcf99](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a1522b6680bcf99) Tomas Bjerre *2018-09-02 06:38:31*
+[df9e0129c081fd0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/df9e0129c081fd0) Tomas Bjerre *2018-09-05 06:28:39*
 
 
 ## 1.43 (2018-08-25 14:03:35)

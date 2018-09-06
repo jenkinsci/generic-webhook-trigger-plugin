@@ -28,14 +28,17 @@ public class JobFinderTest {
   private final ParameterizedJob job4WithAuthTokenDef = createJob("DEF", "");
   private final ParameterizedJob job5WithGenericTokenAbc = createJob("", "ABC");
   private final ParameterizedJob job6WithGenericTokenDef = createJob("", "DEF");
+  private Boolean didImpersonate;
 
   @Before
   public void before() {
+    didImpersonate = null;
     allParameterizedJobsByImpersonation = new ArrayList<>();
     final JobFinderImpersonater jobFinderImpersonater =
         new JobFinderImpersonater() {
           @Override
-          public List<ParameterizedJob> getAllParameterizedJobsByImpersonation() {
+          public List<ParameterizedJob> getAllParameterizedJobs(boolean impersonate) {
+            didImpersonate = impersonate;
             return allParameterizedJobsByImpersonation;
           }
         };
@@ -85,6 +88,8 @@ public class JobFinderTest {
 
     assertThat(actual) //
         .isEmpty();
+    assertThat(didImpersonate) //
+        .isTrue();
   }
 
   @Test
@@ -95,6 +100,8 @@ public class JobFinderTest {
 
     assertThat(actual) //
         .containsExactly(job3WithAuthTokenAbc.getFullName(), job5WithGenericTokenAbc.getFullName());
+    assertThat(didImpersonate) //
+        .isTrue();
   }
 
   @Test
@@ -105,6 +112,8 @@ public class JobFinderTest {
 
     assertThat(actual) //
         .containsExactly(job4WithAuthTokenDef.getFullName(), job6WithGenericTokenDef.getFullName());
+    assertThat(didImpersonate) //
+        .isTrue();
   }
 
   @Test
@@ -115,6 +124,8 @@ public class JobFinderTest {
 
     assertThat(actual) //
         .containsExactly(job1WithNoToken.getFullName(), job2WithNoToken.getFullName());
+    assertThat(didImpersonate) //
+        .isFalse();
   }
 
   @Test
@@ -125,5 +136,7 @@ public class JobFinderTest {
 
     assertThat(actual) //
         .isEmpty();
+    assertThat(didImpersonate) //
+        .isTrue();
   }
 }

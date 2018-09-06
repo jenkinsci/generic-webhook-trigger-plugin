@@ -8,12 +8,17 @@ import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
 
 public class JobFinderImpersonater {
-  public List<ParameterizedJob> getAllParameterizedJobsByImpersonation() {
-    // Impersinate to get all jobs even without read grants
-    final SecurityContext orig = ACL.impersonate(ACL.SYSTEM);
-    final List<ParameterizedJob> jobs = Jenkins.getInstance().getAllItems(ParameterizedJob.class);
-    // Return to previous authentication context
-    SecurityContextHolder.setContext(orig);
-    return jobs;
+  public List<ParameterizedJob> getAllParameterizedJobs(boolean impersonate) {
+    SecurityContext orig = null;
+    try {
+      if (impersonate) {
+        orig = ACL.impersonate(ACL.SYSTEM);
+      }
+      return Jenkins.getInstance().getAllItems(ParameterizedJob.class);
+    } finally {
+      if (impersonate) {
+        SecurityContextHolder.setContext(orig);
+      }
+    }
   }
 }

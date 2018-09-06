@@ -28,8 +28,9 @@ public final class JobFinder {
 
     final List<FoundJob> found = new ArrayList<>();
 
+    final boolean impersonate = !isNullOrEmpty(givenToken);
     final List<ParameterizedJob> candidateProjects =
-        jobFinderImpersonater.getAllParameterizedJobsByImpersonation();
+        jobFinderImpersonater.getAllParameterizedJobs(impersonate);
     for (final ParameterizedJob candidateJob : candidateProjects) {
       final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
