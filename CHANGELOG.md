@@ -1,7 +1,16 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Adding multibranch example with credentials**
+
+
+[3048f14d3a1674a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3048f14d3a1674a) Tomas Bjerre *2018-09-07 09:30:44*
+
+
 ## 1.44 (2018-09-06 16:48:37)
-### GitHub [#77](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/77) Auth/security: can the GWT end point be reached without authenticating?    *question*  
+### GitHub [#77](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/77) Auth/security: can the GWT end point be reached without authenticating?    *enhancement*  *question*  
 
 **Only impersonating if token supplied #77**
 
