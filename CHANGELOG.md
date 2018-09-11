@@ -6,7 +6,7 @@ Changelog of Generic Webhook Plugin.
 **Adding multibranch example with credentials**
 
 
-[3048f14d3a1674a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3048f14d3a1674a) Tomas Bjerre *2018-09-07 09:30:44*
+[a3b0024b222eb9d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a3b0024b222eb9d) Tomas Bjerre *2018-09-07 09:48:43*
 
 
 ## 1.44 (2018-09-06 16:48:37)
