@@ -11,6 +11,9 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
+		<fmt>2.5.1</fmt>
+		<violations.version>1.13</violations.version>
+		<changelog>1.55</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -91,7 +94,7 @@
 			<plugin>
 				<groupId>se.bjurr.gitchangelog</groupId>
 				<artifactId>git-changelog-maven-plugin</artifactId>
-				<version>1.46</version>
+				<version>${changelog}</version>
 				<executions>
 					<execution>
 						<id>GenerateGitChangelog</id>
@@ -147,7 +150,7 @@ Changelog of Generic Webhook Plugin.
 			<plugin>
 				<groupId>com.coveo</groupId>
 				<artifactId>fmt-maven-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>${fmt}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -159,30 +162,32 @@ Changelog of Generic Webhook Plugin.
 			<plugin>
 				<groupId>se.bjurr.violations</groupId>
 				<artifactId>violations-maven-plugin</artifactId>
-				<version>1.7</version>
-				<configuration>
-					<minSeverity>INFO</minSeverity>
-					<detailLevel>VERBOSE</detailLevel>
-					<maxViolations>99999999</maxViolations>
-					<printViolations>true</printViolations>
-					<violations>
-						<violation>
-							<parser>FINDBUGS</parser>
-							<reporter>Findbugs</reporter>
-							<folder>.</folder>
-							<pattern>.*/findbugsXml.*\.xml$</pattern>
-						</violation>
-					</violations>
-				</configuration>
+				<version>${violations.version}</version>
 				<executions>
 					<execution>
 						<phase>verify</phase>
 						<goals>
 							<goal>violations</goal>
 						</goals>
+						<configuration>
+							<minSeverity>INFO</minSeverity>
+							<detailLevel>VERBOSE</detailLevel>
+							<maxViolations>99999999</maxViolations>
+							<printViolations>true</printViolations>
+
+							<violations>
+								<violation>
+									<parser>FINDBUGS</parser>
+									<reporter>Findbugs</reporter>
+									<folder>.</folder>
+									<pattern>.*/findbugsXml\.xml$</pattern>
+								</violation>
+							</violations>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 		<resources>
 			<resource>

@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Automatically stepping dependencies**
+
+
+[fbf11b2f5df47c4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fbf11b2f5df47c4) Tomas Bjerre *2018-09-23 15:38:50*
+
+
 ## 1.45 (2018-09-11 18:35:23)
 ### GitHub [#78](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/78) Working Webhook is now returning &quot;Did not find any jobs to trigger&quot;    *question*  
 
