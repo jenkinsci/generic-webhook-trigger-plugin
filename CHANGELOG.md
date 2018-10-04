@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.46 (2018-10-04 17:23:18)
+### GitHub [#82](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/82) How not to send data in response    *enhancement*  
+
+**Adding option to respond silently #82**
+
+
+[6e30c524269d25f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6e30c524269d25f) Tomas Bjerre *2018-10-04 17:21:32*
+
+
 ### No issue
 
 **Automatically stepping dependencies**
