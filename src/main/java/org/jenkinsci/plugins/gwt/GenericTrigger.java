@@ -32,6 +32,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private boolean printContributedVariables;
   private String causeString;
   private String token;
+  private boolean silentResponse;
 
   @Symbol("GenericTrigger")
   public static class GenericDescriptor extends TriggerDescriptor {
@@ -78,6 +79,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   @DataBoundSetter
   public void setPrintPostContent(final boolean printPostContent) {
     this.printPostContent = printPostContent;
+  }
+
+  @DataBoundSetter
+  public void setSilentResponse(final boolean silentResponse) {
+    this.silentResponse = silentResponse;
+  }
+
+  public boolean isSilentResponse() {
+    return silentResponse;
   }
 
   public boolean isPrintContributedVariables() {

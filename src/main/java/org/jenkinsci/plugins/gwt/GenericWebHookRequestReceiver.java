@@ -5,6 +5,7 @@ import static hudson.util.HttpResponses.okJSON;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
+import static org.kohsuke.stapler.HttpResponses.ok;
 
 import com.google.common.annotations.VisibleForTesting;
 import hudson.Extension;
@@ -98,13 +99,18 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       LOGGER.log(INFO, NO_JOBS_MSG);
       triggerResultsMap.put("ANY", NO_JOBS_MSG);
     }
+    boolean allSilent = true;
     for (final FoundJob foundJob : foundJobs) {
       try {
         LOGGER.log(INFO, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
+        final GenericTrigger genericTrigger = foundJob.getGenericTrigger();
         final GenericTriggerResults triggerResults =
-            foundJob.getGenericTrigger().trigger(headers, parameterMap, postContent);
-        triggerResultsMap.put(foundJob.getFullName(), triggerResults);
+            genericTrigger.trigger(headers, parameterMap, postContent);
+        if (!genericTrigger.isSilentResponse()) {
+          allSilent = false;
+          triggerResultsMap.put(foundJob.getFullName(), triggerResults);
+        }
       } catch (final Throwable t) {
         LOGGER.log(SEVERE, foundJob.getFullName(), t);
         final String msg =
@@ -114,6 +120,9 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
                 + t.getStackTrace()[0].getLineNumber();
         triggerResultsMap.put(foundJob.getFullName(), msg);
       }
+    }
+    if (allSilent) {
+      return ok();
     }
     final Map<String, Object> response = new HashMap<>();
     response.put("triggerResults", triggerResultsMap);

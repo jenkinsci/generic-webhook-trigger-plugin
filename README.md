@@ -142,6 +142,7 @@ job('Generic Job Example') {
    token('abc123')
    printContributedVariables(true)
    printPostContent(true)
+   silentResponse(false)
    regexpFilterText("\$VARIABLE_FROM_POST")
    regexpFilterExpression("aRegExp")
   }
@@ -238,6 +239,8 @@ node {
     printContributedVariables: true,
     printPostContent: true,
     
+    silentResponse: false,
+    
     regexpFilterText: '$ref',
     regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
    ]
@@ -275,6 +278,8 @@ pipeline {
      
      printContributedVariables: true,
      printPostContent: true,
+     
+     silentResponse: false,
     
      regexpFilterText: '$ref',
      regexpFilterExpression: 'refs/heads/' + BRANCH_NAME

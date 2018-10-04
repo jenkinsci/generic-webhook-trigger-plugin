@@ -57,6 +57,13 @@
    </f:description>
  </f:entry>
 
+ <f:entry title="Silent response" field="silentResponse">
+   <f:checkbox/>
+   <f:description>
+    Avoid responding with information about triggered jobs.
+   </f:description>
+ </f:entry>
+
  <f:entry title="Print post content" field="printPostContent">
    <f:checkbox/>
    <f:description>

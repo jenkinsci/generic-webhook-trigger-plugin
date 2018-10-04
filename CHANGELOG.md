@@ -6,7 +6,7 @@ Changelog of Generic Webhook Plugin.
 **Automatically stepping dependencies**
 
 
-[fbf11b2f5df47c4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fbf11b2f5df47c4) Tomas Bjerre *2018-09-23 15:38:50*
+[001a783571102ed](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/001a783571102ed) Tomas Bjerre *2018-09-23 19:11:15*
 
 
 ## 1.45 (2018-09-11 18:35:23)
