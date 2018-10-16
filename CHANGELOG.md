@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#85](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/85) cannot filter based on changed_files and ref    *question*  
+
+**Testing change of specific file in branch #85**
+
+
+[961bb0c9c5b512a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/961bb0c9c5b512a) Tomas Bjerre *2018-10-16 14:38:46*
+
+
 ## 1.46 (2018-10-04 17:23:18)
 ### GitHub [#82](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/82) How not to send data in response    *enhancement*  
 
