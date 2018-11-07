@@ -1,6 +1,30 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.47 (2018-11-07 13:58:28)
+### GitHub [#47](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/47) Declarative Pipeline support    *enhancement*  
+
+**Printing information when no jobs found #47 #84 #81**
+
+
+[800def977df4232](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/800def977df4232) Tomas Bjerre *2018-11-07 13:56:56*
+
+
+### GitHub [#81](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/81) Cannot find the token    *bug*  
+
+**Printing information when no jobs found #47 #84 #81**
+
+
+[800def977df4232](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/800def977df4232) Tomas Bjerre *2018-11-07 13:56:56*
+
+
+### GitHub [#84](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/84) The plugin stopped accepting unlogged requests after update  
+
+**Printing information when no jobs found #47 #84 #81**
+
+
+[800def977df4232](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/800def977df4232) Tomas Bjerre *2018-11-07 13:56:56*
+
+
 ### GitHub [#85](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/85) cannot filter based on changed_files and ref    *question*  
 
 **Testing change of specific file in branch #85**
