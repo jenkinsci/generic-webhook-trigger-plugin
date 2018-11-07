@@ -121,7 +121,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         triggerResultsMap.put(foundJob.getFullName(), msg);
       }
     }
-    if (allSilent) {
+    if (allSilent && foundJobs.size() > 0) {
       return ok();
     }
     final Map<String, Object> response = new HashMap<>();

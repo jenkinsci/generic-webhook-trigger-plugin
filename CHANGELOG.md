@@ -6,7 +6,7 @@ Changelog of Generic Webhook Plugin.
 **Testing change of specific file in branch #85**
 
 
-[961bb0c9c5b512a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/961bb0c9c5b512a) Tomas Bjerre *2018-10-16 14:38:46*
+[d40b2be422907bc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d40b2be422907bc) Tomas Bjerre *2018-10-16 14:39:55*
 
 
 ## 1.46 (2018-10-04 17:23:18)
