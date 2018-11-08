@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.48 (2018-11-08 17:47:29)
+### GitHub [#88](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/88) Use the job&#39;s configured quiet period  
+
+**Refactoring after merge of #88**
+
+
+[62b53f7f2f6f7e1](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/62b53f7f2f6f7e1) Tomas Bjerre *2018-11-08 17:46:31*
+
+
 ### No issue
 
 **Use the job's configured quiet period**
