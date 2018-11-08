@@ -139,7 +139,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
           createParameterAction(parametersDefinitionProperty, resolvedVariables);
       item =
           retrieveScheduleJob(job) //
-              .scheduleBuild2(job, 0, new CauseAction(genericCause), parameters);
+              .scheduleBuild2(job, -1, new CauseAction(genericCause), parameters);
     }
     return new GenericTriggerResults(
         item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);
