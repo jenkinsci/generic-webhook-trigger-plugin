@@ -23,6 +23,9 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
+  /** A value of -1 will make sure the quiet period of the job will be used. */
+  private static final int RESPECT_JOBS_QUIET_PERIOD = -1;
+
   private List<GenericVariable> genericVariables = newArrayList();
   private final String regexpFilterText;
   private final String regexpFilterExpression;
@@ -139,7 +142,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
           createParameterAction(parametersDefinitionProperty, resolvedVariables);
       item =
           retrieveScheduleJob(job) //
-              .scheduleBuild2(job, -1, new CauseAction(genericCause), parameters);
+              .scheduleBuild2(
+                  job, RESPECT_JOBS_QUIET_PERIOD, new CauseAction(genericCause), parameters);
     }
     return new GenericTriggerResults(
         item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);

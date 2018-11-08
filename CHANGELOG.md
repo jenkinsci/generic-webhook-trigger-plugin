@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Use the job's configured quiet period**
+
+
+[08e27215e450252](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/08e27215e450252) Robert Shade *2018-11-08 16:36:28*
+
+
 ## 1.47 (2018-11-07 13:58:28)
 ### GitHub [#47](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/47) Declarative Pipeline support    *enhancement*  
 
