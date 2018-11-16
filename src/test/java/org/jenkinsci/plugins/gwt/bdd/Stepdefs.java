@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.gwt.bdd;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
 import com.google.gson.GsonBuilder;
@@ -12,6 +13,8 @@ import cucumber.api.java.en.When;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import org.assertj.core.api.Assertions;
 import org.jenkinsci.plugins.gwt.ExpressionType;
 import org.jenkinsci.plugins.gwt.GenericVariable;
 import org.jenkinsci.plugins.gwt.Renderer;
@@ -77,25 +80,23 @@ public class Stepdefs {
 
   @Then("^the job is triggered$")
   public void jobShouldBeTriggered() {
-    assertThat(isMatching()) //
-        .isTrue();
+    isMatching(true);
   }
 
   @Then("^the job is not triggered$")
   public void jobShouldNotBeTriggered() {
-    assertThat(isMatching()) //
-        .isFalse();
+    isMatching(false);
   }
 
-  private boolean isMatching() {
+  private boolean isMatching(boolean expected) {
     final Map<String, String> resolvedVariables = getResolvedVariables();
 
     final String renderedRegexpFilterText =
         renderText(featureState.getRegexpFilterText(), resolvedVariables);
     final boolean isMatching =
         Renderer.isMatching(renderedRegexpFilterText, featureState.getRegexpFilterExpression());
-    if (!isMatching) {
-      LOG.info(
+    if (!isMatching && expected || isMatching && !expected) {
+      fail(
           "Text: \""
               + renderedRegexpFilterText
               + "\" does not match \""
