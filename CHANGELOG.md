@@ -1,5 +1,24 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Adding example of ignoring push event with zero commits**
+
+
+[1b8e9b3a25fe7a7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/1b8e9b3a25fe7a7) Tomas Bjerre *2018-11-16 19:40:12*
+
+**Example of ignoring removal or creation of branches**
+
+
+[108723a32c7c5ec](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/108723a32c7c5ec) Tomas Bjerre *2018-11-16 19:28:24*
+
+**Documenting trigger on changed folder GitLab**
+
+
+[a4713a8b6532496](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a4713a8b6532496) Tomas Bjerre *2018-11-15 18:13:36*
+
+
 ## 1.48 (2018-11-08 17:47:29)
 ### GitHub [#88](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/88) Use the job&#39;s configured quiet period  
 

@@ -13,8 +13,6 @@ import cucumber.api.java.en.When;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import org.assertj.core.api.Assertions;
 import org.jenkinsci.plugins.gwt.ExpressionType;
 import org.jenkinsci.plugins.gwt.GenericVariable;
 import org.jenkinsci.plugins.gwt.Renderer;
