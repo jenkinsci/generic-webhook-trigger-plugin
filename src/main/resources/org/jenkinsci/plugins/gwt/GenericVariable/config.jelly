@@ -4,7 +4,7 @@
     <f:textbox field="key"/>
   </f:entry>
 
-  <f:entry title="Expression" description="Expression to evaluate in POST content.">
+  <f:entry title="Expression">
     <f:textbox field="value" />
     <f:entry>
      <f:radio name="expressionType" field="expressionType" value="JSONPath" title="JSONPath" checked="${instance.expressionType == 'JSONPath'}"/>
@@ -12,12 +12,15 @@
     <f:entry>
      <f:radio name="expressionType" field="expressionType" value="XPath" title="XPath" checked="${instance.expressionType == 'XPath'}"/>
     </f:entry>
+    <f:description>
+    Expression to evaluate in POST content. Use <a href="https://github.com/jayway/JsonPath">JSONPath</a> for JSON or <a href="https://www.w3schools.com/xml/xpath_syntax.asp">XPath</a> for XML.
+    </f:description>
   </f:entry>
 
   <f:entry title="Value filter">
    <f:textbox field="regexpFilter" />
    <f:description>
-    Optional. Anything in the evaluated value, matching this <a href="https://jex.im/regulex/">regular expression</a>, will be removed. Having [^0-9] would only allow numbers.
+    Optional. Anything in the evaluated value, matching this <a href="https://jex.im/regulex/" target="_blank">regular expression</a>, will be removed. Having <b>[^0-9]</b> would only allow numbers. The regexp syntax is documented <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank">here</a>.
    </f:description>
   </f:entry>
 

@@ -12,6 +12,9 @@
       You can fiddle with XPath <a href="http://www.freeformatter.com/xpath-tester.html">here</a>. You may also want to checkout the syntax <a href="https://www.w3schools.com/xml/xpath_syntax.asp">here</a>.
      </p>
      <p>
+      You can fiddle with regular expressions <a href="https://jex.im/regulex/">here</a>. You may also want to checkout the syntax <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html">here</a>.
+     </p>
+     <p>
       If your job <b>is not parameterized</b>, then the resolved variables will just be contributed to the build. If your job <b>is parameterized</b>, and you resolve variables that have the same name as those parameters, then the plugin will populate the parameters when triggering job. That means you can, for example, use the parameters in combination with an SCM plugin, like GIT Plugin, to pick a branch.
      </p>
     </div>
@@ -83,14 +86,14 @@
   <f:entry title="Expression">
    <f:textbox field="regexpFilterExpression"/>
    <f:description>
-    <a href="https://jex.im/regulex/">Regular expression</a> to test on the evaluated text specified below.
+    <a href="https://jex.im/regulex/">Regular expression</a> to test on the evaluated text specified below. The regexp syntax is documented <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank">here</a>.
    </f:description>
   </f:entry>
 
   <f:entry title="Text">
    <f:textbox field="regexpFilterText"/>
    <f:description>
-    Text to test for given <a href="https://jex.im/regulex/">regular expression</a>. You can use the variables you specified above.
+    Text to test for the given <a href="https://jex.im/regulex/">expression</a>. You can use any combination of the variables you configured above.
    </f:description>
   </f:entry>
 

@@ -70,7 +70,7 @@ If you are fiddling with expressions, you may want to checkout:
 
 * [This JSONPath site](http://jsonpath.herokuapp.com/)
 * [This XPath site](http://www.freeformatter.com/xpath-tester.html)
-* [This regexp site](https://jex.im/regulex/)
+* [This regexp site](https://jex.im/regulex/) Also syntax [here](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html).
 
 It's probably easiest to do with `curl`. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 

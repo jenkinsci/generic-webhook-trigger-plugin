@@ -6,7 +6,7 @@ Changelog of Generic Webhook Plugin.
 **Adding example of ignoring push event with zero commits**
 
 
-[1b8e9b3a25fe7a7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/1b8e9b3a25fe7a7) Tomas Bjerre *2018-11-16 19:40:12*
+[8ba5bcd28356fba](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8ba5bcd28356fba) Tomas Bjerre *2018-11-16 19:51:45*
 
 **Example of ignoring removal or creation of branches**
 

@@ -7,7 +7,7 @@
   <f:entry title="Value filter">
    <f:textbox field="regexpFilter" />
    <f:description>
-    Optional. Anything in the evaluated value, matching this <a href="https://jex.im/regulex/">regular expression</a>, will be removed. Having [^0-9] would only allow numbers.
+    Optional. Anything in the evaluated value, matching this <a href="https://jex.im/regulex/">regular expression</a>, will be removed. Having <b>[^0-9]</b> would only allow numbers. The regexp syntax is documented <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank">here</a>.
    </f:description>
   </f:entry>
 
