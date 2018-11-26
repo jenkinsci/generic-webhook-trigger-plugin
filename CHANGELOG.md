@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.49 (2018-11-26 20:22:27)
+### GitHub [#92](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/92) Specify expected syntax in all regex fields.     *enhancement*  
+
+**Tweaking docs #92**
+
+
+[4f4d3c00403eff2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4f4d3c00403eff2) Tomas Bjerre *2018-11-26 20:01:49*
+
+
 ### No issue
 
 **Adding example of ignoring push event with zero commits**
