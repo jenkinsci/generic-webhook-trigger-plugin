@@ -46,6 +46,15 @@ public class Stepdefs {
     }
   }
 
+  @Given("^variable ([a-z]+?) has regexpFilter: (.*)$")
+  public void givenGenericVariables(String variable, String regexpFilter) {
+    for (GenericVariable gv : featureState.getGenericVariables()) {
+      if (gv.getVariableName().equals(variable)) {
+        gv.setRegexpFilter(regexpFilter);
+      }
+    }
+  }
+
   @Given("^filter is configured with:$")
   public void givenFilter(final List<GenericFilterPojo> given) {
     featureState.setRegexpFilterText(given.get(0).getText());
