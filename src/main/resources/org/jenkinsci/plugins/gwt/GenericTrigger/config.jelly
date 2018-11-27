@@ -6,6 +6,9 @@
       Is triggered by HTTP requests to <b>http://JENKINS_URL/generic-webhook-trigger/invoke</b>
      </p>
      <p>
+      There are example configurations in <a href="https://github.com/jenkinsci/generic-webhook-trigger-plugin/tree/master/src/test/resources/org/jenkinsci/plugins/gwt/bdd">the Git repository</a>.
+     </p>
+     <p>
       You can fiddle with JSONPath <a href="https://jsonpath.curiousconcept.com/">here</a>. You may also want to checkout the syntax <a href="https://github.com/jayway/JsonPath">here</a>.
      </p>
      <p>
