@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.50 (2018-11-27 07:27:44)
+### No issue
+
+**Linking to BDD tests from GUI**
+
+
+[fc99cc4d1335531](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fc99cc4d1335531) Tomas Bjerre *2018-11-27 07:26:46*
+
+
 ## 1.49 (2018-11-26 20:22:27)
 ### GitHub [#92](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/92) Specify expected syntax in all regex fields.     *enhancement*  
 
