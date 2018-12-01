@@ -8,14 +8,14 @@ Feature: It should be possible to trigger for Bitbucket Server pull request even
       | pr_id                          | $.pullRequest.id                             | JSONPath        |              |               |
       | pr_state                       | $.pullRequest.state                          | JSONPath        |              |               |
       | pr_title                       | $.pullRequest.title                          | JSONPath        |              |               |
-      | pr_from_ref                    | $.pullRequest.fromRef.id                       | JSONPath        |              |               |
-      | pr_from_commit                 | $.pullRequest.fromRef.latestCommit             | JSONPath        |              |               |
-      | pr_from_repository_slug        | $.pullRequest.fromRef.repository.slug          | JSONPath        |              |               |
-      | pr_from_repository_project_key | $.pullRequest.fromRef.repository.project.key   | JSONPath        |              |               |
-      | pr_to_ref                      | $.pullRequest.toRef.id                     | JSONPath        |              |               |
-      | pr_to_commit                   | $.pullRequest.toRef.latestCommit           | JSONPath        |              |               |
-      | pr_to_repository_slug          | $.pullRequest.toRef.repository.slug        | JSONPath        |              |               |
-      | pr_to_repository_project_key   | $.pullRequest.toRef.repository.project.key | JSONPath        |              |               |
+      | pr_from_ref                    | $.pullRequest.fromRef.id                     | JSONPath        |              |               |
+      | pr_from_commit                 | $.pullRequest.fromRef.latestCommit           | JSONPath        |              |               |
+      | pr_from_repository_slug        | $.pullRequest.fromRef.repository.slug        | JSONPath        |              |               |
+      | pr_from_repository_project_key | $.pullRequest.fromRef.repository.project.key | JSONPath        |              |               |
+      | pr_to_ref                      | $.pullRequest.toRef.id                       | JSONPath        |              |               |
+      | pr_to_commit                   | $.pullRequest.toRef.latestCommit             | JSONPath        |              |               |
+      | pr_to_repository_slug          | $.pullRequest.toRef.repository.slug          | JSONPath        |              |               |
+      | pr_to_repository_project_key   | $.pullRequest.toRef.repository.project.key   | JSONPath        |              |               |
 
     Given filter is configured with text: $eventKey
     Given filter is configured with expression: ^pr:opened$
