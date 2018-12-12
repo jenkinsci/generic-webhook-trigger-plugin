@@ -64,9 +64,8 @@ public class VariablesResolverJsonPathTest {
 
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_user_0_name");
-    assertThat(variables.get("variableName")) //
-        .isEqualTo(
-            "{\n" + "   \"user\":[\n" + "\t   { \"name\":\"Administrator\" }\n" + "   ]\n" + "}");
+    assertThat(variables.get("variableName").replaceAll("\\n|\\r\\n|\\s", "")) //
+        .isEqualToIgnoringWhitespace("{\"user\":[{\"name\":\"Administrator\"}]}");
     assertThat(variables.get("variableName_user_0_name")) //
         .isEqualTo("Administrator");
   }
