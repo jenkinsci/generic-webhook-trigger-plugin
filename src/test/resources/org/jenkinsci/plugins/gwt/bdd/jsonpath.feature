@@ -35,6 +35,17 @@ Feature: It should be possible to parse JSON post content with JSONPath.
 
     Then variables are resolved to:
       | variable                              | value                                                                                                               |
-      | everything                            | {"ref":"refs/heads/develop","head_commit":{"committer":{"name":"baxterthehacker","username":"Baxter the Hacker"}}}  |
       | everything_ref                        | refs/heads/develop                                                                                                  |
       | everything_head_commit_committer_name | baxterthehacker                                                                                                     |
+    Then variable everything is resolved to:
+    """
+    {
+      "ref": "refs/heads/develop",
+      "head_commit": {
+        "committer": {
+          "name": "baxterthehacker",
+          "username": "Baxter the Hacker"
+        }
+      }
+    }
+    """

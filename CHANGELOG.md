@@ -1,5 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#91](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/91) Ability to include the result from value filter    *enhancement*  
+
+**Test case for changed files in folders #91**
+
+
+[731e44cc8b1fea7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/731e44cc8b1fea7) Tomas Bjerre *2018-11-27 20:46:42*
+
+
+### No issue
+
+**Example of GitLab triggering on comment**
+
+
+[3bdf8281aff00f3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3bdf8281aff00f3) Tomas Bjerre *2018-12-01 10:16:58*
+
+
 ## 1.50 (2018-11-27 07:27:44)
 ### No issue
 

@@ -85,6 +85,13 @@ public class Stepdefs {
     }
   }
 
+  @Then("^variable ([a-z]+?) is resolved to:$")
+  public void variableIsResolvedTo(String variable, String expected) {
+    assertThat(getResolvedVariables().get(variable)) //
+        .as(variable) //
+        .isEqualTo(expected);
+  }
+
   @Then("^the job is triggered$")
   public void jobShouldBeTriggered() {
     isMatching(true);

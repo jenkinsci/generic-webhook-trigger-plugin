@@ -7,7 +7,7 @@ Feature: It should be possible to trigger for GitHub push events when specific f
       | changed_files | $.commits[*].['modified','added','removed'][*] | JSONPath        |
       | ref           | $.ref                                          | JSONPath        |
     Given variable ref has regexpFilter: ^(refs/heads/|refs/remotes/origin/)
-    
+
     Given filter is configured with text: $ref $changed_files
     Given filter is configured with expression: master\s((.*"(books/|common/|sqs/|security/|common-test/|db/)[^"]+?".)|(."[^/"]+".*))
 

@@ -86,7 +86,12 @@ public class PostContentParameterResolver {
       final String incomingPostContent, final GenericVariable gv) {
     try {
       final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
-      return jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+      final Map<String, String> flatterned =
+          jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+      if (gv.getExpression().trim().equals("$")) {
+        flatterned.put(gv.getVariableName(), incomingPostContent);
+      }
+      return flatterned;
     } catch (final PathNotFoundException e) {
       return new HashMap<>();
     }

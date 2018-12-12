@@ -65,7 +65,8 @@ public class VariablesResolverJsonPathTest {
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_user_0_name");
     assertThat(variables.get("variableName")) //
-        .isEqualTo("{\"user\":[{\"name\":\"Administrator\"}]}");
+        .isEqualTo(
+            "{\n" + "   \"user\":[\n" + "\t   { \"name\":\"Administrator\" }\n" + "   ]\n" + "}");
     assertThat(variables.get("variableName_user_0_name")) //
         .isEqualTo("Administrator");
   }
@@ -113,7 +114,7 @@ public class VariablesResolverJsonPathTest {
         getJsonPathVariablesFromContent("$", "{\"a\": null,\"b\": \"value\"}");
 
     assertThat(variables.get("variableName")) //
-        .isEqualTo("{\"a\":null,\"b\":\"value\"}");
+        .isEqualTo("{\"a\": null,\"b\": \"value\"}");
   }
 
   @Test
