@@ -6,12 +6,11 @@ import hudson.Extension;
 import hudson.model.EnvironmentContributor;
 import hudson.model.Run;
 import hudson.model.TaskListener;
-
-import javax.annotation.Nonnull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
+import javax.annotation.Nonnull;
 
 @Extension
 public class GenericWebhookEnvironmentContributor extends EnvironmentContributor {
