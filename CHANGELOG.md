@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Fixing test case**
+
+
+[3d59136e2515a0a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3d59136e2515a0a) Tomas Bjerre *2018-12-12 18:56:45*
+
+
 ## 1.51 (2018-12-12 16:45:53)
 ### GitHub [#91](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/91) Ability to include the result from value filter    *enhancement*  
 
