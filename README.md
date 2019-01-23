@@ -66,6 +66,8 @@ The token can be supplied as a:
 
 ## Troubleshooting
 
+If you want to fiddle with the plugin, you may use this repo: https://github.com/tomasbjerre/jenkins-configuration-as-code-sandbox
+
 If you are fiddling with expressions, you may want to checkout:
 
 * [This JSONPath site](http://jsonpath.herokuapp.com/)
@@ -111,7 +113,7 @@ This plugin can be used with the Job DSL Plugin. There is also an example int he
 Job DSL supports injecting credenials when processing the DSL. You can use that if you want the `token` to be set from credentials.
 
 ```groovy
-job('Generic Job Example') {
+pipelineJob('Generic Job Example') {
  parameters {
   stringParam('VARIABLE_FROM_POST', '')
  }
@@ -148,19 +150,27 @@ job('Generic Job Example') {
   }
  }
 
- steps {
-  shell('''
-echo $VARIABLE_FROM_POST
-echo $requestParameterName
-echo $requestHeaderName
-  ''')
+ definition {
+  cps {
+   // Or just refer to a Jenkinsfile containing the pipeline
+   script('''
+    node {
+     stage('Some Stage') {
+      println "VARIABLE_FROM_POST: " + VARIABLE_FROM_POST
+     }
+    }
+   ''')
+   sandbox()
+  }
  }
 }
 ```
 
-## Pipeline Multibranch
+## Pipeline
 
-This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties). Here is an example:
+**Note:** When configuring from pipeline, that pipeline needs to run once, to apply the plugin trigger config, and after that this plugin will be able to trigger the job. This is how Jenkins works, not something implemented in this plugin. You can avoid this by using Job DSL and have Job DSL create pipeline jobs with the plugin configured in that DSL.
+
+This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties).
 
 You can use the credentials plugin to provide the `token` from credentials.
 ```groovy
