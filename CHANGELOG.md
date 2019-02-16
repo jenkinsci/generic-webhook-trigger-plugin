@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### No issue
+
+**Doc**
+
+
+[82d483a2f33fa7b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/82d483a2f33fa7b) Tomas Bjerre *2019-01-23 20:17:15*
+
+
 ## 1.52 (2019-01-02 09:29:06)
 ### GitHub [#97](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/97) Avoid calling getLogFile    *bug*  
 
