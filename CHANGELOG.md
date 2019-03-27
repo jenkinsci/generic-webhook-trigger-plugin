@@ -6,6 +6,11 @@ Changelog of Generic Webhook Plugin.
 **Doc**
 
 
+[cb04c670d9177f5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/cb04c670d9177f5) Tomas Bjerre *2019-02-16 18:17:44*
+
+**Doc**
+
+
 [82d483a2f33fa7b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/82d483a2f33fa7b) Tomas Bjerre *2019-01-23 20:17:15*
 
 

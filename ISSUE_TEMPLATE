@@ -4,7 +4,7 @@ When reporting a bug, please **try** to provide as much information as possible.
  * Jenkins version used.
  * Your configuration.
    * Variables configured, names, expressions...
-   * Pipeline script
+   * Pipeline script (See Pipeline section in README)
  * Build job log
  * Post content received. It can be found in the job execution log. People using GitHub often forget to set the content type in "Manage webhook" when configuring the webhook at GitHub.
  * A `curl` command and its response.

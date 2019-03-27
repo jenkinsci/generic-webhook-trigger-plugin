@@ -104,7 +104,7 @@ curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some v
 
 If you need the resolved values in pre build steps, like git clone, you need to add a parameter with the same name as the variable.
 
-![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/parameter-git-repo.png)
+![Parameter](/sandbox/parameter-git-repo.png)
 
 ## Job DSL Plugin
 
@@ -168,7 +168,17 @@ pipelineJob('Generic Job Example') {
 
 ## Pipeline
 
-**Note:** When configuring from pipeline, that pipeline needs to run once, to apply the plugin trigger config, and after that this plugin will be able to trigger the job. This is how Jenkins works, not something implemented in this plugin. You can avoid this by using Job DSL and have Job DSL create pipeline jobs with the plugin configured in that DSL.
+When configuring from pipeline, that pipeline needs to run once, to apply the plugin trigger config, and after that this plugin will be able to trigger the job. This is how Jenkins works, not something implemented in this plugin.
+
+This means that if you create a pipeline like this:
+
+![Parameter](/sandbox/pipeline-pre-run.png)
+
+You need to run it once to have the properties applied. You can verify that the properties has been applied by opening the configuration view (of view configuration if using multibranch pipeline) of the job. You will see that the "Generic Webhook Trigger" is checked and will now have values from your pipeline. Like this:
+
+![Parameter](/sandbox/pipeline-post-run.png)
+
+You can avoid having to run twice, by using Job DSL and have Job DSL create pipeline jobs with the plugin configured in that DSL.
 
 This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties).
 
