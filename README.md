@@ -168,7 +168,7 @@ pipelineJob('Generic Job Example') {
 
 ## Pipeline
 
-When configuring from pipeline, that pipeline needs to run once, to apply the plugin trigger config, and after that this plugin will be able to trigger the job. This is how Jenkins works, not something implemented in this plugin.
+When configuring from pipeline (not multibranch pipeline), that pipeline needs to run once, to apply the plugin trigger config, and after that this plugin will be able to trigger the job. This is how Jenkins works, not something implemented in this plugin.
 
 This means that if you create a pipeline like this:
 
