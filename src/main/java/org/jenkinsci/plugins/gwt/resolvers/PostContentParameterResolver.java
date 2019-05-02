@@ -43,7 +43,7 @@ public class PostContentParameterResolver {
             resolvedMap.isEmpty()
                 || resolvedMap.containsKey(gv.getVariableName())
                     && resolvedMap.get(gv.getVariableName()).isEmpty();
-        if (notResolved && !isNullOrEmpty(gv.getDefaultValue())) {
+        if (notResolved && gv.getDefaultValue() != null) {
           resolvedMap.put(gv.getVariableName(), gv.getDefaultValue());
         }
         resolvedVariables.putAll(resolvedMap);

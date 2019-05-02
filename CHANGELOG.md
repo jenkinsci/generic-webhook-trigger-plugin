@@ -1,7 +1,29 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
 ## Unreleased
+### GitHub [#107](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/107) How to use withCredentials in declarative Jenkinsfile?    *question*  
+
+**Doc #107**
+
+
+[adda82b3c27d146](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/adda82b3c27d146) Tomas Bjerre *2019-03-27 17:21:39*
+
+
+### GitHub [#35](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/35) Add defaultValue attribute to GenericVariables    *enhancement*  
+
+**Allowing empty default values #35**
+
+ * This may break the API for some users. But the intention is that it will make pipelines easier to write, without having to check for null. 
+
+[71564cbe407187d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/71564cbe407187d) Tomas Bjerre *2019-05-02 15:20:37*
+
+
 ### No issue
+
+**Update README.md**
+
+
+[c33a171c0b7960f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c33a171c0b7960f) Tomas Bjerre *2019-04-09 10:36:43*
 
 **Doc**
 
