@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.53 (2019-05-02 15:36:05)
 ### GitHub [#107](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/107) How to use withCredentials in declarative Jenkinsfile?    *question*  
 
 **Doc #107**
@@ -15,7 +15,7 @@ Changelog of Generic Webhook Plugin.
 
  * This may break the API for some users. But the intention is that it will make pipelines easier to write, without having to check for null. 
 
-[71564cbe407187d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/71564cbe407187d) Tomas Bjerre *2019-05-02 15:20:37*
+[2bf0a3f15ec2af6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2bf0a3f15ec2af6) Tomas Bjerre *2019-05-02 15:35:03*
 
 
 ### No issue
