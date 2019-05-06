@@ -1,5 +1,16 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.54 (2019-05-06 13:29:39)
+### GitHub [#115](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/115) Blank parameter trigger the job even if you specified a filter  
+
+**Avoid triggering when text or regexp is empty #115**
+
+ * This was originally implemented to avoid checking the regexp when no filtering was configured. 
+ * Changing to triggering when text **and** regexp is empty. 
+
+[9c78d75222ca3fe](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9c78d75222ca3fe) Tomas Bjerre *2019-05-06 13:26:40*
+
+
 ## 1.53 (2019-05-02 15:36:05)
 ### GitHub [#107](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/107) How to use withCredentials in declarative Jenkinsfile?    *question*  
 
