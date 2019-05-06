@@ -20,7 +20,7 @@ public class Renderer {
   public static boolean isMatching(
       final String renderedRegexpFilterText, final String regexpFilterExpression) {
     final boolean noFilterConfigured =
-        isNullOrEmpty(renderedRegexpFilterText) || isNullOrEmpty(regexpFilterExpression);
+        isNullOrEmpty(renderedRegexpFilterText) && isNullOrEmpty(regexpFilterExpression);
     if (noFilterConfigured) {
       return true;
     }

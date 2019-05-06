@@ -34,6 +34,14 @@ public class RendererTest {
   }
 
   @Test
+  public void testThatEmptyTextIsNotMatched() {
+    final boolean actual = isMatching("", "^feature");
+
+    assertThat(actual) //
+        .isFalse();
+  }
+
+  @Test
   public void testThatIsMatchingWorksDevelopCorrectUser() {
     regexpFilterText = "refs/heads/develop tomabje";
     regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";
