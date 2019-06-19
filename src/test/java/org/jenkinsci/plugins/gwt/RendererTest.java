@@ -74,6 +74,23 @@ public class RendererTest {
   }
 
   @Test
+  public void testThatExactValueOfSingleVariableCanBeMatched() {
+    resolvedVariables = new TreeMap<>();
+    resolvedVariables.put("PR_TO_BRANCH", "master");
+
+    final String text = "$PR_TO_BRANCH";
+
+    final String actualRendered = renderText(text, resolvedVariables);
+    assertThat(actualRendered) //
+        .isEqualTo("master");
+
+    regexpFilterExpression = "^master$";
+    final boolean actual = isMatching(actualRendered, regexpFilterExpression);
+    assertThat(actual) //
+        .isTrue();
+  }
+
+  @Test
   public void testThatVariablesAreResolvedWithLongestVariableFirst() {
     resolvedVariables = new TreeMap<>();
     resolvedVariables.put("key1", "resolved1");
