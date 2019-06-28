@@ -11,9 +11,9 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<fmt>2.8</fmt>
+		<fmt>2.9</fmt>
 		<violations.version>1.19</violations.version>
-		<changelog>1.59</changelog>
+		<changelog>1.60</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>

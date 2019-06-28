@@ -1,5 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#122](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/122) RegExFilterText Not Evaluating Variable?    *question*  
+
+**Testing exact matching of single variable #122**
+
+
+[13bce9c546f3c92](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/13bce9c546f3c92) Tomas Bjerre *2019-06-19 19:03:38*
+
+
+### GitHub [#123](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/123) Webhook Issue with regexpfiltertext for multiple parameters  
+
+**More test #123**
+
+
+[141649403584f64](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/141649403584f64) Tomas Bjerre *2019-06-28 12:38:48*
+
+
 ## 1.54 (2019-05-06 13:29:39)
 ### GitHub [#115](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/115) Blank parameter trigger the job even if you specified a filter  
 

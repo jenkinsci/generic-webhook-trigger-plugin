@@ -47,8 +47,8 @@ public class Stepdefs {
   }
 
   @Given("^variable ([a-z]+?) has regexpFilter: (.*)$")
-  public void givenGenericVariables(String variable, String regexpFilter) {
-    for (GenericVariable gv : featureState.getGenericVariables()) {
+  public void givenGenericVariables(final String variable, final String regexpFilter) {
+    for (final GenericVariable gv : featureState.getGenericVariables()) {
       if (gv.getVariableName().equals(variable)) {
         gv.setRegexpFilter(regexpFilter);
       }
@@ -86,7 +86,7 @@ public class Stepdefs {
   }
 
   @Then("^variable ([a-z]+?) is resolved to:$")
-  public void variableIsResolvedTo(String variable, String expected) {
+  public void variableIsResolvedTo(final String variable, final String expected) {
     assertThat(getResolvedVariables().get(variable)) //
         .as(variable) //
         .isEqualTo(expected);
@@ -102,11 +102,15 @@ public class Stepdefs {
     isMatching(false);
   }
 
-  private boolean isMatching(boolean expected) {
+  @Then("^filter text is rendered to: (.*)$")
+  public void filterTextIsRenderedTo(final String given) {
+    assertThat(renderedText(getResolvedVariables())).isEqualTo(given);
+  }
+
+  private boolean isMatching(final boolean expected) {
     final Map<String, String> resolvedVariables = getResolvedVariables();
 
-    final String renderedRegexpFilterText =
-        renderText(featureState.getRegexpFilterText(), resolvedVariables);
+    final String renderedRegexpFilterText = renderedText(resolvedVariables);
     final boolean isMatching =
         Renderer.isMatching(renderedRegexpFilterText, featureState.getRegexpFilterExpression());
     if (!isMatching && expected || isMatching && !expected) {
@@ -118,6 +122,10 @@ public class Stepdefs {
               + "\"");
     }
     return isMatching;
+  }
+
+  private String renderedText(final Map<String, String> resolvedVariables) {
+    return renderText(featureState.getRegexpFilterText(), resolvedVariables);
   }
 
   private Map<String, String> getResolvedVariables() {
