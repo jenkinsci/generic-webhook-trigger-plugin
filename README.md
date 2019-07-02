@@ -102,6 +102,20 @@ curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some v
 
 ![Generic trigger](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
 
+### Default values
+
+The plugin can be configured with default values. Like below:
+
+![Default Value](/sandbox/default-value.png)
+
+But if you execute the job manually, this default value will not be used. Because the plugin will not be invoked at all. You can solve this by checking the "This job is parameterized" and add a parameter with the same name as the one you configured in the plugin. Like this:
+
+![Default Value](/sandbox/default-value-parameter.png)
+
+Now this default value will be used both when you trigger the job manually and when you trigger it with the plugin!
+
+### Pre build step
+
 If you need the resolved values in pre build steps, like git clone, you need to add a parameter with the same name as the variable.
 
 ![Parameter](/sandbox/parameter-git-repo.png)

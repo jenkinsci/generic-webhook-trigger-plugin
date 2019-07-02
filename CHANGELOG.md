@@ -14,7 +14,7 @@ Changelog of Generic Webhook Plugin.
 **More test #123**
 
 
-[141649403584f64](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/141649403584f64) Tomas Bjerre *2019-06-28 12:38:48*
+[f08ea0c26128b14](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f08ea0c26128b14) Tomas Bjerre *2019-06-28 12:39:49*
 
 
 ## 1.54 (2019-05-06 13:29:39)
