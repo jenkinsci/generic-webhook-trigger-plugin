@@ -17,6 +17,14 @@ Changelog of Generic Webhook Plugin.
 [f08ea0c26128b14](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f08ea0c26128b14) Tomas Bjerre *2019-06-28 12:39:49*
 
 
+### GitHub [#125](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/125) [GenericVariables] Variable not created in case of manual execution  
+
+**Documenting default values #125**
+
+
+[bd73fe693fe549f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bd73fe693fe549f) Tomas Bjerre *2019-07-02 14:57:39*
+
+
 ## 1.54 (2019-05-06 13:29:39)
 ### GitHub [#115](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/115) Blank parameter trigger the job even if you specified a filter  
 

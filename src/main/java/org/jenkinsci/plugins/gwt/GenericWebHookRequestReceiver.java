@@ -113,11 +113,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         }
       } catch (final Throwable t) {
         LOGGER.log(SEVERE, foundJob.getFullName(), t);
-        final String msg =
-            "Exception occurred, full stack trace in Jenkins server log. Thrown in: "
-                + t.getStackTrace()[0].getClassName()
-                + ":"
-                + t.getStackTrace()[0].getLineNumber();
+        final String msg = createMessageFromException(t);
         triggerResultsMap.put(foundJob.getFullName(), msg);
       }
     }
@@ -127,6 +123,25 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     final Map<String, Object> response = new HashMap<>();
     response.put("triggerResults", triggerResultsMap);
     return okJSON(response);
+  }
+
+  String createMessageFromException(final Throwable t) {
+    String stacktraceInfo = "";
+    if (t.getStackTrace().length > 0) {
+      stacktraceInfo =
+          "Thrown in: "
+              + t.getStackTrace()[0].getClassName()
+              + ":"
+              + t.getStackTrace()[0].getLineNumber();
+    }
+    final String msg =
+        "Exception occurred ("
+            + t.getClass()
+            + ": "
+            + t.getMessage()
+            + "), full stack trace in Jenkins server log. "
+            + stacktraceInfo;
+    return msg;
   }
 
   @Override

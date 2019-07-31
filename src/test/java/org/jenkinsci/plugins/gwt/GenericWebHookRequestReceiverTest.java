@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.Test;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -134,5 +135,31 @@ public class GenericWebHookRequestReceiverTest {
 
     assertThat(actual) //
         .isEqualTo(expected);
+  }
+
+  @Test
+  public void testThatMessageIsCreatedFromExceptionWithNoStacktrace() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+
+    final Throwable t = new IndexOutOfBoundsException();
+    final StackTraceElement[] stackTrace = new StackTraceElement[0];
+    t.setStackTrace(stackTrace);
+    final String actual = sut.createMessageFromException(t);
+
+    assertThat(actual) //
+        .isEqualTo(
+            "Exception occurred (class java.lang.IndexOutOfBoundsException: null), full stack trace in Jenkins server log. ");
+  }
+
+  @Test
+  public void testThatMessageIsCreatedFromExceptionWithStacktrace() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+
+    final Throwable t = new IndexOutOfBoundsException();
+    final String actual = sut.createMessageFromException(t);
+
+    assertThat(actual) //
+        .startsWith(
+            "Exception occurred (class java.lang.IndexOutOfBoundsException: null), full stack trace in Jenkins server log. Thrown in: org.jenkinsci.plugins.gwt.GenericWebHookRequestReceiverTest:");
   }
 }
