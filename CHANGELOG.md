@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.55 (2019-07-31 15:01:59)
 ### GitHub [#122](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/122) RegExFilterText Not Evaluating Variable?    *question*  
 
 **Testing exact matching of single variable #122**
@@ -23,6 +23,14 @@ Changelog of Generic Webhook Plugin.
 
 
 [bd73fe693fe549f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bd73fe693fe549f) Tomas Bjerre *2019-07-02 14:57:39*
+
+
+### GitHub [#127](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/127) NullPointerException with Webhook from Github (version 1.54)    *bug*  
+
+**Avoid IndexOutOfBounds when no stacktrace is in thrown exception #127**
+
+
+[68aeade50f90079](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/68aeade50f90079) Tomas Bjerre *2019-07-31 15:00:25*
 
 
 ## 1.54 (2019-05-06 13:29:39)

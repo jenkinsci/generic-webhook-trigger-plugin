@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Test;
 import org.kohsuke.stapler.StaplerRequest;
 
