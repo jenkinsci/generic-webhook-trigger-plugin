@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.56 (2019-08-01 15:37:12)
+### GitHub [#127](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/127) NullPointerException with Webhook from Github (version 1.54)    *bug*  
+
+**Avoiding NPE #127**
+
+
+[7a6654973359749](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7a6654973359749) Tomas Bjerre *2019-08-01 15:36:14*
+
+
 ## 1.55 (2019-07-31 15:01:59)
 ### GitHub [#122](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/122) RegExFilterText Not Evaluating Variable?    *question*  
 
