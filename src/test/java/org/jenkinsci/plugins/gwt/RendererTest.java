@@ -42,6 +42,26 @@ public class RendererTest {
   }
 
   @Test
+  public void testThatEmptyExprButNotEmptyTextIsNotMatched() {
+    assertThat(isMatching(null, "^feature")) //
+        .isFalse();
+    assertThat(isMatching("", "^feature")) //
+        .isFalse();
+  }
+
+  @Test
+  public void testThatEmptyExprAndEmptyTextIsMatched() {
+    assertThat(isMatching(null, "")) //
+        .isTrue();
+    assertThat(isMatching("", null)) //
+        .isTrue();
+    assertThat(isMatching(null, null)) //
+        .isTrue();
+    assertThat(isMatching("", "")) //
+        .isTrue();
+  }
+
+  @Test
   public void testThatIsMatchingWorksDevelopCorrectUser() {
     regexpFilterText = "refs/heads/develop tomabje";
     regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";

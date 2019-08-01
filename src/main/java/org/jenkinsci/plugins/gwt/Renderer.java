@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.google.common.base.Strings.nullToEmpty;
 import static java.util.logging.Level.FINE;
 import static java.util.regex.Pattern.compile;
 
@@ -25,8 +26,8 @@ public class Renderer {
       return true;
     }
     final boolean isMatching =
-        compile(regexpFilterExpression) //
-            .matcher(renderedRegexpFilterText) //
+        compile(nullToEmpty(regexpFilterExpression)) //
+            .matcher(nullToEmpty(renderedRegexpFilterText)) //
             .find();
     if (!isMatching) {
       LOGGER.log(
