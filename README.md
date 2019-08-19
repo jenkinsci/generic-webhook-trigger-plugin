@@ -26,6 +26,10 @@ Then you can have a variable, resolved from post content, named `ref` of type `J
 
 There are more [examples of use cases here](src/test/resources/org/jenkinsci/plugins/gwt/bdd).
 
+Video showing an example usage:
+
+[![Generic Webhook Trigger Usage Example](https://img.youtube.com/vi/8mrJNkofxq4/0.jpg)](https://www.youtube.com/watch?v=8mrJNkofxq4)
+
 It can trigger on any webhook, like:
 * [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html)
 * [Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html)
