@@ -1,4 +1,4 @@
 <?jelly escape-by-default='true'?>
 <div>
-Trigger that can receive any HTTP request, extract any JSONPath/XPath values and trigger a job with those values available as variables.
+Can receive any HTTP request, extract any values from JSON or XML and trigger a job with those values available as variables. Works with GitHub, GitLab, Bitbucket, Jira and many more.
 </div>

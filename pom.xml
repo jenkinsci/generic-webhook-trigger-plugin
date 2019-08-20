@@ -12,14 +12,14 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<fmt>2.9</fmt>
-		<violations.version>1.19</violations.version>
+		<violations.version>1.20</violations.version>
 		<changelog>1.60</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
 	<version>1.57-SNAPSHOT</version>
 	<name>Generic Webhook Trigger Plugin</name>
-	<description>Trigger that can receive any HTTP request, extract any JSONPath/XPath values and trigger a job with those values available as variables.</description>
+	<description>Can receive any HTTP request, extract any values from JSON or XML and trigger a job with those values available as variables. Works with GitHub, GitLab, Bitbucket, Jira and many more.</description>
 	<url>https://wiki.jenkins-ci.org/display/JENKINS/Generic+Webhook+Trigger+Plugin</url>
 	<packaging>hpi</packaging>
 
