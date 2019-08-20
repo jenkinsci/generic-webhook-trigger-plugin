@@ -1,5 +1,19 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.57 (2019-08-20 18:10:41)
+### No issue
+
+**Updating description**
+
+
+[904c76d1b9319c7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/904c76d1b9319c7) Tomas Bjerre *2019-08-20 18:09:11*
+
+**doc**
+
+
+[f84463c9065eaa0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f84463c9065eaa0) Tomas Bjerre *2019-08-19 13:30:25*
+
+
 ## 1.56 (2019-08-01 15:37:12)
 ### GitHub [#127](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/127) NullPointerException with Webhook from Github (version 1.54)    *bug*  
 
