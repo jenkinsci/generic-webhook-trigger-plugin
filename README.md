@@ -112,11 +112,11 @@ The plugin can be configured with default values. Like below:
 
 ![Default Value](/sandbox/default-value.png)
 
-But if you execute the job manually, this default value will not be used. Because the plugin will not be invoked at all. You can solve this by checking the "This job is parameterized" and add a parameter with the same name as the one you configured in the plugin. Like this:
+But if you execute the job manually (or replay a pipeline), this default value will not be used. Because the plugin will not be invoked at all. You can solve this by checking the "This job is parameterized" and add a parameter with the same name as the one you configured in the plugin. Like this:
 
 ![Default Value](/sandbox/default-value-parameter.png)
 
-Now this default value will be used both when you trigger the job manually and when you trigger it with the plugin!
+Now this default value will be used both when you trigger the job manually, replaying pipeline, and when you trigger it with the plugin!
 
 ### Pre build step
 
@@ -192,7 +192,7 @@ This means that if you create a pipeline like this:
 
 ![Parameter](/sandbox/pipeline-pre-run.png)
 
-You need to run it once to have the properties applied. You can verify that the properties has been applied by opening the configuration view (of view configuration if using multibranch pipeline) of the job. You will see that the "Generic Webhook Trigger" is checked and will now have values from your pipeline. Like this:
+You need to run it once to have the properties applied. You can verify that the properties has been applied by opening the configuration view (or view configuration if using multibranch pipeline) of the job. You will see that the "Generic Webhook Trigger" is checked and will now have values from your pipeline. Like this:
 
 ![Parameter](/sandbox/pipeline-post-run.png)
 
