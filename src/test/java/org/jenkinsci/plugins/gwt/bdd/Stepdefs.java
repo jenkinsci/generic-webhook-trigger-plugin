@@ -113,11 +113,19 @@ public class Stepdefs {
     final String renderedRegexpFilterText = renderedText(resolvedVariables);
     final boolean isMatching =
         Renderer.isMatching(renderedRegexpFilterText, featureState.getRegexpFilterExpression());
-    if (!isMatching && expected || isMatching && !expected) {
+    if (!isMatching && expected) {
       fail(
           "Text: \""
               + renderedRegexpFilterText
               + "\" does not match \""
+              + featureState.getRegexpFilterExpression()
+              + "\"");
+    }
+    if (isMatching && !expected) {
+      fail(
+          "Text: \""
+              + renderedRegexpFilterText
+              + "\" does match \""
               + featureState.getRegexpFilterExpression()
               + "\"");
     }

@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#130](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/130) Replay jenkins pipeline job using generic webhook trigger    *question*  
+
+**Documenting replay pipeline #130**
+
+
+[8f69e3b659a5ee3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f69e3b659a5ee3) Tomas Bjerre *2019-08-27 17:07:58*
+
+
 ## 1.57 (2019-08-20 18:10:41)
 ### No issue
 

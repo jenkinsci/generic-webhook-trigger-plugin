@@ -62,6 +62,16 @@ public class RendererTest {
   }
 
   @Test
+  public void testThatIsMatchingWorksWithNewlines() {
+    regexpFilterText = "firstsecondthird";
+    regexpFilterExpression = "^(?!.*(second)).*";
+    final boolean actual = isMatching(regexpFilterText, regexpFilterExpression);
+
+    assertThat(actual) //
+        .isFalse();
+  }
+
+  @Test
   public void testThatIsMatchingWorksDevelopCorrectUser() {
     regexpFilterText = "refs/heads/develop tomabje";
     regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";

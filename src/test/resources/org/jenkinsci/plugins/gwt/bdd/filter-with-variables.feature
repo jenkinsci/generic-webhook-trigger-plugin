@@ -63,3 +63,41 @@ Feature: It should be possible to use variables resolved from post content.
       | text                 | expression       |
       | $committer_name      | tomas            |
     Then the job is not triggered
+
+
+  Scenario: Matched content contains newlines
+
+    Given the following generic variables are configured:
+      | variable         | expression | expressionType  | defaultValue | regexpFilter  |
+      | messageFiltered  | $.message  | JSONPath        |              | [\r\n]        |
+
+    When received post content is:
+    """
+    {
+      "message": "first abc\nabc second def\n abc third"
+    }
+    """
+
+    Then variables are resolved to:
+      | variable            | value              |
+      | messageFiltered     | first abcabc second def abc third  |
+
+    Given filter is configured with:
+      | text             | expression        |
+      | $messageFiltered | ^(?!.*(first)).* |
+    Then the job is not triggered
+
+    Given filter is configured with:
+      | text             | expression        |
+      | $messageFiltered | ^(?!.*(second)).* |
+    Then the job is not triggered
+
+    Given filter is configured with:
+      | text             | expression        |
+      | $messageFiltered | ^(?!.*(third)).* |
+    Then the job is not triggered
+
+    Given filter is configured with:
+      | text             | expression        |
+      | $messageFiltered | ^(?!.*(fourth)).* |
+    Then the job is triggered
