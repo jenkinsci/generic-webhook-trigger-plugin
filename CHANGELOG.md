@@ -9,6 +9,27 @@ Changelog of Generic Webhook Plugin.
 [8f69e3b659a5ee3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f69e3b659a5ee3) Tomas Bjerre *2019-08-27 17:07:58*
 
 
+### GitHub [#132](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/132) Multiple filters on same variable ?    *question*  
+
+**Test case with newlines #132**
+
+
+[23bbefcc5b0dd39](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/23bbefcc5b0dd39) Tomas Bjerre *2019-09-02 15:36:33*
+
+
+### No issue
+
+**Create FUNDING.yml**
+
+
+[952805a24a1e7b6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/952805a24a1e7b6) Tomas Bjerre *2019-09-28 06:52:11*
+
+**Use HTTPS URLs in pom.xml**
+
+
+[352b0124fbca71f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/352b0124fbca71f) Daniel Beck *2019-09-24 10:36:48*
+
+
 ## 1.57 (2019-08-20 18:10:41)
 ### No issue
 
