@@ -198,7 +198,7 @@ You need to run it once to have the properties applied. You can verify that the 
 
 You can avoid having to run twice, by using Job DSL and have Job DSL create pipeline jobs with the plugin configured in that DSL.
 
-This plugin can be used with the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties).
+This plugin can be used in the jobs created by the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties). If you are looking for a way to trigger a scan in the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/) you can use the [Multibranch Scan Webhook Trigger Plugin](https://github.com/jenkinsci/multibranch-scan-webhook-trigger-plugin).
 
 You can use the credentials plugin to provide the `token` from credentials.
 ```groovy
