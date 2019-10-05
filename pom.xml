@@ -3,16 +3,17 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>3.2</version>
+		<version>3.51-SNAPSHOT</version>
 	</parent>
 
 	<properties>
 		<java.level>7</java.level>
 		<jenkins.version>2.7.4</jenkins.version>
-		<findbugs.failOnError>false</findbugs.failOnError>
+                <violations.maxViolations>2</violations.maxViolations>
+                <spotbugs.failOnError>false</spotbugs.failOnError>
+                <findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<fmt>2.9</fmt>
-		<violations.version>1.20</violations.version>
 		<changelog>1.60</changelog>
 	</properties>
 
@@ -159,35 +160,6 @@ Changelog of Generic Webhook Plugin.
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>se.bjurr.violations</groupId>
-				<artifactId>violations-maven-plugin</artifactId>
-				<version>${violations.version}</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>violations</goal>
-						</goals>
-						<configuration>
-							<minSeverity>INFO</minSeverity>
-							<detailLevel>VERBOSE</detailLevel>
-							<maxViolations>99999999</maxViolations>
-							<printViolations>true</printViolations>
-
-							<violations>
-								<violation>
-									<parser>FINDBUGS</parser>
-									<reporter>Findbugs</reporter>
-									<folder>.</folder>
-									<pattern>.*/findbugsXml\.xml$</pattern>
-								</violation>
-							</violations>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 		<resources>
 			<resource>
