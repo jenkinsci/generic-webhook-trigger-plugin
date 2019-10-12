@@ -42,6 +42,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
 
     @Override
     public boolean isApplicable(final Item item) {
+      if (item == null) item.toString();
       return Job.class.isAssignableFrom(item.getClass());
     }
 
