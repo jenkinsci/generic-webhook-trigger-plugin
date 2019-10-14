@@ -17,7 +17,20 @@ Changelog of Generic Webhook Plugin.
 [23bbefcc5b0dd39](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/23bbefcc5b0dd39) Tomas Bjerre *2019-09-02 15:36:33*
 
 
+### GitHub [#136](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/136) Ability to add more optional filters to run the job based on OR operations of two AND operations.    *question*  
+
+**Testing combination of variables #136**
+
+
+[e02cb6ccfd88325](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e02cb6ccfd88325) Tomas Bjerre *2019-09-29 09:18:16*
+
+
 ### No issue
+
+**doc**
+
+
+[722aaf227e3dd56](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/722aaf227e3dd56) Tomas Bjerre *2019-10-03 13:28:49*
 
 **Create FUNDING.yml**
 
