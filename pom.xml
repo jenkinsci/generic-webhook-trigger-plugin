@@ -12,7 +12,7 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<fmt>2.9</fmt>
-		<violations.version>1.20</violations.version>
+		<violations.version>1.29</violations.version>
 		<changelog>1.60</changelog>
 	</properties>
 

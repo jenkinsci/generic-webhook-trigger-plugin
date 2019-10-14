@@ -5,6 +5,7 @@ import static org.jenkinsci.plugins.gwt.ParameterActionUtil.createParameterActio
 import static org.jenkinsci.plugins.gwt.Renderer.isMatching;
 import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Extension;
 import hudson.model.CauseAction;
 import hudson.model.Item;
@@ -113,6 +114,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
 
   @SuppressWarnings("static-access")
+  @SuppressFBWarnings({"RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT", "NP_NULL_ON_SOME_PATH"})
   public GenericTriggerResults trigger(
       final Map<String, List<String>> headers,
       final Map<String, String[]> parameterMap,
