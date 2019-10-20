@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.58 (2019-10-20 19:46:28)
 ### GitHub [#130](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/130) Replay jenkins pipeline job using generic webhook trigger    *question*  
 
 **Documenting replay pipeline #130**
@@ -26,6 +26,11 @@ Changelog of Generic Webhook Plugin.
 
 
 ### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
+
+**Clearer error from whitelist filter #139**
+
+
+[7f585f8f230d238](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7f585f8f230d238) Tomas Bjerre *2019-10-20 19:44:59*
 
 **Whitelist and HMAC #139**
 
