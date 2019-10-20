@@ -53,4 +53,29 @@ public class WhitelistVerifierTest {
 
     assertThat(doVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isFalse();
   }
+
+  @Test
+  public void testThatHostCanBeVerifiedAndInvalidAndValidByAnotherItem() {
+    final WhitelistItem whitelistItem1 = new WhitelistItem("whateverhost1");
+    whitelistItem1.setHmacEnabled(false);
+
+    final WhitelistItem whitelistItem2 = new WhitelistItem("whateverhost2");
+    whitelistItem2.setHmacEnabled(false);
+
+    final WhitelistItem whitelistItem3 = new WhitelistItem("whateverhost3");
+    whitelistItem3.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist =
+        new Whitelist(enabled, Arrays.asList(whitelistItem1, whitelistItem2, whitelistItem3));
+
+    assertThat(doVerifyWhitelist("whateverhost0", headers, postContent, whitelist)).isFalse();
+    assertThat(doVerifyWhitelist("whateverhost1", headers, postContent, whitelist)).isTrue();
+    assertThat(doVerifyWhitelist("whateverhost2", headers, postContent, whitelist)).isTrue();
+    assertThat(doVerifyWhitelist("whateverhost3", headers, postContent, whitelist)).isTrue();
+    assertThat(doVerifyWhitelist("whateverhost4", headers, postContent, whitelist)).isFalse();
+  }
 }

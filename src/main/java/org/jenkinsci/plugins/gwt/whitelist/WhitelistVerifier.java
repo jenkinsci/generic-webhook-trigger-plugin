@@ -23,12 +23,25 @@ public class WhitelistVerifier {
       final Map<String, List<String>> headers,
       final String postContent,
       final Whitelist whitelist) {
+    if (whitelist.getWhitelistItems().isEmpty()) {
+      return true;
+    }
+    final StringBuilder messages = new StringBuilder();
     for (final WhitelistItem whitelistItem : whitelist.getWhitelistItems()) {
-      if (!whitelistVerify(remoteHost, whitelistItem, headers, postContent)) {
-        return false;
+      try {
+        if (whitelistVerify(remoteHost, whitelistItem, headers, postContent)) {
+          return true;
+        }
+      } catch (final WhitelistException e) {
+        messages.append(e.getMessage() + "\n");
       }
     }
-    return true;
+    final String messagesString = messages.toString();
+    if (messagesString.isEmpty()) {
+      return false;
+    } else {
+      throw new WhitelistException(messagesString);
+    }
   }
 
   static boolean whitelistVerify(
