@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.jenkinsci.plugins.gwt.jobfinder.JobFinder;
+import org.jenkinsci.plugins.gwt.whitelist.WhitelistVerifier;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -50,6 +51,18 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
     } catch (final IOException e) {
       LOGGER.log(SEVERE, "", e);
+    }
+
+    if (!WhitelistVerifier.verifyWhitelist(request.getRemoteHost(), headers, postContent)) {
+      final Map<String, Object> response = new HashMap<>();
+      response.put(
+          "triggerResults",
+          "Sender, "
+              + request.getRemoteHost()
+              + ", with headers "
+              + headers
+              + " did not pass whitelist.");
+      return okJSON(response);
     }
 
     final String givenToken = getGivenToken(headers, parameterMap);

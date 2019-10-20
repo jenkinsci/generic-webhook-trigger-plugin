@@ -25,7 +25,20 @@ Changelog of Generic Webhook Plugin.
 [e02cb6ccfd88325](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e02cb6ccfd88325) Tomas Bjerre *2019-09-29 09:18:16*
 
 
+### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
+
+**Whitelist and HMAC #139**
+
+
+[c6a7a3c7c527f29](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c6a7a3c7c527f29) Tomas Bjerre *2019-10-20 15:45:48*
+
+
 ### No issue
+
+**Taking care of some sca**
+
+
+[a1066f64da803cc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a1066f64da803cc) Tomas Bjerre *2019-10-14 16:39:13*
 
 **doc**
 

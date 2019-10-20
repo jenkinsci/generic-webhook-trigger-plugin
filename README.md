@@ -68,6 +68,11 @@ The token can be supplied as a:
 * *Authorization* header of type *Bearer* : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 
 
+## Whitelist hosts
+
+A [whitelist](/sandbox/whitelist.png) can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
+
+
 ## Troubleshooting
 
 If you want to fiddle with the plugin, you may use this repo: https://github.com/tomasbjerre/jenkins-configuration-as-code-sandbox
