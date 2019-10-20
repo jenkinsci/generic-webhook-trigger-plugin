@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:d="jelly:define"
+         xmlns:f="/lib/form"
+         xmlns:l="/lib/layout"
+         xmlns:st="jelly:stapler"
+         xmlns:t="/lib/hudson"
+         xmlns:c="/lib/credentials">
+
+  <f:section title="Generic Webhook Trigger">
+  
+    <f:optionalBlock field="enabled" title="Whitelist enabled" inline="true">
+      <f:entry title="Whitelisted servers">
+        <f:repeatableProperty field="whitelistItems">
+          <f:entry title="">
+            <div align="right">
+              <f:repeatableDeleteButton/>
+            </div>
+          </f:entry>
+        </f:repeatableProperty>
+        <f:description>
+          It supports whitelisted IP/Host and <a href="https://en.wikipedia.org/wiki/HMAC" target="_blank">HMAC</a> verification.
+        </f:description>        
+      </f:entry>
+    </f:optionalBlock>
+  </f:section>
+  
+</j:jelly>
