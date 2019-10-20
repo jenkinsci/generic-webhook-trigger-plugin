@@ -30,7 +30,7 @@ Changelog of Generic Webhook Plugin.
 **Whitelist and HMAC #139**
 
 
-[c6a7a3c7c527f29](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c6a7a3c7c527f29) Tomas Bjerre *2019-10-20 15:45:48*
+[d39f81c3ccefaa6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d39f81c3ccefaa6) Tomas Bjerre *2019-10-20 19:20:49*
 
 
 ### No issue

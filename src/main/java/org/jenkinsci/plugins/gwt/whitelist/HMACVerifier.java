@@ -63,7 +63,7 @@ public class HMACVerifier {
         return value;
       }
     }
-    throw new RuntimeException(
+    throw new WhitelistException(
         "Was unable to find header with name \"" + hmacHeader + "\" among " + headers);
   }
 }

@@ -41,7 +41,7 @@ public class WhitelistVerifier {
         final Optional<StringCredentials> hmacKeyOpt =
             CredentialsHelper.findCredentials(whitelistItem.getHmacCredentialId());
         if (!hmacKeyOpt.isPresent()) {
-          throw new RuntimeException(
+          throw new WhitelistException(
               "Was unable to find secret text credential " + whitelistItem.getHmacCredentialId());
         }
         final String hmacHeader = whitelistItem.getHmacHeader();
