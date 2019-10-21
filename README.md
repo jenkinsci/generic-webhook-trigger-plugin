@@ -59,7 +59,7 @@ When using the plugin in several jobs, you will have the same URL trigger all jo
 
 There is a special `token` parameter. When supplied, the invocation will only trigger jobs with that exact token. The token also allows invocations without any other authentication credentials.
 
-![Parameter](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/configure-token.png)
+![Parameter](/sandbox/configure-token.png)
 
 The token can be supplied as a:
 
@@ -70,7 +70,9 @@ The token can be supplied as a:
 
 ## Whitelist hosts
 
-A [whitelist](/sandbox/whitelist.png) can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
+Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
+
+![Whitelist](/sandbox/whitelist.png)
 
 
 ## Troubleshooting
@@ -109,7 +111,7 @@ curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some v
 
 ## Screenshots
 
-![Generic trigger](https://github.com/jenkinsci/generic-webhook-trigger-plugin/blob/master/sandbox/generic-trigger.png)
+![Generic trigger](/sandbox/generic-trigger.png)
 
 ### Default values
 

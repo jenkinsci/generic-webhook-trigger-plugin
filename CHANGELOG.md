@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.62 (2019-10-21 15:11:24)
+### No issue
+
+**Referencing Github as URL in pom**
+
+
+[721da84ea72506e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/721da84ea72506e) Tomas Bjerre *2019-10-21 15:09:07*
+
+
 ## 1.61 (2019-10-21 04:05:46)
 ### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
 
