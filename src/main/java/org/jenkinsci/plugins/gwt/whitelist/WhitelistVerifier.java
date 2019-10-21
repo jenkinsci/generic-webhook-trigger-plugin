@@ -12,43 +12,43 @@ import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 public class WhitelistVerifier {
 
-  public static boolean verifyWhitelist(
-      final String remoteHost, final Map<String, List<String>> headers, final String postContent) {
+  public static void verifyWhitelist(
+      final String remoteHost, final Map<String, List<String>> headers, final String postContent)
+      throws WhitelistException {
     final Whitelist whitelist = Whitelist.get();
-    return doVerifyWhitelist(remoteHost, headers, postContent, whitelist);
+    doVerifyWhitelist(remoteHost, headers, postContent, whitelist);
   }
 
-  static boolean doVerifyWhitelist(
+  static void doVerifyWhitelist(
       final String remoteHost,
       final Map<String, List<String>> headers,
       final String postContent,
-      final Whitelist whitelist) {
-    if (whitelist.getWhitelistItems().isEmpty()) {
-      return true;
+      final Whitelist whitelist)
+      throws WhitelistException {
+    if (whitelist.getWhitelistItems().isEmpty() || !whitelist.isEnabled()) {
+      return;
     }
     final StringBuilder messages = new StringBuilder();
+    int i = 0;
     for (final WhitelistItem whitelistItem : whitelist.getWhitelistItems()) {
+      i++;
       try {
-        if (whitelistVerify(remoteHost, whitelistItem, headers, postContent)) {
-          return true;
-        }
+        whitelistVerify(remoteHost, whitelistItem, headers, postContent);
+        return;
       } catch (final WhitelistException e) {
-        messages.append(e.getMessage() + "\n");
+        messages.append(i + ") " + e.getMessage() + "\n");
       }
     }
     final String messagesString = messages.toString();
-    if (messagesString.isEmpty()) {
-      return false;
-    } else {
-      throw new WhitelistException(messagesString);
-    }
+    throw new WhitelistException("Did not find a matching whitelisted host:\n" + messagesString);
   }
 
-  static boolean whitelistVerify(
+  static void whitelistVerify(
       final String remoteHost,
       final WhitelistItem whitelistItem,
       final Map<String, List<String>> headers,
-      final String postContent) {
+      final String postContent)
+      throws WhitelistException {
     if (whitelistItem.getHost().equalsIgnoreCase(remoteHost)) {
       if (whitelistItem.isHmacEnabled()) {
         final Optional<StringCredentials> hmacKeyOpt =
@@ -60,13 +60,12 @@ public class WhitelistVerifier {
         final String hmacHeader = whitelistItem.getHmacHeader();
         final String hmacKey = hmacKeyOpt.get().getSecret().getPlainText();
         final String hmacAlgorithm = whitelistItem.getHmacAlgorithm();
-        if (hmacVerify(headers, postContent, hmacHeader, hmacKey, hmacAlgorithm)) {
-          return true;
-        }
-        return false;
+        hmacVerify(headers, postContent, hmacHeader, hmacKey, hmacAlgorithm);
+        return;
       }
-      return true;
+      return;
     }
-    return false;
+    throw new WhitelistException(
+        "Sending host \"" + remoteHost + "\" was not matched by whitelist.");
   }
 }

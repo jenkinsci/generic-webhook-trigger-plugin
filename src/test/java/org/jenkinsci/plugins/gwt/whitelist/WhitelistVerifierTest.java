@@ -23,7 +23,7 @@ public class WhitelistVerifierTest {
     final boolean enabled = false;
     final Whitelist whitelist = new Whitelist(enabled, new ArrayList<WhitelistItem>());
 
-    assertThat(doVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isTrue();
   }
 
   @Test
@@ -37,7 +37,7 @@ public class WhitelistVerifierTest {
     final boolean enabled = true;
     final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
 
-    assertThat(doVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isTrue();
   }
 
   @Test
@@ -51,7 +51,21 @@ public class WhitelistVerifierTest {
     final boolean enabled = true;
     final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
 
-    assertThat(doVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isFalse();
+  }
+
+  @Test
+  public void testThatHostIsAcceptedWhenWhitelistDisabled() {
+    final WhitelistItem whitelistItem = new WhitelistItem("whateverhost");
+    whitelistItem.setHmacEnabled(false);
+    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final String postContent = "";
+
+    final String remoteHost = "anotherhost";
+    final boolean enabled = false;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    assertThat(testDoVerifyWhitelist(remoteHost, headers, postContent, whitelist)).isTrue();
   }
 
   @Test
@@ -72,10 +86,23 @@ public class WhitelistVerifierTest {
     final Whitelist whitelist =
         new Whitelist(enabled, Arrays.asList(whitelistItem1, whitelistItem2, whitelistItem3));
 
-    assertThat(doVerifyWhitelist("whateverhost0", headers, postContent, whitelist)).isFalse();
-    assertThat(doVerifyWhitelist("whateverhost1", headers, postContent, whitelist)).isTrue();
-    assertThat(doVerifyWhitelist("whateverhost2", headers, postContent, whitelist)).isTrue();
-    assertThat(doVerifyWhitelist("whateverhost3", headers, postContent, whitelist)).isTrue();
-    assertThat(doVerifyWhitelist("whateverhost4", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("whateverhost0", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("whateverhost1", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("whateverhost2", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("whateverhost3", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("whateverhost4", headers, postContent, whitelist)).isFalse();
+  }
+
+  private boolean testDoVerifyWhitelist(
+      final String remoteHost,
+      final Map<String, List<String>> headers,
+      final String postContent,
+      final Whitelist whitelist) {
+    try {
+      doVerifyWhitelist(remoteHost, headers, postContent, whitelist);
+      return true;
+    } catch (final WhitelistException e) {
+      return false;
+    }
   }
 }

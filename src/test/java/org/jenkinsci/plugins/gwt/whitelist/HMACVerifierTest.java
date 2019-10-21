@@ -32,7 +32,7 @@ public class HMACVerifierTest {
         "X-Hub-Signature",
         Arrays.asList("sha256=87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
-    final boolean actual = hmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+    final boolean actual = testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
 
     assertThat(actual).isTrue();
   }
@@ -54,7 +54,7 @@ public class HMACVerifierTest {
         "X-Hub-Signature",
         Arrays.asList("87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
-    final boolean actual = hmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+    final boolean actual = testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
 
     assertThat(actual).isTrue();
   }
@@ -76,8 +76,22 @@ public class HMACVerifierTest {
         "X-Hub-Signature",
         Arrays.asList("sha256=97e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
-    final boolean actual = hmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+    final boolean actual = testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
 
     assertThat(actual).isFalse();
+  }
+
+  private boolean testHmacVerify(
+      final Map<String, List<String>> headers,
+      final String postContent,
+      final String hmacHeader,
+      final String hmacSecret,
+      final String algorithm) {
+    try {
+      hmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+      return true;
+    } catch (final WhitelistException e) {
+      return false;
+    }
   }
 }

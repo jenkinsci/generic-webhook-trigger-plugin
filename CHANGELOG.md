@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
+
+**Clearer responses with whitelist #139**
+
+
+[ea2c8f050e585e5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ea2c8f050e585e5) Tomas Bjerre *2019-10-21 03:47:10*
+
+
 ## 1.59 (2019-10-20 20:28:31)
 ### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
 

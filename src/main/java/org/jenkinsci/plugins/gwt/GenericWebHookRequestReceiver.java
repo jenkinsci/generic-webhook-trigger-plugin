@@ -55,20 +55,17 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     }
 
     try {
-      if (!WhitelistVerifier.verifyWhitelist(request.getRemoteHost(), headers, postContent)) {
-        final Map<String, Object> response = new HashMap<>();
-        response.put(
-            "triggerResults",
-            "Sender, "
-                + request.getRemoteHost()
-                + ", with headers "
-                + headers
-                + " did not pass whitelist.");
-        return okJSON(response);
-      }
+      WhitelistVerifier.verifyWhitelist(request.getRemoteHost(), headers, postContent);
     } catch (final WhitelistException e) {
       final Map<String, Object> response = new HashMap<>();
-      response.put("triggerResults", e.getMessage());
+      response.put(
+          "triggerResults",
+          "Sender, "
+              + request.getRemoteHost()
+              + ", with headers "
+              + headers
+              + " did not pass whitelist.\n"
+              + e.getMessage());
       return okJSON(response);
     }
 

@@ -13,15 +13,19 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class HMACVerifier {
 
-  public static boolean hmacVerify(
+  public static void hmacVerify(
       final Map<String, List<String>> headers,
       final String postContent,
       final String hmacHeader,
       final String hmacSecret,
-      final String algorithm) {
+      final String algorithm)
+      throws WhitelistException {
     final String headerValue = getHeaderValue(hmacHeader, headers);
     final String calculateHmac = getCalculatedHmac(postContent, hmacSecret, algorithm);
-    return headerValue.equalsIgnoreCase(calculateHmac);
+    if (!headerValue.equalsIgnoreCase(calculateHmac)) {
+      throw new WhitelistException(
+          "HMAC verification failed with \"" + hmacHeader + "\" and algorithm " + algorithm);
+    }
   }
 
   private static String getCalculatedHmac(
@@ -50,7 +54,7 @@ public class HMACVerifier {
   }
 
   private static String getHeaderValue(
-      final String hmacHeader, final Map<String, List<String>> headers) {
+      final String hmacHeader, final Map<String, List<String>> headers) throws WhitelistException {
     for (final Entry<String, List<String>> ck : headers.entrySet()) {
       final boolean sameHeader = ck.getKey().equalsIgnoreCase(hmacHeader);
       final boolean oneValue = ck.getValue().size() == 1;
