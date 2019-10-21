@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -25,7 +24,12 @@ public class HMACVerifier {
     final String calculateHmac = getCalculatedHmac(postContent, hmacSecret, algorithm);
     if (!headerValue.equalsIgnoreCase(calculateHmac)) {
       throw new WhitelistException(
-          "HMAC verification failed with \"" + hmacHeader + "\" as \""+headerValue+"\" and algorithm " + algorithm);
+          "HMAC verification failed with \""
+              + hmacHeader
+              + "\" as \""
+              + headerValue
+              + "\" and algorithm "
+              + algorithm);
     }
   }
 

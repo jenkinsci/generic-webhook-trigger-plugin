@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.61 (2019-10-21 04:05:46)
+### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
+
+**Incoming HMAC header in error message #139**
+
+
+[8f491b592bc0661](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f491b592bc0661) Tomas Bjerre *2019-10-21 04:04:54*
+
+
 ## 1.60 (2019-10-21 03:55:07)
 ### GitHub [#139](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/139) Whitelist hosts in global config    *enhancement*  
 
