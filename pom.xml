@@ -7,12 +7,12 @@
 	</parent>
 
 	<properties>
-		<java.level>7</java.level>
+		<java.level>8</java.level>
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<fmt>2.9</fmt>
-		<violations.version>1.29</violations.version>
+		<violations.version>1.30</violations.version>
 		<changelog>1.60</changelog>
 	</properties>
 
@@ -239,6 +239,47 @@ Changelog of Generic Webhook Plugin.
 					<artifactId>structs</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.1-jre</version>
+			<exclusions>
+					<!--https://github.com/google/guava/issues/2824-->
+					<exclusion>
+							<groupId>com.google.guava</groupId>
+							<artifactId>failureaccess</artifactId>
+					</exclusion>
+					<exclusion>
+							<groupId>com.google.guava</groupId>
+							<artifactId>listenablefuture</artifactId>
+					</exclusion>
+					<exclusion>
+							<groupId>com.google.code.findbugs</groupId>
+							<artifactId>jsr305</artifactId>
+					</exclusion>
+					<exclusion>
+							<groupId>org.checkerframework</groupId>
+							<artifactId>checker-qual</artifactId>
+					</exclusion>
+					<exclusion>
+							<groupId>com.google.errorprone</groupId>
+							<artifactId>error_prone_annotations</artifactId>
+					</exclusion>
+					<exclusion>
+							<groupId>com.google.j2objc</groupId>
+							<artifactId>j2objc-annotations</artifactId>
+					</exclusion>
+					<exclusion>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>animal-sniffer-annotations</artifactId>
+					</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jgonian</groupId>
+			<artifactId>commons-ip-math</artifactId>
+			<version>1.32</version>
 		</dependency>
 
 		<!-- test // -->
