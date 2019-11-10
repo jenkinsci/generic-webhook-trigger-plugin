@@ -109,8 +109,9 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
 
   /**
    * Returns true if the provided value is a valid ipv4/ipv6 string.
+   * 
    * @param ipValue
-   * @return
+   * @return Boolean
    */
   private Boolean validateIpValue(String ipValue) {
     Boolean isValid = false;
@@ -158,6 +159,7 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
 
   /**
    * See: https://wiki.jenkins.io/display/JENKINS/Form+Validation
+   *
    * @param value
    * @return FormValidation
    * @throws Exception

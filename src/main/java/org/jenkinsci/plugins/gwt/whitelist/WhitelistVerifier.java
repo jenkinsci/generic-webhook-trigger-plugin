@@ -49,12 +49,13 @@ public class WhitelistVerifier {
   }
 
   /**
-   * Returns true if the provided whitelistHost CIDR block contains the
-   * remoteHost; supports ipv4/ipv6.
+   * Returns true if the provided whitelistHost CIDR block contains the remoteHost; supports
+   * ipv4/ipv6.
+   *
    * @param remoteHost
    * @param whitelistHostCIDR
    * @param whitelistHostIP
-   * @return
+   * @return boolean
    * @throws WhitelistException
    */
   static boolean verifyCIDR(
@@ -79,11 +80,11 @@ public class WhitelistVerifier {
   }
 
   /**
-   * Returns true if the provided ipv4 remoteHost value is equal to the ipv4
-   * whitelistHost value.
+   * Returns true if the provided ipv4 remoteHost value is equal to the ipv4 whitelistHost value.
+   *
    * @param remoteHost
    * @param whitelistHost
-   * @return
+   * @return boolean
    * @throws WhitelistException
    */
   static boolean verifyIpv4(final String remoteHost, final String whitelistHost)
@@ -92,61 +93,58 @@ public class WhitelistVerifier {
     return whitelistIP.equals(Ipv4.parse(remoteHost));
   }
 
-  
   /**
-   * Returns true if the provided ipv6 remoteHost value is equal to the ipv6
-   * whitelistHost value.
+   * Returns true if the provided ipv6 remoteHost value is equal to the ipv6 whitelistHost value.
+   *
    * @param remoteHost
    * @param whitelistHost
-   * @return
+   * @return boolean
    * @throws WhitelistException
    */
   static boolean verifyIpv6(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
-    Ipv6 whitelistIP = Ipv6.parse(whitelistHost);
-    return whitelistIP.equals(Ipv6.parse(remoteHost));
+    return Ipv6.parse(whitelistHost).equals(Ipv6.parse(remoteHost));
   }
 
   /**
    * Returns true if whitelistHost is equal to remoteHost; supports ipv4/ipv6.
+   *
    * @param remoteHost
    * @param whitelistHost
-   * @return
+   * @return boolean
    * @throws WhitelistException
    */
   static boolean verifyIP(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
+    boolean isIpValid = false;
 
     int whitelistHostLength = InetAddresses.forString(whitelistHost).getAddress().length;
     int remoteHostLength = InetAddresses.forString(remoteHost).getAddress().length;
-    if (whitelistHostLength == 4) {
-      if (remoteHostLength == 4) {
-        return verifyIpv4(whitelistHost, remoteHost);
-      }
-    } else if (whitelistHostLength == 16) {
-      if (remoteHostLength == 16) {
-        return verifyIpv6(whitelistHost, remoteHost);
-      }
+    if (whitelistHostLength == 4 && remoteHostLength == 4) {
+      isIpValid = verifyIpv4(whitelistHost, remoteHost);
+    } else if (whitelistHostLength == 16 && remoteHostLength == 16) {
+      isIpValid = verifyIpv6(whitelistHost, remoteHost);
     }
 
-    return false;
+    return isIpValid;
   }
 
   /**
    * Returns true if whitelistHost contains remoteHost; supports ip/cidr.
+   *
    * @param remoteHost
    * @param whitelistHost
-   * @return
+   * @return boolean
    * @throws WhitelistException
    */
-  static Boolean whitelistContains(final String remoteHost, final String whitelistHost)
+  static boolean whitelistContains(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
     if (whitelistHost.equalsIgnoreCase(remoteHost)) {
       return true;
     }
 
-    Boolean isCIDR = false;
-    Boolean isRange = false;
+    boolean isCIDR = false;
+    boolean isRange = false;
 
     String[] hostParts = whitelistHost.split("/");
 
@@ -161,7 +159,7 @@ public class WhitelistVerifier {
       }
     }
 
-    Boolean isMatched = false;
+    boolean isMatched = false;
 
     try {
       if (isCIDR || isRange) {
