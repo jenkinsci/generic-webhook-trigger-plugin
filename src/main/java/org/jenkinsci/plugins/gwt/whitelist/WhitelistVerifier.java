@@ -48,7 +48,15 @@ public class WhitelistVerifier {
     throw new WhitelistException("Did not find a matching whitelisted host:\n" + messagesString);
   }
 
-  /** Returns true if whitelistHost CIDR block contains remoteHost; supports ipv4/ipv6. */
+  /**
+   * Returns true if the provided whitelistHost CIDR block contains the
+   * remoteHost; supports ipv4/ipv6.
+   * @param remoteHost
+   * @param whitelistHostCIDR
+   * @param whitelistHostIP
+   * @return
+   * @throws WhitelistException
+   */
   static boolean verifyCIDR(
       final String remoteHost, final String whitelistHostCIDR, final String whitelistHostIP)
       throws WhitelistException {
@@ -70,19 +78,42 @@ public class WhitelistVerifier {
     return false;
   }
 
+  /**
+   * Returns true if the provided ipv4 remoteHost value is equal to the ipv4
+   * whitelistHost value.
+   * @param remoteHost
+   * @param whitelistHost
+   * @return
+   * @throws WhitelistException
+   */
   static boolean verifyIpv4(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
     Ipv4 whitelistIP = Ipv4.parse(whitelistHost);
     return whitelistIP.equals(Ipv4.parse(remoteHost));
   }
 
+  
+  /**
+   * Returns true if the provided ipv6 remoteHost value is equal to the ipv6
+   * whitelistHost value.
+   * @param remoteHost
+   * @param whitelistHost
+   * @return
+   * @throws WhitelistException
+   */
   static boolean verifyIpv6(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
     Ipv6 whitelistIP = Ipv6.parse(whitelistHost);
     return whitelistIP.equals(Ipv6.parse(remoteHost));
   }
 
-  /** Returns true if whitelistHost is equal to remoteHost; supports ipv4/ipv6. */
+  /**
+   * Returns true if whitelistHost is equal to remoteHost; supports ipv4/ipv6.
+   * @param remoteHost
+   * @param whitelistHost
+   * @return
+   * @throws WhitelistException
+   */
   static boolean verifyIP(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
 
@@ -101,7 +132,13 @@ public class WhitelistVerifier {
     return false;
   }
 
-  /** Returns true if whitelistHost contains remoteHost; supports ip/cidr. */
+  /**
+   * Returns true if whitelistHost contains remoteHost; supports ip/cidr.
+   * @param remoteHost
+   * @param whitelistHost
+   * @return
+   * @throws WhitelistException
+   */
   static Boolean whitelistContains(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
     if (whitelistHost.equalsIgnoreCase(remoteHost)) {
