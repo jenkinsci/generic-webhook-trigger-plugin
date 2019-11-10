@@ -104,10 +104,8 @@ public class WhitelistVerifier {
   /** Returns true if whitelistHost contains remoteHost; supports ip/cidr. */
   static Boolean whitelistContains(final String remoteHost, final String whitelistHost)
       throws WhitelistException {
-    Boolean isMatched = false;
-
     if (whitelistHost.equalsIgnoreCase(remoteHost)) {
-      isMatched = true;
+      return true;
     }
 
     Boolean isCIDR = false;
@@ -126,11 +124,17 @@ public class WhitelistVerifier {
       }
     }
 
-    if (isCIDR || isRange) {
-      whitelistHostIP = hostParts[0];
-      isMatched = verifyCIDR(remoteHost, whitelistHost, whitelistHostIP);
-    } else {
-      isMatched = verifyIP(remoteHost, whitelistHost);
+    Boolean isMatched = false;
+
+    try {
+      if (isCIDR || isRange) {
+        whitelistHostIP = hostParts[0];
+        isMatched = verifyCIDR(remoteHost, whitelistHost, whitelistHostIP);
+      } else {
+        isMatched = verifyIP(remoteHost, whitelistHost);
+      }
+    } catch (Exception e) {
+      isMatched = false;
     }
 
     return isMatched;
