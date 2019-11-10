@@ -93,6 +93,49 @@ public class WhitelistVerifierTest {
     assertThat(testDoVerifyWhitelist("whateverhost4", headers, postContent, whitelist)).isFalse();
   }
 
+  @Test
+  public void testThatHostCanBeVerifiedWithSupportedNotations() {
+    final WhitelistItem whitelistItem1 = new WhitelistItem("1.2.3.4");
+    whitelistItem1.setHmacEnabled(false);
+
+    final WhitelistItem whitelistItem2 = new WhitelistItem("2.2.3.0/24");
+    whitelistItem2.setHmacEnabled(false);
+
+    final WhitelistItem whitelistItem3 = new WhitelistItem("3.2.1.1-3.2.1.10");
+    whitelistItem3.setHmacEnabled(false);
+
+    final WhitelistItem whitelistItem4 =
+        new WhitelistItem("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+    whitelistItem4.setHmacEnabled(false);
+
+    final WhitelistItem whitelistItem5 =
+        new WhitelistItem("2002:0db8:85a3:0000:0000:8a2e:0370:7334/127");
+    whitelistItem5.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist =
+        new Whitelist(
+            enabled,
+            Arrays.asList(
+                whitelistItem1, whitelistItem2, whitelistItem3, whitelistItem4, whitelistItem5));
+
+    assertThat(testDoVerifyWhitelist("1.2.3.4", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("2.2.3.50", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("3.2.1.5", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("1.1.1.2", headers, postContent, whitelist)).isFalse();
+    assertThat(
+            testDoVerifyWhitelist(
+                "2001:0db8:85a3:0000:0000:8a2e:0370:7334", headers, postContent, whitelist))
+        .isTrue();
+    assertThat(
+            testDoVerifyWhitelist(
+                "2002:0db8:85a3:0000:0000:8a2e:0370:7335", headers, postContent, whitelist))
+        .isTrue();
+  }
+
   private boolean testDoVerifyWhitelist(
       final String remoteHost,
       final Map<String, List<String>> headers,
