@@ -1,5 +1,10 @@
 package org.jenkinsci.plugins.gwt.global;
 
+import com.github.jgonian.ipmath.Ipv4;
+import com.github.jgonian.ipmath.Ipv4Range;
+import com.github.jgonian.ipmath.Ipv6;
+import com.github.jgonian.ipmath.Ipv6Range;
+import com.google.common.net.InetAddresses;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
@@ -99,6 +104,63 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
 
     public FormValidation doCheckHmacCredentialIdItems(@QueryParameter final String value) {
       return CredentialsHelper.doCheckFillCredentialsId(value);
+    }
+  }
+
+  private Boolean validateIpValue(String ipValue) {
+    Boolean isValid = false;
+
+    Boolean isCIDR = false;
+    Boolean isRange = false;
+
+    String[] hostParts = ipValue.split("/");
+
+    if (hostParts.length == 2) {
+      isCIDR = true;
+    } else {
+      hostParts = ipValue.split("-");
+      if (hostParts.length == 2) {
+        isRange = true;
+      }
+    }
+
+    if (isCIDR || isRange) {
+      int leftValueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
+      if (leftValueLength == 4) {
+        if (Ipv4Range.parse(ipValue) != null) {
+          isValid = true;
+        }
+      } else if (leftValueLength == 16) {
+        if (Ipv6Range.parse(ipValue) != null) {
+          isValid = true;
+        }
+      }
+    } else {
+      int ipValueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
+      if (ipValueLength == 4) {
+        if (Ipv4.parse(ipValue) != null) {
+          isValid = true;
+        }
+      } else if (ipValueLength == 16) {
+        if (Ipv6.parse(ipValue) != null) {
+          isValid = true;
+        }
+      }
+    }
+
+    return isValid;
+  }
+
+  public FormValidation doCheckHost(@QueryParameter String value) throws Exception {
+    try {
+      if (validateIpValue(value)) {
+        return FormValidation.ok();
+      } else {
+        return FormValidation.error(
+            "IP address must be in IPV4 or IPV6 CIDR or IP range notation.");
+      }
+    } catch (Exception e) {
+      return FormValidation.error("Invalid IP address.");
     }
   }
 }
