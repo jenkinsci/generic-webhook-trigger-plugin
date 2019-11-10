@@ -2,7 +2,12 @@ package org.jenkinsci.plugins.gwt.whitelist;
 
 import static org.jenkinsci.plugins.gwt.whitelist.HMACVerifier.hmacVerify;
 
+import com.github.jgonian.ipmath.Ipv4;
+import com.github.jgonian.ipmath.Ipv4Range;
+import com.github.jgonian.ipmath.Ipv6;
+import com.github.jgonian.ipmath.Ipv6Range;
 import com.google.common.base.Optional;
+import com.google.common.net.InetAddresses;
 import java.util.List;
 import java.util.Map;
 import org.jenkinsci.plugins.gwt.global.CredentialsHelper;
@@ -43,13 +48,143 @@ public class WhitelistVerifier {
     throw new WhitelistException("Did not find a matching whitelisted host:\n" + messagesString);
   }
 
+  /**
+   * Returns true if the provided whitelistHost CIDR block contains the remoteHost; supports
+   * ipv4/ipv6.
+   *
+   * @param remoteHost
+   * @param whitelistHostCIDR
+   * @param whitelistHostIP
+   * @return boolean
+   * @throws WhitelistException
+   */
+  static boolean verifyCIDR(
+      final String remoteHost, final String whitelistHostCIDR, final String whitelistHostIP)
+      throws WhitelistException {
+
+    int whitelistHostLength = InetAddresses.forString(whitelistHostIP).getAddress().length;
+    int remoteHostLength = InetAddresses.forString(remoteHost).getAddress().length;
+    if (whitelistHostLength == 4) {
+      if (remoteHostLength == 4) {
+        Ipv4Range whitelistHostRange = Ipv4Range.parse(whitelistHostCIDR);
+        return whitelistHostRange.overlaps(Ipv4Range.parse(remoteHost + "/32"));
+      }
+    } else if (whitelistHostLength == 16) {
+      if (remoteHostLength == 16) {
+        Ipv6Range whitelistHostRange = Ipv6Range.parse(whitelistHostCIDR);
+        return whitelistHostRange.overlaps(Ipv6Range.parse(remoteHost + "/128"));
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns true if the provided ipv4 remoteHost value is equal to the ipv4 whitelistHost value.
+   *
+   * @param remoteHost
+   * @param whitelistHost
+   * @return boolean
+   * @throws WhitelistException
+   */
+  static boolean verifyIpv4(final String remoteHost, final String whitelistHost)
+      throws WhitelistException {
+    Ipv4 whitelistIP = Ipv4.parse(whitelistHost);
+    return whitelistIP.equals(Ipv4.parse(remoteHost));
+  }
+
+  /**
+   * Returns true if the provided ipv6 remoteHost value is equal to the ipv6 whitelistHost value.
+   *
+   * @param remoteHost
+   * @param whitelistHost
+   * @return boolean
+   * @throws WhitelistException
+   */
+  static boolean verifyIpv6(final String remoteHost, final String whitelistHost)
+      throws WhitelistException {
+    return Ipv6.parse(whitelistHost).equals(Ipv6.parse(remoteHost));
+  }
+
+  /**
+   * Returns true if whitelistHost is equal to remoteHost; supports ipv4/ipv6.
+   *
+   * @param remoteHost
+   * @param whitelistHost
+   * @return boolean
+   * @throws WhitelistException
+   */
+  static boolean verifyIP(final String remoteHost, final String whitelistHost)
+      throws WhitelistException {
+    boolean isIpValid = false;
+
+    int whitelistHostLength = InetAddresses.forString(whitelistHost).getAddress().length;
+    int remoteHostLength = InetAddresses.forString(remoteHost).getAddress().length;
+    if (whitelistHostLength == 4 && remoteHostLength == 4) {
+      isIpValid = verifyIpv4(whitelistHost, remoteHost);
+    } else if (whitelistHostLength == 16 && remoteHostLength == 16) {
+      isIpValid = verifyIpv6(whitelistHost, remoteHost);
+    }
+
+    return isIpValid;
+  }
+
+  /**
+   * Returns true if whitelistHost contains remoteHost; supports ip/cidr.
+   *
+   * @param remoteHost
+   * @param whitelistHost
+   * @return boolean
+   * @throws WhitelistException
+   */
+  static boolean whitelistContains(final String remoteHost, final String whitelistHost)
+      throws WhitelistException {
+    if (whitelistHost.equalsIgnoreCase(remoteHost)) {
+      return true;
+    }
+
+    boolean isCIDR = false;
+    boolean isRange = false;
+
+    String[] hostParts = whitelistHost.split("/");
+
+    String whitelistHostIP;
+    if (hostParts.length == 2) {
+      whitelistHostIP = hostParts[0];
+      isCIDR = true;
+    } else {
+      hostParts = whitelistHost.split("-");
+      if (hostParts.length == 2) {
+        isRange = true;
+      }
+    }
+
+    boolean isMatched = false;
+
+    try {
+      if (isCIDR || isRange) {
+        whitelistHostIP = hostParts[0];
+        isMatched = verifyCIDR(remoteHost, whitelistHost, whitelistHostIP);
+      } else {
+        isMatched = verifyIP(remoteHost, whitelistHost);
+      }
+    } catch (Exception e) {
+      isMatched = false;
+    }
+
+    return isMatched;
+  }
+
   static void whitelistVerify(
       final String remoteHost,
       final WhitelistItem whitelistItem,
       final Map<String, List<String>> headers,
       final String postContent)
       throws WhitelistException {
-    if (whitelistItem.getHost().equalsIgnoreCase(remoteHost)) {
+
+    String whitelistHost = whitelistItem.getHost();
+
+    if (whitelistContains(remoteHost, whitelistHost)) {
       if (whitelistItem.isHmacEnabled()) {
         final Optional<StringCredentials> hmacKeyOpt =
             CredentialsHelper.findCredentials(whitelistItem.getHmacCredentialId());
