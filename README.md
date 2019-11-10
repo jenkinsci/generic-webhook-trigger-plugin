@@ -4,16 +4,17 @@
 
 This is a Jenkins plugin that can:
 
- 1. Receive any HTTP request, `JENKINS_URL/generic-webhook-trigger/invoke`
- 2. Extract values
+1.  Receive any HTTP request, `JENKINS_URL/generic-webhook-trigger/invoke`
+2.  Extract values
 
-  * From `POST` content with [JSONPath](https://github.com/json-path/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
-  * From the `query` parameters
-  * From the `headers`
+- From `POST` content with [JSONPath](https://github.com/json-path/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
+- From the `query` parameters
+- From the `headers`
 
- 3. Trigger a build with those values contribute as variables
+3.  Trigger a build with those values contribute as variables
 
 There is an optional feature to trigger jobs only if a supplied regular expression matches the extracted variables. Here is an example, let's say the post content looks like this:
+
 ```javascript
 {
   "before": "1848f1236ae15769e6b31e9c4477d8150b018453",
@@ -22,7 +23,7 @@ There is an optional feature to trigger jobs only if a supplied regular expressi
 }
 ```
 
-Then you can have a variable, resolved from post content, named `ref` of type `JSONPath` and with expression like `$.ref` . The optional filter text can be set to `$ref` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)$](https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24) to trigger builds only for develop and feature-branches.
+Then you can have a variable, resolved from post content, named `ref` of type `JSONPath` and with expression like `$.ref` . The optional filter text can be set to `$ref` and the filter regexp set to [^(refs/heads/develop|refs/heads/feature/.+)\$](<https://jex.im/regulex/#!embed=false&flags=&re=%5E(refs%2Fheads%2Fdevelop%7Crefs%2Fheads%2Ffeature%2F.%2B)%24>) to trigger builds only for develop and feature-branches.
 
 There are more [examples of use cases here](src/test/resources/org/jenkinsci/plugins/gwt/bdd).
 
@@ -31,29 +32,28 @@ Video showing an example usage:
 [![Generic Webhook Trigger Usage Example](https://img.youtube.com/vi/8mrJNkofxq4/0.jpg)](https://www.youtube.com/watch?v=8mrJNkofxq4)
 
 It can trigger on any webhook, like:
-* [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html)
-* [Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html)
-* [GitHub](https://developer.github.com/webhooks/)
-* [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
-* [Gogs](https://gogs.io/docs/features/webhook) and [Gitea](https://docs.gitea.io/en-us/webhooks/)
-* [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
-* [Jira](https://developer.atlassian.com/server/jira/platform/webhooks/)
-* And many many more!
+
+- [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html)
+- [Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html)
+- [GitHub](https://developer.github.com/webhooks/)
+- [GitLab](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
+- [Gogs](https://gogs.io/docs/features/webhook) and [Gitea](https://docs.gitea.io/en-us/webhooks/)
+- [Assembla](https://blog.assembla.com/AssemblaBlog/tabid/12618/bid/107614/Assembla-Bigplans-Integration-How-To.aspx)
+- [Jira](https://developer.atlassian.com/server/jira/platform/webhooks/)
+- And many many more!
 
 The original use case was to build merge/pull requests. You may use the Git Plugin as described in [this blog post](http://bjurr.com/continuous-integration-with-gitlab-and-jenkins/) to do that. There is also an example of this on the [Violation Comments to GitLab Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitLab+Plugin) page.
 
-You may want to report back to the invoking system. [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) is a very convenient plugin for that. 
+You may want to report back to the invoking system. [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) is a very convenient plugin for that.
 
 If a node is selected, then all leafs in that node will be contributed. If a leaf is selected, then only that leaf will be contributed.
-
 
 ## Trigger only specific job
 
 When using the plugin in several jobs, you will have the same URL trigger all jobs. If you want to trigger only a certain job you can:
 
-* Use the `token`-parameter have different tokens for different jobs. Using only the token means only jobs with that exact token will be visible for that request. This will increase performance and reduce responses of each invocation.
-* Or, add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
-
+- Use the `token`-parameter have different tokens for different jobs. Using only the token means only jobs with that exact token will be visible for that request. This will increase performance and reduce responses of each invocation.
+- Or, add some request parameter (or header, or post content) and use the **regexp filter** to trigger only if that parameter has a specific value.
 
 ### Token parameter
 
@@ -63,17 +63,23 @@ There is a special `token` parameter. When supplied, the invocation will only tr
 
 The token can be supplied as a:
 
-* Request parameter: `curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1`
-* Token header: `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
-* *Authorization* header of type *Bearer* : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
-
+- Request parameter: `curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1`
+- Token header: `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+- _Authorization_ header of type _Bearer_ : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 
 ## Whitelist hosts
 
-Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
+Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The hosts can be specified by **CIDR** or **ranges**:
+
+- _1.2.3.4_
+- _2.2.3.0/24_
+- _3.2.1.1-3.2.1.10_
+- _2001:0db8:85a3:0000:0000:8a2e:0370:7334_
+- _2002:0db8:85a3:0000:0000:8a2e:0370:7334/127_
+
+The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
 
 ![Whitelist](/sandbox/whitelist.png)
-
 
 ## Troubleshooting
 
@@ -81,9 +87,9 @@ If you want to fiddle with the plugin, you may use this repo: https://github.com
 
 If you are fiddling with expressions, you may want to checkout:
 
-* [This JSONPath site](http://jsonpath.herokuapp.com/)
-* [This XPath site](http://www.freeformatter.com/xpath-tester.html)
-* [This regexp site](https://jex.im/regulex/) Also syntax [here](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html).
+- [This JSONPath site](http://jsonpath.herokuapp.com/)
+- [This XPath site](http://www.freeformatter.com/xpath-tester.html)
+- [This regexp site](https://jex.im/regulex/) Also syntax [here](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html).
 
 It's probably easiest to do with `curl`. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 
@@ -208,6 +214,7 @@ You can avoid having to run twice, by using Job DSL and have Job DSL create pipe
 This plugin can be used in the jobs created by the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/#properties-set-job-properties). If you are looking for a way to trigger a scan in the [Pipeline Multibranch Plugin](https://jenkins.io/doc/pipeline/steps/workflow-multibranch/) you can use the [Multibranch Scan Webhook Trigger Plugin](https://github.com/jenkinsci/multibranch-scan-webhook-trigger-plugin).
 
 You can use the credentials plugin to provide the `token` from credentials.
+
 ```groovy
 withCredentials([string(credentialsId: 'mycredentialsid', variable: 'credentialsVariable')]) {
  properties([
@@ -236,7 +243,8 @@ Perhaps you want a different `token` for each job.
  ])
 ```
 
-Or have a credentials string prefixed with the job name. 
+Or have a credentials string prefixed with the job name.
+
 ```groovy
 withCredentials([string(credentialsId: 'mycredentialsid', variable: 'credentialsVariable')]) {
  properties([
@@ -276,16 +284,16 @@ node {
      [key: 'headerWithNumber', regexpFilter: '[^0-9]'],
      [key: 'headerWithString', regexpFilter: '']
     ],
-     
+
     causeString: 'Triggered on $ref',
-    
+
     token: 'abc123',
-    
+
     printContributedVariables: true,
     printPostContent: true,
-    
+
     silentResponse: false,
-    
+
     regexpFilterText: '$ref',
     regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
    ]
@@ -316,16 +324,16 @@ pipeline {
      genericVariables: [
       [key: 'ref', value: '$.ref']
      ],
-     
+
      causeString: 'Triggered on $ref',
-     
+
      token: 'abc123',
-     
+
      printContributedVariables: true,
      printPostContent: true,
-     
+
      silentResponse: false,
-    
+
      regexpFilterText: '$ref',
      regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
     )
@@ -363,11 +371,12 @@ Contributing variables:
     requestWithString = a string
 ```
 
-
 ## Plugin development
+
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
 
 A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.
+
 ```
 mvn release:prepare release:perform
 ```

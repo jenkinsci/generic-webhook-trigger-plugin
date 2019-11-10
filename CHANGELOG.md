@@ -1,5 +1,57 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#143](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/143) Support CIDR Notation  
+
+**Cleanup #143**
+
+
+[34d2070d64085f1](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/34d2070d64085f1) Tomas Bjerre *2019-11-10 18:48:17*
+
+
+### No issue
+
+**Cleanup.**
+
+
+[7b6bdb7be8d66aa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7b6bdb7be8d66aa) Terrance Wood *2019-11-10 14:49:10*
+
+**Cleanup.**
+
+
+[922fb3a258583f8](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/922fb3a258583f8) Terrance Wood *2019-11-10 14:42:51*
+
+**Removed problematic guava dependency.**
+
+
+[57884ebd47638f8](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/57884ebd47638f8) Terrance Wood *2019-11-10 14:33:15*
+
+**Fixed exact whitelist matches broken after introducing CIDR notation.**
+
+
+[0ab3bc62d64f490](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0ab3bc62d64f490) Terrance Wood *2019-11-10 09:10:49*
+
+**Fixed field form validation for whitelist host.**
+
+
+[48e3063c6cd04b4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/48e3063c6cd04b4) Terrance Wood *2019-11-10 09:05:17*
+
+**Added support for ipv4/ipv6 CIDR notation to WhitelistVerifer; includes methods for form field validation.**
+
+
+[db13a2b33594b0a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/db13a2b33594b0a) Terrance Wood *2019-11-10 08:54:50*
+
+**Added google guava and commons-ip-math packages; bumped java.level due to package requirements.**
+
+
+[e6daab9b3ff40e7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e6daab9b3ff40e7) Terrance Wood *2019-11-10 08:53:44*
+
+**Added tests for CIDR notation.**
+
+
+[daecd55fcced3a1](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/daecd55fcced3a1) Terrance Wood *2019-11-10 08:52:38*
+
+
 ## 1.62 (2019-10-21 15:11:24)
 ### No issue
 
