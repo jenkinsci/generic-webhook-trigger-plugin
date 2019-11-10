@@ -1,12 +1,20 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.63 (2019-11-10 18:56:01)
+### GitHub [#141](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/141) Make HMAC Authentication independent of requiring an IP.    *enhancement*  
+
+**Refactoring and cleanup of #143 and solving #141**
+
+
+[dcc87c074e5f212](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/dcc87c074e5f212) Tomas Bjerre *2019-11-10 18:53:58*
+
+
 ### GitHub [#143](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/143) Support CIDR Notation  
 
-**Cleanup #143**
+**Refactoring and cleanup of #143 and solving #141**
 
 
-[34d2070d64085f1](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/34d2070d64085f1) Tomas Bjerre *2019-11-10 18:48:17*
+[dcc87c074e5f212](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/dcc87c074e5f212) Tomas Bjerre *2019-11-10 18:53:58*
 
 
 ### No issue
