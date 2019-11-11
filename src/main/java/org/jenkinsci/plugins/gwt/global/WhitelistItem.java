@@ -138,6 +138,13 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
         } else if (leftValueLength == 16) {
           isValid = Ipv6Range.parse(value) != null;
         }
+
+        if (isValid && isRange) {
+          String leftValue = hostParts[0];
+          String rightValue = hostParts[1];
+          isValid = InetAddresses.isInetAddress(leftValue);
+          isValid = InetAddresses.isInetAddress(rightValue);
+        }
       } else {
         int valueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
         if (valueLength == 4) {
