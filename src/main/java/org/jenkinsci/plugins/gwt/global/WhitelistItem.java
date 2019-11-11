@@ -145,10 +145,10 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
         } else if (valueLength == 16) {
           isValid = Ipv6.parse(value) != null;
         }
-      }
 
-      if (isValid && !value.contains("/") && !value.contains("-")) {
-        isValid = InetAddresses.isInetAddress(value);
+        if (isValid) {
+          isValid = InetAddresses.isInetAddress(value);
+        }
       }
 
       return isValid;
