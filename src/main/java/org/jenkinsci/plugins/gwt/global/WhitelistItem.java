@@ -169,21 +169,14 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
      */
     public FormValidation doCheckHost(@QueryParameter final String value) {
       try {
-        boolean isValidDomain = InternetDomainName.isValid(value);
-
-        boolean isValidIp = false;
-        if (!isValidDomain) {
-          isValidIp = validateIpValue(value);
-        }
-
-        if (isValidDomain || isValidIp) {
+        if (validateIpValue(value)) {
           return FormValidation.ok();
         }
       } catch (IllegalArgumentException e) {
-        // NOTE: Generic error message avoids assuming domain/ip value type.
+        FormValidation.error(e.getMessage());
       }
 
-      return FormValidation.error("Invalid domain, IP address, CIDR block or IP range.");
+      return FormValidation.error("Invalid IP address, CIDR block or IP range.");
     }
   }
 }
