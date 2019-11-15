@@ -27,7 +27,7 @@ public class HMACVerifierTest {
     final String hmacHeader = "X-Hub-Signature";
     final String hmacSecret = "this is secret";
     final String algorithm = WhitelistItem.HMAC_SHA256;
-    headers = new HashMap<String, List<String>>();
+    headers = new HashMap<>();
     headers.put(
         "X-Hub-Signature",
         Arrays.asList("sha256=87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
@@ -49,7 +49,7 @@ public class HMACVerifierTest {
     final String hmacHeader = "X-Hub-Signature";
     final String hmacSecret = "this is secret";
     final String algorithm = WhitelistItem.HMAC_SHA256;
-    headers = new HashMap<String, List<String>>();
+    headers = new HashMap<>();
     headers.put(
         "X-Hub-Signature",
         Arrays.asList("87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
@@ -71,7 +71,7 @@ public class HMACVerifierTest {
     final String hmacHeader = "X-Hub-Signature";
     final String hmacSecret = "this is secret";
     final String algorithm = WhitelistItem.HMAC_SHA256;
-    headers = new HashMap<String, List<String>>();
+    headers = new HashMap<>();
     headers.put(
         "X-Hub-Signature",
         Arrays.asList("sha256=97e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
@@ -86,7 +86,8 @@ public class HMACVerifierTest {
       final String postContent,
       final String hmacHeader,
       final String hmacSecret,
-      final String algorithm) {
+      final String algorithm)
+      throws WhitelistException {
     try {
       hmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
       return true;

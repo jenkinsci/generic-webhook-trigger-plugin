@@ -1,5 +1,20 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#145](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/145) Fix whitelist host validation  
+
+**Refactoring after merging #145**
+
+
+[ea7fcf1c1e83a33](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ea7fcf1c1e83a33) Tomas Bjerre *2019-11-15 18:03:37*
+
+**Fix whitelist host validation (#145)**
+
+ * Whitelist host validation 
+
+[0910146b517c742](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0910146b517c742) AbsoluteOther *2019-11-15 15:46:53*
+
+
 ## 1.63 (2019-11-10 18:56:01)
 ### GitHub [#141](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/141) Make HMAC Authentication independent of requiring an IP.    *enhancement*  
 

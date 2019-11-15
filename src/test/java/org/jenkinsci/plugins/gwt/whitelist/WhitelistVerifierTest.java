@@ -16,10 +16,10 @@ public class WhitelistVerifierTest {
 
   @Test
   public void testThatRequestIsValidWhenNoWhitelist() {
-    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final Map<String, List<String>> headers = new HashMap<>();
     final String postContent = "";
 
-    final String remoteHost = "whateverhost";
+    final String remoteHost = "192.168.0.1";
     final boolean enabled = false;
     final Whitelist whitelist = new Whitelist(enabled, new ArrayList<WhitelistItem>());
 
@@ -28,12 +28,12 @@ public class WhitelistVerifierTest {
 
   @Test
   public void testThatHostCanBeVerifiedAndValid() {
-    final WhitelistItem whitelistItem = new WhitelistItem("whateverhost");
+    final WhitelistItem whitelistItem = new WhitelistItem("192.168.0.1");
     whitelistItem.setHmacEnabled(false);
-    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final Map<String, List<String>> headers = new HashMap<>();
     final String postContent = "";
 
-    final String remoteHost = "whateverhost";
+    final String remoteHost = "192.168.0.1";
     final boolean enabled = true;
     final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
 
@@ -42,9 +42,9 @@ public class WhitelistVerifierTest {
 
   @Test
   public void testThatHostCanBeVerifiedAndInvalid() {
-    final WhitelistItem whitelistItem = new WhitelistItem("whateverhost");
+    final WhitelistItem whitelistItem = new WhitelistItem("192.168.0.1");
     whitelistItem.setHmacEnabled(false);
-    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final Map<String, List<String>> headers = new HashMap<>();
     final String postContent = "";
 
     final String remoteHost = "anotherhost";
@@ -56,9 +56,9 @@ public class WhitelistVerifierTest {
 
   @Test
   public void testThatHostIsAcceptedWhenWhitelistDisabled() {
-    final WhitelistItem whitelistItem = new WhitelistItem("whateverhost");
+    final WhitelistItem whitelistItem = new WhitelistItem("192.168.0.1");
     whitelistItem.setHmacEnabled(false);
-    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final Map<String, List<String>> headers = new HashMap<>();
     final String postContent = "";
 
     final String remoteHost = "anotherhost";
@@ -69,28 +69,28 @@ public class WhitelistVerifierTest {
   }
 
   @Test
-  public void testThatHostCanBeVerifiedAndInvalidAndValidByAnotherItem() {
-    final WhitelistItem whitelistItem1 = new WhitelistItem("whateverhost1");
+  public void testThatHostCanBeVerifiedAndInvalidAndValidByAnotherItem() throws Exception {
+    final WhitelistItem whitelistItem1 = new WhitelistItem("192.168.0.1");
     whitelistItem1.setHmacEnabled(false);
 
-    final WhitelistItem whitelistItem2 = new WhitelistItem("whateverhost2");
+    final WhitelistItem whitelistItem2 = new WhitelistItem("192.168.0.2");
     whitelistItem2.setHmacEnabled(false);
 
-    final WhitelistItem whitelistItem3 = new WhitelistItem("whateverhost3");
+    final WhitelistItem whitelistItem3 = new WhitelistItem("192.168.0.3");
     whitelistItem3.setHmacEnabled(false);
 
-    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final Map<String, List<String>> headers = new HashMap<>();
     final String postContent = "";
 
     final boolean enabled = true;
     final Whitelist whitelist =
         new Whitelist(enabled, Arrays.asList(whitelistItem1, whitelistItem2, whitelistItem3));
 
-    assertThat(testDoVerifyWhitelist("whateverhost0", headers, postContent, whitelist)).isFalse();
-    assertThat(testDoVerifyWhitelist("whateverhost1", headers, postContent, whitelist)).isTrue();
-    assertThat(testDoVerifyWhitelist("whateverhost2", headers, postContent, whitelist)).isTrue();
-    assertThat(testDoVerifyWhitelist("whateverhost3", headers, postContent, whitelist)).isTrue();
-    assertThat(testDoVerifyWhitelist("whateverhost4", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("192.168.0.0", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("192.168.0.1", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("192.168.0.2", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("192.168.0.3", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("192.168.0.4", headers, postContent, whitelist)).isFalse();
   }
 
   @Test
@@ -112,7 +112,7 @@ public class WhitelistVerifierTest {
         new WhitelistItem("2002:0db8:85a3:0000:0000:8a2e:0370:7334/127");
     whitelistItem5.setHmacEnabled(false);
 
-    final Map<String, List<String>> headers = new HashMap<String, List<String>>();
+    final Map<String, List<String>> headers = new HashMap<>();
     final String postContent = "";
 
     final boolean enabled = true;
@@ -123,9 +123,12 @@ public class WhitelistVerifierTest {
                 whitelistItem1, whitelistItem2, whitelistItem3, whitelistItem4, whitelistItem5));
 
     assertThat(testDoVerifyWhitelist("1.2.3.4", headers, postContent, whitelist)).isTrue();
-    assertThat(testDoVerifyWhitelist("2.2.3.50", headers, postContent, whitelist)).isTrue();
-    assertThat(testDoVerifyWhitelist("3.2.1.5", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("3.2.1.0", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("3.2.1.1", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("3.2.1.10", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("3.2.1.11", headers, postContent, whitelist)).isFalse();
     assertThat(testDoVerifyWhitelist("1.1.1.2", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("2.2.3.50", headers, postContent, whitelist)).isTrue();
     assertThat(
             testDoVerifyWhitelist(
                 "2001:0db8:85a3:0000:0000:8a2e:0370:7334", headers, postContent, whitelist))

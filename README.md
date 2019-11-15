@@ -76,6 +76,7 @@ Whitelist can be configured in Jenkins global configuration page. The whitelist 
 - _3.2.1.1-3.2.1.10_
 - _2001:0db8:85a3:0000:0000:8a2e:0370:7334_
 - _2002:0db8:85a3:0000:0000:8a2e:0370:7334/127_
+- _2001:0db8:85a3:0000:0000:8a2e:0370:7334-2001:0db8:85a3:0000:0000:8a2e:0370:7335_
 
 The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
 

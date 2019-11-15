@@ -50,9 +50,9 @@ public class WhitelistVerifier {
       final String postContent)
       throws WhitelistException {
 
-    String whitelistHost = whitelistItem.getHost();
+    WhitelistHost whitelistHost = new WhitelistHost(whitelistItem.getHost());
 
-    if (HostVerifier.whitelistContains(remoteHost, whitelistHost)) {
+    if (HostVerifier.whitelistVerified(new WhitelistHost(remoteHost), whitelistHost)) {
       if (whitelistItem.isHmacEnabled()) {
         final Optional<StringCredentials> hmacKeyOpt =
             CredentialsHelper.findCredentials(whitelistItem.getHmacCredentialId());
