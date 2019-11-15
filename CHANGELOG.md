@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.64 (2019-11-15 18:55:35)
 ### GitHub [#145](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/145) Fix whitelist host validation  
 
 **Refactoring after merging #145**
 
 
-[ea7fcf1c1e83a33](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ea7fcf1c1e83a33) Tomas Bjerre *2019-11-15 18:03:37*
+[04963fa91455837](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/04963fa91455837) Tomas Bjerre *2019-11-15 18:47:07*
 
 **Fix whitelist host validation (#145)**
 
