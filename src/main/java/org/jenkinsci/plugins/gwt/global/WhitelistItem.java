@@ -1,5 +1,11 @@
 package org.jenkinsci.plugins.gwt.global;
 
+import com.github.jgonian.ipmath.Ipv4;
+import com.github.jgonian.ipmath.Ipv4Range;
+import com.github.jgonian.ipmath.Ipv6;
+import com.github.jgonian.ipmath.Ipv6Range;
+import com.google.common.net.InetAddresses;
+import com.google.common.net.InternetDomainName;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
@@ -100,6 +106,77 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
 
     public FormValidation doCheckHmacCredentialIdItems(@QueryParameter final String value) {
       return CredentialsHelper.doCheckFillCredentialsId(value);
+    }
+
+    /**
+     * Returns true if the provided value is a valid ipv4/ipv6 string.
+     *
+     * @param value
+     * @return boolean
+     */
+    private boolean validateIpValue(final String value) {
+      boolean isValid = false;
+
+      boolean isCIDR = false;
+      boolean isRange = false;
+
+      String[] hostParts = value.split("/");
+
+      if (hostParts.length == 2) {
+        isCIDR = true;
+      } else {
+        hostParts = value.split("-");
+        if (hostParts.length == 2) {
+          isRange = true;
+        }
+      }
+
+      if (isCIDR || isRange) {
+        int leftValueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
+        if (leftValueLength == 4) {
+          isValid = Ipv4Range.parse(value) != null;
+        } else if (leftValueLength == 16) {
+          isValid = Ipv6Range.parse(value) != null;
+        }
+
+        if (isValid && isRange) {
+          String leftValue = hostParts[0];
+          String rightValue = hostParts[1];
+          isValid = InetAddresses.isInetAddress(leftValue);
+          isValid = InetAddresses.isInetAddress(rightValue);
+        }
+      } else {
+        int valueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
+        if (valueLength == 4) {
+          isValid = Ipv4.parse(value) != null;
+        } else if (valueLength == 16) {
+          isValid = Ipv6.parse(value) != null;
+        }
+
+        if (isValid) {
+          isValid = InetAddresses.isInetAddress(value);
+        }
+      }
+
+      return isValid;
+    }
+
+    /**
+     * See: https://wiki.jenkins.io/display/JENKINS/Form+Validation
+     *
+     * @param value
+     * @return FormValidation
+     */
+    public FormValidation doCheckHost(@QueryParameter final String value) {
+      try {
+        if (validateIpValue(value)) {
+          return FormValidation.ok();
+        }
+      } catch (IllegalArgumentException e) {
+        FormValidation.error(e.getMessage());
+      }
+
+      return FormValidation.error("Invalid IP address, CIDR block or IP range.");
     }
   }
 }
