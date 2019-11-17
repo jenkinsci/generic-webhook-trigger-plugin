@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.gwt.whitelist;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.jenkinsci.plugins.gwt.whitelist.WhitelistVerifier.doVerifyWhitelist;
 
 import java.util.ArrayList;
@@ -137,6 +138,113 @@ public class WhitelistVerifierTest {
             testDoVerifyWhitelist(
                 "2002:0db8:85a3:0000:0000:8a2e:0370:7335", headers, postContent, whitelist))
         .isTrue();
+  }
+
+  @Test
+  public void testThatHostCanBeVerifiedWithCidr() {
+    final WhitelistItem whitelistItem = new WhitelistItem("2.2.3.0/24");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    assertThat(testDoVerifyWhitelist("2.2.2.255", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("2.2.3.0", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("2.2.3.255", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("2.2.4.0", headers, postContent, whitelist)).isFalse();
+  }
+
+  @Test
+  public void testThatHostCanBeVerifiedWithRanges() {
+    final WhitelistItem whitelistItem = new WhitelistItem("3.2.3.5-3.2.3.10");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    assertThat(testDoVerifyWhitelist("3.2.3.4", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("3.2.3.5", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("3.2.3.10", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("3.2.3.11", headers, postContent, whitelist)).isFalse();
+  }
+
+  @Test
+  public void testThatInvalidRangeThrowsException() {
+    final WhitelistItem whitelistItem = new WhitelistItem("3.2.3.a-3.2.3.10");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    try {
+      doVerifyWhitelist("1.1.1.1", headers, postContent, whitelist);
+      fail("No exception");
+    } catch (final WhitelistException e) {
+      assertThat(e.getMessage()).contains("3.2.3.a-3.2.3.10 is not an Ipv4 string literal.");
+    }
+  }
+
+  @Test
+  public void testThatInvalidCidrThrowsException() {
+    final WhitelistItem whitelistItem = new WhitelistItem("3.2.3.1/a");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    try {
+      doVerifyWhitelist("1.1.1.1", headers, postContent, whitelist);
+      fail("No exception");
+    } catch (final WhitelistException e) {
+      assertThat(e.getMessage()).contains("3.2.3.1/a cannot be parsed as Ipv4 string literal");
+    }
+  }
+
+  @Test
+  public void testThatInvalidStaticThrowsException() {
+    final WhitelistItem whitelistItem = new WhitelistItem("3.2.3.a");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    try {
+      doVerifyWhitelist("1.1.1.1", headers, postContent, whitelist);
+      fail("No exception");
+    } catch (final WhitelistException e) {
+      assertThat(e.getMessage()).contains("3.2.3.a is not a valid IP string literal");
+    }
+  }
+
+  @Test
+  public void testThatHostCanBeVerifiedWithStaticIp() {
+    final WhitelistItem whitelistItem = new WhitelistItem("4.2.3.5");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    assertThat(testDoVerifyWhitelist("4.2.3.4", headers, postContent, whitelist)).isFalse();
+    assertThat(testDoVerifyWhitelist("4.2.3.5", headers, postContent, whitelist)).isTrue();
+    assertThat(testDoVerifyWhitelist("4.2.3.6", headers, postContent, whitelist)).isFalse();
   }
 
   private boolean testDoVerifyWhitelist(

@@ -16,8 +16,6 @@ public class HostVerifier {
         return true;
       case CIDR:
         return verifyCidr(remoteHost, whitelistHost);
-      case RANGE:
-        return verifyCidr(remoteHost, whitelistHost);
       case STATIC:
         return verifyStatic(remoteHost, whitelistHost);
       default:

@@ -10,7 +10,6 @@ public class WhitelistHost {
 
   public static enum HOST_TYPE {
     CIDR,
-    RANGE,
     STATIC,
     ANY;
   }
@@ -34,32 +33,39 @@ public class WhitelistHost {
 
     String[] hostParts = whitelistHost.split("/");
 
+    boolean isCidrRange = false;
     if (hostParts.length == 2) {
       hostType = HOST_TYPE.CIDR;
     } else {
       hostParts = whitelistHost.split("-");
       if (hostParts.length == 2) {
-        hostType = HOST_TYPE.RANGE;
+        isCidrRange = true;
+        hostType = HOST_TYPE.CIDR;
       }
     }
 
-    if (hostType == HOST_TYPE.CIDR || hostType == HOST_TYPE.RANGE) {
-      final int leftValueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
+    if (hostType == HOST_TYPE.CIDR) {
+      int leftValueLength;
+      try {
+        leftValueLength = InetAddresses.forString(hostParts[0]).getAddress().length;
+      } catch (final IllegalArgumentException e) {
+        throw new WhitelistException(whitelistHost + " is not an Ipv4 string literal.");
+      }
       if (leftValueLength == 4) {
         try {
           this.rangeIpv4 = Ipv4Range.parse(whitelistHost);
         } catch (final IllegalArgumentException e) {
-          throw new WhitelistException(whitelistHost + " is not an Ipv4 string literal.");
+          throw new WhitelistException(whitelistHost + " cannot be parsed as Ipv4 string literal.");
         }
       } else if (leftValueLength == 16) {
         try {
           this.rangeIpv6 = Ipv6Range.parse(whitelistHost);
         } catch (final IllegalArgumentException e) {
-          throw new WhitelistException(whitelistHost + " is not an Ipv6 string literal.");
+          throw new WhitelistException(whitelistHost + " cannot be parsed as Ipv6 string literal.");
         }
       }
 
-      if (hostType == HOST_TYPE.RANGE) {
+      if (isCidrRange) {
         final String leftValue = hostParts[0];
         final String rightValue = hostParts[1];
 
