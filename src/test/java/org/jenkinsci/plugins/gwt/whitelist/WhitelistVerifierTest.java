@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import org.jenkinsci.plugins.gwt.global.Whitelist;
 import org.jenkinsci.plugins.gwt.global.WhitelistItem;
 import org.junit.Test;
@@ -175,6 +176,34 @@ public class WhitelistVerifierTest {
   }
 
   @Test
+  public void testThatHostCanBeVerifiedWithAny() {
+    final WhitelistItem whitelistItem = new WhitelistItem("");
+    whitelistItem.setHmacEnabled(false);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    assertThat(testDoVerifyWhitelist("6.2.3.10", headers, postContent, whitelist)).isTrue();
+  }
+
+  @Test
+  public void testThatHostCanBeVerifiedWithAnyAndDeniedByHmac() {
+    final WhitelistItem whitelistItem = new WhitelistItem("");
+    whitelistItem.setHmacEnabled(true);
+
+    final Map<String, List<String>> headers = new HashMap<>();
+    final String postContent = "";
+
+    final boolean enabled = true;
+    final Whitelist whitelist = new Whitelist(enabled, Arrays.asList(whitelistItem));
+
+    assertThat(testDoVerifyWhitelist("6.2.3.10", headers, postContent, whitelist)).isFalse();
+  }
+
+  @Test
   public void testThatInvalidRangeThrowsException() {
     final WhitelistItem whitelistItem = new WhitelistItem("3.2.3.a-3.2.3.10");
     whitelistItem.setHmacEnabled(false);
@@ -256,6 +285,7 @@ public class WhitelistVerifierTest {
       doVerifyWhitelist(remoteHost, headers, postContent, whitelist);
       return true;
     } catch (final WhitelistException e) {
+      Logger.getLogger(WhitelistVerifierTest.class.getSimpleName()).info(e.getMessage());
       return false;
     }
   }

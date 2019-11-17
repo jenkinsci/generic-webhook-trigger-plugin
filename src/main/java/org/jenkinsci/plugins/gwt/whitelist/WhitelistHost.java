@@ -24,8 +24,9 @@ public class WhitelistHost {
   private Ipv4Range rangeIpv4;
 
   public WhitelistHost(final String string) throws WhitelistException {
-    if (string == null) {
+    if (string == null || string.trim().isEmpty()) {
       this.hostType = HOST_TYPE.ANY;
+      this.whitelistHost = "";
       return;
     }
     this.hostType = HOST_TYPE.STATIC;

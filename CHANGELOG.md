@@ -6,7 +6,15 @@ Changelog of Generic Webhook Plugin.
 **More test #145**
 
 
-[fde8a59ff1ec255](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fde8a59ff1ec255) Tomas Bjerre *2019-11-17 13:13:04*
+[935fab2291e9663](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/935fab2291e9663) Tomas Bjerre *2019-11-17 13:22:16*
+
+
+### No issue
+
+**Allow whitelist host to be empty, and rely on only HMAC**
+
+
+[e6c8cbdd6133ca7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e6c8cbdd6133ca7) Tomas Bjerre *2019-11-17 15:49:09*
 
 
 ## 1.64 (2019-11-15 18:55:35)

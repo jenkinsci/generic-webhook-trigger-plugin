@@ -69,7 +69,7 @@ The token can be supplied as a:
 
 ## Whitelist hosts
 
-Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The hosts can be specified by **CIDR** or **ranges**:
+Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The host can be **empty** to allow any, **static IP**, **CIDR** or **ranges**:
 
 - _1.2.3.4_
 - _2.2.3.0/24_
