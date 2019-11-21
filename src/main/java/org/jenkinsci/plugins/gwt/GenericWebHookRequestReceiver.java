@@ -1,10 +1,9 @@
 package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Charsets.UTF_8;
-import static hudson.util.HttpResponses.okJSON;
 import static java.util.logging.Level.FINE;
-import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
+import static org.jenkinsci.plugins.gwt.GenericResponse.jsonResponse;
 import static org.kohsuke.stapler.HttpResponses.ok;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -17,6 +16,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -52,21 +52,20 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
     } catch (final IOException e) {
       LOGGER.log(SEVERE, "", e);
+      return jsonResponse(500, "Unable to read inputstream: " + e.getMessage());
     }
 
     try {
       WhitelistVerifier.verifyWhitelist(request.getRemoteAddr(), headers, postContent);
     } catch (final WhitelistException e) {
-      final Map<String, Object> response = new HashMap<>();
-      response.put(
-          "triggerResults",
+      return jsonResponse(
+          403,
           "Sender, "
               + request.getRemoteHost()
               + ", with headers "
               + headers
               + " did not pass whitelist.\n"
               + e.getMessage());
-      return okJSON(response);
     }
 
     final String givenToken = getGivenToken(headers, parameterMap);
@@ -112,14 +111,11 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
 
     final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
     final Map<String, Object> triggerResultsMap = new HashMap<>();
-    if (foundJobs.isEmpty()) {
-      LOGGER.log(INFO, NO_JOBS_MSG);
-      triggerResultsMap.put("ANY", NO_JOBS_MSG);
-    }
     boolean allSilent = true;
+    boolean errors = false;
     for (final FoundJob foundJob : foundJobs) {
       try {
-        LOGGER.log(INFO, "Triggering " + foundJob.getFullName());
+        LOGGER.log(FINE, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
         final GenericTrigger genericTrigger = foundJob.getGenericTrigger();
         final GenericTriggerResults triggerResults =
@@ -132,14 +128,22 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         LOGGER.log(SEVERE, foundJob.getFullName(), t);
         final String msg = createMessageFromException(t);
         triggerResultsMap.put(foundJob.getFullName(), msg);
+        errors = true;
       }
     }
     if (allSilent && foundJobs.size() > 0) {
       return ok();
     }
-    final Map<String, Object> response = new HashMap<>();
-    response.put("triggerResults", triggerResultsMap);
-    return okJSON(response);
+    if (errors) {
+      return jsonResponse(500, "There were errors when triggering jobs.", triggerResultsMap);
+    } else {
+      if (foundJobs.isEmpty()) {
+        LOGGER.log(Level.FINE, NO_JOBS_MSG);
+        return jsonResponse(404, NO_JOBS_MSG);
+      } else {
+        return jsonResponse(200, "Triggered jobs.", triggerResultsMap);
+      }
+    }
   }
 
   String createMessageFromException(final Throwable t) {
