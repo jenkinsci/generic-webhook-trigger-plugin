@@ -1,5 +1,16 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.66 (2019-11-22 15:41:59)
+### GitHub [#146](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/146) Returns OK (200) even if unauthorized, throws an error, etc.    *enhancement*  
+
+**Using HTTP error codes #146**
+
+ * New datastructure in JSON responses. 
+ * Lowering log-level i Jenkins server log. 
+
+[898775bd4a05c3e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/898775bd4a05c3e) Tomas Bjerre *2019-11-21 20:22:46*
+
+
 ## 1.65 (2019-11-17 15:51:23)
 ### GitHub [#145](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/145) Fix whitelist host validation  
 
