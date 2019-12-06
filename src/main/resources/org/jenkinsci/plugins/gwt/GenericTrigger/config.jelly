@@ -47,7 +47,7 @@
  <f:entry title="Token">
    <f:textbox field="token"/>
    <f:description>
-    Optional token. If it is specified then this job can only be triggered if that token is supplied when invoking <b>http://JENKINS_URL/generic-webhook-trigger/invoke</b>. It can be supplid as a:
+    Optional token. If it is specified then this job can only be triggered if that token is supplied when invoking <b>http://JENKINS_URL/generic-webhook-trigger/invoke</b>. It can be supplied as a:
     <ul>
      <li>Query parameter <b>/invoke?token=TOKEN_HERE</b></li>
      <li>A token header <b>token: TOKEN_HERE</b></li>
