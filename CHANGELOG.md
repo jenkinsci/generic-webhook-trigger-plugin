@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#150](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/150) Fix minor typo  
+
+**Fix minor typo (#150)**
+
+
+[513a54530219b67](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/513a54530219b67) Tristan McPherson *2019-12-06 18:49:39*
+
+
 ## 1.66 (2019-11-22 15:41:59)
 ### GitHub [#146](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/146) Returns OK (200) even if unauthorized, throws an error, etc.    *enhancement*  
 

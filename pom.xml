@@ -12,8 +12,8 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<fmt>2.9</fmt>
-		<violations.version>1.30</violations.version>
-		<changelog>1.60</changelog>
+		<violations.version>1.34</violations.version>
+		<changelog>1.61</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
