@@ -69,7 +69,8 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     }
 
     final String givenToken = getGivenToken(headers, parameterMap);
-    return doInvoke(headers, parameterMap, postContent, givenToken);
+    final int givenQuietPeriod = getGivenQuietPeriod(headers, parameterMap);
+    return doInvoke(headers, parameterMap, postContent, givenToken, givenQuietPeriod);
   }
 
   @VisibleForTesting
@@ -92,6 +93,28 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   }
 
   @VisibleForTesting
+  int getGivenQuietPeriod(
+      final Map<String, List<String>> headers, final Map<String, String[]> parameterMap) {
+    if (parameterMap.containsKey("jobQuietPeriod")) {
+      try {
+        return Integer.parseInt(parameterMap.get("jobQuietPeriod")[0]);
+      } catch (Exception e) {
+        return -1;
+      }
+    }
+    if (headers.containsKey("jobQuietPeriod")) {
+      try {
+        return Integer.parseInt(headers.get("jobQuietPeriod").get(0));
+      } catch (Exception e) {
+        return -1;
+      }
+    }
+
+    /** A value of -1 will make sure the quiet period of the job will be used. */
+    return -1;
+  }
+
+  @VisibleForTesting
   Map<String, List<String>> getHeaders(final StaplerRequest request) {
     final Map<String, List<String>> headers = new HashMap<>();
     final Enumeration<String> headersEnumeration = request.getHeaderNames();
@@ -107,19 +130,26 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       final Map<String, List<String>> headers,
       final Map<String, String[]> parameterMap,
       final String postContent,
-      final String givenToken) {
+      final String givenToken,
+      final int givenQuietPeriod) {
 
     final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
     final Map<String, Object> triggerResultsMap = new HashMap<>();
     boolean allSilent = true;
     boolean errors = false;
+    int qpToSend = givenQuietPeriod;
     for (final FoundJob foundJob : foundJobs) {
       try {
         LOGGER.log(FINE, "Triggering " + foundJob.getFullName());
         LOGGER.log(FINE, " with:\n\n" + postContent + "\n\n");
         final GenericTrigger genericTrigger = foundJob.getGenericTrigger();
+
+        if (!genericTrigger.getOverrideQuietPeriod()) {
+          qpToSend = -1;
+        }
+
         final GenericTriggerResults triggerResults =
-            genericTrigger.trigger(headers, parameterMap, postContent);
+            genericTrigger.trigger(headers, parameterMap, postContent, qpToSend);
         if (!genericTrigger.isSilentResponse()) {
           allSilent = false;
           triggerResultsMap.put(foundJob.getFullName(), triggerResults);

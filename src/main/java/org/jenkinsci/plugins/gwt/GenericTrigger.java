@@ -24,9 +24,6 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
-  /** A value of -1 will make sure the quiet period of the job will be used. */
-  private static final int RESPECT_JOBS_QUIET_PERIOD = -1;
-
   private List<GenericVariable> genericVariables = newArrayList();
   private final String regexpFilterText;
   private final String regexpFilterExpression;
@@ -37,6 +34,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private String causeString;
   private String token;
   private boolean silentResponse;
+  private boolean overrideQuietPeriod;
 
   @Symbol("GenericTrigger")
   public static class GenericDescriptor extends TriggerDescriptor {
@@ -90,6 +88,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     this.silentResponse = silentResponse;
   }
 
+  @DataBoundSetter
+  public void setOverrideQuietPeriod(final boolean overrideQuietPeriod) {
+    this.overrideQuietPeriod = overrideQuietPeriod;
+  }
+
+  public boolean getOverrideQuietPeriod() {
+    return overrideQuietPeriod;
+  }
+
   public boolean isSilentResponse() {
     return silentResponse;
   }
@@ -118,7 +125,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   public GenericTriggerResults trigger(
       final Map<String, List<String>> headers,
       final Map<String, String[]> parameterMap,
-      final String postContent) {
+      final String postContent,
+      final int quietPeriod) {
     final Map<String, String> resolvedVariables =
         new VariablesResolver(
                 headers,
@@ -144,8 +152,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
           createParameterAction(parametersDefinitionProperty, resolvedVariables);
       item =
           retrieveScheduleJob(job) //
-              .scheduleBuild2(
-                  job, RESPECT_JOBS_QUIET_PERIOD, new CauseAction(genericCause), parameters);
+              .scheduleBuild2(job, quietPeriod, new CauseAction(genericCause), parameters);
     }
     return new GenericTriggerResults(
         item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);
