@@ -63,6 +63,17 @@
    </f:description>
  </f:entry>
 
+ <f:entry title="Override Quiet Period" field="overrideQuietPeriod">
+   <f:checkbox/>
+   <f:description>
+    Allow the trigger to override this job's quiet period. If selected you can you can provide a quiet period (an integer number of seconds) and the build will use that quiet period instead of its default. If this is selected and no quiet period is given the job's quiet period will still be used. It can be supplied as a:
+    <ul>
+      <li>Query Parameter <b>/invoke?jobQuietPeriod=QUIET_PERIOD_HERE</b></li>
+      <li>A quiet period header <b>jobQuietPeriod: QUIET_PERIOD_HERE</b></li>
+    </ul>
+   </f:description>
+ </f:entry>
+
  <f:entry title="Silent response" field="silentResponse">
    <f:checkbox/>
    <f:description>

@@ -28,6 +28,18 @@ public class GenericWebHookRequestReceiverTest {
   }
 
   @Test
+  public void testThatNoQuietPeriodGivesNegOne() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+    final Map<String, List<String>> headers = newHashMap();
+    final Map<String, String[]> parameterMap = newHashMap();
+
+    final int actual = sut.getGivenQuietPeriod(headers, parameterMap);
+
+    assertThat(actual) //
+        .isEqualTo(-1);
+  }
+
+  @Test
   public void testThatParameterTokenGivesThatToken() {
     final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
     final Map<String, List<String>> headers = newHashMap();
@@ -42,6 +54,20 @@ public class GenericWebHookRequestReceiverTest {
   }
 
   @Test
+  public void testThatParameterQuietPeriodGivesThatQueitPeriod() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+    final Map<String, List<String>> headers = newHashMap();
+    final Map<String, String[]> parameterMap =
+        of( //
+            "jobQuietPeriod", new String[] {"1"});
+
+    final int actual = sut.getGivenQuietPeriod(headers, parameterMap);
+
+    assertThat(actual) //
+        .isEqualTo(1);
+  }
+
+  @Test
   public void testThatHeaderTokenGivesThatToken() {
     final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
     final Map<String, List<String>> headers =
@@ -53,6 +79,34 @@ public class GenericWebHookRequestReceiverTest {
 
     assertThat(actual) //
         .isEqualTo("tokenHeader");
+  }
+
+  @Test
+  public void testThatHeaderQuietPeriodGivesThatQueitPeriod() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+    final Map<String, List<String>> headers =
+        of( //
+            "jobQuietPeriod", (List<String>) newArrayList("1"));
+    final Map<String, String[]> parameterMap = newHashMap();
+
+    final int actual = sut.getGivenQuietPeriod(headers, parameterMap);
+
+    assertThat(actual) //
+        .isEqualTo(1);
+  }
+
+  @Test
+  public void testThatNonsensicalQuietPeriodGivesNegOne() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+    final Map<String, List<String>> headers = newHashMap();
+    final Map<String, String[]> parameterMap =
+        of( //
+            "jobQuietPeriod", new String[] {"fooBar"});
+
+    final int actual = sut.getGivenQuietPeriod(headers, parameterMap);
+
+    assertThat(actual) //
+        .isEqualTo(-1);
   }
 
   @Test
