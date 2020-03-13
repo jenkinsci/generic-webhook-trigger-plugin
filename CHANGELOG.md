@@ -9,6 +9,30 @@ Changelog of Generic Webhook Plugin.
 [513a54530219b67](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/513a54530219b67) Tristan McPherson *2019-12-06 18:49:39*
 
 
+### GitHub [#154](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/154) How do i filter from a JSONArray    *question*  
+
+**Ignore if list contains item with attribute value #154**
+
+
+[39a37c5649790d7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/39a37c5649790d7) Tomas Bjerre *2020-01-23 16:58:17*
+
+
+### GitHub [#159](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/159) Add ability to over-ride a jobs quiet period  
+
+**Add ability to over-ride a jobs quiet period #159**
+
+
+[2f3722f0a6c4c3d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2f3722f0a6c4c3d) Thomas Winderweedle *2020-03-13 15:28:59*
+
+
+### GitHub [#160](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/160) Issue 159, Allow user to override quiet period if they so choose.  
+
+**Refactoring after #160**
+
+
+[fcf9cb40e55f4d0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fcf9cb40e55f4d0) Tomas Bjerre *2020-03-13 15:40:47*
+
+
 ### No issue
 
 **Stepping dependencies**
