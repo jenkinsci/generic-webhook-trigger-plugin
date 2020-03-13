@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.67 (2020-03-13 15:50:31)
 ### GitHub [#150](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/150) Fix minor typo  
 
 **Fix minor typo (#150)**
@@ -30,7 +30,7 @@ Changelog of Generic Webhook Plugin.
 **Refactoring after #160**
 
 
-[fcf9cb40e55f4d0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fcf9cb40e55f4d0) Tomas Bjerre *2020-03-13 15:40:47*
+[21f3b54169998e7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/21f3b54169998e7) Tomas Bjerre *2020-03-13 15:49:38*
 
 
 ### No issue
