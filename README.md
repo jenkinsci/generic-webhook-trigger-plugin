@@ -67,6 +67,15 @@ The token can be supplied as a:
 - Token header: `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 - _Authorization_ header of type _Bearer_ : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 
+## Trigger exactly one build
+
+Jenkins will batch builds of a job if those builds have same parameters. If this plugin gets invoked by many webhooks at the same time it may trigger only one build and it will have many *Generic Cause* as causes. This has been reported in many issues [#64](/../../issues/64) [#116](/../../issues/116) [#126](/../../issues/126) [#162](/../../issues/162) [#171](/../../issues/171).
+
+You can solve this by making the one job parameterized. Resolve one of the parameters with something unique from the webhook. This will make each trigger unique and Jenkins will not batch the builds into one build.
+
+The section on *Default values* explains the parameters.
+
+
 ## Whitelist hosts
 
 Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The host can be **empty** to allow any, **static IP**, **CIDR** or **ranges**:
