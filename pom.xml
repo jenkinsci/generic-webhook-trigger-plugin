@@ -11,9 +11,8 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<fmt>2.9</fmt>
-		<violations.version>1.35</violations.version>
-		<changelog>1.61</changelog>
+		<violations.version>1.40</violations.version>
+		<changelog>1.62</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -150,7 +149,7 @@ Changelog of Generic Webhook Plugin.
 			<plugin>
 				<groupId>com.coveo</groupId>
 				<artifactId>fmt-maven-plugin</artifactId>
-				<version>${fmt}</version>
+				<version>2.9</version>
 				<executions>
 					<execution>
 						<goals>

@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#171](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/171) Problems when jenkins parses trigger (Too FAST!!!!)  
+
+**documenting batched builds #171**
+
+
+[c0cfc1314988ab5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c0cfc1314988ab5) Tomas Bjerre *2020-08-05 04:57:42*
+
+
 ## 1.67 (2020-03-13 15:50:31)
 ### GitHub [#150](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/150) Fix minor typo  
 
