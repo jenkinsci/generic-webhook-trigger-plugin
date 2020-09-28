@@ -1,5 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
    <f:description>
     <div>
      <p>
@@ -55,6 +55,14 @@
     </ul>
    </f:description>
  </f:entry>
+
+ <f:entry field="tokenCredentialId" title="Token Credential">
+   <c:select />
+   <f:description>
+    Same as <b>token</b> above, but configured with a <i>secret text</i> credential.
+   </f:description>
+ </f:entry>
+
 
  <f:entry title="Cause">
    <f:textbox field="causeString" default="Generic Cause"/>

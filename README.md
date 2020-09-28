@@ -183,6 +183,7 @@ pipelineJob('Generic Job Example') {
     }
    }
    token('abc123')
+   tokenCredentialId('')
    printContributedVariables(true)
    printPostContent(true)
    silentResponse(false)
@@ -298,6 +299,7 @@ node {
     causeString: 'Triggered on $ref',
 
     token: 'abc123',
+    tokenCredentialId: '',
 
     printContributedVariables: true,
     printPostContent: true,
@@ -338,6 +340,7 @@ pipeline {
      causeString: 'Triggered on $ref',
 
      token: 'abc123',
+     tokenCredentialId: '',
 
      printContributedVariables: true,
      printPostContent: true,

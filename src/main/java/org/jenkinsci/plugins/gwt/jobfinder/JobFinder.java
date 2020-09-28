@@ -3,17 +3,24 @@ package org.jenkinsci.plugins.gwt.jobfinder;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
 import hudson.model.BuildAuthorizationToken;
+import hudson.model.Item;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 import org.jenkinsci.plugins.gwt.FoundJob;
 import org.jenkinsci.plugins.gwt.GenericTrigger;
+import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 public final class JobFinder {
+
+  private static Logger LOG = Logger.getLogger(JobFinder.class.getSimpleName());
 
   private JobFinder() {}
 
@@ -34,14 +41,56 @@ public final class JobFinder {
     for (final ParameterizedJob candidateJob : candidateProjects) {
       final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
-        if (authenticationTokenMatches(
-            givenToken, candidateJob.getAuthToken(), genericTriggerOpt.getToken())) {
-          found.add(new FoundJob(candidateJob.getFullName(), genericTriggerOpt));
+        final String configuredToken =
+            determineTokenValue(
+                candidateJob,
+                genericTriggerOpt.getToken(),
+                genericTriggerOpt.getTokenCredentialId());
+        final boolean authenticationTokenMatches =
+            authenticationTokenMatches(givenToken, candidateJob.getAuthToken(), configuredToken);
+        if (authenticationTokenMatches) {
+          final FoundJob foundJob = new FoundJob(candidateJob.getFullName(), genericTriggerOpt);
+          found.add(foundJob);
         }
       }
     }
 
     return found;
+  }
+
+  private static String determineTokenValue(
+      final Item item, final String token, final String tokenCredentialsId) {
+    if (isNullOrEmpty(tokenCredentialsId)) {
+      LOG.log(Level.FINE, "Found no credential configured in " + item.getFullDisplayName());
+      return token;
+    }
+    if (!isNullOrEmpty(tokenCredentialsId) && !isNullOrEmpty(token)) {
+      LOG.log(
+          Level.WARNING,
+          "The job "
+              + item.getFullDisplayName()
+              + " is configured with both static token and token from credential "
+              + tokenCredentialsId
+              + ".");
+    }
+    final Optional<StringCredentials> credentialsOpt =
+        org.jenkinsci.plugins.gwt.global.CredentialsHelper.findCredentials(tokenCredentialsId);
+    if (credentialsOpt.isPresent()) {
+      LOG.log(
+          Level.FINE,
+          "Found credential from "
+              + tokenCredentialsId
+              + " configured in "
+              + item.getFullDisplayName());
+      return credentialsOpt.get().getSecret().getPlainText();
+    }
+    LOG.log(
+        Level.SEVERE,
+        "Cannot find credential ("
+            + tokenCredentialsId
+            + ") configured in "
+            + item.getFullDisplayName());
+    return token;
   }
 
   private static boolean authenticationTokenMatches(

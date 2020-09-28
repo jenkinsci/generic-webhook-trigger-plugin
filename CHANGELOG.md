@@ -9,6 +9,14 @@ Changelog of Generic Webhook Plugin.
 [c0cfc1314988ab5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c0cfc1314988ab5) Tomas Bjerre *2020-08-05 04:57:42*
 
 
+### No issue
+
+**Build: stepping plugins**
+
+
+[22bc077679fa927](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/22bc077679fa927) Tomas Bjerre *2020-09-28 15:52:55*
+
+
 ## 1.67 (2020-03-13 15:50:31)
 ### GitHub [#150](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/150) Fix minor typo  
 

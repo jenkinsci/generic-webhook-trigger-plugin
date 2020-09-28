@@ -14,13 +14,18 @@ import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
 import java.util.List;
 import java.util.Map;
 import jenkins.model.ParameterizedJobMixIn;
 import org.jenkinsci.Symbol;
+import org.jenkinsci.plugins.gwt.global.CredentialsHelper;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
@@ -33,6 +38,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private boolean printContributedVariables;
   private String causeString;
   private String token;
+  private String tokenCredentialId;
   private boolean silentResponse;
   private boolean overrideQuietPeriod;
 
@@ -47,6 +53,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     @Override
     public String getDisplayName() {
       return "Generic Webhook Trigger";
+    }
+
+    public ListBoxModel doFillTokenCredentialIdItems(
+        @AncestorInPath final Item item, @QueryParameter final String credentialsId) {
+      return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId);
+    }
+
+    public FormValidation doCheckTokenCredentialIdItems(@QueryParameter final String value) {
+      return CredentialsHelper.doCheckFillCredentialsId(value);
     }
   }
 
@@ -70,7 +85,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   public String getCauseString() {
-    return causeString;
+    return this.causeString;
   }
 
   @DataBoundSetter
@@ -94,19 +109,19 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   public boolean getOverrideQuietPeriod() {
-    return overrideQuietPeriod;
+    return this.overrideQuietPeriod;
   }
 
   public boolean isSilentResponse() {
-    return silentResponse;
+    return this.silentResponse;
   }
 
   public boolean isPrintContributedVariables() {
-    return printContributedVariables;
+    return this.printContributedVariables;
   }
 
   public boolean isPrintPostContent() {
-    return printPostContent;
+    return this.printPostContent;
   }
 
   @DataBoundSetter
@@ -115,7 +130,16 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   public String getToken() {
-    return token;
+    return this.token;
+  }
+
+  @DataBoundSetter
+  public void setTokenCredentialId(final String tokenCredentialId) {
+    this.tokenCredentialId = tokenCredentialId;
+  }
+
+  public String getTokenCredentialId() {
+    return this.tokenCredentialId;
   }
 
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
@@ -132,30 +156,34 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
                 headers,
                 parameterMap,
                 postContent,
-                genericVariables,
-                genericRequestVariables,
-                genericHeaderVariables)
+                this.genericVariables,
+                this.genericRequestVariables,
+                this.genericHeaderVariables)
             .getVariables();
 
-    final String renderedRegexpFilterText = renderText(regexpFilterText, resolvedVariables);
-    final boolean isMatching = isMatching(renderedRegexpFilterText, regexpFilterExpression);
+    final String renderedRegexpFilterText = renderText(this.regexpFilterText, resolvedVariables);
+    final boolean isMatching = isMatching(renderedRegexpFilterText, this.regexpFilterExpression);
 
     hudson.model.Queue.Item item = null;
     if (isMatching) {
-      final String cause = renderText(causeString, resolvedVariables);
+      final String cause = renderText(this.causeString, resolvedVariables);
       final GenericCause genericCause =
           new GenericCause(
-              postContent, resolvedVariables, printContributedVariables, printPostContent, cause);
+              postContent,
+              resolvedVariables,
+              this.printContributedVariables,
+              this.printPostContent,
+              cause);
       final ParametersDefinitionProperty parametersDefinitionProperty =
-          job.getProperty(ParametersDefinitionProperty.class);
+          this.job.getProperty(ParametersDefinitionProperty.class);
       final ParametersAction parameters =
           createParameterAction(parametersDefinitionProperty, resolvedVariables);
       item =
-          retrieveScheduleJob(job) //
-              .scheduleBuild2(job, quietPeriod, new CauseAction(genericCause), parameters);
+          this.retrieveScheduleJob(this.job) //
+              .scheduleBuild2(this.job, quietPeriod, new CauseAction(genericCause), parameters);
     }
     return new GenericTriggerResults(
-        item, resolvedVariables, renderedRegexpFilterText, regexpFilterExpression);
+        item, resolvedVariables, renderedRegexpFilterText, this.regexpFilterExpression);
   }
 
   @SuppressWarnings("rawtypes")
@@ -169,37 +197,37 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   }
 
   public List<GenericVariable> getGenericVariables() {
-    return genericVariables;
+    return this.genericVariables;
   }
 
   public String getRegexpFilterExpression() {
-    return regexpFilterExpression;
+    return this.regexpFilterExpression;
   }
 
   public List<GenericRequestVariable> getGenericRequestVariables() {
-    return genericRequestVariables;
+    return this.genericRequestVariables;
   }
 
   public List<GenericHeaderVariable> getGenericHeaderVariables() {
-    return genericHeaderVariables;
+    return this.genericHeaderVariables;
   }
 
   public String getRegexpFilterText() {
-    return regexpFilterText;
+    return this.regexpFilterText;
   }
 
   @Override
   public String toString() {
     return "GenericTrigger [genericVariables="
-        + genericVariables
+        + this.genericVariables
         + ", regexpFilterText="
-        + regexpFilterText
+        + this.regexpFilterText
         + ", regexpFilterExpression="
-        + regexpFilterExpression
+        + this.regexpFilterExpression
         + ", genericRequestVariables="
-        + genericRequestVariables
+        + this.genericRequestVariables
         + ", genericHeaderVariables="
-        + genericHeaderVariables
+        + this.genericHeaderVariables
         + "]";
   }
 }
