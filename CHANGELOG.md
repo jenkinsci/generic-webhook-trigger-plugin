@@ -1,12 +1,28 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.68 (2020-09-28 17:13:49)
+### GitHub [#165](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/165) Masked Token Field    *question*  
+
+**Adding token credential support #183 #165**
+
+
+[e923e8d9f15bb8d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e923e8d9f15bb8d) Tomas Bjerre *2020-09-28 17:13:03*
+
+
 ### GitHub [#171](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/171) Problems when jenkins parses trigger (Too FAST!!!!)  
 
 **documenting batched builds #171**
 
 
 [c0cfc1314988ab5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c0cfc1314988ab5) Tomas Bjerre *2020-08-05 04:57:42*
+
+
+### GitHub [#183](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/183) Use credentials for tokens    *enhancement*  
+
+**Adding token credential support #183 #165**
+
+
+[e923e8d9f15bb8d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e923e8d9f15bb8d) Tomas Bjerre *2020-09-28 17:13:03*
 
 
 ### No issue
