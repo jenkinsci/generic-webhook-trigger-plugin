@@ -50,7 +50,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     Map<String, String[]> parameterMap = null;
     Map<String, List<String>> headers = null;
     try {
-      headers = getHeaders(request);
+      headers = this.getHeaders(request);
       parameterMap = request.getParameterMap();
       postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
     } catch (final IOException e) {
@@ -71,8 +71,8 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
               + e.getMessage());
     }
 
-    final String givenToken = getGivenToken(headers, parameterMap);
-    return doInvoke(headers, parameterMap, postContent, givenToken);
+    final String givenToken = this.getGivenToken(headers, parameterMap);
+    return this.doInvoke(headers, parameterMap, postContent, givenToken);
   }
 
   @VisibleForTesting
@@ -91,6 +91,9 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         }
       }
     }
+    if (headers.containsKey("X-Gitlab-Token")) {
+      return headers.get("X-Gitlab-Token").get(0);
+    }
     return null;
   }
 
@@ -100,14 +103,14 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     if (parameterMap.containsKey("jobQuietPeriod")) {
       try {
         return Integer.parseInt(parameterMap.get("jobQuietPeriod")[0]);
-      } catch (Exception e) {
+      } catch (final Exception e) {
         return RESPECT_JOBS_QUIET_PERIOD;
       }
     }
     if (headers.containsKey("jobQuietPeriod")) {
       try {
         return Integer.parseInt(headers.get("jobQuietPeriod").get(0));
-      } catch (Exception e) {
+      } catch (final Exception e) {
         return RESPECT_JOBS_QUIET_PERIOD;
       }
     }
@@ -146,7 +149,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
 
         int quietPeriod = RESPECT_JOBS_QUIET_PERIOD;
         if (genericTrigger.getOverrideQuietPeriod()) {
-          quietPeriod = getGivenQuietPeriod(headers, parameterMap);
+          quietPeriod = this.getGivenQuietPeriod(headers, parameterMap);
         }
 
         final GenericTriggerResults triggerResults =
@@ -157,7 +160,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         }
       } catch (final Throwable t) {
         LOGGER.log(SEVERE, foundJob.getFullName(), t);
-        final String msg = createMessageFromException(t);
+        final String msg = this.createMessageFromException(t);
         triggerResultsMap.put(foundJob.getFullName(), msg);
         errors = true;
       }

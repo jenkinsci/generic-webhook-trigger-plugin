@@ -82,6 +82,20 @@ public class GenericWebHookRequestReceiverTest {
   }
 
   @Test
+  public void testThatGitLabTokenHeaderTokenGivesThatToken() {
+    final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
+    final Map<String, List<String>> headers =
+        of( //
+            "X-Gitlab-Token", (List<String>) newArrayList("gitlabtoken"));
+    final Map<String, String[]> parameterMap = newHashMap();
+
+    final String actual = sut.getGivenToken(headers, parameterMap);
+
+    assertThat(actual) //
+        .isEqualTo("gitlabtoken");
+  }
+
+  @Test
   public void testThatHeaderQuietPeriodGivesThatQueitPeriod() {
     final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
     final Map<String, List<String>> headers =
