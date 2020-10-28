@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.Test;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -86,7 +87,7 @@ public class GenericWebHookRequestReceiverTest {
     final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
     final Map<String, List<String>> headers =
         of( //
-            "X-Gitlab-Token", (List<String>) newArrayList("gitlabtoken"));
+            "x-gitlab-token", (List<String>) newArrayList("gitlabtoken"));
     final Map<String, String[]> parameterMap = newHashMap();
 
     final String actual = sut.getGivenToken(headers, parameterMap);
