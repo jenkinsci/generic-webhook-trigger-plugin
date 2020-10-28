@@ -63,9 +63,16 @@ There is a special `token` parameter. When supplied, the invocation will only tr
 
 The token can be supplied as a:
 
-- Request parameter: `curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1`
-- Token header: `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
-- _Authorization_ header of type _Bearer_ : `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+- Request parameter:
+  
+  `curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1`
+- Token header:
+  
+  `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+  - It will also detect `X-Gitlab-Token`.
+- _Authorization_ header of type _Bearer_ :
+  
+  `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
 
 ## Trigger exactly one build
 
