@@ -1,5 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.70 (2020-10-28 15:34:10)
+### GitHub [#186](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/186) Support X-Gitlab-Token  
+
+**Correcting X-Gitlab-Token #186**
+
+
+[aeec75fecff3b14](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/aeec75fecff3b14) Tomas Bjerre *2020-10-28 15:33:17*
+
+
 ## 1.69 (2020-10-28 14:35:20)
 ### GitHub [#186](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/186) Support X-Gitlab-Token  
 
