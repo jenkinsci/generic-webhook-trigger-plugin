@@ -1,6 +1,14 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.72 (2020-11-06 17:35:28)
+### GitHub [#187](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/187) HMAC verify 500 error with Teams  
+
+**Supporting Base64 encoded HMAC header #187**
+
+
+[17c8f3495ee0cd2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/17c8f3495ee0cd2) Tomas Bjerre *2020-11-06 17:33:51*
+
+
 ### No issue
 
 **Documenting**
