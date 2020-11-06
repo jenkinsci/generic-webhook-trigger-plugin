@@ -22,7 +22,9 @@ public class HMACVerifierTest {
         new String(
             Files.readAllBytes(
                 Paths.get(
-                    getClass().getResource("/hmac/hmac-bitbucket-server-payload.json").toURI())),
+                    this.getClass()
+                        .getResource("/hmac/hmac-bitbucket-server-payload.json")
+                        .toURI())),
             UTF_8);
     final String hmacHeader = "X-Hub-Signature";
     final String hmacSecret = "this is secret";
@@ -32,7 +34,27 @@ public class HMACVerifierTest {
         "X-Hub-Signature",
         Arrays.asList("sha256=87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
-    final boolean actual = testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+    final boolean actual =
+        this.testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+
+    assertThat(actual).isTrue();
+  }
+
+  @Test
+  public void testThatHmacCanBeBase64() throws Exception {
+    final Map<String, List<String>> headers;
+    final String postContent = "whatever";
+    final String hmacHeader = "hmac";
+    final String hmacSecret = "this is secret";
+    final String algorithm = WhitelistItem.HMAC_SHA256;
+    headers = new HashMap<>();
+    headers.put(
+        hmacHeader,
+        Arrays.asList(
+            "NzEyMTJGODU0RTIzQzU3NUQ3QjFBQUQ0QzM0NjcwRkYwOEVCRjcyMUMzODM3NjY4NjEzRTk2Qzg3RjZFRThCMg=="));
+
+    final boolean actual =
+        this.testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
 
     assertThat(actual).isTrue();
   }
@@ -44,7 +66,9 @@ public class HMACVerifierTest {
         new String(
             Files.readAllBytes(
                 Paths.get(
-                    getClass().getResource("/hmac/hmac-bitbucket-server-payload.json").toURI())),
+                    this.getClass()
+                        .getResource("/hmac/hmac-bitbucket-server-payload.json")
+                        .toURI())),
             UTF_8);
     final String hmacHeader = "X-Hub-Signature";
     final String hmacSecret = "this is secret";
@@ -54,7 +78,8 @@ public class HMACVerifierTest {
         "X-Hub-Signature",
         Arrays.asList("87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
-    final boolean actual = testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+    final boolean actual =
+        this.testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
 
     assertThat(actual).isTrue();
   }
@@ -66,7 +91,9 @@ public class HMACVerifierTest {
         new String(
             Files.readAllBytes(
                 Paths.get(
-                    getClass().getResource("/hmac/hmac-bitbucket-server-payload.json").toURI())),
+                    this.getClass()
+                        .getResource("/hmac/hmac-bitbucket-server-payload.json")
+                        .toURI())),
             UTF_8);
     final String hmacHeader = "X-Hub-Signature";
     final String hmacSecret = "this is secret";
@@ -76,7 +103,8 @@ public class HMACVerifierTest {
         "X-Hub-Signature",
         Arrays.asList("sha256=97e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
-    final boolean actual = testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
+    final boolean actual =
+        this.testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
 
     assertThat(actual).isFalse();
   }

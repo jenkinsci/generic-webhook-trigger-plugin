@@ -5,6 +5,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,7 +23,11 @@ public class HMACVerifier {
       throws WhitelistException {
     final String headerValue = getHeaderValue(hmacHeader, headers);
     final String calculateHmac = getCalculatedHmac(postContent, hmacSecret, algorithm);
-    if (!headerValue.equalsIgnoreCase(calculateHmac)) {
+    final String calculateHmacBase64 =
+        new String(Base64.getEncoder().encode(calculateHmac.getBytes(UTF_8)), UTF_8);
+
+    if (!headerValue.equalsIgnoreCase(calculateHmac)
+        && !headerValue.equalsIgnoreCase(calculateHmacBase64)) {
       throw new WhitelistException(
           "HMAC verification failed with \""
               + hmacHeader
@@ -65,7 +70,7 @@ public class HMACVerifier {
       final boolean oneValue = ck.getValue().size() == 1;
       if (sameHeader && oneValue) {
         final String value = ck.getValue().get(0);
-        if (value.contains("=")) {
+        if (value.contains("=") && !value.endsWith("=")) {
           // To handle X-Hub-Signature: sha256=87e3e7...
           return value.split("=")[1];
         }
