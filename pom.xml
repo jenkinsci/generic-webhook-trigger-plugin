@@ -12,7 +12,7 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violations.version>1.42</violations.version>
-		<changelog>1.62</changelog>
+		<changelog>1.67</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -108,6 +108,7 @@
 							<gitHubIssuePattern>#([0-9]*)</gitHubIssuePattern>
 							<file>CHANGELOG.md</file>
 							<jiraIssuePattern>\bJENKINS-([0-9]+)\b</jiraIssuePattern>
+							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
 							<templateContent>
         <![CDATA[
 # Generic Webhook Plugin Changelog
