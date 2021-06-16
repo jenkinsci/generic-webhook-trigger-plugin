@@ -38,7 +38,7 @@ public class PostContentParameterResolver {
     final Map<String, String> resolvedVariables = newHashMap();
     if (configuredGenericVariables != null) {
       for (final GenericVariable gv : configuredGenericVariables) {
-        final Map<String, String> resolvedMap = resolve(incomingPostContent, gv);
+        final Map<String, String> resolvedMap = this.resolve(incomingPostContent, gv);
         final boolean notResolved =
             resolvedMap.isEmpty()
                 || resolvedMap.containsKey(gv.getVariableName())
@@ -59,9 +59,9 @@ public class PostContentParameterResolver {
           && gv.getExpression() != null
           && !gv.getExpression().isEmpty()) {
         if (gv.getExpressionType() == JSONPath) {
-          return resolveJsonPath(incomingPostContent, gv);
+          return this.resolveJsonPath(incomingPostContent, gv);
         } else if (gv.getExpressionType() == XPath) {
-          return resolveXPath(incomingPostContent, gv);
+          return this.resolveXPath(incomingPostContent, gv);
         } else {
           throw new IllegalStateException("Not recognizing " + gv.getExpressionType());
         }
@@ -87,7 +87,7 @@ public class PostContentParameterResolver {
     try {
       final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
       final Map<String, String> flatterned =
-          jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+          this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
       if (gv.getExpression().trim().equals("$")) {
         flatterned.put(gv.getVariableName(), incomingPostContent);
       }
@@ -100,6 +100,7 @@ public class PostContentParameterResolver {
   private Map<String, String> resolveXPath(
       final String incomingPostContent, final GenericVariable gv) throws Exception {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
     final DocumentBuilder builder = factory.newDocumentBuilder();
     final InputSource inputSource =
         new InputSource(new ByteArrayInputStream(incomingPostContent.getBytes(Charsets.UTF_8)));
@@ -108,6 +109,6 @@ public class PostContentParameterResolver {
     final XPath xpath = xPathfactory.newXPath();
     final XPathExpression expr = xpath.compile(gv.getExpression());
     final Object resolved = expr.evaluate(doc, XPathConstants.NODESET);
-    return xmlFlattener.flatternXmlNode(gv, (NodeList) resolved);
+    return this.xmlFlattener.flatternXmlNode(gv, (NodeList) resolved);
   }
 }
