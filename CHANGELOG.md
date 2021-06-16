@@ -1,12 +1,20 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.73 (2021-06-16 15:51:34)
 ### GitHub [#200](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/200) Add documentation to handle github issue_comment events  
 
 **bdd test for pull-request and issue-comment #200**
 
 
 [75de929d6ed34bf](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/75de929d6ed34bf) Tomas Bjerre *2021-02-20 07:38:10*
+
+
+### No issue
+
+**fix: disallow-doctype-decl (fixes SECURITY-2330)**
+
+
+[da434dfca1b82f5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/da434dfca1b82f5) Tomas Bjerre *2021-06-16 15:44:39*
 
 
 ## 1.72 (2020-11-06 17:35:28)
