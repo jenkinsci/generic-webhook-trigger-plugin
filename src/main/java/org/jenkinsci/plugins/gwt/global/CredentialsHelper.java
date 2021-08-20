@@ -60,15 +60,19 @@ public class CredentialsHelper {
   }
 
   public static Optional<StringCredentials> findCredentials(final String credentialsId) {
+    return findCredentials(credentialsId, null);
+  }
+
+  public static Optional<StringCredentials> findCredentials(
+      final String credentialsId, final Item item) {
     if (isNullOrEmpty(credentialsId)) {
       return absent();
     }
-    final Item item2 = null;
     final Authentication authentication = null;
-    final ArrayList<DomainRequirement> domainRequirements = new ArrayList<DomainRequirement>();
+    final ArrayList<DomainRequirement> domainRequirements = new ArrayList<>();
     final List<StringCredentials> lookupCredentials =
         CredentialsProvider.lookupCredentials(
-            StringCredentials.class, item2, authentication, domainRequirements);
+            StringCredentials.class, item, authentication, domainRequirements);
     final CredentialsMatcher allOf =
         CredentialsMatchers.allOf(
             CredentialsMatchers.withId(credentialsId),

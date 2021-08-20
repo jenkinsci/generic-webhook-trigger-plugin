@@ -74,7 +74,8 @@ public final class JobFinder {
               + ".");
     }
     final Optional<StringCredentials> credentialsOpt =
-        org.jenkinsci.plugins.gwt.global.CredentialsHelper.findCredentials(tokenCredentialsId);
+        org.jenkinsci.plugins.gwt.global.CredentialsHelper.findCredentials(
+            tokenCredentialsId, item);
     if (credentialsOpt.isPresent()) {
       LOG.log(
           Level.FINE,
