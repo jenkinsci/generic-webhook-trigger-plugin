@@ -1,12 +1,12 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.75 (2021-08-20 17:05:23)
 ### GitHub [#214](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/214) Folder credentials not working when using tokenCredentialId    *bug*  
 
 **fix: find credentials configured in folders (refs #214)**
 
 
-[4cd0a44a49b5d4f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4cd0a44a49b5d4f) Tomas Bjerre *2021-08-20 16:58:26*
+[8366bf58bbde1b4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8366bf58bbde1b4) Tomas Bjerre *2021-08-20 17:04:17*
 
 
 ## 1.73 (2021-06-16 15:51:34)
