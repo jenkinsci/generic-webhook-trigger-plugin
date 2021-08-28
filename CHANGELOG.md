@@ -1,6 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.76 (2021-08-28 06:37:59)
+### GitHub [#216](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/216) Base64 encoded HMAC is not generated correctly.    *bug*  
+
+**fix: bug in hmac verification (refs #216) (#217)**
+
+
+[14f62f8bdd4d39c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/14f62f8bdd4d39c) Tomas Bjerre *2021-08-28 06:36:50*
+
+
+### GitHub [#217](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/217) fix: bug in hmac verification (refs #216)  
+
+**fix: bug in hmac verification (refs #216) (#217)**
+
+
+[14f62f8bdd4d39c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/14f62f8bdd4d39c) Tomas Bjerre *2021-08-28 06:36:50*
+
+
 ### No issue
 
 **chore: refactoring**
