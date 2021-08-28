@@ -31,12 +31,11 @@ public class HMACVerifierTest {
     final String algorithm = WhitelistItem.HMAC_SHA256;
     headers = new HashMap<>();
     headers.put(
-        "X-Hub-Signature",
+        hmacHeader,
         Arrays.asList("sha256=87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
     final boolean actual =
         this.testHmacVerify(headers, postContent, hmacHeader, hmacSecret, algorithm);
-
     assertThat(actual).isTrue();
   }
 
@@ -75,7 +74,7 @@ public class HMACVerifierTest {
     final String algorithm = WhitelistItem.HMAC_SHA256;
     headers = new HashMap<>();
     headers.put(
-        "X-Hub-Signature",
+        hmacHeader,
         Arrays.asList("87e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
     final boolean actual =
@@ -100,7 +99,7 @@ public class HMACVerifierTest {
     final String algorithm = WhitelistItem.HMAC_SHA256;
     headers = new HashMap<>();
     headers.put(
-        "X-Hub-Signature",
+        hmacHeader,
         Arrays.asList("sha256=97e3e7b7e4567f528342a75b6d88c619f272c68a4d0d565c68d596a830213164"));
 
     final boolean actual =

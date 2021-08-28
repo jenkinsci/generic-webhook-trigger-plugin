@@ -41,11 +41,11 @@ public class HMACVerifier {
   private static String getCalculatedHmac(
       final String postContent, final String hmacSecret, final String algorithm) {
     try {
-      final byte[] byteKey = hmacSecret.getBytes("UTF-8");
-      final Mac sha512_HMAC = Mac.getInstance(algorithm);
+      final byte[] byteKey = hmacSecret.getBytes(UTF_8.name());
+      final Mac mac = Mac.getInstance(algorithm);
       final SecretKeySpec keySpec = new SecretKeySpec(byteKey, algorithm);
-      sha512_HMAC.init(keySpec);
-      final byte[] mac_data = sha512_HMAC.doFinal(postContent.getBytes(UTF_8));
+      mac.init(keySpec);
+      final byte[] mac_data = mac.doFinal(postContent.getBytes(UTF_8));
       return bytesToHex(mac_data);
     } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
       throw new RuntimeException(e);
