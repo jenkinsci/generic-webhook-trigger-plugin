@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import org.jenkinsci.plugins.gwt.global.WhitelistAlgorithm;
 
 public class HMACVerifier {
 
@@ -22,12 +23,15 @@ public class HMACVerifier {
       final String algorithm)
       throws WhitelistException {
     final String headerValue = getHeaderValue(hmacHeader, headers);
-    final String calculateHmac = getCalculatedHmac(postContent, hmacSecret, algorithm);
-    final String calculateHmacBase64 =
-        new String(Base64.getEncoder().encode(calculateHmac.getBytes(UTF_8)), UTF_8);
+    final byte[] calculateHmacBytes = getCalculatedHmac(postContent, hmacSecret, algorithm);
+    final String calculateHmacAsString = Base64.getEncoder().encodeToString(calculateHmacBytes);
+    final String calculateHmacAsHex = bytesToHex(calculateHmacBytes);
+    final String calculateHmacAsHexAndBase64 =
+        new String(Base64.getEncoder().encode(calculateHmacAsHex.getBytes(UTF_8)), UTF_8);
 
-    if (!headerValue.equalsIgnoreCase(calculateHmac)
-        && !headerValue.equalsIgnoreCase(calculateHmacBase64)) {
+    if (!headerValue.equalsIgnoreCase(calculateHmacAsHex)
+        && !headerValue.equalsIgnoreCase(calculateHmacAsHexAndBase64)
+        && !headerValue.equalsIgnoreCase(calculateHmacAsString)) {
       throw new WhitelistException(
           "HMAC verification failed with \""
               + hmacHeader
@@ -38,15 +42,14 @@ public class HMACVerifier {
     }
   }
 
-  private static String getCalculatedHmac(
+  private static byte[] getCalculatedHmac(
       final String postContent, final String hmacSecret, final String algorithm) {
     try {
       final byte[] byteKey = hmacSecret.getBytes(UTF_8.name());
       final Mac mac = Mac.getInstance(algorithm);
       final SecretKeySpec keySpec = new SecretKeySpec(byteKey, algorithm);
       mac.init(keySpec);
-      final byte[] mac_data = mac.doFinal(postContent.getBytes(UTF_8));
-      return bytesToHex(mac_data);
+      return mac.doFinal(postContent.getBytes(UTF_8));
     } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
       throw new RuntimeException(e);
     }
@@ -70,9 +73,18 @@ public class HMACVerifier {
       final boolean oneValue = ck.getValue().size() == 1;
       if (sameHeader && oneValue) {
         final String value = ck.getValue().get(0);
-        if (value.contains("=") && !value.endsWith("=")) {
-          // To handle X-Hub-Signature: sha256=87e3e7...
-          return value.split("=")[1];
+        for (final WhitelistAlgorithm algorithm : WhitelistAlgorithm.values()) {
+          final String startString = algorithm.getAlgorithm() + "=";
+          if (value.startsWith(startString)) {
+            // To handle X-Hub-Signature: sha256=87e3e7...
+            return value.substring(startString.length());
+          }
+          final String startStringHmac = "HMAC ";
+          if (value.startsWith(startStringHmac)) {
+            // To handle teams signature authorization: HMAC
+            // w2g2swwmrsvRLZ5W68LfjaLrSR4fN0ErKGyfTPbLrBs=
+            return value.substring(startStringHmac.length()).trim();
+          }
         }
         return value;
       }

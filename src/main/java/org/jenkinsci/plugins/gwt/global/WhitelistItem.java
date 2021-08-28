@@ -8,8 +8,6 @@ import hudson.model.Item;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 import org.jenkinsci.plugins.gwt.whitelist.WhitelistException;
 import org.jenkinsci.plugins.gwt.whitelist.WhitelistHost;
 import org.kohsuke.stapler.AncestorInPath;
@@ -19,17 +17,12 @@ import org.kohsuke.stapler.QueryParameter;
 
 public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implements Serializable {
 
-  public static final String HMAC_MD5 = "HmacMD5";
-  public static final String HMAC_SHA1 = "HmacSHA1";
-  public static final String HMAC_SHA256 = "HmacSHA256";
   private static final long serialVersionUID = 1176246137502450635L;
   private String host;
   private boolean hmacEnabled;
   private String hmacHeader;
   private String hmacCredentialId;
   private String hmacAlgorithm;
-  private static final List<String> MAC_ALGORITHMS =
-      Arrays.asList(HMAC_MD5, HMAC_SHA1, HMAC_SHA256);
 
   public WhitelistItem() {}
 
@@ -39,12 +32,14 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
   }
 
   public String getHost() {
-    if (host == null) return null;
-    return host.trim();
+    if (this.host == null) {
+      return null;
+    }
+    return this.host.trim();
   }
 
   public String getHmacAlgorithm() {
-    return hmacAlgorithm;
+    return this.hmacAlgorithm;
   }
 
   @DataBoundSetter
@@ -53,7 +48,7 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
   }
 
   public String getHmacCredentialId() {
-    return hmacCredentialId;
+    return this.hmacCredentialId;
   }
 
   @DataBoundSetter
@@ -62,7 +57,7 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
   }
 
   public boolean isHmacEnabled() {
-    return hmacEnabled;
+    return this.hmacEnabled;
   }
 
   @DataBoundSetter
@@ -71,7 +66,7 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
   }
 
   public String getHmacHeader() {
-    return hmacHeader;
+    return this.hmacHeader;
   }
 
   @DataBoundSetter
@@ -89,8 +84,8 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
 
     public ListBoxModel doFillHmacAlgorithmItems() {
       final ListBoxModel listBoxModel = new ListBoxModel();
-      for (final String a : MAC_ALGORITHMS) {
-        listBoxModel.add(a);
+      for (final WhitelistAlgorithm a : WhitelistAlgorithm.values()) {
+        listBoxModel.add(a.getFullName());
       }
       return listBoxModel;
     }
@@ -114,7 +109,7 @@ public class WhitelistItem extends AbstractDescribableImpl<WhitelistItem> implem
       try {
         new WhitelistHost(value);
         return FormValidation.ok();
-      } catch (WhitelistException e) {
+      } catch (final WhitelistException e) {
         return FormValidation.error(e.getMessage());
       }
     }
