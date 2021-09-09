@@ -7,32 +7,29 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+When reporting a bug, please **try** to provide as much information as possible.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+ * Plugin version used.
+ * Jenkins version used.
+ * Your configuration.
+   * Variables configured, names, expressions...
+   * Pipeline script (See Pipeline section in README)
+ * Build job log
+ * Post content received. It can be found in the job execution log. People using GitHub often forget to set the content type in "Manage webhook" when configuring the webhook at GitHub.
+ * A `curl` command and its response.
+ * Expected result and actual result.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+You may also have a look at the test cases as they should answer the most common questions:
+ 
+  https://github.com/jenkinsci/generic-webhook-trigger-plugin/tree/master/src/test/resources/org/jenkinsci/plugins/gwt/bdd
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+If you are fiddling with expressions, you may want to checkout:
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+* [This JSONPath site](http://jsonpath.herokuapp.com/)
+* [This XPath site](http://www.freeformatter.com/xpath-tester.html)
+* [This regexp site](https://jex.im/regulex/)
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+A Curl command can look something like this:
+```
+curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"GitHub API", "url":"http://developer.github.com/v3/oauth/" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=sometoken
+```
