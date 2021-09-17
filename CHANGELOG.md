@@ -1,16 +1,17 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.77 (2021-09-17 12:58:35)
 ### No issue
+
+**chore: avoiding spotbugs error**
+
+
+[33990c6e38073b3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/33990c6e38073b3) Tomas Bjerre *2021-09-17 12:57:39*
 
 **chore: adjust release script**
 
 
 [2fac18968e16af6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2fac18968e16af6) Tomas Bjerre *2021-09-17 12:51:43*
-
-
-## refs/tags/fix (2021-09-17 12:40:45)
-### No issue
 
 **feat: json-path 2.6.0**
 
