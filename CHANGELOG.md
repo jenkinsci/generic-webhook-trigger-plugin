@@ -3,6 +3,11 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**feat: plugin-parent 4.25 and jenkins 2.222.4**
+
+
+[62797e5f3c9ed4a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/62797e5f3c9ed4a) Tomas Bjerre *2021-09-17 12:36:16*
+
 **Update issue templates**
 
 
