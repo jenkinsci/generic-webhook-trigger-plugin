@@ -68,9 +68,10 @@ public class ParameterActionUtil {
     if (!isNullOrEmpty(resolvedVariables.get(param))) {
       return resolvedVariables.get(param);
     }
-    if (defaultParameterValue.getValue() == null) {
+    final Object value = defaultParameterValue.getValue();
+    if (value == null) {
       return "";
     }
-    return defaultParameterValue.getValue().toString();
+    return value.toString();
   }
 }

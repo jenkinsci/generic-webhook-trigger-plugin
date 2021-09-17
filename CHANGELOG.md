@@ -3,6 +3,20 @@ Changelog of Generic Webhook Plugin.
 ## Unreleased
 ### No issue
 
+**chore: adjust release script**
+
+
+[2fac18968e16af6](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2fac18968e16af6) Tomas Bjerre *2021-09-17 12:51:43*
+
+
+## refs/tags/fix (2021-09-17 12:40:45)
+### No issue
+
+**feat: json-path 2.6.0**
+
+
+[90a0dcc3251f6e7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/90a0dcc3251f6e7) Tomas Bjerre *2021-09-17 12:40:45*
+
 **feat: plugin-parent 4.25 and jenkins 2.222.4**
 
 
