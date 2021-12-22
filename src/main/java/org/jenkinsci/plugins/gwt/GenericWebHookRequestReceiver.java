@@ -7,6 +7,8 @@ import static org.jenkinsci.plugins.gwt.GenericResponse.jsonResponse;
 import static org.kohsuke.stapler.HttpResponses.ok;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import hudson.Extension;
 import hudson.model.UnprotectedRootAction;
 import hudson.security.csrf.CrumbExclusion;
@@ -20,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
@@ -32,8 +35,17 @@ import org.kohsuke.stapler.StaplerRequest;
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {
 
+  private static final String TOKEN_PARAM = "token";
+
   /** A value of -1 will make sure the quiet period of the job will be used. */
   private static final int RESPECT_JOBS_QUIET_PERIOD = -1;
+
+  private static Gson GSON =
+      new GsonBuilder() //
+          .setPrettyPrinting() //
+          .create();
+  private static final String APPLICATION_JSON = "application/json";
+  private static final String FORM_URLENCODED = "application/x-www-form-urlencoded";
 
   private static final String NO_JOBS_MSG =
       "Did not find any jobs with "
@@ -49,10 +61,12 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     String postContent = null;
     Map<String, String[]> parameterMap = null;
     Map<String, List<String>> headers = null;
+
     try {
       headers = this.getHeaders(request);
       parameterMap = request.getParameterMap();
-      postContent = IOUtils.toString(request.getInputStream(), UTF_8.name());
+
+      postContent = this.getPostContentAsJson(request);
     } catch (final IOException e) {
       LOGGER.log(SEVERE, "", e);
       return jsonResponse(500, "Unable to read inputstream: " + e.getMessage());
@@ -75,14 +89,29 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     return this.doInvoke(headers, parameterMap, postContent, givenToken);
   }
 
+  private String getPostContentAsJson(final StaplerRequest request) throws IOException {
+    final String contentType = request.getContentType();
+    if (contentType == APPLICATION_JSON) {
+      final ServletInputStream inputStream = request.getInputStream();
+      return IOUtils.toString(inputStream, UTF_8.name());
+    } else if (contentType == FORM_URLENCODED) {
+      final Map<String, String[]> data = new HashMap<>(request.getParameterMap());
+      if (data.containsKey(TOKEN_PARAM)) {
+        data.remove(TOKEN_PARAM);
+      }
+      return GSON.toJson(data);
+    }
+    throw new RuntimeException("Unsupported content type: " + contentType);
+  }
+
   @VisibleForTesting
   String getGivenToken(
       final Map<String, List<String>> headers, final Map<String, String[]> parameterMap) {
-    if (parameterMap.containsKey("token")) {
-      return parameterMap.get("token")[0];
+    if (parameterMap.containsKey(TOKEN_PARAM)) {
+      return parameterMap.get(TOKEN_PARAM)[0];
     }
-    if (headers.containsKey("token")) {
-      return headers.get("token").get(0);
+    if (headers.containsKey(TOKEN_PARAM)) {
+      return headers.get(TOKEN_PARAM).get(0);
     }
     if (headers.containsKey("authorization")) {
       for (final String candidateValue : headers.get("authorization")) {
