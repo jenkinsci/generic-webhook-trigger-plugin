@@ -1,12 +1,20 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.78 (2021-12-22 05:59:48)
 ### GitHub [#225](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/225) request Payload is not getting parsed if content-type is application/x-www-form-urlencoded  
 
 **Accept x-www-form-urlencoded #225**
 
 
 [381c993b309dd00](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/381c993b309dd00) Tomas Bjerre *2021-12-22 05:20:48*
+
+
+### No issue
+
+**minor cleanup in pom**
+
+
+[27a7e079a67efec](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/27a7e079a67efec) Tomas Bjerre *2021-12-22 05:51:20*
 
 
 ## 1.77 (2021-09-17 12:58:35)
