@@ -6,12 +6,6 @@ import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.gwt.GenericResponse.jsonResponse;
 import static org.kohsuke.stapler.HttpResponses.ok;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import hudson.Extension;
-import hudson.model.UnprotectedRootAction;
-import hudson.security.csrf.CrumbExclusion;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -20,17 +14,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.jenkinsci.plugins.gwt.jobfinder.JobFinder;
 import org.jenkinsci.plugins.gwt.whitelist.WhitelistException;
 import org.jenkinsci.plugins.gwt.whitelist.WhitelistVerifier;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import hudson.Extension;
+import hudson.model.UnprotectedRootAction;
+import hudson.security.csrf.CrumbExclusion;
 
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {
@@ -44,7 +48,6 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       new GsonBuilder() //
           .setPrettyPrinting() //
           .create();
-  private static final String APPLICATION_JSON = "application/json";
   private static final String FORM_URLENCODED = "application/x-www-form-urlencoded";
 
   private static final String NO_JOBS_MSG =
@@ -91,17 +94,15 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
 
   private String getPostContentAsJson(final StaplerRequest request) throws IOException {
     final String contentType = request.getContentType();
-    if (contentType == APPLICATION_JSON) {
-      final ServletInputStream inputStream = request.getInputStream();
-      return IOUtils.toString(inputStream, UTF_8.name());
-    } else if (contentType == FORM_URLENCODED) {
+    if (contentType != null && contentType.contains(FORM_URLENCODED)) {
       final Map<String, String[]> data = new HashMap<>(request.getParameterMap());
       if (data.containsKey(TOKEN_PARAM)) {
         data.remove(TOKEN_PARAM);
       }
       return GSON.toJson(data);
     }
-    throw new RuntimeException("Unsupported content type: " + contentType);
+    final ServletInputStream inputStream = request.getInputStream();
+    return IOUtils.toString(inputStream, UTF_8.name());
   }
 
   @VisibleForTesting
