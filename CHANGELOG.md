@@ -1,5 +1,22 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## 1.79 (2021-12-23 06:18:42)
+### GitHub [#226](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/226) Not accept Content-Type with charset  
+
+**fix: optnially specify contentType and charset (refs #226 #227)**
+
+
+[d219ce3384c7566](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d219ce3384c7566) Tomas Bjerre *2021-12-23 06:05:47*
+
+
+### GitHub #227   
+
+**fix: optnially specify contentType and charset (refs #226 #227)**
+
+
+[d219ce3384c7566](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d219ce3384c7566) Tomas Bjerre *2021-12-23 06:05:47*
+
+
 ## 1.78 (2021-12-22 05:59:48)
 ### GitHub [#225](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/225) request Payload is not getting parsed if content-type is application/x-www-form-urlencoded  
 
