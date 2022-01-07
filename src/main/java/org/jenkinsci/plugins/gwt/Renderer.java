@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class Renderer {
-  private static Logger LOGGER = Logger.getLogger(Renderer.class.getSimpleName());
+  private static Logger LOGGER = Logger.getLogger(Renderer.class.getName());
 
   @VisibleForTesting
   public static boolean isMatching(
