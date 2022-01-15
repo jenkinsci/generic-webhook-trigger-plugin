@@ -1,6 +1,6 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
-## Unreleased
+## 1.80 (2022-01-15 17:07:14)
 ### GitHub [#227](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/227) Update logging path for Render  
 
 **Update logging path for Render (#227)**
@@ -16,7 +16,7 @@ Changelog of Generic Webhook Plugin.
 **fix: ignore OPTIONS (refs #229)**
 
 
-[b5dcf5375db6a71](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b5dcf5375db6a71) Tomas Bjerre *2022-01-15 16:55:07*
+[14fa17df8ad7e38](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/14fa17df8ad7e38) Tomas Bjerre *2022-01-15 16:58:05*
 
 
 ## 1.79 (2021-12-23 06:18:42)
