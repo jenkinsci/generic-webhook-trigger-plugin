@@ -12,7 +12,7 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violations.version>1.48</violations.version>
-		<changelog>1.82</changelog>
+		<changelog>1.84</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -105,6 +105,7 @@
 							<readableTagName>-([^-]+?)$</readableTagName>
 							<file>CHANGELOG.md</file>
 							<jiraIssuePattern>\bJENKINS-([0-9]+)\b</jiraIssuePattern>
+							<gitHubEnabled>true</gitHubEnabled>
 							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
 							<templateContent>
         <![CDATA[

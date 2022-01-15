@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.gwt;
 
 import static com.google.common.base.Charsets.UTF_8;
 import static java.util.logging.Level.FINE;
+import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.gwt.GenericResponse.jsonResponse;
 import static org.kohsuke.stapler.HttpResponses.ok;
@@ -12,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import hudson.Extension;
 import hudson.model.UnprotectedRootAction;
 import hudson.security.csrf.CrumbExclusion;
+import hudson.util.HttpResponses;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -57,6 +59,11 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
 
   public HttpResponse doInvoke(final StaplerRequest request) {
+    if (request.getMethod().equals("OPTIONS")) {
+      LOGGER.log(INFO, "Ignoring OPTIONS");
+      return HttpResponses.ok();
+    }
+
     String postContent = null;
     Map<String, String[]> parameterMap = null;
     Map<String, List<String>> headers = null;

@@ -1,5 +1,24 @@
 # Generic Webhook Plugin Changelog
 Changelog of Generic Webhook Plugin.
+## Unreleased
+### GitHub [#227](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/227) Update logging path for Render  
+
+**Update logging path for Render (#227)**
+
+ * Logging for Render is not in the plugin&#x27;s namespace, just shows up as 
+ * Render. Which could cause conflicts. 
+
+[8066e337b15db8e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8066e337b15db8e) Mike Terzo *2022-01-07 17:40:16*
+
+
+### GitHub [#229](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/229) XMLHtmlRequest does not supply body to Job  
+
+**fix: ignore OPTIONS (refs #229)**
+
+
+[b5dcf5375db6a71](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b5dcf5375db6a71) Tomas Bjerre *2022-01-15 16:55:07*
+
+
 ## 1.79 (2021-12-23 06:18:42)
 ### GitHub [#226](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/226) Not accept Content-Type with charset  
 
@@ -9,7 +28,7 @@ Changelog of Generic Webhook Plugin.
 [d219ce3384c7566](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d219ce3384c7566) Tomas Bjerre *2021-12-23 06:05:47*
 
 
-### GitHub #227   
+### GitHub [#227](https://github.com/jenkinsci/generic-webhook-trigger-plugin/pull/227) Update logging path for Render  
 
 **fix: optnially specify contentType and charset (refs #226 #227)**
 
