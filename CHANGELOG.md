@@ -2,6 +2,30 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.82 (2022-01-19)
+
+
+
+
+
+### Bug Fixes
+
+-  escaping text in cause ([b289c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b289c32aa74439f) Tomas Bjerre)  [#228](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/228)  
+
+
+### Other changes
+
+**Merge branch 'feature/issue-228'**
+
+
+[aa904](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/aa904f159b816ad) Tomas Bjerre *2022-01-19 14:57:20*
+
+**revert faulty merge**
+
+
+[2ce3a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2ce3aaa88349de5) Tomas Bjerre *2022-01-19 14:56:32*
+
+
 ## 1.80 (2022-01-15)
 
 
