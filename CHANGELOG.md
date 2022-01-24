@@ -2,6 +2,18 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.83 (2022-01-24)
+
+
+
+
+
+### Bug Fixes
+
+-  removing accidentally hardcoded text in cause ([16340](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/16340bcdeb49f50) Tomas Bjerre)  
+
+
+
 ## 1.82 (2022-01-19)
 
 
