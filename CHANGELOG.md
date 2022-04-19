@@ -2,6 +2,22 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.84 (2022-04-19)
+
+
+
+
+
+
+
+### Other changes
+
+**Replace jenkins with example.org in public facing error message. (#236)**
+
+
+[93b29](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/93b296142f4a1f9) rene *2022-04-19 16:08:37*
+
+
 ## 1.83 (2022-01-24)
 
 
