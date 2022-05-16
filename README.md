@@ -125,6 +125,7 @@ If your job has a `token` you don't need to supply other credentials. You can sp
 ```bash
 curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE 2>&1
 ```
+Please keep in mind, using a token always runs the triggered jobs with SYSTEM privileges.
 
 If you want to trigger with `token` and some post content, `curl` can dot that like this.
 
