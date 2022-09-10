@@ -33,10 +33,6 @@ Feature: It should be possible to parse JSON post content with JSONPath.
       | variable            | expression                        | expressionType  | defaultValue | regexpFilter  |
       | everything          | $                                 | JSONPath        |              |               |
 
-    Then variables are resolved to:
-      | variable                              | value                                                                                                               |
-      | everything_ref                        | refs/heads/develop                                                                                                  |
-      | everything_head_commit_committer_name | baxterthehacker                                                                                                     |
     Then variable everything is resolved to:
     """
     {

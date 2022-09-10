@@ -1864,3 +1864,19 @@ Changelog of generic-webhook-trigger-plugin.
 [ec4a3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ec4a38b96200c76) Tomas Bjerre *2017-03-09 04:42:06*
 
 
+## 1.0 (2017-03-09)
+
+
+
+
+
+
+
+### Other changes
+
+**Initial**
+
+
+[32c89](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/32c89bb52ac8a57) Tomas Bjerre *2017-03-08 16:27:37*
+
+
