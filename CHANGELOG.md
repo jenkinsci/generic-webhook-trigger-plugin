@@ -2,6 +2,8 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## generic-webhook-trigger-1.84.1 (2022-09-10)
+
 ## generic-webhook-trigger-0.1.0 (2022-09-10)
 
 ### Bug Fixes
@@ -16,7 +18,7 @@ Changelog of generic-webhook-trigger-plugin.
 [fa097](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fa0974147f7e7c7) DanInst84 *2022-05-16 07:50:34*
 
 
-## generic-webhook-trigger-1.84 (2022-04-19)
+## 1.84.0 (2022-04-19)
 
 ### Other changes
 
