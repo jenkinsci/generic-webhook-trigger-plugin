@@ -162,7 +162,9 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
             .getVariables();
 
     final String renderedRegexpFilterText = renderText(this.regexpFilterText, resolvedVariables);
-    final boolean isMatching = isMatching(renderedRegexpFilterText, this.regexpFilterExpression);
+    final String renderedRegexpFilterExpression =
+        renderText(this.regexpFilterExpression, resolvedVariables);
+    final boolean isMatching = isMatching(renderedRegexpFilterText, renderedRegexpFilterExpression);
 
     hudson.model.Queue.Item item = null;
     if (isMatching) {
