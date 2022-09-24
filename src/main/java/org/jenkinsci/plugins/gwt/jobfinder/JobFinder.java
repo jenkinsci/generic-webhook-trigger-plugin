@@ -1,6 +1,8 @@
 package org.jenkinsci.plugins.gwt.jobfinder;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.security.MessageDigest.isEqual;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -114,7 +116,7 @@ public final class JobFinder {
     final boolean jobHasAuthToken = !isNullOrEmpty(token);
     final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
     if (jobHasAuthToken && authTokenWasGiven) {
-      return token.equals(givenToken);
+      return isEqual(token.getBytes(UTF_8), givenToken.getBytes(UTF_8));
     }
     if (!jobHasAuthToken && !authTokenWasGiven) {
       return true;
@@ -130,7 +132,7 @@ public final class JobFinder {
     final boolean jobHasAuthToken = jobHasAuthToken(authToken);
     final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
     if (jobHasAuthToken && authTokenWasGiven) {
-      return authToken.getToken().equals(givenToken);
+      return isEqual(authToken.getToken().getBytes(UTF_8), givenToken.getBytes(UTF_8));
     }
     if (!jobHasAuthToken && !authTokenWasGiven) {
       return true;
