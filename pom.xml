@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
@@ -11,8 +11,8 @@
 		<jenkins.version>2.222.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violations.version>1.50.1</violations.version>
-		<changelog>1.92.2</changelog>
+		<violations.version>1.50.4</violations.version>
+		<changelog>1.94.0</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -102,6 +102,7 @@
 							<goal>git-changelog</goal>
 						</goals>
 						<configuration>
+							<updatePomWithNextSemanticVersion>true</updatePomWithNextSemanticVersion>
 							<readableTagName>-([^-]+?)$</readableTagName>
 							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
 						</configuration>
