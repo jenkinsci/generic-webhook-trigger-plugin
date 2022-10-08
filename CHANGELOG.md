@@ -2,14 +2,30 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
-## 1.84.2 (2022-09-24)
+## generic-webhook-trigger-1.85.1 (2022-10-08)
+
+### Bug Fixes
+
+-  release-script ([ebfaa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ebfaa8f58c0949e) Tomas Bjerre)  
+
+## generic-webhook-trigger-1.85.0 (2022-10-08)
+
+### Features
+
+-  optionally avoid flatterning JSON when selecting a branch ([19a1f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/19a1fca904df922) Tomas Bjerre)  [#237](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/237)  
+
+### Bug Fixes
+
+-  revert avoiding flatterning JSON when resolving entire payload with ([a9582](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a958270f2a24a16) Tomas Bjerre)  [#237](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/237)  
+
+## generic-webhook-trigger-1.84.2 (2022-09-24)
 
 ### Bug Fixes
 
 -  minor refactoring ([95dfa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/95dfa833c67c95f) Tomas Bjerre)  
 -  updating changelog ([b4813](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b48133a999159ac) Tomas Bjerre)  
 
-## 1.84.1 (2022-09-10)
+## generic-webhook-trigger-1.84.1 (2022-09-10)
 
 ### Bug Fixes
 
@@ -23,7 +39,7 @@ Changelog of generic-webhook-trigger-plugin.
 [fa097](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fa0974147f7e7c7) DanInst84 *2022-05-16 07:50:34*
 
 
-## 1.84 (2022-04-19)
+## generic-webhook-trigger-1.84 (2022-04-19)
 
 ### Other changes
 
@@ -33,13 +49,13 @@ Changelog of generic-webhook-trigger-plugin.
 [93b29](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/93b296142f4a1f9) rene *2022-04-19 16:08:37*
 
 
-## 1.83 (2022-01-24)
+## generic-webhook-trigger-1.83 (2022-01-24)
 
 ### Bug Fixes
 
 -  removing accidentally hardcoded text in cause ([16340](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/16340bcdeb49f50) Tomas Bjerre)  
 
-## 1.82 (2022-01-19)
+## generic-webhook-trigger-1.82 (2022-01-19)
 
 ### Bug Fixes
 
@@ -58,7 +74,7 @@ Changelog of generic-webhook-trigger-plugin.
 [2ce3a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/2ce3aaa88349de5) Tomas Bjerre *2022-01-19 14:56:32*
 
 
-## 1.80 (2022-01-15)
+## generic-webhook-trigger-1.80 (2022-01-15)
 
 ### Bug Fixes
 
@@ -74,13 +90,13 @@ Changelog of generic-webhook-trigger-plugin.
 [8066e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8066e337b15db8e) Mike Terzo *2022-01-07 17:40:16*
 
 
-## 1.79 (2021-12-23)
+## generic-webhook-trigger-1.79 (2021-12-23)
 
 ### Bug Fixes
 
 -  optnially specify contentType and charset ([d219c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d219ce3384c7566) Tomas Bjerre)  [#226](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/226)  [#227](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/227)  
 
-## 1.78 (2021-12-22)
+## generic-webhook-trigger-1.78 (2021-12-22)
 
 ### Other changes
 
@@ -95,7 +111,7 @@ Changelog of generic-webhook-trigger-plugin.
 [381c9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/381c993b309dd00) Tomas Bjerre *2021-12-22 05:20:48*
 
 
-## 1.77 (2021-09-17)
+## generic-webhook-trigger-1.77 (2021-09-17)
 
 ### Features
 
@@ -115,19 +131,19 @@ Changelog of generic-webhook-trigger-plugin.
 [cc5be](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/cc5be4e6323f4fd) Tomas Bjerre *2021-09-09 02:28:52*
 
 
-## 1.76 (2021-08-28)
+## generic-webhook-trigger-1.76 (2021-08-28)
 
 ### Bug Fixes
 
 -  bug in hmac verification ([14f62](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/14f62f8bdd4d39c) Tomas Bjerre)  [#216](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/216)  
 
-## 1.75 (2021-08-20)
+## generic-webhook-trigger-1.75 (2021-08-20)
 
 ### Bug Fixes
 
 -  find credentials configured in folders ([8366b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8366bf58bbde1b4) Tomas Bjerre)  [#214](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/214)  
 
-## 1.73 (2021-06-16)
+## generic-webhook-trigger-1.73 (2021-06-16)
 
 ### Bug Fixes
 
@@ -141,7 +157,7 @@ Changelog of generic-webhook-trigger-plugin.
 [75de9](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/75de929d6ed34bf) Tomas Bjerre *2021-02-20 07:38:10*
 
 
-## 1.72 (2020-11-06)
+## generic-webhook-trigger-1.72 (2020-11-06)
 
 ### Other changes
 
@@ -156,7 +172,7 @@ Changelog of generic-webhook-trigger-plugin.
 [99821](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/99821d521ee09b8) Tomas Bjerre *2020-10-28 15:56:51*
 
 
-## 1.70 (2020-10-28)
+## generic-webhook-trigger-1.70 (2020-10-28)
 
 ### Other changes
 
@@ -166,7 +182,7 @@ Changelog of generic-webhook-trigger-plugin.
 [aeec7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/aeec75fecff3b14) Tomas Bjerre *2020-10-28 15:33:17*
 
 
-## 1.69 (2020-10-28)
+## generic-webhook-trigger-1.69 (2020-10-28)
 
 ### Other changes
 
@@ -176,7 +192,7 @@ Changelog of generic-webhook-trigger-plugin.
 [f0679](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f067906be0a2223) Tomas Bjerre *2020-10-28 14:34:06*
 
 
-## 1.68 (2020-09-28)
+## generic-webhook-trigger-1.68 (2020-09-28)
 
 ### Other changes
 
@@ -191,7 +207,7 @@ Changelog of generic-webhook-trigger-plugin.
 [c0cfc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c0cfc1314988ab5) Tomas Bjerre *2020-08-05 04:57:42*
 
 
-## 1.67 (2020-03-13)
+## generic-webhook-trigger-1.67 (2020-03-13)
 
 ### Other changes
 
@@ -221,7 +237,7 @@ Changelog of generic-webhook-trigger-plugin.
 [513a5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/513a54530219b67) Tristan McPherson *2019-12-06 18:49:39*
 
 
-## 1.66 (2019-11-22)
+## generic-webhook-trigger-1.66 (2019-11-22)
 
 ### Other changes
 
@@ -233,7 +249,7 @@ Changelog of generic-webhook-trigger-plugin.
 [89877](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/898775bd4a05c3e) Tomas Bjerre *2019-11-21 20:22:46*
 
 
-## 1.65 (2019-11-17)
+## generic-webhook-trigger-1.65 (2019-11-17)
 
 ### Other changes
 
@@ -248,7 +264,7 @@ Changelog of generic-webhook-trigger-plugin.
 [935fa](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/935fab2291e9663) Tomas Bjerre *2019-11-17 13:22:16*
 
 
-## 1.64 (2019-11-15)
+## generic-webhook-trigger-1.64 (2019-11-15)
 
 ### Other changes
 
@@ -264,7 +280,7 @@ Changelog of generic-webhook-trigger-plugin.
 [09101](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0910146b517c742) AbsoluteOther *2019-11-15 15:46:53*
 
 
-## 1.63 (2019-11-10)
+## generic-webhook-trigger-1.63 (2019-11-10)
 
 ### Other changes
 
@@ -320,7 +336,7 @@ Changelog of generic-webhook-trigger-plugin.
 [daecd](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/daecd55fcced3a1) Terrance Wood *2019-11-10 08:52:38*
 
 
-## 1.62 (2019-10-21)
+## generic-webhook-trigger-1.62 (2019-10-21)
 
 ### Other changes
 
@@ -330,7 +346,7 @@ Changelog of generic-webhook-trigger-plugin.
 [721da](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/721da84ea72506e) Tomas Bjerre *2019-10-21 15:09:07*
 
 
-## 1.61 (2019-10-21)
+## generic-webhook-trigger-1.61 (2019-10-21)
 
 ### Other changes
 
@@ -340,7 +356,7 @@ Changelog of generic-webhook-trigger-plugin.
 [8f491](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f491b592bc0661) Tomas Bjerre *2019-10-21 04:04:54*
 
 
-## 1.60 (2019-10-21)
+## generic-webhook-trigger-1.60 (2019-10-21)
 
 ### Other changes
 
@@ -350,7 +366,7 @@ Changelog of generic-webhook-trigger-plugin.
 [118ef](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/118efcd549630f1) Tomas Bjerre *2019-10-21 03:53:30*
 
 
-## 1.59 (2019-10-20)
+## generic-webhook-trigger-1.59 (2019-10-20)
 
 ### Other changes
 
@@ -360,7 +376,7 @@ Changelog of generic-webhook-trigger-plugin.
 [e77e0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e77e0329c4793b1) Tomas Bjerre *2019-10-20 20:27:41*
 
 
-## 1.58 (2019-10-20)
+## generic-webhook-trigger-1.58 (2019-10-20)
 
 ### Other changes
 
@@ -428,7 +444,7 @@ Changelog of generic-webhook-trigger-plugin.
 [8f69e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8f69e3b659a5ee3) Tomas Bjerre *2019-08-27 17:07:58*
 
 
-## 1.57 (2019-08-20)
+## generic-webhook-trigger-1.57 (2019-08-20)
 
 ### Other changes
 
@@ -443,7 +459,7 @@ Changelog of generic-webhook-trigger-plugin.
 [f8446](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f84463c9065eaa0) Tomas Bjerre *2019-08-19 13:30:25*
 
 
-## 1.56 (2019-08-01)
+## generic-webhook-trigger-1.56 (2019-08-01)
 
 ### Other changes
 
@@ -453,7 +469,7 @@ Changelog of generic-webhook-trigger-plugin.
 [7a665](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7a6654973359749) Tomas Bjerre *2019-08-01 15:36:14*
 
 
-## 1.55 (2019-07-31)
+## generic-webhook-trigger-1.55 (2019-07-31)
 
 ### Other changes
 
@@ -478,7 +494,7 @@ Changelog of generic-webhook-trigger-plugin.
 [13bce](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/13bce9c546f3c92) Tomas Bjerre *2019-06-19 19:03:38*
 
 
-## 1.54 (2019-05-06)
+## generic-webhook-trigger-1.54 (2019-05-06)
 
 ### Other changes
 
@@ -490,7 +506,7 @@ Changelog of generic-webhook-trigger-plugin.
 [9c78d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9c78d75222ca3fe) Tomas Bjerre *2019-05-06 13:26:40*
 
 
-## 1.53 (2019-05-02)
+## generic-webhook-trigger-1.53 (2019-05-02)
 
 ### Other changes
 
@@ -521,7 +537,7 @@ Changelog of generic-webhook-trigger-plugin.
 [82d48](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/82d483a2f33fa7b) Tomas Bjerre *2019-01-23 20:17:15*
 
 
-## 1.52 (2019-01-02)
+## generic-webhook-trigger-1.52 (2019-01-02)
 
 ### Other changes
 
@@ -536,7 +552,7 @@ Changelog of generic-webhook-trigger-plugin.
 [3d591](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3d59136e2515a0a) Tomas Bjerre *2018-12-12 18:56:45*
 
 
-## 1.51 (2018-12-12)
+## generic-webhook-trigger-1.51 (2018-12-12)
 
 ### Other changes
 
@@ -556,7 +572,7 @@ Changelog of generic-webhook-trigger-plugin.
 [731e4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/731e44cc8b1fea7) Tomas Bjerre *2018-11-27 20:46:42*
 
 
-## 1.50 (2018-11-27)
+## generic-webhook-trigger-1.50 (2018-11-27)
 
 ### Other changes
 
@@ -566,7 +582,7 @@ Changelog of generic-webhook-trigger-plugin.
 [fc99c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fc99cc4d1335531) Tomas Bjerre *2018-11-27 07:26:46*
 
 
-## 1.49 (2018-11-26)
+## generic-webhook-trigger-1.49 (2018-11-26)
 
 ### Other changes
 
@@ -591,7 +607,7 @@ Changelog of generic-webhook-trigger-plugin.
 [a4713](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a4713a8b6532496) Tomas Bjerre *2018-11-15 18:13:36*
 
 
-## 1.48 (2018-11-08)
+## generic-webhook-trigger-1.48 (2018-11-08)
 
 ### Other changes
 
@@ -612,7 +628,7 @@ Changelog of generic-webhook-trigger-plugin.
 [08e27](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/08e27215e450252) Robert Shade *2018-11-08 16:36:28*
 
 
-## 1.47 (2018-11-07)
+## generic-webhook-trigger-1.47 (2018-11-07)
 
 ### Other changes
 
@@ -627,7 +643,7 @@ Changelog of generic-webhook-trigger-plugin.
 [d40b2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d40b2be422907bc) Tomas Bjerre *2018-10-16 14:39:55*
 
 
-## 1.46 (2018-10-04)
+## generic-webhook-trigger-1.46 (2018-10-04)
 
 ### Other changes
 
@@ -642,7 +658,7 @@ Changelog of generic-webhook-trigger-plugin.
 [001a7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/001a783571102ed) Tomas Bjerre *2018-09-23 19:11:15*
 
 
-## 1.45 (2018-09-11)
+## generic-webhook-trigger-1.45 (2018-09-11)
 
 ### Other changes
 
@@ -657,7 +673,7 @@ Changelog of generic-webhook-trigger-plugin.
 [a3b00](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a3b0024b222eb9d) Tomas Bjerre *2018-09-07 09:48:43*
 
 
-## 1.44 (2018-09-06)
+## generic-webhook-trigger-1.44 (2018-09-06)
 
 ### Other changes
 
@@ -675,7 +691,7 @@ Changelog of generic-webhook-trigger-plugin.
 [df9e0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/df9e0129c081fd0) Tomas Bjerre *2018-09-05 06:28:39*
 
 
-## 1.43 (2018-08-25)
+## generic-webhook-trigger-1.43 (2018-08-25)
 
 ### Other changes
 
@@ -696,7 +712,7 @@ Changelog of generic-webhook-trigger-plugin.
 [d88bd](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d88bd14417d6922) Tomas Bjerre *2018-08-24 09:14:45*
 
 
-## 1.42 (2018-08-21)
+## generic-webhook-trigger-1.42 (2018-08-21)
 
 ### Other changes
 
@@ -712,7 +728,7 @@ Changelog of generic-webhook-trigger-plugin.
 [d6e1e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d6e1eaa7fc7df99) Volodymyr Tsykun *2018-08-20 16:28:19*
 
 
-## 1.41 (2018-08-09)
+## generic-webhook-trigger-1.41 (2018-08-09)
 
 ### Other changes
 
@@ -729,7 +745,7 @@ Changelog of generic-webhook-trigger-plugin.
 [d1f05](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d1f05cfd5300b57) Tomas Bjerre *2018-08-07 12:16:10*
 
 
-## 1.40 (2018-07-10)
+## generic-webhook-trigger-1.40 (2018-07-10)
 
 ### Other changes
 
@@ -744,7 +760,7 @@ Changelog of generic-webhook-trigger-plugin.
 [6e475](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6e47573b2926fbd) Tomas Bjerre *2018-07-09 20:48:34*
 
 
-## 1.39 (2018-06-25)
+## generic-webhook-trigger-1.39 (2018-06-25)
 
 ### Other changes
 
@@ -754,7 +770,7 @@ Changelog of generic-webhook-trigger-plugin.
 [60364](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/603642cf5d3af95) Tomas Bjerre *2018-06-25 18:15:43*
 
 
-## 1.38 (2018-06-24)
+## generic-webhook-trigger-1.38 (2018-06-24)
 
 ### Other changes
 
@@ -769,7 +785,7 @@ Changelog of generic-webhook-trigger-plugin.
 [b7e8b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b7e8b47e1d7b4cc) Tomas Bjerre *2018-06-15 14:49:28*
 
 
-## 1.37 (2018-06-14)
+## generic-webhook-trigger-1.37 (2018-06-14)
 
 ### Other changes
 
@@ -779,7 +795,7 @@ Changelog of generic-webhook-trigger-plugin.
 [76bb4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/76bb41ae584ca78) Tomas Bjerre *2018-06-14 15:18:49*
 
 
-## 1.36 (2018-05-18)
+## generic-webhook-trigger-1.36 (2018-05-18)
 
 ### Other changes
 
@@ -789,7 +805,7 @@ Changelog of generic-webhook-trigger-plugin.
 [8c591](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8c5910820cbd9a8) Tomas Bjerre *2018-05-18 18:01:27*
 
 
-## 1.35 (2018-05-09)
+## generic-webhook-trigger-1.35 (2018-05-09)
 
 ### Other changes
 
@@ -799,7 +815,7 @@ Changelog of generic-webhook-trigger-plugin.
 [5b36c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/5b36c5a8ca9b832) Tomas Bjerre *2018-05-08 16:08:55*
 
 
-## 1.34 (2018-05-05)
+## generic-webhook-trigger-1.34 (2018-05-05)
 
 ### Other changes
 
@@ -816,7 +832,7 @@ Changelog of generic-webhook-trigger-plugin.
 [23e3e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/23e3e03ab5e815b) Tomas Bjerre *2018-05-05 20:50:46*
 
 
-## 1.33 (2018-05-05)
+## generic-webhook-trigger-1.33 (2018-05-05)
 
 ### Other changes
 
@@ -826,7 +842,7 @@ Changelog of generic-webhook-trigger-plugin.
 [9d29a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9d29aa90ffc2996) Tomas Bjerre *2018-05-05 19:11:38*
 
 
-## 1.32 (2018-04-18)
+## generic-webhook-trigger-1.32 (2018-04-18)
 
 ### Other changes
 
@@ -836,7 +852,7 @@ Changelog of generic-webhook-trigger-plugin.
 [1f000](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/1f0006795ab6941) Tomas Bjerre *2018-04-18 15:30:40*
 
 
-## 1.31 (2018-04-07)
+## generic-webhook-trigger-1.31 (2018-04-07)
 
 ### Other changes
 
@@ -870,7 +886,7 @@ Changelog of generic-webhook-trigger-plugin.
 [0fd81](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0fd81969349a1d0) jekader *2018-03-08 17:28:09*
 
 
-## 1.29 (2018-03-06)
+## generic-webhook-trigger-1.29 (2018-03-06)
 
 ### Other changes
 
@@ -880,7 +896,7 @@ Changelog of generic-webhook-trigger-plugin.
 [602ea](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/602ea1fd613abd2) Tomas Bjerre *2018-03-06 20:25:41*
 
 
-## 1.28 (2018-02-24)
+## generic-webhook-trigger-1.28 (2018-02-24)
 
 ### Other changes
 
@@ -891,7 +907,7 @@ Changelog of generic-webhook-trigger-plugin.
 [c2620](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/c2620541b8c48d3) Tomas Bjerre *2018-02-24 13:39:01*
 
 
-## 1.27 (2018-02-22)
+## generic-webhook-trigger-1.27 (2018-02-22)
 
 ### Other changes
 
@@ -917,7 +933,7 @@ Changelog of generic-webhook-trigger-plugin.
 [52b9b](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/52b9b5258c9a2e3) Gmanfunky *2018-02-17 02:22:25*
 
 
-## 1.26 (2018-02-07)
+## generic-webhook-trigger-1.26 (2018-02-07)
 
 ### Other changes
 
@@ -927,7 +943,7 @@ Changelog of generic-webhook-trigger-plugin.
 [02c4d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/02c4d68a5871f2d) Tomas Bjerre *2018-02-07 15:21:47*
 
 
-## 1.25 (2018-02-06)
+## generic-webhook-trigger-1.25 (2018-02-06)
 
 ### Other changes
 
@@ -945,7 +961,7 @@ Changelog of generic-webhook-trigger-plugin.
 [a87bb](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a87bb57241904a5) Tomas Bjerre *2018-02-06 18:35:46*
 
 
-## 1.24 (2018-02-05)
+## generic-webhook-trigger-1.24 (2018-02-05)
 
 ### Other changes
 
@@ -963,7 +979,7 @@ Changelog of generic-webhook-trigger-plugin.
 [4ac53](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4ac53820dbca918) Tomas Bjerre *2018-02-05 16:59:30*
 
 
-## 1.23 (2018-01-27)
+## generic-webhook-trigger-1.23 (2018-01-27)
 
 ### Other changes
 
@@ -978,7 +994,7 @@ Changelog of generic-webhook-trigger-plugin.
 [92ced](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/92ced8a3dc25a34) Tomas Bjerre *2018-01-03 12:33:36*
 
 
-## 1.22 (2018-01-03)
+## generic-webhook-trigger-1.22 (2018-01-03)
 
 ### Other changes
 
@@ -991,7 +1007,7 @@ Changelog of generic-webhook-trigger-plugin.
 [4a60c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4a60c3cd9350e49) Tomas Bjerre *2018-01-03 12:18:32*
 
 
-## 1.21 (2017-12-20)
+## generic-webhook-trigger-1.21 (2017-12-20)
 
 ### Other changes
 
@@ -1011,7 +1027,7 @@ Changelog of generic-webhook-trigger-plugin.
 [98e25](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/98e25326d3f645b) Tomas Bjerre *2017-09-20 19:27:55*
 
 
-## 1.20 (2017-09-20)
+## generic-webhook-trigger-1.20 (2017-09-20)
 
 ### Other changes
 
@@ -1031,7 +1047,7 @@ Changelog of generic-webhook-trigger-plugin.
 [9c1d3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9c1d3999b933e12) Tomas Bjerre *2017-08-17 16:08:10*
 
 
-## 1.19 (2017-08-16)
+## generic-webhook-trigger-1.19 (2017-08-16)
 
 ### Other changes
 
@@ -1082,7 +1098,7 @@ Changelog of generic-webhook-trigger-plugin.
 [93474](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/934742625d102f2) Tomas Bjerre *2017-07-17 16:08:00*
 
 
-## 1.18 (2017-08-10)
+## generic-webhook-trigger-1.18 (2017-08-10)
 
 ### Other changes
 
@@ -1097,7 +1113,7 @@ Changelog of generic-webhook-trigger-plugin.
 [8eaca](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8eacab3e02d3680) Tomas Bjerre *2017-07-28 20:27:43*
 
 
-## 1.17 (2017-07-26)
+## generic-webhook-trigger-1.17 (2017-07-26)
 
 ### Other changes
 
@@ -1112,7 +1128,7 @@ Changelog of generic-webhook-trigger-plugin.
 [b0fad](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b0fad3a4ff5f110) Tomas Bjerre *2017-07-26 04:15:15*
 
 
-## 1.16 (2017-07-25)
+## generic-webhook-trigger-1.16 (2017-07-25)
 
 ### Other changes
 
@@ -1132,7 +1148,7 @@ Changelog of generic-webhook-trigger-plugin.
 [fec2f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/fec2f6e88d5e4f4) Tomas Bjerre *2017-07-21 12:42:34*
 
 
-## 1.15 (2017-07-21)
+## generic-webhook-trigger-1.15 (2017-07-21)
 
 ### Other changes
 
@@ -1158,7 +1174,7 @@ Changelog of generic-webhook-trigger-plugin.
 [40eb7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/40eb716a1bbe7ac) Tomas Bjerre *2017-07-20 18:58:21*
 
 
-## 1.14 (2017-07-17)
+## generic-webhook-trigger-1.14 (2017-07-17)
 
 ### Other changes
 
@@ -1205,7 +1221,7 @@ Changelog of generic-webhook-trigger-plugin.
 [bbd41](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/bbd41960d1fc017) Tomas Bjerre *2017-07-14 05:52:08*
 
 
-## 1.13 (2017-07-13)
+## generic-webhook-trigger-1.13 (2017-07-13)
 
 ### Other changes
 
@@ -1221,7 +1237,7 @@ Changelog of generic-webhook-trigger-plugin.
 [3d6e7](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3d6e791dfedabfe) Tomas Bjerre *2017-07-13 18:15:51*
 
 
-## 1.12 (2017-07-13)
+## generic-webhook-trigger-1.12 (2017-07-13)
 
 ### Other changes
 
@@ -1242,7 +1258,7 @@ Changelog of generic-webhook-trigger-plugin.
 [8de23](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8de2365d832e07a) Tomas Bjerre *2017-07-12 18:41:20*
 
 
-## 1.11 (2017-07-12)
+## generic-webhook-trigger-1.11 (2017-07-12)
 
 ### Other changes
 
@@ -1268,7 +1284,7 @@ Changelog of generic-webhook-trigger-plugin.
 [81361](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/81361f4bdd73d7b) Tomas Bjerre *2017-05-09 19:30:40*
 
 
-## 1.10 (2017-05-09)
+## generic-webhook-trigger-1.10 (2017-05-09)
 
 ### Other changes
 
@@ -1283,7 +1299,7 @@ Changelog of generic-webhook-trigger-plugin.
 [cbf75](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/cbf75eb9d75192a) Tomas Bjerre *2017-05-03 19:31:19*
 
 
-## 1.9 (2017-05-02)
+## generic-webhook-trigger-1.9 (2017-05-02)
 
 ### Other changes
 
@@ -1298,7 +1314,7 @@ Changelog of generic-webhook-trigger-plugin.
 [d1288](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d1288153a6ae2ff) Tomas Bjerre *2017-04-29 06:47:22*
 
 
-## 1.8 (2017-04-10)
+## generic-webhook-trigger-1.8 (2017-04-10)
 
 ### Other changes
 
@@ -1308,7 +1324,7 @@ Changelog of generic-webhook-trigger-plugin.
 [00bf4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/00bf4c75de19007) Tomas Bjerre *2017-04-10 17:28:55*
 
 
-## 1.7 (2017-04-07)
+## generic-webhook-trigger-1.7 (2017-04-07)
 
 ### Other changes
 
@@ -1323,7 +1339,7 @@ Changelog of generic-webhook-trigger-plugin.
 [7ca0c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7ca0ca4e98a6747) Tomas Bjerre *2017-04-05 16:59:50*
 
 
-## 1.6 (2017-03-29)
+## generic-webhook-trigger-1.6 (2017-03-29)
 
 ### Other changes
 
@@ -1339,7 +1355,7 @@ Changelog of generic-webhook-trigger-plugin.
 [25d64](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/25d6448d957ca4f) Tomas Bjerre *2017-03-28 18:32:38*
 
 
-## 1.5 (2017-03-28)
+## generic-webhook-trigger-1.5 (2017-03-28)
 
 ### Other changes
 
@@ -1354,7 +1370,7 @@ Changelog of generic-webhook-trigger-plugin.
 [dad0d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/dad0d8f3a2d25a3) Tomas Bjerre *2017-03-14 18:14:16*
 
 
-## 1.4 (2017-03-14)
+## generic-webhook-trigger-1.4 (2017-03-14)
 
 ### Other changes
 
@@ -1364,7 +1380,7 @@ Changelog of generic-webhook-trigger-plugin.
 [37694](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/37694044b53d9f9) Tomas Bjerre *2017-03-14 18:10:59*
 
 
-## 1.3 (2017-03-13)
+## generic-webhook-trigger-1.3 (2017-03-13)
 
 ### Other changes
 
@@ -1379,7 +1395,7 @@ Changelog of generic-webhook-trigger-plugin.
 [b80be](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/b80be7df1e2eb66) Tomas Bjerre *2017-03-12 22:07:15*
 
 
-## 1.2 (2017-03-12)
+## generic-webhook-trigger-1.2 (2017-03-12)
 
 ### Other changes
 
@@ -1394,7 +1410,7 @@ Changelog of generic-webhook-trigger-plugin.
 [6b2c4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6b2c43524f6f5b6) Tomas Bjerre *2017-03-12 20:21:51*
 
 
-## 1.1 (2017-03-12)
+## generic-webhook-trigger-1.1 (2017-03-12)
 
 ### Other changes
 
@@ -1409,7 +1425,7 @@ Changelog of generic-webhook-trigger-plugin.
 [ec4a3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/ec4a38b96200c76) Tomas Bjerre *2017-03-09 04:42:06*
 
 
-## 1.0 (2017-03-09)
+## generic-webhook-trigger-1.0 (2017-03-09)
 
 ### Other changes
 
