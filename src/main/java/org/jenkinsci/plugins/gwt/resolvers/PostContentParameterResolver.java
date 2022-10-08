@@ -34,11 +34,14 @@ public class PostContentParameterResolver {
   public PostContentParameterResolver() {}
 
   public Map<String, String> getPostContentParameters(
-      final List<GenericVariable> configuredGenericVariables, final String incomingPostContent) {
+      final List<GenericVariable> configuredGenericVariables,
+      final String incomingPostContent,
+      final boolean shouldNotFlattern) {
     final Map<String, String> resolvedVariables = newHashMap();
     if (configuredGenericVariables != null) {
       for (final GenericVariable gv : configuredGenericVariables) {
-        final Map<String, String> resolvedMap = this.resolve(incomingPostContent, gv);
+        final Map<String, String> resolvedMap =
+            this.resolve(incomingPostContent, gv, shouldNotFlattern);
         final boolean notResolved =
             resolvedMap.isEmpty()
                 || resolvedMap.containsKey(gv.getVariableName())
@@ -52,14 +55,15 @@ public class PostContentParameterResolver {
     return resolvedVariables;
   }
 
-  private Map<String, String> resolve(final String incomingPostContent, final GenericVariable gv) {
+  private Map<String, String> resolve(
+      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlattern) {
     try {
       if (!isNullOrEmpty(incomingPostContent)
           && gv != null
           && gv.getExpression() != null
           && !gv.getExpression().isEmpty()) {
         if (gv.getExpressionType() == JSONPath) {
-          return this.resolveJsonPath(incomingPostContent, gv);
+          return this.resolveJsonPath(incomingPostContent, gv, shouldNotFlattern);
         } else if (gv.getExpressionType() == XPath) {
           return this.resolveXPath(incomingPostContent, gv);
         } else {
@@ -83,11 +87,14 @@ public class PostContentParameterResolver {
   }
 
   private Map<String, String> resolveJsonPath(
-      final String incomingPostContent, final GenericVariable gv) {
+      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlattern) {
     try {
       final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
-      final Map<String, String> flatterned =
-          this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+      Map<String, String> flatterned = new HashMap<>();
+      if (!shouldNotFlattern) {
+        flatterned =
+            this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+      }
       if (gv.getExpression().trim().equals("$")) {
         flatterned.put(gv.getVariableName(), incomingPostContent);
       }

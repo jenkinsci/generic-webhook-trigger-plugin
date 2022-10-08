@@ -41,6 +41,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private String tokenCredentialId;
   private boolean silentResponse;
   private boolean overrideQuietPeriod;
+  private boolean shouldNotFlattern;
 
   @Symbol("GenericTrigger")
   public static class GenericDescriptor extends TriggerDescriptor {
@@ -112,6 +113,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     return this.overrideQuietPeriod;
   }
 
+  @DataBoundSetter
+  public void setShouldNotFlattern(final boolean shouldNotFlattern) {
+    this.shouldNotFlattern = shouldNotFlattern;
+  }
+
+  public boolean isShouldNotFlattern() {
+    return this.shouldNotFlattern;
+  }
+
   public boolean isSilentResponse() {
     return this.silentResponse;
   }
@@ -158,7 +168,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
                 postContent,
                 this.genericVariables,
                 this.genericRequestVariables,
-                this.genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     final String renderedRegexpFilterText = renderText(this.regexpFilterText, resolvedVariables);

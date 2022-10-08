@@ -15,11 +15,12 @@ import org.junit.Test;
 public class VariablesResolverJsonPathTest {
   private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+  private final boolean shouldNotFlattern = false;
 
   @Test
   public void testJSONPathGetOneLeaf() throws Exception {
     final String resourceName = "one-leaf.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables) //
         .containsEntry("variableName_name", "Administrator") //
@@ -32,7 +33,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetTwoLeafs() throws Exception {
     final String resourceName = "two-leafs.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables) //
         .containsEntry("variableName_name", "Administrator") //
@@ -46,7 +47,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetOneListItem() throws Exception {
     final String resourceName = "one-list-item.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_0_name");
@@ -60,7 +61,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetRootItem() throws Exception {
     final String resourceName = "one-list-item.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$");
 
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_user_0_name");
@@ -73,7 +74,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetTwoListItems() throws Exception {
     final String resourceName = "two-list-items.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_0_name", "variableName_1_username");
@@ -89,7 +90,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetSeveralMixedListItems() throws Exception {
     final String resourceName = "several-mixed-list-items.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables) //
         .containsEntry("variableName_0_name", "Administrator") //
@@ -110,7 +111,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetNullValues() throws Exception {
     final Map<String, String> variables =
-        getJsonPathVariablesFromContent("$", "{\"a\": null,\"b\": \"value\"}");
+        this.getJsonPathVariablesFromContent("$", "{\"a\": null,\"b\": \"value\"}");
 
     assertThat(variables.get("variableName")) //
         .isEqualTo("{\"a\": null,\"b\": \"value\"}");
@@ -119,7 +120,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetAllVariable() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final List<GenericVariable> genericVariables =
         newArrayList( //
@@ -134,12 +135,13 @@ public class VariablesResolverJsonPathTest {
     genericRequestVariables.add(new GenericRequestVariable("reqp2", ""));
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -182,12 +184,13 @@ public class VariablesResolverJsonPathTest {
 
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -203,7 +206,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetZeroMatchingVariables() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final List<GenericVariable> genericVariables =
         newArrayList( //
@@ -212,12 +215,13 @@ public class VariablesResolverJsonPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -230,7 +234,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetOneVariable() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final List<GenericVariable> genericVariables =
         newArrayList( //
@@ -239,12 +243,13 @@ public class VariablesResolverJsonPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -255,7 +260,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetTwoVariables() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable1 = new GenericVariable("user_name", "$.user.name");
     genericVariable1.setRegexpFilter("[aA]");
@@ -267,12 +272,13 @@ public class VariablesResolverJsonPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -284,7 +290,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetNodeVariable() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final Map<String, String> variables = getJsonPathVariables(resourceName, "$.user");
+    final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
     assertThat(variables) //
         .containsEntry("variableName_name", "Administrator");
@@ -293,7 +299,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetPayloadVariable() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final List<GenericVariable> genericVariables =
         newArrayList( //
@@ -302,12 +308,13 @@ public class VariablesResolverJsonPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -317,7 +324,7 @@ public class VariablesResolverJsonPathTest {
   @Test
   public void testJSONPathGetPayloadVariableDefault() throws Exception {
     final String resourceName = "gitlab-mergerequest-comment.json";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("payload", "$.doesnotexist");
     genericVariable.setDefaultValue("this is the default");
@@ -328,12 +335,13 @@ public class VariablesResolverJsonPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -344,7 +352,7 @@ public class VariablesResolverJsonPathTest {
   public void testStarOperator() throws Exception {
     final String resourceName = "github-push-event.json";
     final Map<String, String> variables =
-        getJsonPathVariables(resourceName, "$.commits[*].modified[*]");
+        this.getJsonPathVariables(resourceName, "$.commits[*].modified[*]");
 
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_0");
@@ -358,7 +366,7 @@ public class VariablesResolverJsonPathTest {
   public void testCommaOperator() throws Exception {
     final String resourceName = "github-push-event.json";
     final Map<String, String> variables =
-        getJsonPathVariables(resourceName, "$.commits[*].['modified','added','removed'][*]");
+        this.getJsonPathVariables(resourceName, "$.commits[*].['modified','added','removed'][*]");
 
     assertThat(variables.keySet()) //
         .containsOnly("variableName", "variableName_0");
@@ -370,9 +378,9 @@ public class VariablesResolverJsonPathTest {
 
   private Map<String, String> getJsonPathVariables(
       final String resourceName, final String jsonPath) {
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
-    return getJsonPathVariablesFromContent(jsonPath, postContent);
+    return this.getJsonPathVariablesFromContent(jsonPath, postContent);
   }
 
   private Map<String, String> getJsonPathVariablesFromContent(
@@ -384,12 +392,13 @@ public class VariablesResolverJsonPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
     return variables;
   }

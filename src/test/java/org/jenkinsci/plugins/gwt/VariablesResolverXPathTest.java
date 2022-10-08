@@ -16,11 +16,12 @@ import org.junit.Test;
 public class VariablesResolverXPathTest {
   private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+  private final boolean shouldNotFlattern = false;
 
   @Test
   public void testXPathGetOneVariable() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore/book[1]/title");
     genericVariable.setExpressionType(XPath);
@@ -31,12 +32,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -46,7 +48,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathGetOneNode() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore/book[1]");
     genericVariable.setExpressionType(XPath);
@@ -57,12 +59,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -72,7 +75,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathGetNodes() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore/book[*]");
     genericVariable.setExpressionType(XPath);
@@ -83,12 +86,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -99,7 +103,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathGetAttribute() throws Exception {
     final String resourceName = "attribute.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable =
         new GenericVariable("variablename", "/attribute[@name='thekey']/@value");
@@ -111,12 +115,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -130,7 +135,7 @@ public class VariablesResolverXPathTest {
     final String xPath = "/attribute[@name='thekey']/@anothervalue";
     final GenericVariable genericVariable = new GenericVariable(variableName, xPath);
 
-    final Map<String, String> variables = getVariables(resourceName, genericVariable);
+    final Map<String, String> variables = this.getVariables(resourceName, genericVariable);
 
     assertThat(variables) //
         .containsEntry(variableName, "");
@@ -145,7 +150,7 @@ public class VariablesResolverXPathTest {
     genericVariable.setExpressionType(XPath);
     genericVariable.setDefaultValue("the default");
 
-    final Map<String, String> variables = getVariables(resourceName, genericVariable);
+    final Map<String, String> variables = this.getVariables(resourceName, genericVariable);
 
     assertThat(variables) //
         .containsEntry(variableName, "the default");
@@ -153,7 +158,7 @@ public class VariablesResolverXPathTest {
 
   private Map<String, String> getVariables(
       final String resourceName, final GenericVariable genericVariable) {
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     genericVariable.setExpressionType(XPath);
     final List<GenericVariable> genericVariables =
@@ -163,12 +168,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
     return variables;
   }
@@ -176,7 +182,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathTwoListItems() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("payload", "/*");
     genericVariable.setExpressionType(XPath);
@@ -187,12 +193,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -206,7 +213,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathOneListItem() throws Exception {
     final String resourceName = "one-list-item.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("payload", "/*");
     genericVariable.setExpressionType(XPath);
@@ -217,12 +224,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -234,7 +242,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathTwoListListItems() throws Exception {
     final String resourceName = "two-list-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore");
     genericVariable.setExpressionType(XPath);
@@ -245,12 +253,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -270,7 +279,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathTwoListListItemsFirstBook() throws Exception {
     final String resourceName = "two-list-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore/book[1]");
     genericVariable.setExpressionType(XPath);
@@ -281,12 +290,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -304,7 +314,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathRootElement() throws Exception {
     final String resourceName = "two-list-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/");
     genericVariable.setExpressionType(XPath);
@@ -315,12 +325,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -334,7 +345,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathTwoListListItemsSecondBook() throws Exception {
     final String resourceName = "two-list-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore/book[2]");
     genericVariable.setExpressionType(XPath);
@@ -345,12 +356,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -362,7 +374,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathTwoListItemsFirstBook() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable = new GenericVariable("book", "/bookstore/book[1]");
     genericVariable.setExpressionType(XPath);
@@ -373,12 +385,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -390,7 +403,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathGetTwoVariable() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable1 =
         new GenericVariable("book1", "/bookstore/book[1]/title");
@@ -407,12 +420,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //
@@ -423,7 +437,7 @@ public class VariablesResolverXPathTest {
   @Test
   public void testXPathGetZeroMatchingVariables() throws Exception {
     final String resourceName = "two-list-items.xml";
-    final String postContent = getContent(resourceName);
+    final String postContent = this.getContent(resourceName);
 
     final GenericVariable genericVariable =
         new GenericVariable("book1", "/bookstore/book[1]/title123");
@@ -436,12 +450,13 @@ public class VariablesResolverXPathTest {
     final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
     final Map<String, String> variables =
         new VariablesResolver(
-                headers,
+                this.headers,
                 parameterMap,
                 postContent,
                 genericVariables,
                 genericRequestVariables,
-                genericHeaderVariables)
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
             .getVariables();
 
     assertThat(variables) //

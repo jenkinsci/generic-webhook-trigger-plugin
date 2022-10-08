@@ -20,6 +20,7 @@ public class VariablesResolver {
       new PostContentParameterResolver();
   private final List<GenericHeaderVariable> configuredGenericHeaderVariables;
   private final Map<String, List<String>> incomingHeaders;
+  private final boolean shouldNotFlattern;
 
   public VariablesResolver(
       final Map<String, List<String>> incomingHeaders,
@@ -27,16 +28,20 @@ public class VariablesResolver {
       final String incomingPostContent,
       final List<GenericVariable> configuredGenericVariables,
       final List<GenericRequestVariable> configuredGenericRequestVariables,
-      final List<GenericHeaderVariable> configuredGenericHeaderVariables) {
-    this.incomingPostContent = firstNotNull(incomingPostContent, "");
+      final List<GenericHeaderVariable> configuredGenericHeaderVariables,
+      final boolean shouldNotFlattern) {
+    this.incomingPostContent = this.firstNotNull(incomingPostContent, "");
     this.configuredGenericVariables =
-        firstNotNull(configuredGenericVariables, new ArrayList<GenericVariable>());
-    this.incomingParameterMap = firstNotNull(incomingParameterMap, new HashMap<String, String[]>());
+        this.firstNotNull(configuredGenericVariables, new ArrayList<GenericVariable>());
+    this.incomingParameterMap =
+        this.firstNotNull(incomingParameterMap, new HashMap<String, String[]>());
     this.configuredGenericRequestVariables =
-        firstNotNull(configuredGenericRequestVariables, new ArrayList<GenericRequestVariable>());
+        this.firstNotNull(
+            configuredGenericRequestVariables, new ArrayList<GenericRequestVariable>());
     this.configuredGenericHeaderVariables =
-        firstNotNull(configuredGenericHeaderVariables, new ArrayList<GenericHeaderVariable>());
+        this.firstNotNull(configuredGenericHeaderVariables, new ArrayList<GenericHeaderVariable>());
     this.incomingHeaders = incomingHeaders;
+    this.shouldNotFlattern = shouldNotFlattern;
   }
 
   private <T> T firstNotNull(final T o1, final T o2) {
@@ -49,13 +54,14 @@ public class VariablesResolver {
   public Map<String, String> getVariables() {
     final Map<String, String> resolvedVariables = new TreeMap<>();
     resolvedVariables.putAll(
-        requestHeaderResolver.getRequestHeaders(configuredGenericHeaderVariables, incomingHeaders));
+        this.requestHeaderResolver.getRequestHeaders(
+            this.configuredGenericHeaderVariables, this.incomingHeaders));
     resolvedVariables.putAll(
-        requestParameterResolver.getRequestParameters(
-            configuredGenericRequestVariables, incomingParameterMap));
+        this.requestParameterResolver.getRequestParameters(
+            this.configuredGenericRequestVariables, this.incomingParameterMap));
     resolvedVariables.putAll(
-        postContentParameterResolver.getPostContentParameters(
-            configuredGenericVariables, incomingPostContent));
+        this.postContentParameterResolver.getPostContentParameters(
+            this.configuredGenericVariables, this.incomingPostContent, this.shouldNotFlattern));
     return resolvedVariables;
   }
 }

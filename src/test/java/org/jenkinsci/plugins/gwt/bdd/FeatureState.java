@@ -17,9 +17,10 @@ public class FeatureState {
   private List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
   private String regexpFilterText;
   private String regexpFilterExpression;
+  private boolean shouldNotFlattern;
 
   public Map<String, List<String>> getHeaders() {
-    return headers;
+    return this.headers;
   }
 
   public void setHeaders(final Map<String, List<String>> headers) {
@@ -27,7 +28,7 @@ public class FeatureState {
   }
 
   public Map<String, String[]> getParameterMap() {
-    return parameterMap;
+    return this.parameterMap;
   }
 
   public void setParameterMap(final Map<String, String[]> parameterMap) {
@@ -35,7 +36,7 @@ public class FeatureState {
   }
 
   public String getPostContent() {
-    return postContent;
+    return this.postContent;
   }
 
   public void setPostContent(final String postContent) {
@@ -43,7 +44,7 @@ public class FeatureState {
   }
 
   public List<GenericVariable> getGenericVariables() {
-    return genericVariables;
+    return this.genericVariables;
   }
 
   public void setGenericVariables(final List<GenericVariable> genericVariables) {
@@ -51,7 +52,7 @@ public class FeatureState {
   }
 
   public List<GenericRequestVariable> getGenericRequestVariables() {
-    return genericRequestVariables;
+    return this.genericRequestVariables;
   }
 
   public void setGenericRequestVariables(
@@ -60,7 +61,7 @@ public class FeatureState {
   }
 
   public List<GenericHeaderVariable> getGenericHeaderVariables() {
-    return genericHeaderVariables;
+    return this.genericHeaderVariables;
   }
 
   public void setGenericHeaderVariables(final List<GenericHeaderVariable> genericHeaderVariables) {
@@ -68,7 +69,7 @@ public class FeatureState {
   }
 
   public String getRegexpFilterText() {
-    return regexpFilterText;
+    return this.regexpFilterText;
   }
 
   public void setRegexpFilterText(final String regexpFilterText) {
@@ -76,31 +77,41 @@ public class FeatureState {
   }
 
   public String getRegexpFilterExpression() {
-    return regexpFilterExpression;
+    return this.regexpFilterExpression;
   }
 
   public void setRegexpFilterExpression(final String regexpFilterExpression) {
     this.regexpFilterExpression = regexpFilterExpression;
   }
 
+  public boolean getShouldNotFlattern() {
+    return this.shouldNotFlattern;
+  }
+
+  public void setShouldNotFlattern(final boolean shouldNotFlattern) {
+    this.shouldNotFlattern = shouldNotFlattern;
+  }
+
   @Override
   public String toString() {
     return "FeatureState [headers="
-        + headers
+        + this.headers
         + ", parameterMap="
-        + parameterMap
+        + this.parameterMap
         + ", postContent="
-        + postContent
+        + this.postContent
         + ", genericVariables="
-        + genericVariables
+        + this.genericVariables
         + ", genericRequestVariables="
-        + genericRequestVariables
+        + this.genericRequestVariables
         + ", genericHeaderVariables="
-        + genericHeaderVariables
+        + this.genericHeaderVariables
         + ", regexpFilterText="
-        + regexpFilterText
+        + this.regexpFilterText
         + ", regexpFilterExpression="
-        + regexpFilterExpression
+        + this.regexpFilterExpression
+        + ", shouldNotFlattern="
+        + this.shouldNotFlattern
         + "]";
   }
 }

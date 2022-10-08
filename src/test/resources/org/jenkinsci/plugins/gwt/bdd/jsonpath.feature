@@ -49,3 +49,43 @@ Feature: It should be possible to parse JSON post content with JSONPath.
       }
     }
     """
+
+
+  Scenario: JSONPath is used to extract values from post content and flatterning is turned off
+
+    When received post content is:
+    """
+    {
+      "ref": "refs/heads/develop",
+      "head_commit": {
+        "committer": {
+          "name": "baxterthehacker",
+          "username": "Baxter the Hacker"
+        }
+      }
+    }
+    """
+
+    Given the following generic variables are configured:
+      | variable            | expression                        | expressionType  | defaultValue | regexpFilter  |
+      | everything          | $                                 | JSONPath        |              |               |
+
+    Given should not flattern is checked
+
+    Then variables are resolved to:
+      | variable                              | value |
+      | everything_ref                        |       |
+      | everything_head_commit_committer_name |       |
+
+    Then variable everything is resolved to:
+    """
+    {
+      "ref": "refs/heads/develop",
+      "head_commit": {
+        "committer": {
+          "name": "baxterthehacker",
+          "username": "Baxter the Hacker"
+        }
+      }
+    }
+    """

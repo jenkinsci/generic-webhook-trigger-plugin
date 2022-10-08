@@ -89,6 +89,13 @@
    </f:description>
  </f:entry>
 
+ <f:entry title="Avoid flatterning branches" field="shouldNotFlattern">
+   <f:checkbox/>
+   <f:description>
+    Avoid flatterning any selected branch. If the selected node is a branch, not a leaf, the plugin will, by default, flattern its content and create variables for each leaf on that branch.
+   </f:description>
+ </f:entry>
+
  <f:entry title="Print post content" field="printPostContent">
    <f:checkbox/>
    <f:description>

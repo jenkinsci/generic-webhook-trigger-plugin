@@ -71,9 +71,14 @@ public class Stepdefs {
     featureState.setRegexpFilterExpression(given.trim());
   }
 
+  @Given("^should not flattern is checked$")
+  public void givenShouldNotFlattern() {
+    featureState.setShouldNotFlattern(true);
+  }
+
   @Then("^variables are resolved to:$")
   public void variablesAreResolved(final List<GenericVariablesResolvedPojo> given) {
-    final Map<String, String> resolvedVariables = getResolvedVariables();
+    final Map<String, String> resolvedVariables = this.getResolvedVariables();
     for (final GenericVariablesResolvedPojo expected : given) {
       String actual = "";
       if (resolvedVariables.containsKey(expected.getVariable())) {
@@ -87,30 +92,30 @@ public class Stepdefs {
 
   @Then("^variable ([a-z]+?) is resolved to:$")
   public void variableIsResolvedTo(final String variable, final String expected) {
-    assertThat(getResolvedVariables().get(variable)) //
+    assertThat(this.getResolvedVariables().get(variable)) //
         .as(variable) //
         .isEqualTo(expected);
   }
 
   @Then("^the job is triggered$")
   public void jobShouldBeTriggered() {
-    isMatching(true);
+    this.isMatching(true);
   }
 
   @Then("^the job is not triggered$")
   public void jobShouldNotBeTriggered() {
-    isMatching(false);
+    this.isMatching(false);
   }
 
   @Then("^filter text is rendered to: (.*)$")
   public void filterTextIsRenderedTo(final String given) {
-    assertThat(renderedText(getResolvedVariables())).isEqualTo(given);
+    assertThat(this.renderedText(this.getResolvedVariables())).isEqualTo(given);
   }
 
   private boolean isMatching(final boolean expected) {
-    final Map<String, String> resolvedVariables = getResolvedVariables();
+    final Map<String, String> resolvedVariables = this.getResolvedVariables();
 
-    final String renderedRegexpFilterText = renderedText(resolvedVariables);
+    final String renderedRegexpFilterText = this.renderedText(resolvedVariables);
     final boolean isMatching =
         Renderer.isMatching(renderedRegexpFilterText, featureState.getRegexpFilterExpression());
     if (!isMatching && expected) {
@@ -144,7 +149,8 @@ public class Stepdefs {
                 featureState.getPostContent(),
                 featureState.getGenericVariables(),
                 featureState.getGenericRequestVariables(),
-                featureState.getGenericHeaderVariables()) //
+                featureState.getGenericHeaderVariables(),
+                featureState.getShouldNotFlattern()) //
             .getVariables();
     LOG.info(
         "Resolved variables:\n "
