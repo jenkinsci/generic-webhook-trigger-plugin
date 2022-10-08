@@ -102,7 +102,7 @@
 							<goal>git-changelog</goal>
 						</goals>
 						<configuration>
-							<updatePomWithNextSemanticVersion>true</updatePomWithNextSemanticVersion>
+							<updatePomWithNextSemanticVersion>false</updatePomWithNextSemanticVersion>
 							<readableTagName>-([^-]+?)$</readableTagName>
 							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
 						</configuration>
