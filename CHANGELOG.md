@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## generic-webhook-trigger-1.85.2 (2022-10-17)
+
+### Bug Fixes
+
+-  stepping GSON to 2.9.1 ([7bcdc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7bcdcec1e623bf6) Tomas Bjerre)  
+
 ## generic-webhook-trigger-1.85.1 (2022-10-08)
 
 ### Bug Fixes
