@@ -94,19 +94,10 @@
 				<groupId>se.bjurr.gitchangelog</groupId>
 				<artifactId>git-changelog-maven-plugin</artifactId>
 				<version>${changelog}</version>
-				<executions>
-					<execution>
-						<id>GenerateGitChangelog</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>git-changelog</goal>
-						</goals>
-						<configuration>
-							<readableTagName>-([^-]+?)$</readableTagName>
-							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<readableTagName>-([^-]+?)$</readableTagName>
+					<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.coveo</groupId>
