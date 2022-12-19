@@ -42,6 +42,7 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   private boolean silentResponse;
   private boolean overrideQuietPeriod;
   private boolean shouldNotFlattern;
+  private boolean allowSeveralTriggersPerBuild;
 
   @Symbol("GenericTrigger")
   public static class GenericDescriptor extends TriggerDescriptor {
@@ -152,6 +153,15 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     return this.tokenCredentialId;
   }
 
+  @DataBoundSetter
+  public void setAllowSeveralTriggersPerBuild(final boolean allowSeveralTriggersPerBuild) {
+    this.allowSeveralTriggersPerBuild = allowSeveralTriggersPerBuild;
+  }
+
+  public boolean getAllowSeveralTriggersPerBuild() {
+    return this.allowSeveralTriggersPerBuild;
+  }
+
   @Extension public static final GenericDescriptor DESCRIPTOR = new GenericDescriptor();
 
   @SuppressWarnings("static-access")
@@ -188,7 +198,8 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       final ParametersDefinitionProperty parametersDefinitionProperty =
           this.job.getProperty(ParametersDefinitionProperty.class);
       final ParametersAction parameters =
-          createParameterAction(parametersDefinitionProperty, resolvedVariables);
+          createParameterAction(
+              parametersDefinitionProperty, resolvedVariables, this.allowSeveralTriggersPerBuild);
       item =
           this.retrieveScheduleJob(this.job) //
               .scheduleBuild2(this.job, quietPeriod, new CauseAction(genericCause), parameters);

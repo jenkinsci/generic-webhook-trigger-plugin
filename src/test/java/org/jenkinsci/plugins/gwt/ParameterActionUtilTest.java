@@ -8,6 +8,7 @@ import hudson.model.BooleanParameterDefinition;
 import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class ParameterActionUtilTest {
             .build();
 
     final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables);
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
     assertThat(actual) //
         .hasSize(1);
@@ -43,7 +44,7 @@ public class ParameterActionUtilTest {
             "name", "this is supplied");
 
     final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables);
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
     assertThat(actual) //
         .hasSize(1);
@@ -62,7 +63,7 @@ public class ParameterActionUtilTest {
             .build();
 
     final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables);
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
     assertThat(actual) //
         .hasSize(1);
@@ -81,7 +82,7 @@ public class ParameterActionUtilTest {
             "name", "false");
 
     final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables);
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
     assertThat(actual) //
         .hasSize(1);
@@ -100,11 +101,32 @@ public class ParameterActionUtilTest {
             "name", "true");
 
     final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables);
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
     assertThat(actual) //
         .hasSize(1);
     assertThat(actual.getAllParameters().get(0).getValue()) //
         .isEqualTo(true);
+  }
+
+  @Test
+  public void testThatUniqueParameterIsAddedWhenallowSeveralTriggersPerBuildFalse() {
+    final ParametersDefinitionProperty parametersDefinitionProperty =
+        new ParametersDefinitionProperty();
+    final Map<String, String> resolvedVariables = new HashMap<>();
+
+    final ParametersAction actualWithTrue =
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+
+    assertThat(actualWithTrue) //
+        .hasSize(0);
+
+    final ParametersAction actualWithFalse =
+        createParameterAction(parametersDefinitionProperty, resolvedVariables, false);
+
+    assertThat(actualWithFalse) //
+        .hasSize(1);
+    assertThat(actualWithFalse.getAllParameters().get(0).getValue()) //
+        .isNotNull();
   }
 }

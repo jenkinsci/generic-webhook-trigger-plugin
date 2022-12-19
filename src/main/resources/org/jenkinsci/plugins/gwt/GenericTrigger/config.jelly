@@ -82,6 +82,13 @@
    </f:description>
  </f:entry>
 
+ <f:entry title="Allow several triggers per build" field="allowSeveralTriggersPerBuild">
+   <f:checkbox/>
+   <f:description>
+    If checked, the plugin will allow one build to have several triggers. If not checked, the plugin will trigger exactly one job when invoked.
+   </f:description>
+ </f:entry>
+
  <f:entry title="Silent response" field="silentResponse">
    <f:checkbox/>
    <f:description>

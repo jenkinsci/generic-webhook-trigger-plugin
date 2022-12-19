@@ -76,12 +76,7 @@ The token can be supplied as a:
 
 ## Trigger exactly one build
 
-Jenkins will batch builds of a job if those builds have same parameters. If this plugin gets invoked by many webhooks at the same time it may trigger only one build and it will have many *Generic Cause* as causes. This has been reported in many issues [#64](/../../issues/64) [#116](/../../issues/116) [#126](/../../issues/126) [#162](/../../issues/162) [#171](/../../issues/171).
-
-You can solve this by making the one job parameterized. Resolve one of the parameters with something unique from the webhook. This will make each trigger unique and Jenkins will not batch the builds into one build.
-
-The section on *Default values* explains the parameters.
-
+Until version `1.85.2` of this plugin, it would batch builds with same parameters. The `1.86.0` adds an option, `allowSeveralTriggersPerBuild`, that, if checked, will keep this behavior. If not checked, the plugin will trigger exactly one job when invoked.
 
 ## Whitelist hosts
 
