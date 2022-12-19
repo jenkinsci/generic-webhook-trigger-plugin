@@ -59,7 +59,7 @@
 		<connection>scm:git:ssh://github.com:jenkinsci/generic-webhook-trigger-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/generic-webhook-trigger-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/generic-webhook-trigger-plugin</url>
-		<tag>HEAD</tag>
+		<tag>generic-webhook-trigger-1.86.0</tag>
 	</scm>
 
 	<repositories>
