@@ -1,7 +1,8 @@
 #!/bin/bash
 
-./mvnw release:prepare release:perform -B -DperformRelease=true \
- && ./mvnw package \
- && git commit -a -m "chore: updating changelog" \
- && git push \
- || git clean -f && git checkout pom.xml
+./mvnw se.bjurr.gitchangelog:git-changelog-maven-plugin:semantic-version \
+  && ./mvnw release:prepare release:perform -B \
+  && ./mvnw se.bjurr.gitchangelog:git-changelog-maven-plugin:git-changelog \
+  && git commit -a -m "chore: updating changelog" \
+  && git push \
+  || git clean -f

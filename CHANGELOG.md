@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.86.0 (2022-12-19)
+
+### Features
+
+-  adding allowSeveralTriggersPerBuild configuration ([aa637](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/aa6370b2930ac94) Tomas Bjerre)  [#64](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/64)  [#116](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/116)  [#126](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/126)  [#162](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/162)  [#171](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/171)  [#252](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/252)  
+
 ## 1.85.2 (2022-10-17)
 
 ### Bug Fixes
