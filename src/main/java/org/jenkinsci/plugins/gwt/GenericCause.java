@@ -4,6 +4,8 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import hudson.model.Cause;
 import java.util.Map;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 
 public class GenericCause extends Cause {
 
@@ -48,6 +50,7 @@ public class GenericCause extends Cause {
 
   @Override
   public String getShortDescription() {
-    return cause;
+    PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+    return policy.sanitize(cause);
   }
 }
