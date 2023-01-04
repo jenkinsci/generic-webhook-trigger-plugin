@@ -2,6 +2,20 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.86.2 (2023-01-04)
+
+### Bug Fixes
+
+-  stepping owasp-java-html-sanitizer ([7a926](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/7a926bc802946a2) Tomas Bjerre)  
+
+### Other changes
+
+**allow links and formatting in causeString**
+
+
+[4340e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4340ecc84e1d172) Benjamin, Max (mb388a) *2023-01-04 01:19:03*
+
+
 ## 1.86.1 (2022-12-19)
 
 ### Bug Fixes
