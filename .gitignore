@@ -10,3 +10,4 @@ work
 *iml
 /.apt_generated/
 .vscode
+/.gradle/

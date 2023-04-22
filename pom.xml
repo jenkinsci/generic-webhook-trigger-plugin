@@ -11,8 +11,8 @@
 		<jenkins.version>2.222.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violations.version>1.50.4</violations.version>
-		<changelog>1.95.4</changelog>
+		<violations.version>1.50.7</violations.version>
+		<changelog>1.97.0</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
@@ -201,6 +201,12 @@
 			<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
 			<artifactId>owasp-java-html-sanitizer</artifactId>
 			<version>20220608.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- test // -->
