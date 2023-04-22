@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.86.3 (2023-04-22)
+
+### Bug Fixes
+
+-  excluding guava ([08a20](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/08a204c2d1ca1a3) Tomas Bjerre)  [#262](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/262)  
+
 ## 1.86.2 (2023-01-04)
 
 ### Bug Fixes
