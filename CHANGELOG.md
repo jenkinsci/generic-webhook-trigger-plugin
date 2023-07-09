@@ -2,6 +2,13 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.86.4 (2023-07-09)
+
+### Bug Fixes
+
+-  correct spelling of flatten in API ([3794d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3794dabb04d5eaf) Tomas Bjerre)  [#268](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/268)  
+-  avoid flattening branches was broken ([3fedc](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3fedc55573f5748) Tomas Bjerre)  [#268](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/268)  
+
 ## 1.86.3 (2023-04-22)
 
 ### Bug Fixes
