@@ -114,12 +114,25 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     return this.overrideQuietPeriod;
   }
 
+  /** @deprecated use {@link #setShouldNotFlatten} */
+  @Deprecated
   @DataBoundSetter
   public void setShouldNotFlattern(final boolean shouldNotFlattern) {
     this.shouldNotFlattern = shouldNotFlattern;
   }
 
+  /** @deprecated use {@link #isShouldNotFlatten} */
+  @Deprecated
   public boolean isShouldNotFlattern() {
+    return this.shouldNotFlattern;
+  }
+
+  @DataBoundSetter
+  public void setShouldNotFlatten(final boolean shouldNotFlatten) {
+    this.shouldNotFlattern = shouldNotFlatten;
+  }
+
+  public boolean isShouldNotFlatten() {
     return this.shouldNotFlattern;
   }
 

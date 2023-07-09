@@ -190,7 +190,7 @@ pipelineJob('Generic Job Example') {
    printContributedVariables(true)
    printPostContent(true)
    silentResponse(false)
-   shouldNotFlattern(false)
+   shouldNotFlatten(false)
    regexpFilterText("\$VARIABLE_FROM_POST")
    regexpFilterExpression("aRegExp")
   }
@@ -310,7 +310,7 @@ node {
 
     silentResponse: false,
     
-    shouldNotFlattern: false,
+    shouldNotFlatten: false,
 
     regexpFilterText: '$ref',
     regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
@@ -353,7 +353,7 @@ pipeline {
 
      silentResponse: false,
      
-     shouldNotFlattern: false,
+     shouldNotFlatten: false,
 
      regexpFilterText: '$ref',
      regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
