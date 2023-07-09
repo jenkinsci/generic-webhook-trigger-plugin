@@ -91,7 +91,9 @@ public class PostContentParameterResolver {
     try {
       final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
       Map<String, String> flatterned = new HashMap<>();
-      if (!shouldNotFlattern) {
+      if (shouldNotFlattern) {
+        JsonFlattener.putVariable(flatterned, gv.getVariableName(), resolved, gv.getRegexpFilter());
+      } else {
         flatterned =
             this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
       }

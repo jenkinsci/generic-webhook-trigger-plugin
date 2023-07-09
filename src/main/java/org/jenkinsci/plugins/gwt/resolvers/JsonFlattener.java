@@ -21,11 +21,12 @@ public class JsonFlattener {
   public Map<String, String> flattenJson(
       final String key, final String regexFilter, final Object resolved) {
     final Map<String, String> resolvedVariables = newHashMap();
-    doFlatternJson(key, regexFilter, resolved, resolvedVariables);
+    this.doFlatternJson(key, regexFilter, resolved, resolvedVariables);
 
     if (resolved != null && !(resolved instanceof String)) {
       final String variableName = toVariableName(key);
-      resolvedVariables.put(variableName, filter(GSON.toJson(resolved).toString(), regexFilter));
+      resolvedVariables.put(
+          variableName, filter(JsonFlattener.GSON.toJson(resolved).toString(), regexFilter));
     }
 
     return resolvedVariables;
@@ -40,21 +41,29 @@ public class JsonFlattener {
     if (resolved instanceof List) {
       int i = 0;
       for (final Object o : (List<?>) resolved) {
-        doFlatternJson(key + "_" + i, regexFilter, o, resolvedVariables);
+        this.doFlatternJson(key + "_" + i, regexFilter, o, resolvedVariables);
         i++;
       }
     } else if (resolved instanceof Map) {
       for (final Entry<String, Object> entry : ((Map<String, Object>) resolved).entrySet()) {
-        doFlatternJson(
+        this.doFlatternJson(
             key + "_" + entry.getKey(), regexFilter, entry.getValue(), resolvedVariables);
       }
     } else if (resolved != null) {
       final String variableName = toVariableName(key);
-      String string = resolved.toString();
-      if (!(resolved instanceof String)) {
-        string = GSON.toJson(resolved).toString();
-      }
-      resolvedVariables.put(variableName, filter(string, regexFilter));
+      JsonFlattener.putVariable(resolvedVariables, variableName, resolved, regexFilter);
     }
+  }
+
+  public static void putVariable(
+      final Map<String, String> resolvedVariables,
+      final String variableName,
+      final Object variableValue,
+      final String regexFilter) {
+    String string = variableValue.toString();
+    if (!(variableValue instanceof String)) {
+      string = JsonFlattener.GSON.toJson(variableValue).toString();
+    }
+    resolvedVariables.put(variableName, filter(string, regexFilter));
   }
 }

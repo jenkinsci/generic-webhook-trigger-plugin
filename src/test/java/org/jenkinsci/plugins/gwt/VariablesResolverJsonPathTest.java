@@ -15,7 +15,7 @@ import org.junit.Test;
 public class VariablesResolverJsonPathTest {
   private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
-  private final boolean shouldNotFlattern = false;
+  private boolean shouldNotFlattern = false;
 
   @Test
   public void testJSONPathGetOneLeaf() throws Exception {
@@ -156,6 +156,43 @@ public class VariablesResolverJsonPathTest {
 
     assertThat(variables.get("ids")) //
         .isEqualTo("[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]");
+  }
+
+  @Test
+  public void testJSONPathGetAllVariable_not_flat() throws Exception {
+    this.shouldNotFlattern = true;
+
+    final String resourceName = "gitlab-mergerequest-comment.json";
+    final String postContent = this.getContent(resourceName);
+
+    final List<GenericVariable> genericVariables =
+        newArrayList( //
+            new GenericVariable("ids", "$..id"),
+            new GenericVariable("user", "$.user"),
+            new GenericVariable("userName", "$.user.name"));
+    final Map<String, String> variables =
+        new VariablesResolver(
+                this.headers,
+                new HashMap<String, String[]>(),
+                postContent,
+                genericVariables,
+                new ArrayList<GenericRequestVariable>(),
+                this.genericHeaderVariables,
+                this.shouldNotFlattern)
+            .getVariables();
+
+    assertThat(variables) //
+        .containsOnlyKeys("ids", "user", "userName");
+
+    assertThat(variables.get("ids")) //
+        .isEqualTo("[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]");
+
+    assertThat(variables.get("user")) //
+        .isEqualTo(
+            "{\"name\":\"Administrator\",\"username\":\"root\",\"avatar_url\":\"http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s\\u003d80\\u0026d\\u003didenticon\"}");
+
+    assertThat(variables.get("userName")) //
+        .isEqualTo("Administrator");
   }
 
   @Test
