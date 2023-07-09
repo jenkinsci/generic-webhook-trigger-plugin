@@ -36,12 +36,12 @@ public class PostContentParameterResolver {
   public Map<String, String> getPostContentParameters(
       final List<GenericVariable> configuredGenericVariables,
       final String incomingPostContent,
-      final boolean shouldNotFlattern) {
+      final boolean shouldNotFlatten) {
     final Map<String, String> resolvedVariables = newHashMap();
     if (configuredGenericVariables != null) {
       for (final GenericVariable gv : configuredGenericVariables) {
         final Map<String, String> resolvedMap =
-            this.resolve(incomingPostContent, gv, shouldNotFlattern);
+            this.resolve(incomingPostContent, gv, shouldNotFlatten);
         final boolean notResolved =
             resolvedMap.isEmpty()
                 || resolvedMap.containsKey(gv.getVariableName())
@@ -56,14 +56,14 @@ public class PostContentParameterResolver {
   }
 
   private Map<String, String> resolve(
-      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlattern) {
+      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlatten) {
     try {
       if (!isNullOrEmpty(incomingPostContent)
           && gv != null
           && gv.getExpression() != null
           && !gv.getExpression().isEmpty()) {
         if (gv.getExpressionType() == JSONPath) {
-          return this.resolveJsonPath(incomingPostContent, gv, shouldNotFlattern);
+          return this.resolveJsonPath(incomingPostContent, gv, shouldNotFlatten);
         } else if (gv.getExpressionType() == XPath) {
           return this.resolveXPath(incomingPostContent, gv);
         } else {
@@ -87,20 +87,20 @@ public class PostContentParameterResolver {
   }
 
   private Map<String, String> resolveJsonPath(
-      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlattern) {
+      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlatten) {
     try {
       final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
-      Map<String, String> flatterned = new HashMap<>();
-      if (shouldNotFlattern) {
-        JsonFlattener.putVariable(flatterned, gv.getVariableName(), resolved, gv.getRegexpFilter());
+      Map<String, String> flattened = new HashMap<>();
+      if (shouldNotFlatten) {
+        JsonFlattener.putVariable(flattened, gv.getVariableName(), resolved, gv.getRegexpFilter());
       } else {
-        flatterned =
+        flattened =
             this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
       }
       if (gv.getExpression().trim().equals("$")) {
-        flatterned.put(gv.getVariableName(), incomingPostContent);
+        flattened.put(gv.getVariableName(), incomingPostContent);
       }
-      return flatterned;
+      return flattened;
     } catch (final PathNotFoundException e) {
       return new HashMap<>();
     }
@@ -118,6 +118,6 @@ public class PostContentParameterResolver {
     final XPath xpath = xPathfactory.newXPath();
     final XPathExpression expr = xpath.compile(gv.getExpression());
     final Object resolved = expr.evaluate(doc, XPathConstants.NODESET);
-    return this.xmlFlattener.flatternXmlNode(gv, (NodeList) resolved);
+    return this.xmlFlattener.flattenXmlNode(gv, (NodeList) resolved);
   }
 }

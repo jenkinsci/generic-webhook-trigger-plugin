@@ -13,7 +13,7 @@ import org.junit.Test;
 public class VariablesResolverRequestParameterTest {
   private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
-  private final boolean shouldNotFlattern = false;
+  private final boolean shouldNotFlatten = false;
 
   @Test
   public void testGenericRequestParametersWithFilters() throws Exception {
@@ -47,7 +47,7 @@ public class VariablesResolverRequestParameterTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -85,7 +85,7 @@ public class VariablesResolverRequestParameterTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //

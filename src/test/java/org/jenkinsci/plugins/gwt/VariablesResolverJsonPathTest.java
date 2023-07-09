@@ -15,7 +15,7 @@ import org.junit.Test;
 public class VariablesResolverJsonPathTest {
   private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
-  private boolean shouldNotFlattern = false;
+  private boolean shouldNotFlatten = false;
 
   @Test
   public void testJSONPathGetOneLeaf() throws Exception {
@@ -141,7 +141,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -160,7 +160,7 @@ public class VariablesResolverJsonPathTest {
 
   @Test
   public void testJSONPathGetAllVariable_not_flat() throws Exception {
-    this.shouldNotFlattern = true;
+    this.shouldNotFlatten = true;
 
     final String resourceName = "gitlab-mergerequest-comment.json";
     final String postContent = this.getContent(resourceName);
@@ -178,7 +178,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 new ArrayList<GenericRequestVariable>(),
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -227,7 +227,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -258,7 +258,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -286,7 +286,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -315,7 +315,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -351,7 +351,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -378,7 +378,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -435,7 +435,7 @@ public class VariablesResolverJsonPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
     return variables;
   }

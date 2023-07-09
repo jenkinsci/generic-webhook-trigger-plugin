@@ -20,7 +20,7 @@ public class VariablesResolver {
       new PostContentParameterResolver();
   private final List<GenericHeaderVariable> configuredGenericHeaderVariables;
   private final Map<String, List<String>> incomingHeaders;
-  private final boolean shouldNotFlattern;
+  private final boolean shouldNotFlatten;
 
   public VariablesResolver(
       final Map<String, List<String>> incomingHeaders,
@@ -29,7 +29,7 @@ public class VariablesResolver {
       final List<GenericVariable> configuredGenericVariables,
       final List<GenericRequestVariable> configuredGenericRequestVariables,
       final List<GenericHeaderVariable> configuredGenericHeaderVariables,
-      final boolean shouldNotFlattern) {
+      final boolean shouldNotFlatten) {
     this.incomingPostContent = this.firstNotNull(incomingPostContent, "");
     this.configuredGenericVariables =
         this.firstNotNull(configuredGenericVariables, new ArrayList<GenericVariable>());
@@ -41,7 +41,7 @@ public class VariablesResolver {
     this.configuredGenericHeaderVariables =
         this.firstNotNull(configuredGenericHeaderVariables, new ArrayList<GenericHeaderVariable>());
     this.incomingHeaders = incomingHeaders;
-    this.shouldNotFlattern = shouldNotFlattern;
+    this.shouldNotFlatten = shouldNotFlatten;
   }
 
   private <T> T firstNotNull(final T o1, final T o2) {
@@ -61,7 +61,7 @@ public class VariablesResolver {
             this.configuredGenericRequestVariables, this.incomingParameterMap));
     resolvedVariables.putAll(
         this.postContentParameterResolver.getPostContentParameters(
-            this.configuredGenericVariables, this.incomingPostContent, this.shouldNotFlattern));
+            this.configuredGenericVariables, this.incomingPostContent, this.shouldNotFlatten));
     return resolvedVariables;
   }
 }

@@ -33,7 +33,7 @@ public class VariablesResolverHeaderTest {
     genericHeaderVariables.add(new GenericHeaderVariable("someparam", ""));
     genericHeaderVariables.add(new GenericHeaderVariable("anotherparam", "[^e]"));
     genericHeaderVariables.add(new GenericHeaderVariable("content-type", ""));
-    final boolean shouldNotFlattern = false;
+    final boolean shouldNotFlatten = false;
     final Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -42,7 +42,7 @@ public class VariablesResolverHeaderTest {
                 genericVariables,
                 genericRequestVariables,
                 genericHeaderVariables,
-                shouldNotFlattern)
+                shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -74,7 +74,7 @@ public class VariablesResolverHeaderTest {
     genericHeaderVariables.add(new GenericHeaderVariable("someparam", ""));
     genericHeaderVariables.add(new GenericHeaderVariable("anotherparam", "[^e]"));
     genericHeaderVariables.add(new GenericHeaderVariable("content-type", ""));
-    final boolean shouldNotFlattern = false;
+    final boolean shouldNotFlatten = false;
     final Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -83,7 +83,7 @@ public class VariablesResolverHeaderTest {
                 genericVariables,
                 genericRequestVariables,
                 genericHeaderVariables,
-                shouldNotFlattern)
+                shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -110,7 +110,7 @@ public class VariablesResolverHeaderTest {
 
     final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     genericHeaderVariables.add(new GenericHeaderVariable("someparam", null));
-    final boolean shouldNotFlattern = false;
+    final boolean shouldNotFlatten = false;
     final Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -119,7 +119,7 @@ public class VariablesResolverHeaderTest {
                 genericVariables,
                 genericRequestVariables,
                 genericHeaderVariables,
-                shouldNotFlattern)
+                shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -141,7 +141,7 @@ public class VariablesResolverHeaderTest {
 
     final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     genericHeaderVariables.add(new GenericHeaderVariable("someparam", null));
-    final boolean shouldNotFlattern = false;
+    final boolean shouldNotFlatten = false;
     Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -150,7 +150,7 @@ public class VariablesResolverHeaderTest {
                 genericVariables,
                 genericRequestVariables,
                 genericHeaderVariables,
-                shouldNotFlattern)
+                shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -165,7 +165,7 @@ public class VariablesResolverHeaderTest {
                 genericVariables,
                 genericRequestVariables,
                 genericHeaderVariables,
-                shouldNotFlattern)
+                shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -189,7 +189,7 @@ public class VariablesResolverHeaderTest {
     headers.put("param_not_mapped", newArrayList("do not include"));
 
     final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
-    final boolean shouldNotFlattern = false;
+    final boolean shouldNotFlatten = false;
     final Map<String, String> variables =
         new VariablesResolver(
                 headers,
@@ -198,7 +198,7 @@ public class VariablesResolverHeaderTest {
                 genericVariables,
                 genericRequestVariables,
                 genericHeaderVariables,
-                shouldNotFlattern)
+                shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //

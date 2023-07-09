@@ -21,7 +21,7 @@ import org.w3c.dom.NodeList;
 public class XmlFlattener {
   public XmlFlattener() {}
 
-  public Map<String, String> flatternXmlNode(final GenericVariable gv, final NodeList nodeList)
+  public Map<String, String> flattenXmlNode(final GenericVariable gv, final NodeList nodeList)
       throws Exception {
     final Map<String, String> resolvedVariables = newHashMap();
     if (nodeList.getLength() > 0) {

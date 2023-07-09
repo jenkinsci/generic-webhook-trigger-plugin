@@ -17,7 +17,7 @@ public class FeatureState {
   private List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
   private String regexpFilterText;
   private String regexpFilterExpression;
-  private boolean shouldNotFlattern;
+  private boolean shouldNotFlatten;
 
   public Map<String, List<String>> getHeaders() {
     return this.headers;
@@ -84,12 +84,12 @@ public class FeatureState {
     this.regexpFilterExpression = regexpFilterExpression;
   }
 
-  public boolean getShouldNotFlattern() {
-    return this.shouldNotFlattern;
+  public boolean getShouldNotFlatten() {
+    return this.shouldNotFlatten;
   }
 
-  public void setShouldNotFlattern(final boolean shouldNotFlattern) {
-    this.shouldNotFlattern = shouldNotFlattern;
+  public void setShouldNotFlatten(final boolean shouldNotFlatten) {
+    this.shouldNotFlatten = shouldNotFlatten;
   }
 
   @Override
@@ -110,8 +110,8 @@ public class FeatureState {
         + this.regexpFilterText
         + ", regexpFilterExpression="
         + this.regexpFilterExpression
-        + ", shouldNotFlattern="
-        + this.shouldNotFlattern
+        + ", shouldNotFlatten="
+        + this.shouldNotFlatten
         + "]";
   }
 }

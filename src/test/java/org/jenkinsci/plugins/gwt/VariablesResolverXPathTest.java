@@ -16,7 +16,7 @@ import org.junit.Test;
 public class VariablesResolverXPathTest {
   private final Map<String, List<String>> headers = new HashMap<>();
   private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
-  private final boolean shouldNotFlattern = false;
+  private final boolean shouldNotFlatten = false;
 
   @Test
   public void testXPathGetOneVariable() throws Exception {
@@ -38,7 +38,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -65,7 +65,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -92,7 +92,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -121,7 +121,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -174,7 +174,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
     return variables;
   }
@@ -199,7 +199,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -230,7 +230,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -259,7 +259,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -296,7 +296,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -331,7 +331,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -362,7 +362,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -391,7 +391,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -426,7 +426,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //
@@ -456,7 +456,7 @@ public class VariablesResolverXPathTest {
                 genericVariables,
                 genericRequestVariables,
                 this.genericHeaderVariables,
-                this.shouldNotFlattern)
+                this.shouldNotFlatten)
             .getVariables();
 
     assertThat(variables) //

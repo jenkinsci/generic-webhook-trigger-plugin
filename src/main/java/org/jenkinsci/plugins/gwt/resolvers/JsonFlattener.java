@@ -21,7 +21,7 @@ public class JsonFlattener {
   public Map<String, String> flattenJson(
       final String key, final String regexFilter, final Object resolved) {
     final Map<String, String> resolvedVariables = newHashMap();
-    this.doFlatternJson(key, regexFilter, resolved, resolvedVariables);
+    this.doFlattenJson(key, regexFilter, resolved, resolvedVariables);
 
     if (resolved != null && !(resolved instanceof String)) {
       final String variableName = toVariableName(key);
@@ -33,7 +33,7 @@ public class JsonFlattener {
   }
 
   @SuppressWarnings("unchecked")
-  private void doFlatternJson(
+  private void doFlattenJson(
       final String key,
       final String regexFilter,
       final Object resolved,
@@ -41,12 +41,12 @@ public class JsonFlattener {
     if (resolved instanceof List) {
       int i = 0;
       for (final Object o : (List<?>) resolved) {
-        this.doFlatternJson(key + "_" + i, regexFilter, o, resolvedVariables);
+        this.doFlattenJson(key + "_" + i, regexFilter, o, resolvedVariables);
         i++;
       }
     } else if (resolved instanceof Map) {
       for (final Entry<String, Object> entry : ((Map<String, Object>) resolved).entrySet()) {
-        this.doFlatternJson(
+        this.doFlattenJson(
             key + "_" + entry.getKey(), regexFilter, entry.getValue(), resolvedVariables);
       }
     } else if (resolved != null) {

@@ -71,9 +71,9 @@ public class Stepdefs {
     featureState.setRegexpFilterExpression(given.trim());
   }
 
-  @Given("^should not flattern is checked$")
-  public void givenShouldNotFlattern() {
-    featureState.setShouldNotFlattern(true);
+  @Given("^should not flatten is checked$")
+  public void givenShouldNotFlatten() {
+    featureState.setShouldNotFlatten(true);
   }
 
   @Then("^variables are resolved to:$")
@@ -150,7 +150,7 @@ public class Stepdefs {
                 featureState.getGenericVariables(),
                 featureState.getGenericRequestVariables(),
                 featureState.getGenericHeaderVariables(),
-                featureState.getShouldNotFlattern()) //
+                featureState.getShouldNotFlatten()) //
             .getVariables();
     LOG.info(
         "Resolved variables:\n "

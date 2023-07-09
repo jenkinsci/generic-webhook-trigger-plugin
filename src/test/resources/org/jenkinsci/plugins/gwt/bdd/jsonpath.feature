@@ -51,7 +51,7 @@ Feature: It should be possible to parse JSON post content with JSONPath.
     """
 
 
-  Scenario: JSONPath is used to extract values from post content and flatterning is turned off
+  Scenario: JSONPath is used to extract values from post content and flattening is turned off
 
     When received post content is:
     """
@@ -70,7 +70,7 @@ Feature: It should be possible to parse JSON post content with JSONPath.
       | variable            | expression                        | expressionType  | defaultValue | regexpFilter  |
       | everything          | $                                 | JSONPath        |              |               |
 
-    Given should not flattern is checked
+    Given should not flatten is checked
 
     Then variables are resolved to:
       | variable                              | value |
