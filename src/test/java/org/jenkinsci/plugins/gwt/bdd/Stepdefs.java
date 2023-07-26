@@ -5,11 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 
+import com.google.common.base.Strings;
 import com.google.gson.GsonBuilder;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.Before;
+import io.cucumber.java.DataTableType;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -33,6 +35,16 @@ public class Stepdefs {
     featureState.setPostContent(postContent);
   }
 
+  @DataTableType
+  public GenericVariablePojo genericVariablePojo(final Map<String, String> entry) {
+    return new GenericVariablePojo(
+        Strings.nullToEmpty(entry.get("variable")),
+        Strings.nullToEmpty(entry.get("expression")),
+        Strings.nullToEmpty(entry.get("expressionType")),
+        Strings.nullToEmpty(entry.get("defaultValue")),
+        Strings.nullToEmpty(entry.get("regexpFilter")));
+  }
+
   @Given("^the following generic variables are configured:$")
   public void givenGenericVariables(final List<GenericVariablePojo> given) {
     for (final GenericVariablePojo from : given) {
@@ -42,7 +54,9 @@ public class Stepdefs {
       if (!isNullOrEmpty(from.getExpressionType())) {
         to.setExpressionType(ExpressionType.valueOf(from.getExpressionType()));
       }
-      featureState.getGenericVariables().add(to);
+      featureState //
+          .getGenericVariables() //
+          .add(to);
     }
   }
 
@@ -53,6 +67,14 @@ public class Stepdefs {
         gv.setRegexpFilter(regexpFilter);
       }
     }
+  }
+
+  @DataTableType
+  public GenericFilterPojo genericFilterPojo(final Map<String, String> entry) {
+    final GenericFilterPojo it = new GenericFilterPojo();
+    it.setExpression(Strings.nullToEmpty(entry.get("expression")));
+    it.setText(Strings.nullToEmpty(entry.get("text")));
+    return it;
   }
 
   @Given("^filter is configured with:$")
@@ -74,6 +96,14 @@ public class Stepdefs {
   @Given("^should not flatten is checked$")
   public void givenShouldNotFlatten() {
     featureState.setShouldNotFlatten(true);
+  }
+
+  @DataTableType
+  public GenericVariablesResolvedPojo gnericVariablesResolvedPojo(final Map<String, String> entry) {
+    final GenericVariablesResolvedPojo it = new GenericVariablesResolvedPojo();
+    it.setVariable(Strings.nullToEmpty(entry.get("variable")));
+    it.setValue(Strings.nullToEmpty(entry.get("value")));
+    return it;
   }
 
   @Then("^variables are resolved to:$")
