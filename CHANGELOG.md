@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.86.5 (2023-07-27)
+
+### Bug Fixes
+
+-  stepping dependencies ([302ed](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/302ed3a827647b4) Tomas Bjerre)  [#270](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/270)  
+
 ## 1.86.4 (2023-07-09)
 
 ### Bug Fixes
