@@ -37,7 +37,8 @@ public class JobFinderTest {
     final JobFinderImpersonater jobFinderImpersonater =
         new JobFinderImpersonater() {
           @Override
-          public List<ParameterizedJob> getAllParameterizedJobs(final boolean impersonate) {
+          public List<ParameterizedJob> getAllParameterizedJobs(
+              final boolean impersonate, final boolean usecache) {
             JobFinderTest.this.didImpersonate = impersonate;
             return JobFinderTest.this.allParameterizedJobsByImpersonation;
           }
@@ -71,7 +72,7 @@ public class JobFinderTest {
   }
 
   private List<String> findAllJobs(final String givenToken) {
-    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
+    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken, false);
     final List<String> names = new ArrayList<>();
     for (final FoundJob found : foundJobs) {
       names.add(found.getFullName());

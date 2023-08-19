@@ -65,14 +65,24 @@ The token can be supplied as a:
 
 - Request parameter:
   
-  `curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123 2>&1`
+  `curl -vs "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123" 2>&1`
 - Token header:
   
-  `curl -vs -H "token: abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+  `curl -vs -H "token: abc123" "http://localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1`
   - It will also detect `X-Gitlab-Token`.
 - _Authorization_ header of type _Bearer_ :
   
-  `curl -vs -H "Authorization: Bearer abc123" http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1`
+  `curl -vs -H "Authorization: Bearer abc123" "http://localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1`
+
+### Cache parameter
+
+There is a special `usecache` parameter. When supplied, the plugin will cache configured jobs for `15` minutes. After the first invocation, useing this parameter, the plugin will automatically refresh the cache so that any future calls will use the cached value. This means the effect of any changes to any configured job will be delayed.
+
+The cache will only be used if a `token` is also supplied.
+
+The cache will be used when `usecache=true` parameter is passed like this:
+
+  `curl -vs "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123&usecache=true" 2>&1`
 
 ## Trigger exactly one build
 
@@ -106,26 +116,26 @@ If you are fiddling with expressions, you may want to checkout:
 It's probably easiest to do with `curl`. Given that you have configured a Jenkins job to trigger on Generic Webhook, here are some examples of how to start the jobs.
 
 ```bash
-curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1
+curl -vs "http://localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1
 ```
 
 This should start your job, if the job has no `token` configured and no security enabled. If you have security enabled you may need to authenticate:
 
 ```bash
-curl -vs http://theusername:thepasssword@localhost:8080/jenkins/generic-webhook-trigger/invoke 2>&1
+curl -vs "http://theusername:thepasssword@localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1
 ```
 
 If your job has a `token` you don't need to supply other credentials. You can specify the `token` like this:
 
 ```bash
-curl -vs http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE 2>&1
+curl -vs "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE" 2>&1
 ```
 Please keep in mind, using a token always runs the triggered jobs with SYSTEM privileges.
 
 If you want to trigger with `token` and some post content, `curl` can dot that like this.
 
 ```bash
-curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some value" }}' http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE
+curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some value" }}' "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE"
 ```
 
 ## Screenshots
@@ -372,7 +382,7 @@ pipeline {
 It can be triggered with something like:
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -H "headerWithNumber: nbr123" -H "headerWithString: a b c" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke?requestWithNumber=nbr%20123\&requestWithString=a%20string
+curl -X POST -H "Content-Type: application/json" -H "headerWithNumber: nbr123" -H "headerWithString: a b c" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs "http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke?requestWithNumber=nbr%20123&requestWithString=a%20string"
 ```
 
 And the job will have this in the log:

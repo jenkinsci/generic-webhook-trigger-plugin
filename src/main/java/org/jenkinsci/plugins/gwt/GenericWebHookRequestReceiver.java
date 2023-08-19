@@ -170,7 +170,8 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       final String postContent,
       final String givenToken) {
 
-    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
+    final boolean useCache = this.shouldUseCache(parameterMap);
+    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken, useCache);
     final Map<String, Object> triggerResultsMap = new HashMap<>();
     boolean allSilent = true;
     boolean errors = false;
@@ -211,6 +212,21 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         return jsonResponse(200, "Triggered jobs.", triggerResultsMap);
       }
     }
+  }
+
+  private boolean shouldUseCache(final Map<String, String[]> parameterMap) {
+    if (parameterMap == null) {
+      return false;
+    }
+    final String useCacheParamName = "usecache";
+    if (parameterMap.containsKey(useCacheParamName)) {
+      final String[] useCache = parameterMap.get(useCacheParamName);
+      if (useCache.length == 1) {
+        final String useCacheValue = useCache[0];
+        return useCacheValue != null && (useCacheValue.equalsIgnoreCase("true"));
+      }
+    }
+    return false;
   }
 
   String createMessageFromException(final Throwable t) {

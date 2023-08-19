@@ -22,7 +22,7 @@ import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 public final class JobFinder {
 
-  private static Logger LOG = Logger.getLogger(JobFinder.class.getSimpleName());
+  private static Logger LOG = Logger.getLogger(JobFinder.class.getName());
 
   private JobFinder() {}
 
@@ -33,13 +33,14 @@ public final class JobFinder {
     JobFinder.jobFinderImpersonater = jobFinderImpersonater;
   }
 
-  public static List<FoundJob> findAllJobsWithTrigger(final String givenToken) {
+  public static List<FoundJob> findAllJobsWithTrigger(
+      final String givenToken, final boolean useCache) {
 
     final List<FoundJob> found = new ArrayList<>();
 
     final boolean impersonate = !isNullOrEmpty(givenToken);
     final List<ParameterizedJob> candidateProjects =
-        jobFinderImpersonater.getAllParameterizedJobs(impersonate);
+        jobFinderImpersonater.getAllParameterizedJobs(impersonate, useCache);
     for (final ParameterizedJob candidateJob : candidateProjects) {
       final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
