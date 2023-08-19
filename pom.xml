@@ -183,7 +183,7 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>credentials</artifactId>
-			<version>2.6.2</version>
+			<version>1074.v60e6c29b_b_44b_</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.jenkins-ci.plugins</groupId>
