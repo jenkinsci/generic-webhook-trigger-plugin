@@ -22,32 +22,32 @@ import org.junit.Test;
 public class JobFinderTest {
   private final AtomicInteger atomicInteger = new AtomicInteger(0);
   private List<ParameterizedJob> allParameterizedJobsByImpersonation;
-  private final ParameterizedJob job1WithNoToken = createJob("", "");
-  private final ParameterizedJob job2WithNoToken = createJob("", "");
-  private final ParameterizedJob job3WithAuthTokenAbc = createJob("ABC", "");
-  private final ParameterizedJob job4WithAuthTokenDef = createJob("DEF", "");
-  private final ParameterizedJob job5WithGenericTokenAbc = createJob("", "ABC");
-  private final ParameterizedJob job6WithGenericTokenDef = createJob("", "DEF");
+  private final ParameterizedJob job1WithNoToken = this.createJob("", "");
+  private final ParameterizedJob job2WithNoToken = this.createJob("", "");
+  private final ParameterizedJob job3WithAuthTokenAbc = this.createJob("ABC", "");
+  private final ParameterizedJob job4WithAuthTokenDef = this.createJob("DEF", "");
+  private final ParameterizedJob job5WithGenericTokenAbc = this.createJob("", "ABC");
+  private final ParameterizedJob job6WithGenericTokenDef = this.createJob("", "DEF");
   private Boolean didImpersonate;
 
   @Before
   public void before() {
-    didImpersonate = null;
-    allParameterizedJobsByImpersonation = new ArrayList<>();
+    this.didImpersonate = null;
+    this.allParameterizedJobsByImpersonation = new ArrayList<>();
     final JobFinderImpersonater jobFinderImpersonater =
         new JobFinderImpersonater() {
           @Override
-          public List<ParameterizedJob> getAllParameterizedJobs(boolean impersonate) {
-            didImpersonate = impersonate;
-            return allParameterizedJobsByImpersonation;
+          public List<ParameterizedJob> getAllParameterizedJobs(final boolean impersonate) {
+            JobFinderTest.this.didImpersonate = impersonate;
+            return JobFinderTest.this.allParameterizedJobsByImpersonation;
           }
         };
-    allParameterizedJobsByImpersonation.add(job1WithNoToken);
-    allParameterizedJobsByImpersonation.add(job2WithNoToken);
-    allParameterizedJobsByImpersonation.add(job3WithAuthTokenAbc);
-    allParameterizedJobsByImpersonation.add(job4WithAuthTokenDef);
-    allParameterizedJobsByImpersonation.add(job5WithGenericTokenAbc);
-    allParameterizedJobsByImpersonation.add(job6WithGenericTokenDef);
+    this.allParameterizedJobsByImpersonation.add(this.job1WithNoToken);
+    this.allParameterizedJobsByImpersonation.add(this.job2WithNoToken);
+    this.allParameterizedJobsByImpersonation.add(this.job3WithAuthTokenAbc);
+    this.allParameterizedJobsByImpersonation.add(this.job4WithAuthTokenDef);
+    this.allParameterizedJobsByImpersonation.add(this.job5WithGenericTokenAbc);
+    this.allParameterizedJobsByImpersonation.add(this.job6WithGenericTokenDef);
 
     JobFinder.setJobFinderImpersonater(jobFinderImpersonater);
   }
@@ -58,7 +58,7 @@ public class JobFinderTest {
     when(mock.getAuthToken()) //
         .thenReturn(new BuildAuthorizationToken(authToken));
     when(mock.getFullName()) //
-        .thenReturn("name-" + atomicInteger.incrementAndGet());
+        .thenReturn("name-" + this.atomicInteger.incrementAndGet());
     final Map<TriggerDescriptor, Trigger<?>> triggers = new HashMap<>();
     final TriggerDescriptor typeDescr = mock(TriggerDescriptor.class);
     final GenericTrigger genericTrigger = new GenericTrigger(null, null, null, null, null);
@@ -84,11 +84,11 @@ public class JobFinderTest {
   public void testThatJobsWithoutTokenIsNotFoundWhenTokenSupplied() {
     final String givenToken = "some-token";
 
-    final List<String> actual = findAllJobs(givenToken);
+    final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
         .isEmpty();
-    assertThat(didImpersonate) //
+    assertThat(this.didImpersonate) //
         .isTrue();
   }
 
@@ -96,11 +96,12 @@ public class JobFinderTest {
   public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesABC() {
     final String givenToken = "ABC";
 
-    final List<String> actual = findAllJobs(givenToken);
+    final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job3WithAuthTokenAbc.getFullName(), job5WithGenericTokenAbc.getFullName());
-    assertThat(didImpersonate) //
+        .containsExactly(
+            this.job3WithAuthTokenAbc.getFullName(), this.job5WithGenericTokenAbc.getFullName());
+    assertThat(this.didImpersonate) //
         .isTrue();
   }
 
@@ -108,11 +109,12 @@ public class JobFinderTest {
   public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesDEF() {
     final String givenToken = "DEF";
 
-    final List<String> actual = findAllJobs(givenToken);
+    final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job4WithAuthTokenDef.getFullName(), job6WithGenericTokenDef.getFullName());
-    assertThat(didImpersonate) //
+        .containsExactly(
+            this.job4WithAuthTokenDef.getFullName(), this.job6WithGenericTokenDef.getFullName());
+    assertThat(this.didImpersonate) //
         .isTrue();
   }
 
@@ -120,11 +122,11 @@ public class JobFinderTest {
   public void testThatJobsWithoutTokenIsFoundWhenTokenNotSupplied() {
     final String givenToken = "";
 
-    final List<String> actual = findAllJobs(givenToken);
+    final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(job1WithNoToken.getFullName(), job2WithNoToken.getFullName());
-    assertThat(didImpersonate) //
+        .containsExactly(this.job1WithNoToken.getFullName(), this.job2WithNoToken.getFullName());
+    assertThat(this.didImpersonate) //
         .isFalse();
   }
 
@@ -132,11 +134,11 @@ public class JobFinderTest {
   public void testThatNoJobsAreFoundWhenTokenSuppliedButDoesNotMatch() {
     final String givenToken = "QWE";
 
-    final List<String> actual = findAllJobs(givenToken);
+    final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
         .isEmpty();
-    assertThat(didImpersonate) //
+    assertThat(this.didImpersonate) //
         .isTrue();
   }
 }
