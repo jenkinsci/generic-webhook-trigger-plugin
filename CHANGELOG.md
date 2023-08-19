@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.87.0 (2023-08-19)
+
+### Features
+
+-  add caching feature in global config ([811e5](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/811e50b1905e809) Tomas Bjerre)  [#272](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/272)  
+
 ## 1.86.5 (2023-07-27)
 
 ### Bug Fixes
