@@ -22,7 +22,7 @@ import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 public final class JobFinder {
 
-  private static Logger LOG = Logger.getLogger(JobFinder.class.getSimpleName());
+  private static Logger LOG = Logger.getLogger(JobFinder.class.getName());
 
   private JobFinder() {}
 

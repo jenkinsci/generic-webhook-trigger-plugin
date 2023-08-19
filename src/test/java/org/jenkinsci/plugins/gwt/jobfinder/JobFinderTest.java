@@ -37,6 +37,9 @@ public class JobFinderTest {
     final JobFinderImpersonater jobFinderImpersonater =
         new JobFinderImpersonater() {
           @Override
+          synchronized void reconfigureCachingIfNecessary() {}
+
+          @Override
           public List<ParameterizedJob> getAllParameterizedJobs(final boolean impersonate) {
             JobFinderTest.this.didImpersonate = impersonate;
             return JobFinderTest.this.allParameterizedJobsByImpersonation;

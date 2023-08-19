@@ -8,7 +8,7 @@
          xmlns:t="/lib/hudson"
          xmlns:c="/lib/credentials">
 
-  <f:section title="Generic Webhook Trigger">
+  <f:section title="Generic Webhook Trigger Whitelist">
   
     <f:optionalBlock field="enabled" title="Whitelist enabled" inline="true">
       <f:entry title="Whitelisted servers">
