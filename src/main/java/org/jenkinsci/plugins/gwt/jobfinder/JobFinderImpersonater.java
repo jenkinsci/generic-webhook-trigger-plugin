@@ -80,12 +80,6 @@ public class JobFinderImpersonater {
     if (configCacheGetJobs) {
       this.stopCaching();
       this.startCaching();
-      try {
-        // Make a call to add the entry to cache
-        this.getCachedJobs();
-      } catch (final ExecutionException e) {
-        LOGGER.log(Level.SEVERE, "Was unable to trigger cache", e);
-      }
     } else {
       this.stopCaching();
     }
