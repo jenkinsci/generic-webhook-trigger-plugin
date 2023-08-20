@@ -124,15 +124,15 @@
 						<configuration>
 							<minSeverity>INFO</minSeverity>
 							<detailLevel>VERBOSE</detailLevel>
-							<maxViolations>99999999</maxViolations>
+							<maxViolations>0</maxViolations>
 							<printViolations>true</printViolations>
 
 							<violations>
 								<violation>
 									<parser>FINDBUGS</parser>
-									<reporter>Findbugs</reporter>
+									<reporter>Spotbugs</reporter>
 									<folder>.</folder>
-									<pattern>.*/findbugsXml\.xml$</pattern>
+									<pattern>.*/spotbugsXml\.xml$</pattern>
 								</violation>
 							</violations>
 						</configuration>
