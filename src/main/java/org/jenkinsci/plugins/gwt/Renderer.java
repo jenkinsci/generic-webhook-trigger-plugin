@@ -4,8 +4,12 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Strings.nullToEmpty;
 import static java.util.logging.Level.FINE;
 import static java.util.regex.Pattern.compile;
+import static org.jenkinsci.plugins.gwt.resolvers.FlattenerUtils.filter;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jayway.jsonpath.JsonPath;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -86,5 +90,38 @@ public class Renderer {
           }
         });
     return variables;
+  }
+
+  @VisibleForTesting
+  public static List<String> render(String Path, final Map<String, String> resolvedVariables) {
+    List<String> allPathList = new ArrayList<>();
+    if (isNullOrEmpty(Path)) {
+      return allPathList;
+    }
+    for (final Map.Entry<String, String> entry : resolvedVariables.entrySet()) {
+      String fullName = "";
+      String postContent = entry.getValue();
+      List<String> newPathList = new ArrayList<>();
+      String[] pathFieldList = Path.split("\\/");
+      for (String pathField : pathFieldList) {
+        final boolean isMatching = compile("^\\$\\{").matcher(nullToEmpty(pathField)).find();
+        if (isMatching) {
+          pathField = filter(pathField, "\\$\\{");
+          pathField = filter(pathField, "\\}");
+          Object content = JsonPath.read(postContent, pathField);
+          if (!(content instanceof String)) {
+            Gson GSON = new GsonBuilder().serializeNulls().create();
+            content = GSON.toJson(content);
+          }
+          newPathList.add(content.toString());
+          continue;
+        }
+        newPathList.add(pathField);
+      }
+      fullName = String.join("/", newPathList);
+      fullName = fullName.replace("\"", "");
+      allPathList.add(fullName);
+    }
+    return allPathList;
   }
 }

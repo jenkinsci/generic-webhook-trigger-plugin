@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import hudson.security.ACL;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -129,6 +130,30 @@ public class JobFinderImpersonater {
         orig = ACL.impersonate(ACL.SYSTEM);
       }
       return Jenkins.getInstance().getAllItems(ParameterizedJob.class);
+    } finally {
+      if (impersonate) {
+        SecurityContextHolder.setContext(orig);
+      }
+    }
+  }
+
+  public static List<ParameterizedJob> getAllParameterizedJobsByFullNameList(
+      boolean impersonate, List<String> fullNameList) {
+    SecurityContext orig = null;
+    List<ParameterizedJob> listItem = new ArrayList();
+    try {
+      if (impersonate) {
+        orig = ACL.impersonate(ACL.SYSTEM);
+      }
+      for (final String fullName : fullNameList) {
+        ParameterizedJob item =
+            (ParameterizedJob)
+                Jenkins.getInstance().get().getItemByFullName(fullName, ParameterizedJob.class);
+        if (item != null) {
+          listItem.add(item);
+        }
+      }
+      return listItem;
     } finally {
       if (impersonate) {
         SecurityContextHolder.setContext(orig);

@@ -170,7 +170,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       final String postContent,
       final String givenToken) {
 
-    final List<FoundJob> foundJobs = JobFinder.findAllJobsWithTrigger(givenToken);
+    final List<FoundJob> foundJobs = JobFinder.foundJobs(givenToken, postContent);
     final Map<String, Object> triggerResultsMap = new HashMap<>();
     boolean allSilent = true;
     boolean errors = false;

@@ -6,6 +6,9 @@ import static java.security.MessageDigest.isEqual;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import hudson.model.BuildAuthorizationToken;
 import hudson.model.Item;
 import hudson.triggers.Trigger;
@@ -15,9 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jenkins.model.ParameterizedJobMixIn;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 import org.jenkinsci.plugins.gwt.FoundJob;
 import org.jenkinsci.plugins.gwt.GenericTrigger;
+import org.jenkinsci.plugins.gwt.global.JobFinderConfig;
+import org.jenkinsci.plugins.gwt.resolvers.JsonFlattener;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 public final class JobFinder {
@@ -31,6 +37,49 @@ public final class JobFinder {
   @VisibleForTesting
   static void setJobFinderImpersonater(final JobFinderImpersonater jobFinderImpersonater) {
     JobFinder.jobFinderImpersonater = jobFinderImpersonater;
+  }
+
+  /** This is the factory to choice findJobWithFullName or findAllJobsWithTrigger. */
+  public static List<FoundJob> foundJobs(final String givenToken, final String postContent) {
+    List<FoundJob> foundJobs;
+    if (JobFinderConfig.get().isEnabled()) {
+      foundJobs = findJobWithFullName(givenToken, postContent);
+    } else {
+      foundJobs = findAllJobsWithTrigger(givenToken);
+    }
+    return foundJobs;
+  }
+
+  @VisibleForTesting
+  public static JsonObject getJsonObject(String postContent) {
+    Gson GSON = new GsonBuilder().serializeNulls().create();
+    return GSON.fromJson(postContent, JsonObject.class);
+  }
+
+  private static List<FoundJob> findJobWithFullName(
+      final String givenToken, final String postContent) {
+    final List<FoundJob> found = new ArrayList<>();
+    if (postContent == null || postContent.isEmpty()) {
+      return found;
+    }
+    String regexFilter = "";
+    String postContentKey = postContent.getClass().getName();
+    JsonFlattener flattenJson = new JsonFlattener();
+    JsonObject resolved = getJsonObject(postContent);
+    final Map<String, String> postMap =
+        flattenJson.flattenJson(postContentKey, regexFilter, resolved);
+    final List<String> fullNameList = JobFinderConfig.get().getFullNameList(postMap);
+    final boolean impersonate = !isNullOrEmpty(givenToken);
+    final List<ParameterizedJobMixIn.ParameterizedJob> candidateProjects =
+        JobFinderImpersonater.getAllParameterizedJobsByFullNameList(impersonate, fullNameList);
+    for (final ParameterizedJobMixIn.ParameterizedJob candidateJob : candidateProjects) {
+      final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
+      if (genericTriggerOpt != null) {
+        final FoundJob foundJob = new FoundJob(candidateJob.getFullName(), genericTriggerOpt);
+        found.add(foundJob);
+      }
+    }
+    return found;
   }
 
   public static List<FoundJob> findAllJobsWithTrigger(final String givenToken) {
