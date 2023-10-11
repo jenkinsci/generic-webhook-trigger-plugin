@@ -64,7 +64,7 @@ public class JobFinderTest {
         .thenReturn("name-" + this.atomicInteger.incrementAndGet());
     final Map<TriggerDescriptor, Trigger<?>> triggers = new HashMap<>();
     final TriggerDescriptor typeDescr = mock(TriggerDescriptor.class);
-    final GenericTrigger genericTrigger = new GenericTrigger(null, null, null, null, null);
+    final GenericTrigger genericTrigger = new GenericTrigger(null, null, null);
     genericTrigger.setToken(genericToken);
     triggers.put(typeDescr, genericTrigger);
     when(mock.getTriggers()) //
