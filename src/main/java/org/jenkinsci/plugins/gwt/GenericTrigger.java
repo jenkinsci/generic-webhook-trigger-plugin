@@ -30,8 +30,8 @@ import org.kohsuke.stapler.QueryParameter;
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
   private List<GenericVariable> genericVariables = newArrayList();
-  private final String regexpFilterText;
-  private final String regexpFilterExpression;
+  private String regexpFilterText;
+  private String regexpFilterExpression;
   private List<GenericRequestVariable> genericRequestVariables = newArrayList();
   private List<GenericHeaderVariable> genericHeaderVariables = newArrayList();
   private boolean printPostContent;
@@ -70,15 +70,21 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
   @DataBoundConstructor
   public GenericTrigger(
       final List<GenericVariable> genericVariables,
-      final String regexpFilterText,
-      final String regexpFilterExpression,
       final List<GenericRequestVariable> genericRequestVariables,
       final List<GenericHeaderVariable> genericHeaderVariables) {
     this.genericVariables = genericVariables;
-    this.regexpFilterExpression = regexpFilterExpression;
-    this.regexpFilterText = regexpFilterText;
     this.genericRequestVariables = genericRequestVariables;
     this.genericHeaderVariables = genericHeaderVariables;
+  }
+
+  @DataBoundSetter
+  public void setRegexpFilterText(final String regexpFilterText) {
+    this.regexpFilterText = regexpFilterText;
+  }
+
+  @DataBoundSetter
+  public void setRegexpFilterExpression(final String regexpFilterExpression) {
+    this.regexpFilterExpression = regexpFilterExpression;
   }
 
   @DataBoundSetter
