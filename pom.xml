@@ -3,11 +3,10 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>4.71</version>
+		<version>4.74</version>
 	</parent>
 
 	<properties>
-		<java.level>11</java.level>
 		<jenkins.version>2.361.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
@@ -154,12 +153,22 @@
 		</testResources>
 	</build>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.jenkins.tools.bom</groupId>
+				<artifactId>bom-2.361.x</artifactId>
+				<version>2102.v854b_fec19c92</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>plain-credentials</artifactId>
-			<version>1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
@@ -178,18 +187,10 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>structs</artifactId>
-			<version>1.24</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>credentials</artifactId>
-			<version>2.6.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jenkins-ci.plugins</groupId>
-					<artifactId>structs</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.github.jgonian</groupId>
@@ -209,11 +210,6 @@
 		</dependency>
 
 		<!-- test // -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
