@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.88.0 (2023-10-15)
+
+### Features
+
+-  change filter to optional parameter in Job DSL (#280) ([f591e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/f591ee21a57f716) 임준영)  
+
 ## 1.87.0 (2023-08-19)
 
 ### Features
