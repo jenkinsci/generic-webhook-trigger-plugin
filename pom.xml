@@ -15,7 +15,7 @@
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>
-	<version>1.88.1-SNAPSHOT</version>
+	<version>1.88.1</version>
 	<name>Generic Webhook Trigger Plugin</name>
 	<description>Can receive any HTTP request, extract any values from JSON or XML and trigger a job with those values available as variables. Works with GitHub, GitLab, Bitbucket, Jira and many more.</description>
 	<url>https://github.com/jenkinsci/generic-webhook-trigger-plugin</url>
@@ -58,7 +58,7 @@
 		<connection>scm:git:ssh://github.com:jenkinsci/generic-webhook-trigger-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/generic-webhook-trigger-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/generic-webhook-trigger-plugin</url>
-		<tag>generic-webhook-trigger-1.86.1</tag>
+		<tag>generic-webhook-trigger-1.88.1</tag>
 	</scm>
 
 	<repositories>
