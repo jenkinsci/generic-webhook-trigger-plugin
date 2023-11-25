@@ -10,8 +10,8 @@
 		<jenkins.version>2.361.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violations.version>1.50.8</violations.version>
-		<changelog>1.97.1</changelog>
+		<violations.version>1.50.9</violations.version>
+		<changelog>1.100.6</changelog>
 	</properties>
 
 	<artifactId>generic-webhook-trigger</artifactId>

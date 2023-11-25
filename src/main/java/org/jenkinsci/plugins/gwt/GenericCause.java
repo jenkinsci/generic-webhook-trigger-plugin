@@ -13,6 +13,9 @@ public class GenericCause extends Cause {
   private final String postContent;
   private final boolean printContributedVariables;
   private final boolean printPostContent;
+  /** Used at runtime to only print once. */
+  private boolean postContentPrinted;
+
   private final String cause;
 
   public GenericCause(
@@ -25,6 +28,7 @@ public class GenericCause extends Cause {
     this.resolvedVariables = resolvedVariables;
     this.printContributedVariables = printContributedVariables;
     this.printPostContent = printPostContent;
+    this.postContentPrinted = false;
     if (!isNullOrEmpty(cause)) {
       this.cause = cause;
     } else {
@@ -38,6 +42,14 @@ public class GenericCause extends Cause {
 
   public boolean isPrintPostContent() {
     return printPostContent;
+  }
+
+  public void setPostContentPrinted(boolean postContentPrinted) {
+    this.postContentPrinted = postContentPrinted;
+  }
+
+  public boolean isPostContentPrinted() {
+    return postContentPrinted;
   }
 
   public Map<String, String> getResolvedVariables() {
