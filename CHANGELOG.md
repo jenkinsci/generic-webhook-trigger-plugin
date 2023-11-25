@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.88.1 (2023-11-25)
+
+### Bug Fixes
+
+-  contributed variables repeated in build log ([573e3](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/573e39f5e8a8a22) Tomas Bjerre)  [#283](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/283)  
+
 ## 1.88.0 (2023-10-15)
 
 ### Features
