@@ -1,14 +1,11 @@
 package org.jenkinsci.plugins.gwt;
 
-import com.google.common.base.Charsets;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.EnvironmentContributor;
 import hudson.model.Run;
 import hudson.model.TaskListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
@@ -25,7 +22,8 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
     final GenericCause cause = (GenericCause) r.getCause(GenericCause.class);
     if (cause != null) {
       final boolean shouldLog =
-          (cause.isPrintContributedVariables() || cause.isPrintPostContent()) && !cause.isPostContentPrinted();
+          (cause.isPrintContributedVariables() || cause.isPrintPostContent())
+              && !cause.isPostContentPrinted();
       if (shouldLog) {
         cause.setPostContentPrinted(true);
       }

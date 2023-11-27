@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.88.2 (2023-11-27)
+
+### Bug Fixes
+
+-  contributing variables was broken ([87206](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/87206dcd28ed57b) Tomas Bjerre)  [#285](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/285)  
+
 ## 1.88.1 (2023-11-25)
 
 ### Bug Fixes
