@@ -6,7 +6,6 @@ import static java.security.MessageDigest.isEqual;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
-import hudson.model.BuildAuthorizationToken;
 import hudson.model.Item;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
@@ -49,7 +48,7 @@ public final class JobFinder {
                 genericTriggerOpt.getToken(),
                 genericTriggerOpt.getTokenCredentialId());
         final boolean authenticationTokenMatches =
-            authenticationTokenMatches(givenToken, candidateJob.getAuthToken(), configuredToken);
+            authenticationTokenMatches(givenToken, configuredToken);
         if (authenticationTokenMatches) {
           final FoundJob foundJob = new FoundJob(candidateJob.getFullName(), genericTriggerOpt);
           found.add(foundJob);
@@ -97,52 +96,25 @@ public final class JobFinder {
   }
 
   private static boolean authenticationTokenMatches(
-      final String givenToken,
-      @SuppressWarnings("deprecation") final BuildAuthorizationToken authToken,
-      final String genericToken) {
+      final String givenToken, final String configuredToken) {
     final boolean noTokenGiven = isNullOrEmpty(givenToken);
-    final boolean noKindOfTokenConfigured =
-        isNullOrEmpty(genericToken) && !jobHasAuthToken(authToken);
-    final boolean genericTokenNotConfigured = isNullOrEmpty(genericToken);
-    final boolean authTokenNotConfigured = !jobHasAuthToken(authToken);
-    return genericTokenNotConfigured && authenticationTokenMatches(authToken, givenToken)
-        || authTokenNotConfigured && authenticationTokenMatchesGeneric(genericToken, givenToken)
-        || noTokenGiven && noKindOfTokenConfigured;
+    final boolean noTokenConfigured = isNullOrEmpty(configuredToken);
+    return authenticationTokenMatchesGeneric(configuredToken, givenToken)
+        || noTokenGiven && noTokenConfigured;
   }
 
   /** This is the token configured in this plugin. */
   private static boolean authenticationTokenMatchesGeneric(
-      final String token, final String givenToken) {
-    final boolean jobHasAuthToken = !isNullOrEmpty(token);
-    final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
-    if (jobHasAuthToken && authTokenWasGiven) {
-      return isEqual(token.getBytes(UTF_8), givenToken.getBytes(UTF_8));
+      final String configuredToken, final String givenToken) {
+    final boolean jobHasConfiguredToken = !isNullOrEmpty(configuredToken);
+    final boolean tokenWasGiven = !isNullOrEmpty(givenToken);
+    if (jobHasConfiguredToken && tokenWasGiven) {
+      return isEqual(configuredToken.getBytes(UTF_8), givenToken.getBytes(UTF_8));
     }
-    if (!jobHasAuthToken && !authTokenWasGiven) {
+    if (!jobHasConfiguredToken && !tokenWasGiven) {
       return true;
     }
     return false;
-  }
-
-  /** This is the token configured in the job. A feature found in Jenkins core. */
-  @SuppressWarnings("deprecation")
-  private static boolean authenticationTokenMatches(
-      final hudson.model.BuildAuthorizationToken authToken, final String givenToken) {
-
-    final boolean jobHasAuthToken = jobHasAuthToken(authToken);
-    final boolean authTokenWasGiven = !isNullOrEmpty(givenToken);
-    if (jobHasAuthToken && authTokenWasGiven) {
-      return isEqual(authToken.getToken().getBytes(UTF_8), givenToken.getBytes(UTF_8));
-    }
-    if (!jobHasAuthToken && !authTokenWasGiven) {
-      return true;
-    }
-    return false;
-  }
-
-  @SuppressWarnings("deprecation")
-  private static boolean jobHasAuthToken(final hudson.model.BuildAuthorizationToken authToken) {
-    return authToken != null && !isNullOrEmpty(authToken.getToken());
   }
 
   private static GenericTrigger findGenericTrigger(
