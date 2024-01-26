@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 1.88.3 (2024-01-26)
+
+### Bug Fixes
+
+-  JsonPath 2.9.0, fixes CVE-2023-51074 ([08913](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/089134d460f882b) Tomas Bjerre)  
+
 ## 1.88.2 (2023-11-27)
 
 ### Bug Fixes
