@@ -59,6 +59,8 @@ When using the plugin in several jobs, you will have the same URL trigger all jo
 
 There is a special `token` parameter. When supplied, the invocation will only trigger jobs with that exact token. The token also allows invocations without any other authentication credentials.
 
+*In version 2.x of the plugin it no longer supports specifying the token outside of the plugin in [BuildAuthorizationToken](https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/model/BuildAuthorizationToken.java).*
+
 ![Parameter](/sandbox/configure-token.png)
 
 The token can be supplied as a:

@@ -102,8 +102,7 @@ public class JobFinderTest {
     final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(
-            this.job3WithAuthTokenAbc.getFullName(), this.job5WithGenericTokenAbc.getFullName());
+        .containsExactly(this.job5WithGenericTokenAbc.getFullName());
     assertThat(this.didImpersonate) //
         .isTrue();
   }
@@ -115,8 +114,7 @@ public class JobFinderTest {
     final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(
-            this.job4WithAuthTokenDef.getFullName(), this.job6WithGenericTokenDef.getFullName());
+        .containsExactly(this.job6WithGenericTokenDef.getFullName());
     assertThat(this.didImpersonate) //
         .isTrue();
   }
@@ -128,7 +126,11 @@ public class JobFinderTest {
     final List<String> actual = this.findAllJobs(givenToken);
 
     assertThat(actual) //
-        .containsExactly(this.job1WithNoToken.getFullName(), this.job2WithNoToken.getFullName());
+        .containsExactly(
+            this.job1WithNoToken.getFullName(),
+            this.job2WithNoToken.getFullName(),
+            this.job3WithAuthTokenAbc.getFullName(),
+            this.job4WithAuthTokenDef.getFullName());
     assertThat(this.didImpersonate) //
         .isFalse();
   }
