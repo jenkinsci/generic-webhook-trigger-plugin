@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.0.0 (2024-01-27)
+
+### Breaking changes
+
+-  dropping support for BuildAuthorizationToken ([d1d7a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d1d7ad6ecf926af) Tomas Bjerre)  [#290](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/290)  
+
 ## 1.88.3 (2024-01-26)
 
 ### Bug Fixes
