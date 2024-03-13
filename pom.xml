@@ -7,7 +7,7 @@
 	</parent>
 
 	<properties>
-		<jenkins.version>2.361.4</jenkins.version>
+		<jenkins.version>2.414.3</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violations.version>2.0.0</violations.version>
@@ -157,8 +157,8 @@
 		<dependencies>
 			<dependency>
 				<groupId>io.jenkins.tools.bom</groupId>
-				<artifactId>bom-2.361.x</artifactId>
-				<version>2102.v854b_fec19c92</version>
+				<artifactId>bom-2.414.x</artifactId>
+				<version>2884.vc36b_64ce114a_</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -171,24 +171,12 @@
 			<artifactId>plain-credentials</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.jayway.jsonpath</groupId>
-			<artifactId>json-path</artifactId>
-			<version>2.9.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>io.jenkins.plugins</groupId>
+			<artifactId>json-path-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.10.1</version>
+			<groupId>io.jenkins.plugins</groupId>
+			<artifactId>gson-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
