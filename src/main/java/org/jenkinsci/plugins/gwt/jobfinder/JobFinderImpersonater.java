@@ -56,8 +56,9 @@ public class JobFinderImpersonater {
   }
 
   synchronized void reconfigureCachingIfNecessary() {
-    final boolean configCacheGetJobs = CacheConfig.get().isCacheGetJobs();
     final int configCacheGetJobsMinutes = CacheConfig.get().getCacheGetJobsMinutes();
+    final boolean configCacheGetJobs =
+        CacheConfig.get().isCacheGetJobs() && configCacheGetJobsMinutes > 0;
     final boolean shouldReconfigure =
         this.cacheGetJobs != configCacheGetJobs
             || this.cacheGetJobsMinutes != configCacheGetJobsMinutes;
