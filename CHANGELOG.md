@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.0.1 (2024-03-13)
+
+### Bug Fixes
+
+-  avoiding setting cache time to 0 ([6c9f4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6c9f435991ec97c) Tomas Bjerre)  [#297](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/297)  
+
 ## 2.0.0 (2024-01-27)
 
 ### Breaking changes
