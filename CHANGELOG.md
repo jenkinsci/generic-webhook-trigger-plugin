@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.0.2 (2024-03-14)
+
+### Bug Fixes
+
+-  Use library plugins where possible ([35f5c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/35f5c680ca44f42) Basil Crow)  [#298](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/298)  
+
 ## 2.0.1 (2024-03-13)
 
 ### Bug Fixes
