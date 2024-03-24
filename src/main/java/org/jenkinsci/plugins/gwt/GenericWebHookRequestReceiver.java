@@ -8,6 +8,7 @@ import static org.jenkinsci.plugins.gwt.GenericResponse.jsonResponse;
 import static org.kohsuke.stapler.HttpResponses.ok;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import hudson.Extension;
@@ -49,11 +50,13 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
   private static final String FORM_URLENCODED = "application/x-www-form-urlencoded";
 
   private static final String NO_JOBS_MSG =
-      "Did not find any jobs with "
-          + GenericTrigger.class.getSimpleName()
-          + " configured! "
-          + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE. "
-          + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook... ";
+      "Did not find any jobs with " + GenericTrigger.class.getSimpleName() + " configured!\n";
+  private static final String NO_JOBS_HOW_TO_USE_TOKEN =
+      "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n";
+  private static final String NO_JOBS_HOW_TO_AUTH =
+      "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n";
+  private static final String NO_JOBS_MSG_TOKEN = "A token was supplied.\n";
+  private static final String NO_JOBS_MSG_NO_TOKEN = "No token was supplied.\n";
   private static final String URL_NAME = "generic-webhook-trigger";
   private static final Logger LOGGER =
       Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
@@ -205,12 +208,26 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
       return jsonResponse(500, "There were errors when triggering jobs.", triggerResultsMap);
     } else {
       if (foundJobs.isEmpty()) {
-        LOGGER.log(Level.FINE, NO_JOBS_MSG);
-        return jsonResponse(404, NO_JOBS_MSG);
+        final String msg = construct404Message(givenToken);
+        LOGGER.log(Level.FINE, msg);
+        return jsonResponse(404, msg);
       } else {
         return jsonResponse(200, "Triggered jobs.", triggerResultsMap);
       }
     }
+  }
+
+  static String construct404Message(final String givenToken) {
+    String msg = NO_JOBS_MSG;
+    final boolean noTokenGiven = Strings.isNullOrEmpty(givenToken);
+    if (noTokenGiven) {
+      msg += NO_JOBS_MSG_NO_TOKEN;
+    } else {
+      msg += NO_JOBS_MSG_TOKEN;
+    }
+    msg += NO_JOBS_HOW_TO_USE_TOKEN;
+    msg += NO_JOBS_HOW_TO_AUTH;
+    return msg;
   }
 
   String createMessageFromException(final Throwable t) {

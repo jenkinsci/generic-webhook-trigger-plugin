@@ -229,4 +229,40 @@ public class GenericWebHookRequestReceiverTest {
         .startsWith(
             "Exception occurred (class java.lang.IndexOutOfBoundsException: null), full stack trace in Jenkins server log. Thrown in: org.jenkinsci.plugins.gwt.GenericWebHookRequestReceiverTest:");
   }
+
+  @Test
+  public void test404MessageNoToken_empty() {
+    final String actual = GenericWebHookRequestReceiver.construct404Message(null);
+
+    assertThat(actual)
+        .isEqualToIgnoringWhitespace(
+            "Did not find any jobs with GenericTrigger configured!\n"
+                + "No token was supplied.\n"
+                + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n"
+                + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n");
+  }
+
+  @Test
+  public void test404MessageNoToken_null() {
+    final String actual = GenericWebHookRequestReceiver.construct404Message(null);
+
+    assertThat(actual)
+        .isEqualToIgnoringWhitespace(
+            "Did not find any jobs with GenericTrigger configured!\n"
+                + "No token was supplied.\n"
+                + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n"
+                + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n");
+  }
+
+  @Test
+  public void test404MessageNoToken_given() {
+    final String actual = GenericWebHookRequestReceiver.construct404Message("something");
+
+    assertThat(actual)
+        .isEqualToIgnoringWhitespace(
+            "Did not find any jobs with GenericTrigger configured!\n"
+                + "A token was supplied.\n"
+                + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n"
+                + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n");
+  }
 }
