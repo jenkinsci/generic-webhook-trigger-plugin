@@ -12,46 +12,41 @@ public class GenericTriggerResults {
   private final boolean triggered;
 
   public GenericTriggerResults(
-      final hudson.model.Queue.Item item,
+      final String url,
+      final long id,
+      final boolean triggered,
       final Map<String, String> resolvedVariables,
       final String regexpFilterText,
       final String regexpFilterExpression) {
-    if (item != null) {
-      this.url = item.getUrl();
-      this.id = item.getId();
-      this.triggered = true;
-    } else {
-      this.url = null;
-      this.id = 0;
-      this.triggered = false;
-    }
-
+    this.url = url;
+    this.id = id;
+    this.triggered = triggered;
     this.resolvedVariables = resolvedVariables;
     this.regexpFilterText = regexpFilterText;
     this.regexpFilterExpression = regexpFilterExpression;
   }
 
   public boolean isTriggered() {
-    return triggered;
+    return this.triggered;
   }
 
   public long getId() {
-    return id;
+    return this.id;
   }
 
   public String getUrl() {
-    return url;
+    return this.url;
   }
 
   public String getRegexpFilterExpression() {
-    return regexpFilterExpression;
+    return this.regexpFilterExpression;
   }
 
   public String getRegexpFilterText() {
-    return regexpFilterText;
+    return this.regexpFilterText;
   }
 
   public Map<String, String> getResolvedVariables() {
-    return resolvedVariables;
+    return this.resolvedVariables;
   }
 }

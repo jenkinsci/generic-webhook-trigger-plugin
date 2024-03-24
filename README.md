@@ -76,6 +76,18 @@ The token can be supplied as a:
   
   `curl -vs -H "Authorization: Bearer abc123" "http://localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1`
 
+## Dry run
+
+The dry run feature enables a user to test the plugin without actually triggering any jobs.
+
+Dry run is enabled by supplying the `gwt-dry-run: true` header.
+
+```sh
+curl -v -H "gwt-dry-run: true"\
+  "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123"
+```
+
+
 ## Cache jobs
 
 When plugin is used in large installations it may need some time to retrieve all configured jobs. This can be cached by enabling it in the global configuration. When enabled, the plugin will cache configured jobs for a configured time. The plugin will automatically refresh the cache so that any calls will use the cached value. This means the effect of any changes to any configured job will be delayed.

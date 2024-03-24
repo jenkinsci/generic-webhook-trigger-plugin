@@ -29,6 +29,8 @@ import org.kohsuke.stapler.QueryParameter;
 
 public class GenericTrigger extends Trigger<Job<?, ?>> {
 
+  public static final String HEADER_DRY_RUN = "gwt-dry-run";
+
   private List<GenericVariable> genericVariables = newArrayList();
   private String regexpFilterText;
   private String regexpFilterExpression;
@@ -204,7 +206,9 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
     final String renderedRegexpFilterText = renderText(this.regexpFilterText, resolvedVariables);
     final boolean isMatching = isMatching(renderedRegexpFilterText, this.regexpFilterExpression);
 
-    hudson.model.Queue.Item item = null;
+    String url = null;
+    long id = 0;
+    boolean triggered = false;
     if (isMatching) {
       final String cause = renderText(this.causeString, resolvedVariables);
       final GenericCause genericCause =
@@ -219,12 +223,40 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       final ParametersAction parameters =
           createParameterAction(
               parametersDefinitionProperty, resolvedVariables, this.allowSeveralTriggersPerBuild);
-      item =
-          this.retrieveScheduleJob(this.job) //
-              .scheduleBuild2(this.job, quietPeriod, new CauseAction(genericCause), parameters);
+      if (!isDryRun(headers)) {
+        final hudson.model.Queue.Item item =
+            this.retrieveScheduleJob(this.job) //
+                .scheduleBuild2(this.job, quietPeriod, new CauseAction(genericCause), parameters);
+        url = item.getUrl();
+        id = item.getId();
+      } else {
+        url = this.job.getAbsoluteUrl();
+      }
+      triggered = true;
     }
     return new GenericTriggerResults(
-        item, resolvedVariables, renderedRegexpFilterText, this.regexpFilterExpression);
+        url,
+        id,
+        triggered,
+        resolvedVariables,
+        renderedRegexpFilterText,
+        this.regexpFilterExpression);
+  }
+
+  static boolean isDryRun(final Map<String, List<String>> headers) {
+    if (headers == null) {
+      return false;
+    }
+    final List<String> dryRunHeaders = headers.get(HEADER_DRY_RUN);
+    if (dryRunHeaders == null) {
+      return false;
+    }
+    for (final String dryRunHeader : dryRunHeaders) {
+      if (dryRunHeader.equalsIgnoreCase("true")) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @SuppressWarnings("rawtypes")
