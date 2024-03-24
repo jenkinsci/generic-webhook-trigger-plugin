@@ -2,6 +2,13 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.1.0 (2024-03-24)
+
+### Features
+
+-  adding dry run mode ([cc71a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/cc71adf4c3208fa) Tomas Bjerre)  [#300](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/300)  
+-  adjusting 404-response to inform about token supplied or not ([8af75](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/8af75db59994bc0) Tomas Bjerre)  
+
 ## 2.0.2 (2024-03-14)
 
 ### Bug Fixes
