@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.1.1 (2024-04-03)
+
+### Bug Fixes
+
+-  avoid NPE when job not triggered ([64759](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/64759c3db14de8a) Tomas Bjerre)  [#304](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/304)  
+
 ## 2.1.0 (2024-03-24)
 
 ### Features
