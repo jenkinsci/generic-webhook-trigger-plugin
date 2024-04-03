@@ -223,16 +223,19 @@ public class GenericTrigger extends Trigger<Job<?, ?>> {
       final ParametersAction parameters =
           createParameterAction(
               parametersDefinitionProperty, resolvedVariables, this.allowSeveralTriggersPerBuild);
-      if (!isDryRun(headers)) {
+      if (isDryRun(headers)) {
+        url = this.job.getAbsoluteUrl();
+        triggered = true;
+      } else {
         final hudson.model.Queue.Item item =
             this.retrieveScheduleJob(this.job) //
                 .scheduleBuild2(this.job, quietPeriod, new CauseAction(genericCause), parameters);
-        url = item.getUrl();
-        id = item.getId();
-      } else {
-        url = this.job.getAbsoluteUrl();
+        if (item != null) {
+          url = item.getUrl();
+          id = item.getId();
+          triggered = true;
+        }
       }
-      triggered = true;
     }
     return new GenericTriggerResults(
         url,

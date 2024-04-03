@@ -10,7 +10,7 @@
 		<jenkins.version>2.414.3</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violations.version>2.0.0</violations.version>
+		<violations.version>2.1.0</violations.version>
 		<changelog>2.1.0</changelog>
 	</properties>
 
