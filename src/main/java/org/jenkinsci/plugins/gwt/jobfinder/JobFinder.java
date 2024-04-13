@@ -7,11 +7,8 @@ import static java.security.MessageDigest.isEqual;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import hudson.model.Item;
-import hudson.triggers.Trigger;
-import hudson.triggers.TriggerDescriptor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
@@ -40,7 +37,8 @@ public final class JobFinder {
     final List<ParameterizedJob> candidateProjects =
         jobFinderImpersonater.getAllParameterizedJobs(impersonate);
     for (final ParameterizedJob candidateJob : candidateProjects) {
-      final GenericTrigger genericTriggerOpt = findGenericTrigger(candidateJob.getTriggers());
+      final GenericTrigger genericTriggerOpt =
+          GenericTriggerFinder.findGenericTrigger(candidateJob.getTriggers());
       if (genericTriggerOpt != null) {
         final String configuredToken =
             determineTokenValue(
@@ -115,18 +113,5 @@ public final class JobFinder {
       return true;
     }
     return false;
-  }
-
-  private static GenericTrigger findGenericTrigger(
-      final Map<TriggerDescriptor, Trigger<?>> triggers) {
-    if (triggers == null) {
-      return null;
-    }
-    for (final Trigger<?> candidate : triggers.values()) {
-      if (candidate instanceof GenericTrigger) {
-        return (GenericTrigger) candidate;
-      }
-    }
-    return null;
   }
 }
