@@ -90,9 +90,7 @@ curl -v -H "gwt-dry-run: true"\
 
 ## Cache jobs
 
-When plugin is used in large installations it may need some time to retrieve all configured jobs. This can be cached by enabling it in the global configuration. When enabled, the plugin will cache configured jobs for a configured time. The plugin will automatically refresh the cache so that any calls will use the cached value. This means the effect of any changes to any configured job will be delayed.
-
-The cache will only be used in invocations where a `token` is supplied.
+In large installations, it may take some time to retrieve all configured jobs. The plugin solves this by keeping track of configured jobs using [ItemListener](https://javadoc.jenkins.io/hudson/model/listeners/ItemListener.html). This will only be used in invocations where a `token` is supplied so using `token` that is recommended for performance.
 
 ## Trigger exactly one build
 
