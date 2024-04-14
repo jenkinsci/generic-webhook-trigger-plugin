@@ -260,9 +260,6 @@ public class GenericWebHookRequestReceiverTest {
 
     assertThat(actual)
         .isEqualToIgnoringWhitespace(
-            "Did not find any jobs with GenericTrigger configured!\n"
-                + "A token was supplied.\n"
-                + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n"
-                + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n");
+            "Did not find any jobs with GenericTrigger configured!\n" + "A token was supplied.");
   }
 }

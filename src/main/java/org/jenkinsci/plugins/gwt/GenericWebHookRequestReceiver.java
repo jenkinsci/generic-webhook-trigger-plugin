@@ -222,11 +222,11 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     final boolean noTokenGiven = Strings.isNullOrEmpty(givenToken);
     if (noTokenGiven) {
       msg += NO_JOBS_MSG_NO_TOKEN;
+      msg += NO_JOBS_HOW_TO_USE_TOKEN;
+      msg += NO_JOBS_HOW_TO_AUTH;
     } else {
       msg += NO_JOBS_MSG_TOKEN;
     }
-    msg += NO_JOBS_HOW_TO_USE_TOKEN;
-    msg += NO_JOBS_HOW_TO_AUTH;
     return msg;
   }
 
