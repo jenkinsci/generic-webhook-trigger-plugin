@@ -2,6 +2,14 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.2.0 (2024-04-14)
+
+### Features
+
+-  adjusting response when no jobs found ([0bdad](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0bdad7f48fa87f2) Tomas Bjerre)  
+-  optimizing retrieval of jobs when using token to auth ([53825](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/53825a1dde1fd8a) Tomas Bjerre)  
+-  removing cache feature ([026c2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/026c2c81b0a2207) Tomas Bjerre)  
+
 ## 2.1.1 (2024-04-03)
 
 ### Bug Fixes
