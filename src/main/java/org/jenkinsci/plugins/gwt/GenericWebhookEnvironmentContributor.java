@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.gwt;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.EnvironmentContributor;
@@ -7,7 +8,6 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import java.io.IOException;
 import java.util.Map;
-import javax.annotation.Nonnull;
 
 @Extension
 public class GenericWebhookEnvironmentContributor extends EnvironmentContributor {
@@ -15,9 +15,9 @@ public class GenericWebhookEnvironmentContributor extends EnvironmentContributor
   @SuppressWarnings("unchecked")
   @Override
   public void buildEnvironmentFor(
-      @SuppressWarnings("rawtypes") @Nonnull final Run r,
-      @Nonnull final EnvVars envs,
-      @Nonnull final TaskListener listener)
+      @SuppressWarnings("rawtypes") @NonNull final Run r,
+      @NonNull final EnvVars envs,
+      @NonNull final TaskListener listener)
       throws IOException, InterruptedException {
     final GenericCause cause = (GenericCause) r.getCause(GenericCause.class);
     if (cause != null) {
