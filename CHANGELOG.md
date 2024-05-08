@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.2.1 (2024-05-08)
+
+### Bug Fixes
+
+-  replace JSR-305 annotations with spotbugs annotations ([1461f](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/1461f5b36a16fe5) Mark Waite)  [#307](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/307)  
+
 ## 2.2.0 (2024-04-14)
 
 ### Features
