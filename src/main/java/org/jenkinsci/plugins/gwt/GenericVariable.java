@@ -38,6 +38,9 @@ public class GenericVariable extends AbstractDescribableImpl<GenericVariable> {
   }
 
   public String getDefaultValue() {
+    if (defaultValue == null) {
+      return '';
+    }
     return defaultValue;
   }
 
