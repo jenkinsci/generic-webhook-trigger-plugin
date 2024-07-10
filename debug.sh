@@ -3,6 +3,6 @@
 MAVEN_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=n" \
  ./mvnw hpi:run \
  -Djava.util.logging.config.file=logging.properties \
- -Djenkins.version=2.361.4 \
+ -Djenkins.version=2.452.2 \
  -Denforcer.skip=true \
  -Dhudson.model.ParametersAction.keepUndefinedParameters=true
