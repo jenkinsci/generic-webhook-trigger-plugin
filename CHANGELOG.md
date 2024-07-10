@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.2.2 (2024-07-10)
+
+### Bug Fixes
+
+-  litening for job changes with both SaveableListener and ItemListener ([29183](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/291833b906bc8ab) Tomas Bjerre)  [#319](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/319)  
+
 ## 2.2.1 (2024-05-08)
 
 ### Bug Fixes
