@@ -1,0 +1,12 @@
+name: Publish release on tag push
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  call-workflow:
+    uses: tomasbjerre/.github/.github/workflows/publish-release-on-tag-push.yaml@master
