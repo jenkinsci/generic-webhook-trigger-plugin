@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.2.3 (2024-10-14)
+
+### Bug Fixes
+
+-  dependencies ([71200](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/712002c65ebecbb) Tomas Bjerre)  
+
 ## 2.2.2 (2024-07-10)
 
 ### Bug Fixes
