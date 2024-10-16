@@ -4,14 +4,14 @@
 
 This is a Jenkins plugin that can:
 
-1.  Receive any HTTP request, `JENKINS_URL/generic-webhook-trigger/invoke`
-2.  Extract values
+1. Receive any HTTP request, `JENKINS_URL/generic-webhook-trigger/invoke`
+2. Extract values
 
 - From `POST` content with [JSONPath](https://github.com/json-path/JsonPath) or [XPath](https://www.w3schools.com/xml/xpath_syntax.asp)
 - From the `query` parameters
 - From the `headers`
 
-3.  Trigger a build with those values contribute as variables
+3. Trigger a build with those values contribute as variables
 
 There is an optional feature to trigger jobs only if a supplied regular expression matches the extracted variables. Here is an example, let's say the post content looks like this:
 
@@ -72,7 +72,7 @@ The token can be supplied as a:
   
   `curl -vs -H "token: abc123" "http://localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1`
   - It will also detect `X-Gitlab-Token`.
-- _Authorization_ header of type _Bearer_ :
+- *Authorization* header of type *Bearer* :
   
   `curl -vs -H "Authorization: Bearer abc123" "http://localhost:8080/jenkins/generic-webhook-trigger/invoke" 2>&1`
 
@@ -87,7 +87,6 @@ curl -v -H "gwt-dry-run: true"\
   "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123"
 ```
 
-
 ## Cache jobs
 
 In large installations, it may take some time to retrieve all configured jobs. The plugin solves this by keeping track of configured jobs using [ItemListener](https://javadoc.jenkins.io/hudson/model/listeners/ItemListener.html). This will only be used in invocations where a `token` is supplied so using `token` that is recommended for performance.
@@ -100,12 +99,12 @@ Until version `1.85.2` of this plugin, it would batch builds with same parameter
 
 Whitelist can be configured in Jenkins global configuration page. The whitelist will block any request to the plugin that is not configured in this list. The host can be **empty** to allow any, **static IP**, **CIDR** or **ranges**:
 
-- _1.2.3.4_
-- _2.2.3.0/24_
-- _3.2.1.1-3.2.1.10_
-- _2001:0db8:85a3:0000:0000:8a2e:0370:7334_
-- _2002:0db8:85a3:0000:0000:8a2e:0370:7334/127_
-- _2001:0db8:85a3:0000:0000:8a2e:0370:7334-2001:0db8:85a3:0000:0000:8a2e:0370:7335_
+- *1.2.3.4*
+- *2.2.3.0/24*
+- *3.2.1.1-3.2.1.10*
+- *2001:0db8:85a3:0000:0000:8a2e:0370:7334*
+- *2002:0db8:85a3:0000:0000:8a2e:0370:7334/127*
+- *2001:0db8:85a3:0000:0000:8a2e:0370:7334-2001:0db8:85a3:0000:0000:8a2e:0370:7335*
 
 The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/wiki/HMAC).
 
@@ -113,7 +112,7 @@ The hosts can optionally also be verified with [HMAC](https://en.wikipedia.org/w
 
 ## Troubleshooting
 
-If you want to fiddle with the plugin, you may use this repo: https://github.com/tomasbjerre/jenkins-configuration-as-code-sandbox
+If you want to fiddle with the plugin, you may use this repo: <https://github.com/tomasbjerre/jenkins-configuration-as-code-sandbox>
 
 If you are fiddling with expressions, you may want to checkout:
 
@@ -138,12 +137,17 @@ If your job has a `token` you don't need to supply other credentials. You can sp
 ```bash
 curl -vs "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE" 2>&1
 ```
+
 Please keep in mind, using a token always runs the triggered jobs with SYSTEM privileges.
 
 If you want to trigger with `token` and some post content, `curl` can dot that like this.
 
 ```bash
-curl -v -H "Content-Type: application/json" -X POST -d '{ "app":{ "name":"some value" }}' "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE"
+curl -v \
+ -H "Content-Type: application/json" \
+ -X POST \
+ -d '{ "app":{ "name":"some value" }}' \
+ "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=TOKEN_HERE"
 ```
 
 ## Screenshots
@@ -343,11 +347,39 @@ node {
   echo before $before
   echo requestWithNumber $requestWithNumber
   echo requestWithString $requestWithString
-  echo headerWithNumber $headerWithNumber
-  echo headerWithString $headerWithString
+  echo headerwithnumber $headerwithnumber
+  echo headerwithstring $headerwithstring
   '''
  }
 }
+```
+
+It can be triggered with something like:
+
+```bash
+curl -X POST \
+ -H "Content-Type: application/json" \
+ -H "headerWithNumber: nbr123" \
+ -H "headerWithString: a b c" \
+ -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' \
+ -vs "http://localhost:8080/jenkins/generic-webhook-trigger/invoke?token=abc123&requestWithNumber=nbr%20123&requestWithString=a%20string"
+```
+
+And the job will have this in the log:
+
+```text
+Contributing variables:
+
+    before = 1848f12
+    headerwithnumber = 123
+    headerwithnumber_0 = 123
+    headerwithstring = a b c
+    headerwithstring_0 = a b c
+    ref = refs/heads/develop
+    requestWithNumber = 123
+    requestWithNumber_0 = 123
+    requestWithString = a string
+    requestWithString_0 = a string
 ```
 
 With a declarative Jenkinsfile like this:
@@ -387,35 +419,12 @@ pipeline {
 }
 ```
 
-It can be triggered with something like:
-
-```bash
-curl -X POST -H "Content-Type: application/json" -H "headerWithNumber: nbr123" -H "headerWithString: a b c" -d '{ "before": "1848f12", "after": "5cab1", "ref": "refs/heads/develop" }' -vs "http://admin:admin@localhost:8080/jenkins/generic-webhook-trigger/invoke?requestWithNumber=nbr%20123&requestWithString=a%20string"
-```
-
-And the job will have this in the log:
-
-```
-Contributing variables:
-
-    headerWithString_0 = a b c
-    requestWithNumber_0 = 123
-    ref = refs/heads/develop
-    headerWithNumber = 123
-    requestWithNumber = 123
-    before = 1848f12
-    requestWithString_0 = a string
-    headerWithNumber_0 = 123
-    headerWithString = a b c
-    requestWithString = a string
-```
-
 ## Plugin development
 
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
 
 A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.
 
-```
+```sh
 mvn release:prepare release:perform
 ```

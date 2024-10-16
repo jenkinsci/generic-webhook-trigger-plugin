@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:entry title="Request header" description="Name of request header in lowercase. Resulting variable name has '_' instead of '-' characters.">
+  <f:entry title="Request header" description="Request header to be captured. The resulting variable name will be in lowercase and '-' will be replaced with '_' character.">
     <f:textbox field="key"/>
   </f:entry>
 
