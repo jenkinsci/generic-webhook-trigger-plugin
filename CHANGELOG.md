@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.2.4 (2024-10-16)
+
+### Bug Fixes
+
+-  adjusting description of header config ([0438a](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/0438a89cd70f692) Tomas Bjerre)  [#215](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/215)  
+
 ## 2.2.3 (2024-10-14)
 
 ### Bug Fixes
