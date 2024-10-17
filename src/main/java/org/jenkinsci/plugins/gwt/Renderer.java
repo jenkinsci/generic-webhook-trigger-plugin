@@ -35,6 +35,14 @@ public class Renderer {
                             + "\" not matching \""
                             + renderedRegexpFilterText
                             + "\".");
+        }else{
+			LOGGER.log(
+					FINE,
+					"Triggering \""
+							+ regexpFilterExpression
+							+ "\" matching \""
+							+ renderedRegexpFilterText
+							+ "\".");
         }
         return isMatching;
     }
