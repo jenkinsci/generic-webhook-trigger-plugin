@@ -11,88 +11,86 @@ import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 import org.junit.Test;
 
 public class VariablesResolverRequestParameterTest {
-  private final Map<String, List<String>> headers = new HashMap<>();
-  private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
-  private final boolean shouldNotFlatten = false;
+    private final Map<String, List<String>> headers = new HashMap<>();
+    private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
+    private final boolean shouldNotFlatten = false;
 
-  @Test
-  public void testGenericRequestParametersWithFilters() throws Exception {
-    final String postContent = null;
+    @Test
+    public void testGenericRequestParametersWithFilters() throws Exception {
+        final String postContent = null;
 
-    final List<GenericVariable> genericVariables = newArrayList();
+        final List<GenericVariable> genericVariables = newArrayList();
 
-    final Map<String, String[]> parameterMap = new HashMap<>();
-    final String[] values1 = new String[] {"abc123456cdef", "ABCdef"};
-    parameterMap.put("reqp1", values1);
+        final Map<String, String[]> parameterMap = new HashMap<>();
+        final String[] values1 = new String[] {"abc123456cdef", "ABCdef"};
+        parameterMap.put("reqp1", values1);
 
-    final String[] values2 = new String[] {"this one will be ignored"};
-    parameterMap.put("reqp2", values2);
+        final String[] values2 = new String[] {"this one will be ignored"};
+        parameterMap.put("reqp2", values2);
 
-    final String[] values3 = new String[] {"just one"};
-    parameterMap.put("reqp3", values3);
+        final String[] values3 = new String[] {"just one"};
+        parameterMap.put("reqp3", values3);
 
-    final String[] values4 = new String[] {"just one", "just one again"};
-    parameterMap.put("reqp4", values4);
+        final String[] values4 = new String[] {"just one", "just one again"};
+        parameterMap.put("reqp4", values4);
 
-    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    genericRequestVariables.add(new GenericRequestVariable("reqp1", "[^0-9]"));
-    genericRequestVariables.add(new GenericRequestVariable("reqp3", "[^a-z]"));
-    genericRequestVariables.add(new GenericRequestVariable("reqp4", ""));
+        final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+        genericRequestVariables.add(new GenericRequestVariable("reqp1", "[^0-9]"));
+        genericRequestVariables.add(new GenericRequestVariable("reqp3", "[^a-z]"));
+        genericRequestVariables.add(new GenericRequestVariable("reqp4", ""));
 
-    final Map<String, String> variables =
-        new VariablesResolver(
-                this.headers,
-                parameterMap,
-                postContent,
-                genericVariables,
-                genericRequestVariables,
-                this.genericHeaderVariables,
-                this.shouldNotFlatten)
-            .getVariables();
+        final Map<String, String> variables = new VariablesResolver(
+                        this.headers,
+                        parameterMap,
+                        postContent,
+                        genericVariables,
+                        genericRequestVariables,
+                        this.genericHeaderVariables,
+                        this.shouldNotFlatten)
+                .getVariables();
 
-    assertThat(variables) //
-        .containsEntry("reqp1_0", "123456") //
-        .containsEntry("reqp1_1", "") //
-        .containsEntry("reqp3", "justone") //
-        .containsEntry("reqp3_0", "justone") //
-        .containsEntry("reqp4_0", "just one") //
-        .containsEntry("reqp4_1", "just one again") //
-        .hasSize(6);
-  }
+        assertThat(variables) //
+                .containsEntry("reqp1_0", "123456") //
+                .containsEntry("reqp1_1", "") //
+                .containsEntry("reqp3", "justone") //
+                .containsEntry("reqp3_0", "justone") //
+                .containsEntry("reqp4_0", "just one") //
+                .containsEntry("reqp4_1", "just one again") //
+                .hasSize(6);
+    }
 
-  @Test
-  public void testGenericRequestParameters() throws Exception {
-    final String postContent = null;
+    @Test
+    public void testGenericRequestParameters() throws Exception {
+        final String postContent = null;
 
-    final List<GenericVariable> genericVariables = newArrayList();
+        final List<GenericVariable> genericVariables = newArrayList();
 
-    final Map<String, String[]> parameterMap = new HashMap<>();
-    final String[] values1 = new String[] {"p1value"};
-    parameterMap.put("param1", values1);
+        final Map<String, String[]> parameterMap = new HashMap<>();
+        final String[] values1 = new String[] {"p1value"};
+        parameterMap.put("param1", values1);
 
-    final String[] values2 = new String[] {"p2value"};
-    parameterMap.put("param2", values2);
+        final String[] values2 = new String[] {"p2value"};
+        parameterMap.put("param2", values2);
 
-    final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
-    genericRequestVariables.add(new GenericRequestVariable("param1", ""));
-    genericRequestVariables.add(new GenericRequestVariable("param2", ""));
+        final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+        genericRequestVariables.add(new GenericRequestVariable("param1", ""));
+        genericRequestVariables.add(new GenericRequestVariable("param2", ""));
 
-    final Map<String, String> variables =
-        new VariablesResolver(
-                this.headers,
-                parameterMap,
-                postContent,
-                genericVariables,
-                genericRequestVariables,
-                this.genericHeaderVariables,
-                this.shouldNotFlatten)
-            .getVariables();
+        final Map<String, String> variables = new VariablesResolver(
+                        this.headers,
+                        parameterMap,
+                        postContent,
+                        genericVariables,
+                        genericRequestVariables,
+                        this.genericHeaderVariables,
+                        this.shouldNotFlatten)
+                .getVariables();
 
-    assertThat(variables) //
-        .hasSize(4) //
-        .containsEntry("param1", "p1value") //
-        .containsEntry("param1_0", "p1value") //
-        .containsEntry("param2", "p2value") //
-        .containsEntry("param2_0", "p2value");
-  }
+        assertThat(variables) //
+                .hasSize(4) //
+                .containsEntry("param1", "p1value") //
+                .containsEntry("param1_0", "p1value") //
+                .containsEntry("param2", "p2value") //
+                .containsEntry("param2_0", "p2value");
+    }
 }

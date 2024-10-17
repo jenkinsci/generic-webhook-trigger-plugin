@@ -2,19 +2,19 @@ package org.jenkinsci.plugins.gwt;
 
 public class FoundJob {
 
-  private final String fullName;
-  private final GenericTrigger genericTrigger;
+    private final String fullName;
+    private final GenericTrigger genericTrigger;
 
-  public FoundJob(String fullName, GenericTrigger genericTrigger) {
-    this.fullName = fullName;
-    this.genericTrigger = genericTrigger;
-  }
+    public FoundJob(String fullName, GenericTrigger genericTrigger) {
+        this.fullName = fullName;
+        this.genericTrigger = genericTrigger;
+    }
 
-  public GenericTrigger getGenericTrigger() {
-    return genericTrigger;
-  }
+    public GenericTrigger getGenericTrigger() {
+        return genericTrigger;
+    }
 
-  public String getFullName() {
-    return fullName;
-  }
+    public String getFullName() {
+        return fullName;
+    }
 }
