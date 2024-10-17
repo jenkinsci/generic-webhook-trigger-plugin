@@ -27,7 +27,11 @@ public class Renderer {
         final boolean isMatching = compile(nullToEmpty(regexpFilterExpression)) //
                 .matcher(nullToEmpty(renderedRegexpFilterText)) //
                 .find();
-        if (!isMatching) {
+        if (isMatching) {
+            LOGGER.log(
+                    FINE,
+                    "Triggering \"" + regexpFilterExpression + "\" matching \"" + renderedRegexpFilterText + "\".");
+        } else {
             LOGGER.log(
                     FINE,
                     "Not triggering \""
@@ -35,14 +39,6 @@ public class Renderer {
                             + "\" not matching \""
                             + renderedRegexpFilterText
                             + "\".");
-        }else{
-			LOGGER.log(
-					FINE,
-					"Triggering \""
-							+ regexpFilterExpression
-							+ "\" matching \""
-							+ renderedRegexpFilterText
-							+ "\".");
         }
         return isMatching;
     }
