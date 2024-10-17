@@ -9,38 +9,39 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 public class GenericHeaderVariable extends AbstractDescribableImpl<GenericHeaderVariable> {
 
-  @Extension public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
+    @Extension
+    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
-  public static class DescriptorImpl extends Descriptor<GenericHeaderVariable> {
-    @Override
-    public String getDisplayName() {
-      return "";
+    public static class DescriptorImpl extends Descriptor<GenericHeaderVariable> {
+        @Override
+        public String getDisplayName() {
+            return "";
+        }
     }
-  }
 
-  private final String key;
-  private final String regexpFilter;
+    private final String key;
+    private final String regexpFilter;
 
-  @DataBoundConstructor
-  public GenericHeaderVariable(String key, String regexpFilter) {
-    this.key = checkNotNull(key, "Variable name");
-    this.regexpFilter = regexpFilter;
-  }
+    @DataBoundConstructor
+    public GenericHeaderVariable(String key, String regexpFilter) {
+        this.key = checkNotNull(key, "Variable name");
+        this.regexpFilter = regexpFilter;
+    }
 
-  public String getKey() {
-    return key;
-  }
+    public String getKey() {
+        return key;
+    }
 
-  public String getRegexpFilter() {
-    return regexpFilter;
-  }
+    public String getRegexpFilter() {
+        return regexpFilter;
+    }
 
-  public String getHeaderName() {
-    return key;
-  }
+    public String getHeaderName() {
+        return key;
+    }
 
-  @Override
-  public String toString() {
-    return "GenericHeaderVariable [key=" + key + ", regexpFilter=" + regexpFilter + "]";
-  }
+    @Override
+    public String toString() {
+        return "GenericHeaderVariable [key=" + key + ", regexpFilter=" + regexpFilter + "]";
+    }
 }

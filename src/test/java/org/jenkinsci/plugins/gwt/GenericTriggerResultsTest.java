@@ -6,39 +6,37 @@ import java.util.Map;
 import org.junit.Test;
 
 public class GenericTriggerResultsTest {
-  @Test
-  public void testNull() {
-    final String url = null;
-    final long id = 0;
-    final boolean triggered = false;
-    final Map<String, String> resolvedVariables = null;
-    final String regexpFilterText = null;
-    final String regexpFilterExpression = null;
+    @Test
+    public void testNull() {
+        final String url = null;
+        final long id = 0;
+        final boolean triggered = false;
+        final Map<String, String> resolvedVariables = null;
+        final String regexpFilterText = null;
+        final String regexpFilterExpression = null;
 
-    final GenericTriggerResults sut =
-        new GenericTriggerResults(
-            url, id, triggered, resolvedVariables, regexpFilterText, regexpFilterExpression);
+        final GenericTriggerResults sut = new GenericTriggerResults(
+                url, id, triggered, resolvedVariables, regexpFilterText, regexpFilterExpression);
 
-    assertThat(sut) //
-        .isNotNull();
-  }
+        assertThat(sut) //
+                .isNotNull();
+    }
 
-  @Test
-  public void testNullApi() {
-    final String url = null;
-    final long id = 2L;
-    final boolean triggered = false;
-    final Map<String, String> resolvedVariables = null;
-    final String regexpFilterText = null;
-    final String regexpFilterExpression = null;
+    @Test
+    public void testNullApi() {
+        final String url = null;
+        final long id = 2L;
+        final boolean triggered = false;
+        final Map<String, String> resolvedVariables = null;
+        final String regexpFilterText = null;
+        final String regexpFilterExpression = null;
 
-    final GenericTriggerResults sut =
-        new GenericTriggerResults(
-            url, id, triggered, resolvedVariables, regexpFilterText, regexpFilterExpression);
+        final GenericTriggerResults sut = new GenericTriggerResults(
+                url, id, triggered, resolvedVariables, regexpFilterText, regexpFilterExpression);
 
-    assertThat(sut) //
-        .isNotNull();
-    assertThat(sut.getId()) //
-        .isEqualTo(2L);
-  }
+        assertThat(sut) //
+                .isNotNull();
+        assertThat(sut.getId()) //
+                .isEqualTo(2L);
+    }
 }

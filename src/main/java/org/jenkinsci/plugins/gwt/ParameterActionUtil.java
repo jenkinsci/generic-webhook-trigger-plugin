@@ -16,70 +16,69 @@ import java.util.UUID;
 
 public class ParameterActionUtil {
 
-  public static ParametersAction createParameterAction(
-      final ParametersDefinitionProperty parametersDefinitionProperty,
-      final Map<String, String> resolvedVariables,
-      final boolean allowSeveralTriggersPerBuild) {
-    final List<ParameterValue> parameterList =
-        getParametersWithRespectToDefaultValues(parametersDefinitionProperty, resolvedVariables);
-    final boolean triggerOneBuildPerInvocation = !allowSeveralTriggersPerBuild;
-    if (triggerOneBuildPerInvocation) {
-      parameterList.add(
-          new StringParameterValue(
-              "jenkins-generic-webhook-trigger-plugin_uuid", UUID.randomUUID().toString(), null));
-    }
-    return new ParametersAction(parameterList);
-  }
-
-  /** To keep any default values set there. */
-  static List<ParameterValue> getParametersWithRespectToDefaultValues(
-      final ParametersDefinitionProperty parametersDefinitionProperty,
-      final Map<String, String> resolvedVariables) {
-    final List<ParameterValue> parameterList = newArrayList();
-    if (parametersDefinitionProperty != null) {
-      for (final ParameterDefinition parameterDefinition :
-          parametersDefinitionProperty.getParameterDefinitions()) {
-        final String paramName = parameterDefinition.getName();
-        final ParameterValue defaultParameterValue = parameterDefinition.getDefaultParameterValue();
-        if (defaultParameterValue != null) {
-          final ParameterValue parameterValue =
-              getParameterValue(
-                  resolvedVariables, parameterDefinition, paramName, defaultParameterValue);
-          parameterList.add(parameterValue);
+    public static ParametersAction createParameterAction(
+            final ParametersDefinitionProperty parametersDefinitionProperty,
+            final Map<String, String> resolvedVariables,
+            final boolean allowSeveralTriggersPerBuild) {
+        final List<ParameterValue> parameterList =
+                getParametersWithRespectToDefaultValues(parametersDefinitionProperty, resolvedVariables);
+        final boolean triggerOneBuildPerInvocation = !allowSeveralTriggersPerBuild;
+        if (triggerOneBuildPerInvocation) {
+            parameterList.add(new StringParameterValue(
+                    "jenkins-generic-webhook-trigger-plugin_uuid",
+                    UUID.randomUUID().toString(),
+                    null));
         }
-      }
+        return new ParametersAction(parameterList);
     }
-    return parameterList;
-  }
 
-  private static ParameterValue getParameterValue(
-      final Map<String, String> resolvedVariables,
-      final ParameterDefinition parameterDefinition,
-      final String paramName,
-      final ParameterValue defaultParameterValue) {
-    final String stringValue = getStringValue(resolvedVariables, paramName, defaultParameterValue);
-    if (defaultParameterValue.getValue() instanceof Boolean) {
-      return new BooleanParameterValue(
-          paramName, Boolean.parseBoolean(stringValue), parameterDefinition.getDescription());
+    /** To keep any default values set there. */
+    static List<ParameterValue> getParametersWithRespectToDefaultValues(
+            final ParametersDefinitionProperty parametersDefinitionProperty,
+            final Map<String, String> resolvedVariables) {
+        final List<ParameterValue> parameterList = newArrayList();
+        if (parametersDefinitionProperty != null) {
+            for (final ParameterDefinition parameterDefinition :
+                    parametersDefinitionProperty.getParameterDefinitions()) {
+                final String paramName = parameterDefinition.getName();
+                final ParameterValue defaultParameterValue = parameterDefinition.getDefaultParameterValue();
+                if (defaultParameterValue != null) {
+                    final ParameterValue parameterValue =
+                            getParameterValue(resolvedVariables, parameterDefinition, paramName, defaultParameterValue);
+                    parameterList.add(parameterValue);
+                }
+            }
+        }
+        return parameterList;
     }
-    if (defaultParameterValue instanceof CredentialsParameterValue) {
-      return new CredentialsParameterValue(
-          paramName, stringValue, parameterDefinition.getDescription());
-    }
-    return new StringParameterValue(paramName, stringValue, parameterDefinition.getDescription());
-  }
 
-  private static String getStringValue(
-      final Map<String, String> resolvedVariables,
-      final String param,
-      final ParameterValue defaultParameterValue) {
-    if (!isNullOrEmpty(resolvedVariables.get(param))) {
-      return resolvedVariables.get(param);
+    private static ParameterValue getParameterValue(
+            final Map<String, String> resolvedVariables,
+            final ParameterDefinition parameterDefinition,
+            final String paramName,
+            final ParameterValue defaultParameterValue) {
+        final String stringValue = getStringValue(resolvedVariables, paramName, defaultParameterValue);
+        if (defaultParameterValue.getValue() instanceof Boolean) {
+            return new BooleanParameterValue(
+                    paramName, Boolean.parseBoolean(stringValue), parameterDefinition.getDescription());
+        }
+        if (defaultParameterValue instanceof CredentialsParameterValue) {
+            return new CredentialsParameterValue(paramName, stringValue, parameterDefinition.getDescription());
+        }
+        return new StringParameterValue(paramName, stringValue, parameterDefinition.getDescription());
     }
-    final Object value = defaultParameterValue.getValue();
-    if (value == null) {
-      return "";
+
+    private static String getStringValue(
+            final Map<String, String> resolvedVariables,
+            final String param,
+            final ParameterValue defaultParameterValue) {
+        if (!isNullOrEmpty(resolvedVariables.get(param))) {
+            return resolvedVariables.get(param);
+        }
+        final Object value = defaultParameterValue.getValue();
+        if (value == null) {
+            return "";
+        }
+        return value.toString();
     }
-    return value.toString();
-  }
 }

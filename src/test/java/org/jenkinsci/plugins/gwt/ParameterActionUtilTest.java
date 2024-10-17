@@ -14,119 +14,103 @@ import org.junit.Test;
 
 public class ParameterActionUtilTest {
 
-  @Test
-  public void testThatStringKeepsItsDefaultValueWhenNoParameterSupplied() {
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        new ParametersDefinitionProperty(
-            new StringParameterDefinition("name", "the default value") //
-            );
-    final Map<String, String> resolvedVariables =
-        ImmutableMap.<String, String>builder() //
-            .build();
+    @Test
+    public void testThatStringKeepsItsDefaultValueWhenNoParameterSupplied() {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
+                new StringParameterDefinition("name", "the default value") //
+                );
+        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>builder() //
+                .build();
 
-    final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+        final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
-    assertThat(actual) //
-        .hasSize(1);
-    assertThat(actual.getAllParameters().get(0).getValue()) //
-        .isEqualTo("the default value");
-  }
+        assertThat(actual) //
+                .hasSize(1);
+        assertThat(actual.getAllParameters().get(0).getValue()) //
+                .isEqualTo("the default value");
+    }
 
-  @Test
-  public void testThatStringDoesNotKeepItsDefaultValueWhenParameterSupplied() {
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        new ParametersDefinitionProperty(
-            new StringParameterDefinition("name", "the default value") //
-            );
-    final Map<String, String> resolvedVariables =
-        ImmutableMap.<String, String>of( //
-            "name", "this is supplied");
+    @Test
+    public void testThatStringDoesNotKeepItsDefaultValueWhenParameterSupplied() {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
+                new StringParameterDefinition("name", "the default value") //
+                );
+        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>of( //
+                "name", "this is supplied");
 
-    final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+        final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
-    assertThat(actual) //
-        .hasSize(1);
-    assertThat(actual.getAllParameters().get(0).getValue()) //
-        .isEqualTo("this is supplied");
-  }
+        assertThat(actual) //
+                .hasSize(1);
+        assertThat(actual.getAllParameters().get(0).getValue()) //
+                .isEqualTo("this is supplied");
+    }
 
-  @Test
-  public void testThatBooleanKeepsItsDefaultValueWhenNoParameterSupplied() {
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        new ParametersDefinitionProperty(
-            new BooleanParameterDefinition("name", true, null) //
-            );
-    final Map<String, String> resolvedVariables =
-        ImmutableMap.<String, String>builder() //
-            .build();
+    @Test
+    public void testThatBooleanKeepsItsDefaultValueWhenNoParameterSupplied() {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
+                new BooleanParameterDefinition("name", true, null) //
+                );
+        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>builder() //
+                .build();
 
-    final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+        final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
-    assertThat(actual) //
-        .hasSize(1);
-    assertThat(actual.getAllParameters().get(0).getValue()) //
-        .isEqualTo(true);
-  }
+        assertThat(actual) //
+                .hasSize(1);
+        assertThat(actual.getAllParameters().get(0).getValue()) //
+                .isEqualTo(true);
+    }
 
-  @Test
-  public void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndFalseIsFalse() {
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        new ParametersDefinitionProperty(
-            new BooleanParameterDefinition("name", true, null) //
-            );
-    final Map<String, String> resolvedVariables =
-        ImmutableMap.<String, String>of( //
-            "name", "false");
+    @Test
+    public void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndFalseIsFalse() {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
+                new BooleanParameterDefinition("name", true, null) //
+                );
+        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>of( //
+                "name", "false");
 
-    final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+        final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
-    assertThat(actual) //
-        .hasSize(1);
-    assertThat(actual.getAllParameters().get(0).getValue()) //
-        .isEqualTo(false);
-  }
+        assertThat(actual) //
+                .hasSize(1);
+        assertThat(actual.getAllParameters().get(0).getValue()) //
+                .isEqualTo(false);
+    }
 
-  @Test
-  public void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndTrueIsTrue() {
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        new ParametersDefinitionProperty(
-            new BooleanParameterDefinition("name", true, null) //
-            );
-    final Map<String, String> resolvedVariables =
-        ImmutableMap.<String, String>of( //
-            "name", "true");
+    @Test
+    public void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndTrueIsTrue() {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
+                new BooleanParameterDefinition("name", true, null) //
+                );
+        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>of( //
+                "name", "true");
 
-    final ParametersAction actual =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+        final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
-    assertThat(actual) //
-        .hasSize(1);
-    assertThat(actual.getAllParameters().get(0).getValue()) //
-        .isEqualTo(true);
-  }
+        assertThat(actual) //
+                .hasSize(1);
+        assertThat(actual.getAllParameters().get(0).getValue()) //
+                .isEqualTo(true);
+    }
 
-  @Test
-  public void testThatUniqueParameterIsAddedWhenallowSeveralTriggersPerBuildFalse() {
-    final ParametersDefinitionProperty parametersDefinitionProperty =
-        new ParametersDefinitionProperty();
-    final Map<String, String> resolvedVariables = new HashMap<>();
+    @Test
+    public void testThatUniqueParameterIsAddedWhenallowSeveralTriggersPerBuildFalse() {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty();
+        final Map<String, String> resolvedVariables = new HashMap<>();
 
-    final ParametersAction actualWithTrue =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
+        final ParametersAction actualWithTrue =
+                createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
-    assertThat(actualWithTrue) //
-        .hasSize(0);
+        assertThat(actualWithTrue) //
+                .hasSize(0);
 
-    final ParametersAction actualWithFalse =
-        createParameterAction(parametersDefinitionProperty, resolvedVariables, false);
+        final ParametersAction actualWithFalse =
+                createParameterAction(parametersDefinitionProperty, resolvedVariables, false);
 
-    assertThat(actualWithFalse) //
-        .hasSize(1);
-    assertThat(actualWithFalse.getAllParameters().get(0).getValue()) //
-        .isNotNull();
-  }
+        assertThat(actualWithFalse) //
+                .hasSize(1);
+        assertThat(actualWithFalse.getAllParameters().get(0).getValue()) //
+                .isNotNull();
+    }
 }

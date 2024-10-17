@@ -26,98 +26,95 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class PostContentParameterResolver {
-  private static final Logger LOGGER = Logger.getLogger(VariablesResolver.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(VariablesResolver.class.getName());
 
-  private final XmlFlattener xmlFlattener = new XmlFlattener();
-  private final JsonFlattener jsonFlattener = new JsonFlattener();
+    private final XmlFlattener xmlFlattener = new XmlFlattener();
+    private final JsonFlattener jsonFlattener = new JsonFlattener();
 
-  public PostContentParameterResolver() {}
+    public PostContentParameterResolver() {}
 
-  public Map<String, String> getPostContentParameters(
-      final List<GenericVariable> configuredGenericVariables,
-      final String incomingPostContent,
-      final boolean shouldNotFlatten) {
-    final Map<String, String> resolvedVariables = newHashMap();
-    if (configuredGenericVariables != null) {
-      for (final GenericVariable gv : configuredGenericVariables) {
-        final Map<String, String> resolvedMap =
-            this.resolve(incomingPostContent, gv, shouldNotFlatten);
-        final boolean notResolved =
-            resolvedMap.isEmpty()
-                || resolvedMap.containsKey(gv.getVariableName())
-                    && resolvedMap.get(gv.getVariableName()).isEmpty();
-        if (notResolved && gv.getDefaultValue() != null) {
-          resolvedMap.put(gv.getVariableName(), gv.getDefaultValue());
+    public Map<String, String> getPostContentParameters(
+            final List<GenericVariable> configuredGenericVariables,
+            final String incomingPostContent,
+            final boolean shouldNotFlatten) {
+        final Map<String, String> resolvedVariables = newHashMap();
+        if (configuredGenericVariables != null) {
+            for (final GenericVariable gv : configuredGenericVariables) {
+                final Map<String, String> resolvedMap = this.resolve(incomingPostContent, gv, shouldNotFlatten);
+                final boolean notResolved = resolvedMap.isEmpty()
+                        || resolvedMap.containsKey(gv.getVariableName())
+                                && resolvedMap.get(gv.getVariableName()).isEmpty();
+                if (notResolved && gv.getDefaultValue() != null) {
+                    resolvedMap.put(gv.getVariableName(), gv.getDefaultValue());
+                }
+                resolvedVariables.putAll(resolvedMap);
+            }
         }
-        resolvedVariables.putAll(resolvedMap);
-      }
+        return resolvedVariables;
     }
-    return resolvedVariables;
-  }
 
-  private Map<String, String> resolve(
-      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlatten) {
-    try {
-      if (!isNullOrEmpty(incomingPostContent)
-          && gv != null
-          && gv.getExpression() != null
-          && !gv.getExpression().isEmpty()) {
-        if (gv.getExpressionType() == JSONPath) {
-          return this.resolveJsonPath(incomingPostContent, gv, shouldNotFlatten);
-        } else if (gv.getExpressionType() == XPath) {
-          return this.resolveXPath(incomingPostContent, gv);
-        } else {
-          throw new IllegalStateException("Not recognizing " + gv.getExpressionType());
+    private Map<String, String> resolve(
+            final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlatten) {
+        try {
+            if (!isNullOrEmpty(incomingPostContent)
+                    && gv != null
+                    && gv.getExpression() != null
+                    && !gv.getExpression().isEmpty()) {
+                if (gv.getExpressionType() == JSONPath) {
+                    return this.resolveJsonPath(incomingPostContent, gv, shouldNotFlatten);
+                } else if (gv.getExpressionType() == XPath) {
+                    return this.resolveXPath(incomingPostContent, gv);
+                } else {
+                    throw new IllegalStateException("Not recognizing " + gv.getExpressionType());
+                }
+            }
+        } catch (final Throwable e) {
+            LOGGER.log(
+                    INFO,
+                    "Unable to resolve "
+                            + gv.getVariableName()
+                            + " with "
+                            + gv.getExpressionType()
+                            + " "
+                            + gv.getExpression()
+                            + " in\n"
+                            + incomingPostContent,
+                    e);
         }
-      }
-    } catch (final Throwable e) {
-      LOGGER.log(
-          INFO,
-          "Unable to resolve "
-              + gv.getVariableName()
-              + " with "
-              + gv.getExpressionType()
-              + " "
-              + gv.getExpression()
-              + " in\n"
-              + incomingPostContent,
-          e);
+        return new HashMap<>();
     }
-    return new HashMap<>();
-  }
 
-  private Map<String, String> resolveJsonPath(
-      final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlatten) {
-    try {
-      final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
-      Map<String, String> flattened = new HashMap<>();
-      if (shouldNotFlatten) {
-        JsonFlattener.putVariable(flattened, gv.getVariableName(), resolved, gv.getRegexpFilter());
-      } else {
-        flattened =
-            this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
-      }
-      if (gv.getExpression().trim().equals("$")) {
-        flattened.put(gv.getVariableName(), incomingPostContent);
-      }
-      return flattened;
-    } catch (final PathNotFoundException e) {
-      return new HashMap<>();
+    private Map<String, String> resolveJsonPath(
+            final String incomingPostContent, final GenericVariable gv, final boolean shouldNotFlatten) {
+        try {
+            final Object resolved = JsonPath.read(incomingPostContent, gv.getExpression());
+            Map<String, String> flattened = new HashMap<>();
+            if (shouldNotFlatten) {
+                JsonFlattener.putVariable(flattened, gv.getVariableName(), resolved, gv.getRegexpFilter());
+            } else {
+                flattened = this.jsonFlattener.flattenJson(gv.getVariableName(), gv.getRegexpFilter(), resolved);
+            }
+            if (gv.getExpression().trim().equals("$")) {
+                flattened.put(gv.getVariableName(), incomingPostContent);
+            }
+            return flattened;
+        } catch (final PathNotFoundException e) {
+            return new HashMap<>();
+        }
     }
-  }
 
-  private Map<String, String> resolveXPath(
-      final String incomingPostContent, final GenericVariable gv) throws Exception {
-    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-    final DocumentBuilder builder = factory.newDocumentBuilder();
-    final InputSource inputSource =
-        new InputSource(new ByteArrayInputStream(incomingPostContent.getBytes(Charsets.UTF_8)));
-    final Document doc = builder.parse(inputSource);
-    final XPathFactory xPathfactory = XPathFactory.newInstance();
-    final XPath xpath = xPathfactory.newXPath();
-    final XPathExpression expr = xpath.compile(gv.getExpression());
-    final Object resolved = expr.evaluate(doc, XPathConstants.NODESET);
-    return this.xmlFlattener.flattenXmlNode(gv, (NodeList) resolved);
-  }
+    private Map<String, String> resolveXPath(final String incomingPostContent, final GenericVariable gv)
+            throws Exception {
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        final DocumentBuilder builder = factory.newDocumentBuilder();
+        final InputSource inputSource =
+                new InputSource(new ByteArrayInputStream(incomingPostContent.getBytes(Charsets.UTF_8)));
+        final Document doc = builder.parse(inputSource);
+        final XPathFactory xPathfactory = XPathFactory.newInstance();
+        final XPath xpath = xPathfactory.newXPath();
+        final XPathExpression expr = xpath.compile(gv.getExpression());
+        final Object resolved = expr.evaluate(doc, XPathConstants.NODESET);
+        return this.xmlFlattener.flattenXmlNode(gv, (NodeList) resolved);
+    }
 }
