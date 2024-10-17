@@ -2,6 +2,26 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.2.5 (2024-10-17)
+
+### Other changes
+
+**Merge branch 'xsimo-feature/log_when_triggering'**
+
+
+[9706d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/9706d32108f476a) Tomas Bjerre *2024-10-17 18:50:53*
+
+**Adding a FINE level log message when effectively triggering**
+
+
+[d3368](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/d33686169390d9a) sa103736 *2024-10-17 18:32:59*
+
+**Automate dependency updates (#324)**
+
+
+[a4e0e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/a4e0ed00a09ae5d) Tomas Bjerre *2024-10-16 18:27:10*
+
+
 ## 2.2.4 (2024-10-16)
 
 ### Bug Fixes
