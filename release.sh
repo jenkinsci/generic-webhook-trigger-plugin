@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ./mvnw se.bjurr.gitchangelog:git-changelog-maven-plugin:semantic-version \
+  && ./mvnw spotless:apply \
   && git commit -a -m "chore: setting version in pom" && git push || echo "No new version" \
   && ./mvnw release:prepare release:perform -B \
   && ./mvnw se.bjurr.gitchangelog:git-changelog-maven-plugin:git-changelog \
