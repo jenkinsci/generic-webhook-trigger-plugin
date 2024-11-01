@@ -30,8 +30,8 @@
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com:jenkinsci/generic-webhook-trigger-plugin.git</connection>
-    <developerConnection>scm:git:https@github.com:jenkinsci/generic-webhook-trigger-plugin.git</developerConnection>
+    <connection>scm:git:https://github.com/jenkinsci/generic-webhook-trigger-plugin</connection>
+    <developerConnection>scm:git:https://github.com/jenkinsci/generic-webhook-trigger-plugin</developerConnection>
     <tag>generic-webhook-trigger-1.86.1</tag>
     <url>https://github.com/jenkinsci/generic-webhook-trigger-plugin</url>
   </scm>
