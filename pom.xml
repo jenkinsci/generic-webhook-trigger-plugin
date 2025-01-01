@@ -59,7 +59,7 @@
     <findbugs.failOnError>false</findbugs.failOnError>
     <maven.javadoc.skip>true</maven.javadoc.skip>
     <violations.version>2.2.0</violations.version>
-    <changelog>2.2.0</changelog>
+    <changelog>2.2.2</changelog>
     <spotless.check.skip>false</spotless.check.skip>
   </properties>
 
