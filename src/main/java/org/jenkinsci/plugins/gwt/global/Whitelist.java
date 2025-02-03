@@ -8,7 +8,7 @@ import java.util.List;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundSetter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 @Extension
 public class Whitelist extends GlobalConfiguration implements Serializable {
@@ -33,7 +33,7 @@ public class Whitelist extends GlobalConfiguration implements Serializable {
     }
 
     @Override
-    public boolean configure(final StaplerRequest req, final JSONObject json) throws FormException {
+    public boolean configure(final StaplerRequest2 req, final JSONObject json) throws FormException {
         req.bindJSON(this, json);
         save();
         return true;

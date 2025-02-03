@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>4.74</version>
+    <version>5.6</version>
   </parent>
 
   <artifactId>generic-webhook-trigger</artifactId>
@@ -56,10 +56,8 @@
 
   <properties>
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
-    <jenkins.baseline>2.414</jenkins.baseline>
-    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
-    <findbugs.failOnError>false</findbugs.failOnError>
-    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <jenkins.baseline>2.479</jenkins.baseline>
+    <jenkins.version>${jenkins.baseline}.1</jenkins.version>
     <violations.version>2.2.0</violations.version>
     <changelog>2.2.2</changelog>
     <spotless.check.skip>false</spotless.check.skip>
@@ -70,7 +68,7 @@
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>2982.vdce2153031a_0</version>
+        <version>3850.vb_c5319efa_e29</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

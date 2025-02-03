@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class GenericWebHookRequestReceiverTest {
 
@@ -134,7 +134,7 @@ public class GenericWebHookRequestReceiverTest {
     public void testThatHeadersCanBeTransformedToList() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
-        final StaplerRequest request = mock(StaplerRequest.class);
+        final StaplerRequest2 request = mock(StaplerRequest2.class);
         when(request.getHeaderNames()) //
                 .thenReturn( //
                         new ArrayEnumeration(new String[] {"headerName1"}));
@@ -155,7 +155,7 @@ public class GenericWebHookRequestReceiverTest {
     public void testThatHeadersCanBeTransformedToListSeveralValues() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
-        final StaplerRequest request = mock(StaplerRequest.class);
+        final StaplerRequest2 request = mock(StaplerRequest2.class);
         when(request.getHeaderNames()) //
                 .thenReturn( //
                         new ArrayEnumeration(new String[] {"headerName1"}));
@@ -176,7 +176,7 @@ public class GenericWebHookRequestReceiverTest {
     public void testThatHeadersCanBeTransformedToListSeveralNames() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
-        final StaplerRequest request = mock(StaplerRequest.class);
+        final StaplerRequest2 request = mock(StaplerRequest2.class);
         when(request.getHeaderNames()) //
                 .thenReturn( //
                         new ArrayEnumeration(new String[] {"headerName1", "headerName2"}));
