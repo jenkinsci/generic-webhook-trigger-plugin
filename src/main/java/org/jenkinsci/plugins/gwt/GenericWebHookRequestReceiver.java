@@ -15,6 +15,11 @@ import hudson.Extension;
 import hudson.model.UnprotectedRootAction;
 import hudson.security.csrf.CrumbExclusion;
 import hudson.util.HttpResponses;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -23,17 +28,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.jenkinsci.plugins.gwt.jobfinder.JobFinder;
 import org.jenkinsci.plugins.gwt.whitelist.WhitelistException;
 import org.jenkinsci.plugins.gwt.whitelist.WhitelistVerifier;
 import org.kohsuke.stapler.HttpResponse;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 @Extension
 public class GenericWebHookRequestReceiver extends CrumbExclusion implements UnprotectedRootAction {
@@ -59,7 +59,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     private static final String URL_NAME = "generic-webhook-trigger";
     private static final Logger LOGGER = Logger.getLogger(GenericWebHookRequestReceiver.class.getName());
 
-    public HttpResponse doInvoke(final StaplerRequest request) {
+    public HttpResponse doInvoke(final StaplerRequest2 request) {
         if (request.getMethod().equals("OPTIONS")) {
             LOGGER.log(INFO, "Ignoring OPTIONS");
             return HttpResponses.ok();
@@ -96,7 +96,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
         return this.doInvoke(headers, parameterMap, postContent, givenToken);
     }
 
-    private String getPostContentAsJson(final StaplerRequest request) throws IOException {
+    private String getPostContentAsJson(final StaplerRequest2 request) throws IOException {
         final String contentType = request.getContentType();
         if (contentType != null && contentType.contains(FORM_URLENCODED)) {
             final Map<String, String[]> data = new HashMap<>(request.getParameterMap());
@@ -152,7 +152,7 @@ public class GenericWebHookRequestReceiver extends CrumbExclusion implements Unp
     }
 
     @VisibleForTesting
-    Map<String, List<String>> getHeaders(final StaplerRequest request) {
+    Map<String, List<String>> getHeaders(final StaplerRequest2 request) {
         final Map<String, List<String>> headers = new HashMap<>();
         final Enumeration<String> headersEnumeration = request.getHeaderNames();
         while (headersEnumeration.hasMoreElements()) {
