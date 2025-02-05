@@ -2,6 +2,23 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.3.0 (2025-02-05)
+
+### Features
+
+-  Migrate from EE 8 to EE 9 (#343) ([3da9e](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/3da9ecebb4591d3) Basil Crow)  
+
+### Dependency updates
+
+- bump se.bjurr.gitchangelog:git-changelog-maven-plugin (#334) ([1d0cb](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/1d0cb8dc22827f7) dependabot[bot])  
+### Other changes
+
+**Use `jenkins.baseline` to reduce bom update mistakes (#337)**
+
+
+[99e13](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/99e13490438dc04) strangelookingnerd *2025-01-18 07:29:53*
+
+
 ## 2.2.5 (2024-10-17)
 
 ### Other changes
@@ -54,6 +71,9 @@ Changelog of generic-webhook-trigger-plugin.
 -  optimizing retrieval of jobs when using token to auth ([53825](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/53825a1dde1fd8a) Tomas Bjerre)  
 -  removing cache feature ([026c2](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/026c2c81b0a2207) Tomas Bjerre)  
 
+### Other changes
+
+
 ## 2.1.1 (2024-04-03)
 
 ### Bug Fixes
@@ -78,6 +98,9 @@ Changelog of generic-webhook-trigger-plugin.
 ### Bug Fixes
 
 -  avoiding setting cache time to 0 ([6c9f4](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/6c9f435991ec97c) Tomas Bjerre)  [#297](https://github.com/jenkinsci/generic-webhook-trigger-plugin/issues/297)  
+
+### Other changes
+
 
 ## 2.0.0 (2024-01-27)
 
