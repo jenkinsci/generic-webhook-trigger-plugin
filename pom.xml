@@ -59,7 +59,7 @@
     <jenkins.baseline>2.479</jenkins.baseline>
     <jenkins.version>${jenkins.baseline}.1</jenkins.version>
     <violations.version>2.2.0</violations.version>
-    <changelog>2.2.2</changelog>
+    <changelog>2.2.4</changelog>
     <spotless.check.skip>false</spotless.check.skip>
   </properties>
 
