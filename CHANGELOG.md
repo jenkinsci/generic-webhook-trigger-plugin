@@ -2,6 +2,13 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.3.1 (2025-02-09)
+
+### Dependency updates
+
+- bump io.jenkins.tools.bom:bom-2.479.x (#345) ([635f0](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/635f05441e65d49) dependabot[bot])  
+- bump org.jenkins-ci.plugins:plugin from 5.6 to 5.7 (#346) ([05f8c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/05f8c66e959c104) dependabot[bot])  
+- bump se.bjurr.gitchangelog:git-changelog-maven-plugin (#339) ([e0d5c](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/e0d5c03c9251cb3) dependabot[bot])  
 ## 2.3.0 (2025-02-05)
 
 ### Features
