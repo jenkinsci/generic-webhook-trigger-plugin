@@ -10,13 +10,13 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.stapler.StaplerRequest2;
 
-public class GenericWebHookRequestReceiverTest {
+class GenericWebHookRequestReceiverTest {
 
     @Test
-    public void testThatNoTokenGivesNull() {
+    void testThatNoTokenGivesNull() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = newHashMap();
         final Map<String, String[]> parameterMap = newHashMap();
@@ -28,7 +28,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatNoQuietPeriodGivesNegOne() {
+    void testThatNoQuietPeriodGivesNegOne() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = newHashMap();
         final Map<String, String[]> parameterMap = newHashMap();
@@ -40,7 +40,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatParameterTokenGivesThatToken() {
+    void testThatParameterTokenGivesThatToken() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = newHashMap();
         final Map<String, String[]> parameterMap = of( //
@@ -53,7 +53,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatParameterQuietPeriodGivesThatQueitPeriod() {
+    void testThatParameterQuietPeriodGivesThatQueitPeriod() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = newHashMap();
         final Map<String, String[]> parameterMap = of( //
@@ -66,10 +66,10 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatHeaderTokenGivesThatToken() {
+    void testThatHeaderTokenGivesThatToken() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = of( //
-                "token", (List<String>) newArrayList("tokenHeader"));
+                "token", newArrayList("tokenHeader"));
         final Map<String, String[]> parameterMap = newHashMap();
 
         final String actual = sut.getGivenToken(headers, parameterMap);
@@ -79,10 +79,10 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatGitLabTokenHeaderTokenGivesThatToken() {
+    void testThatGitLabTokenHeaderTokenGivesThatToken() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = of( //
-                "x-gitlab-token", (List<String>) newArrayList("gitlabtoken"));
+                "x-gitlab-token", newArrayList("gitlabtoken"));
         final Map<String, String[]> parameterMap = newHashMap();
 
         final String actual = sut.getGivenToken(headers, parameterMap);
@@ -92,10 +92,10 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatHeaderQuietPeriodGivesThatQueitPeriod() {
+    void testThatHeaderQuietPeriodGivesThatQueitPeriod() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = of( //
-                "jobQuietPeriod", (List<String>) newArrayList("1"));
+                "jobQuietPeriod", newArrayList("1"));
         final Map<String, String[]> parameterMap = newHashMap();
 
         final int actual = sut.getGivenQuietPeriod(headers, parameterMap);
@@ -105,7 +105,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatNonsensicalQuietPeriodGivesNegOne() {
+    void testThatNonsensicalQuietPeriodGivesNegOne() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = newHashMap();
         final Map<String, String[]> parameterMap = of( //
@@ -118,10 +118,10 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatHeaderAuthorizationBearerTokenGivesThatToken() {
+    void testThatHeaderAuthorizationBearerTokenGivesThatToken() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
         final Map<String, List<String>> headers = of( //
-                "authorization", (List<String>) newArrayList("Bearer baererTokenValue"));
+                "authorization", newArrayList("Bearer baererTokenValue"));
         final Map<String, String[]> parameterMap = newHashMap();
 
         final String actual = sut.getGivenToken(headers, parameterMap);
@@ -131,7 +131,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatHeadersCanBeTransformedToList() {
+    void testThatHeadersCanBeTransformedToList() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
         final StaplerRequest2 request = mock(StaplerRequest2.class);
@@ -152,7 +152,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatHeadersCanBeTransformedToListSeveralValues() {
+    void testThatHeadersCanBeTransformedToListSeveralValues() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
         final StaplerRequest2 request = mock(StaplerRequest2.class);
@@ -173,7 +173,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatHeadersCanBeTransformedToListSeveralNames() {
+    void testThatHeadersCanBeTransformedToListSeveralNames() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
         final StaplerRequest2 request = mock(StaplerRequest2.class);
@@ -198,7 +198,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatMessageIsCreatedFromExceptionWithNoStacktrace() {
+    void testThatMessageIsCreatedFromExceptionWithNoStacktrace() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
         final Throwable t = new IndexOutOfBoundsException();
@@ -212,7 +212,7 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void testThatMessageIsCreatedFromExceptionWithStacktrace() {
+    void testThatMessageIsCreatedFromExceptionWithStacktrace() {
         final GenericWebHookRequestReceiver sut = new GenericWebHookRequestReceiver();
 
         final Throwable t = new IndexOutOfBoundsException();
@@ -224,31 +224,35 @@ public class GenericWebHookRequestReceiverTest {
     }
 
     @Test
-    public void test404MessageNoToken_empty() {
+    void test404MessageNoToken_empty() {
         final String actual = GenericWebHookRequestReceiver.construct404Message(null);
 
         assertThat(actual)
                 .isEqualToIgnoringWhitespace(
-                        "Did not find any jobs with GenericTrigger configured!\n"
-                                + "No token was supplied.\n"
-                                + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n"
-                                + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n");
+                        """
+                                Did not find any jobs with GenericTrigger configured!
+                                No token was supplied.
+                                If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE
+                                If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...
+                                """);
     }
 
     @Test
-    public void test404MessageNoToken_null() {
+    void test404MessageNoToken_null() {
         final String actual = GenericWebHookRequestReceiver.construct404Message(null);
 
         assertThat(actual)
                 .isEqualToIgnoringWhitespace(
-                        "Did not find any jobs with GenericTrigger configured!\n"
-                                + "No token was supplied.\n"
-                                + "If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE\n"
-                                + "If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...\n");
+                        """
+                                Did not find any jobs with GenericTrigger configured!
+                                No token was supplied.
+                                If you are using a token, you need to pass it like ...trigger/invoke?token=TOKENHERE
+                                If you are not using a token, you need to authenticate like http://user:passsword@example.org/generic-webhook...
+                                """);
     }
 
     @Test
-    public void test404MessageNoToken_given() {
+    void test404MessageNoToken_given() {
         final String actual = GenericWebHookRequestReceiver.construct404Message("something");
 
         assertThat(actual)

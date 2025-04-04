@@ -1,7 +1,10 @@
 package org.jenkinsci.plugins.gwt.bdd;
 
-import io.cucumber.junit.Cucumber;
-import org.junit.runner.RunWith;
+import org.junit.platform.suite.api.IncludeEngines;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
 
-@RunWith(Cucumber.class)
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("org/jenkinsci/plugins/gwt/bdd")
 public class RunTest {}

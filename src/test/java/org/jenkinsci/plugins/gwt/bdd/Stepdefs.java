@@ -22,7 +22,7 @@ import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
 
 public class Stepdefs {
 
-    private static Logger LOG = Logger.getLogger(Stepdefs.class.getSimpleName());
+    private static final Logger LOG = Logger.getLogger(Stepdefs.class.getSimpleName());
     private static FeatureState featureState;
 
     @Before

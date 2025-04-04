@@ -10,23 +10,23 @@ import static org.jenkinsci.plugins.gwt.Renderer.renderText;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class RendererTest {
+class RendererTest {
     private String regexpFilterText = null;
     private String regexpFilterExpression = null;
     private Map<String, String> resolvedVariables;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         resolvedVariables = newHashMap();
         resolvedVariables.put("key1", "resolved1");
         resolvedVariables.put("key2", "resolved2");
     }
 
     @Test
-    public void testThatIsMatchingAcceptsEverythingIfNoFilter() {
+    void testThatIsMatchingAcceptsEverythingIfNoFilter() {
         final boolean actual = isMatching(regexpFilterText, regexpFilterExpression);
 
         assertThat(actual) //
@@ -34,7 +34,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatEmptyTextIsNotMatched() {
+    void testThatEmptyTextIsNotMatched() {
         final boolean actual = isMatching("", "^feature");
 
         assertThat(actual) //
@@ -42,7 +42,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatEmptyExprButNotEmptyTextIsNotMatched() {
+    void testThatEmptyExprButNotEmptyTextIsNotMatched() {
         assertThat(isMatching(null, "^feature")) //
                 .isFalse();
         assertThat(isMatching("", "^feature")) //
@@ -50,7 +50,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatEmptyExprAndEmptyTextIsMatched() {
+    void testThatEmptyExprAndEmptyTextIsMatched() {
         assertThat(isMatching(null, "")) //
                 .isTrue();
         assertThat(isMatching("", null)) //
@@ -62,7 +62,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatIsMatchingWorksWithNewlines() {
+    void testThatIsMatchingWorksWithNewlines() {
         regexpFilterText = "firstsecondthird";
         regexpFilterExpression = "^(?!.*(second)).*";
         final boolean actual = isMatching(regexpFilterText, regexpFilterExpression);
@@ -72,7 +72,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatIsMatchingWorksDevelopCorrectUser() {
+    void testThatIsMatchingWorksDevelopCorrectUser() {
         regexpFilterText = "refs/heads/develop tomabje";
         regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";
         final boolean actual = isMatching(regexpFilterText, regexpFilterExpression);
@@ -82,7 +82,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatIsMatchingWorksDevelopNotCorrectUser() {
+    void testThatIsMatchingWorksDevelopNotCorrectUser() {
         regexpFilterText = "refs/heads/develop jenkins";
         regexpFilterExpression = "^refs/heads/develop ((?!jenkins))";
         final boolean actual = isMatching(regexpFilterText, regexpFilterExpression);
@@ -92,7 +92,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatIsMatchingAcceptsIfMatching() {
+    void testThatIsMatchingAcceptsIfMatching() {
         regexpFilterText = "$key1";
         regexpFilterExpression = "resolved1";
 
@@ -103,7 +103,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatExactValueOfSingleVariableCanBeMatched() {
+    void testThatExactValueOfSingleVariableCanBeMatched() {
         resolvedVariables = new TreeMap<>();
         resolvedVariables.put("PR_TO_BRANCH", "master");
 
@@ -120,7 +120,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatVariablesAreResolvedWithLongestVariableFirst() {
+    void testThatVariablesAreResolvedWithLongestVariableFirst() {
         resolvedVariables = new TreeMap<>();
         resolvedVariables.put("key1", "resolved1");
         resolvedVariables.put("key2", "resolved2only");
@@ -134,7 +134,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatExceptionNotThrownWithBadResolvedVariable() {
+    void testThatExceptionNotThrownWithBadResolvedVariable() {
         resolvedVariables = new TreeMap<>();
         resolvedVariables.put("key1", "resolved1");
         resolvedVariables.put("key2", "resolved2($this)");
@@ -147,7 +147,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatVariablesCanUseBrackets() {
+    void testThatVariablesCanUseBrackets() {
         resolvedVariables = new TreeMap<>();
         resolvedVariables.put("key1", "resolved1");
         resolvedVariables.put("key2", "resolved2only");
@@ -161,7 +161,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatVariablesAreResolvedInOrder() {
+    void testThatVariablesAreResolvedInOrder() {
         final List<String> actual = getVariablesInResolveOrder(
                 newHashSet( //
                         "var1", //
@@ -184,8 +184,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testThatIsMatchingRejectsIfNotMatching() {
-
+    void testThatIsMatchingRejectsIfNotMatching() {
         regexpFilterText = "resolved2";
         regexpFilterExpression = "$key1";
         final boolean actual = isMatching(regexpFilterText, regexpFilterExpression);

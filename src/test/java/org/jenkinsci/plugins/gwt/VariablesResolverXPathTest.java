@@ -11,15 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VariablesResolverXPathTest {
+class VariablesResolverXPathTest {
     private final Map<String, List<String>> headers = new HashMap<>();
     private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     private final boolean shouldNotFlatten = false;
 
     @Test
-    public void testXPathGetOneVariable() throws Exception {
+    void testXPathGetOneVariable() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -44,7 +44,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetOneNode() throws Exception {
+    void testXPathGetOneNode() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -69,7 +69,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetNodes() throws Exception {
+    void testXPathGetNodes() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -95,7 +95,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetAttribute() throws Exception {
+    void testXPathGetAttribute() {
         final String resourceName = "attribute.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -121,7 +121,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetAbsentAttribute() throws Exception {
+    void testXPathGetAbsentAttribute() {
         final String resourceName = "attribute.xml";
         final String variableName = "variablename";
         final String xPath = "/attribute[@name='thekey']/@anothervalue";
@@ -134,7 +134,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetAbsentAttributeDefault() throws Exception {
+    void testXPathGetAbsentAttributeDefault() {
         final String resourceName = "attribute.xml";
         final String variableName = "variablename";
         final String xPath = "/attribute[@name='thekey']/@anothervalue";
@@ -169,7 +169,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathTwoListItems() throws Exception {
+    void testXPathTwoListItems() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -198,7 +198,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathOneListItem() throws Exception {
+    void testXPathOneListItem() {
         final String resourceName = "one-list-item.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -225,7 +225,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathTwoListListItems() throws Exception {
+    void testXPathTwoListListItems() {
         final String resourceName = "two-list-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -260,7 +260,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathTwoListListItemsFirstBook() throws Exception {
+    void testXPathTwoListListItemsFirstBook() {
         final String resourceName = "two-list-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -293,7 +293,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathRootElement() throws Exception {
+    void testXPathRootElement() {
         final String resourceName = "two-list-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -322,7 +322,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathTwoListListItemsSecondBook() throws Exception {
+    void testXPathTwoListListItemsSecondBook() {
         final String resourceName = "two-list-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -349,7 +349,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathTwoListItemsFirstBook() throws Exception {
+    void testXPathTwoListItemsFirstBook() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -376,7 +376,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetTwoVariable() throws Exception {
+    void testXPathGetTwoVariable() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
@@ -406,7 +406,7 @@ public class VariablesResolverXPathTest {
     }
 
     @Test
-    public void testXPathGetZeroMatchingVariables() throws Exception {
+    void testXPathGetZeroMatchingVariables() {
         final String resourceName = "two-list-items.xml";
         final String postContent = this.getContent(resourceName);
 
