@@ -10,12 +10,12 @@ import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ParameterActionUtilTest {
+class ParameterActionUtilTest {
 
     @Test
-    public void testThatStringKeepsItsDefaultValueWhenNoParameterSupplied() {
+    void testThatStringKeepsItsDefaultValueWhenNoParameterSupplied() {
         final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
                 new StringParameterDefinition("name", "the default value") //
                 );
@@ -31,11 +31,11 @@ public class ParameterActionUtilTest {
     }
 
     @Test
-    public void testThatStringDoesNotKeepItsDefaultValueWhenParameterSupplied() {
+    void testThatStringDoesNotKeepItsDefaultValueWhenParameterSupplied() {
         final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
                 new StringParameterDefinition("name", "the default value") //
                 );
-        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>of( //
+        final Map<String, String> resolvedVariables = ImmutableMap.of( //
                 "name", "this is supplied");
 
         final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
@@ -47,7 +47,7 @@ public class ParameterActionUtilTest {
     }
 
     @Test
-    public void testThatBooleanKeepsItsDefaultValueWhenNoParameterSupplied() {
+    void testThatBooleanKeepsItsDefaultValueWhenNoParameterSupplied() {
         final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
                 new BooleanParameterDefinition("name", true, null) //
                 );
@@ -63,11 +63,11 @@ public class ParameterActionUtilTest {
     }
 
     @Test
-    public void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndFalseIsFalse() {
+    void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndFalseIsFalse() {
         final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
                 new BooleanParameterDefinition("name", true, null) //
                 );
-        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>of( //
+        final Map<String, String> resolvedVariables = ImmutableMap.of( //
                 "name", "false");
 
         final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
@@ -79,11 +79,11 @@ public class ParameterActionUtilTest {
     }
 
     @Test
-    public void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndTrueIsTrue() {
+    void testThatBooleanDoesNotKeepItsDefaultValueWhenParameterSuppliedAndTrueIsTrue() {
         final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty(
                 new BooleanParameterDefinition("name", true, null) //
                 );
-        final Map<String, String> resolvedVariables = ImmutableMap.<String, String>of( //
+        final Map<String, String> resolvedVariables = ImmutableMap.of( //
                 "name", "true");
 
         final ParametersAction actual = createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
@@ -95,7 +95,7 @@ public class ParameterActionUtilTest {
     }
 
     @Test
-    public void testThatUniqueParameterIsAddedWhenallowSeveralTriggersPerBuildFalse() {
+    void testThatUniqueParameterIsAddedWhenallowSeveralTriggersPerBuildFalse() {
         final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty();
         final Map<String, String> resolvedVariables = new HashMap<>();
 
@@ -103,7 +103,7 @@ public class ParameterActionUtilTest {
                 createParameterAction(parametersDefinitionProperty, resolvedVariables, true);
 
         assertThat(actualWithTrue) //
-                .hasSize(0);
+                .isEmpty();
 
         final ParametersAction actualWithFalse =
                 createParameterAction(parametersDefinitionProperty, resolvedVariables, false);

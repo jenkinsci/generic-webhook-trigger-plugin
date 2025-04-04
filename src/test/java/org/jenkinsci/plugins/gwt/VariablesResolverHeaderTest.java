@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VariablesResolverHeaderTest {
+class VariablesResolverHeaderTest {
 
     @Test
-    public void testHeadersAndRequestParameters() throws Exception {
+    void testHeadersAndRequestParameters() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -55,7 +55,7 @@ public class VariablesResolverHeaderTest {
     }
 
     @Test
-    public void testHeaders() throws Exception {
+    void testHeaders() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -95,7 +95,7 @@ public class VariablesResolverHeaderTest {
     }
 
     @Test
-    public void testHeaderResolvesToNull() throws Exception {
+    void testHeaderResolvesToNull() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -125,7 +125,7 @@ public class VariablesResolverHeaderTest {
     }
 
     @Test
-    public void testHeaderResolvesCanBeReused() throws Exception {
+    void testHeaderResolvesCanBeReused() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -169,7 +169,7 @@ public class VariablesResolverHeaderTest {
     }
 
     @Test
-    public void testHeadersButNoneConfigured() throws Exception {
+    void testHeadersButNoneConfigured() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -196,6 +196,6 @@ public class VariablesResolverHeaderTest {
                 .getVariables();
 
         assertThat(variables) //
-                .hasSize(0);
+                .isEmpty();
     }
 }

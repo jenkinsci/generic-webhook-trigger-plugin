@@ -3,11 +3,12 @@ package org.jenkinsci.plugins.gwt;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GenericTriggerResultsTest {
+class GenericTriggerResultsTest {
+
     @Test
-    public void testNull() {
+    void testNull() {
         final String url = null;
         final long id = 0;
         final boolean triggered = false;
@@ -23,7 +24,7 @@ public class GenericTriggerResultsTest {
     }
 
     @Test
-    public void testNullApi() {
+    void testNullApi() {
         final String url = null;
         final long id = 2L;
         final boolean triggered = false;

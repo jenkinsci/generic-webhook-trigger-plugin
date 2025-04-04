@@ -10,85 +10,73 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VariablesResolverJsonPathTest {
+class VariablesResolverJsonPathTest {
     private final Map<String, List<String>> headers = new HashMap<>();
     private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     private boolean shouldNotFlatten = false;
 
     @Test
-    public void testJSONPathGetOneLeaf() throws Exception {
+    void testJSONPathGetOneLeaf() {
         final String resourceName = "one-leaf.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
         assertThat(variables) //
                 .containsEntry("variableName_name", "Administrator") //
-                .hasSize(2);
-
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("{\"name\":\"Administrator\"}");
+                .hasSize(2)
+                .containsEntry("variableName", "{\"name\":\"Administrator\"}");
     }
 
     @Test
-    public void testJSONPathGetTwoLeafs() throws Exception {
+    void testJSONPathGetTwoLeafs() {
         final String resourceName = "two-leafs.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
         assertThat(variables) //
                 .containsEntry("variableName_name", "Administrator") //
                 .containsEntry("variableName_username", "root") //
-                .hasSize(3);
-
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("{\"name\":\"Administrator\",\"username\":\"root\"}");
+                .hasSize(3)
+                .containsEntry("variableName", "{\"name\":\"Administrator\",\"username\":\"root\"}");
     }
 
     @Test
-    public void testJSONPathGetOneListItem() throws Exception {
+    void testJSONPathGetOneListItem() {
         final String resourceName = "one-list-item.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
-        assertThat(variables.keySet()) //
-                .containsOnly("variableName", "variableName_0_name");
-
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("[{\"name\":\"Administrator\"}]");
-        assertThat(variables.get("variableName_0_name")) //
-                .isEqualTo("Administrator");
+        assertThat(variables) //
+                .containsOnlyKeys("variableName", "variableName_0_name")
+                .containsEntry("variableName", "[{\"name\":\"Administrator\"}]")
+                .containsEntry("variableName_0_name", "Administrator");
     }
 
     @Test
-    public void testJSONPathGetRootItem() throws Exception {
+    void testJSONPathGetRootItem() {
         final String resourceName = "one-list-item.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$");
 
-        assertThat(variables.keySet()) //
-                .containsOnly("variableName", "variableName_user_0_name");
+        assertThat(variables) //
+                .containsOnlyKeys("variableName", "variableName_user_0_name")
+                .containsEntry("variableName_user_0_name", "Administrator");
         assertThat(variables.get("variableName").replaceAll("\\n|\\r\\n|\\s", "")) //
                 .isEqualToIgnoringWhitespace("{\"user\":[{\"name\":\"Administrator\"}]}");
-        assertThat(variables.get("variableName_user_0_name")) //
-                .isEqualTo("Administrator");
     }
 
     @Test
-    public void testJSONPathGetTwoListItems() throws Exception {
+    void testJSONPathGetTwoListItems() {
         final String resourceName = "two-list-items.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
-        assertThat(variables.keySet()) //
-                .containsOnly("variableName", "variableName_0_name", "variableName_1_username");
-
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("[{\"name\":\"Administrator\"},{\"username\":\"root\"}]");
-        assertThat(variables.get("variableName_0_name")) //
-                .isEqualTo("Administrator");
-        assertThat(variables.get("variableName_1_username")) //
-                .isEqualTo("root");
+        assertThat(variables) //
+                .containsOnlyKeys("variableName", "variableName_0_name", "variableName_1_username")
+                .containsEntry("variableName", "[{\"name\":\"Administrator\"},{\"username\":\"root\"}]")
+                .containsEntry("variableName_0_name", "Administrator")
+                .containsEntry("variableName_1_username", "root");
     }
 
     @Test
-    public void testJSONPathGetSeveralMixedListItems() throws Exception {
+    void testJSONPathGetSeveralMixedListItems() {
         final String resourceName = "several-mixed-list-items.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
@@ -101,24 +89,23 @@ public class VariablesResolverJsonPathTest {
                 .containsEntry("variableName_5", "another simple string") //
                 .containsEntry("variableName_6", "66666") //
                 .containsEntry("variableName_7_another_number", "another value") //
-                .hasSize(9);
-
-        assertThat(variables.get("variableName")) //
-                .isEqualTo(
+                .hasSize(9)
+                .containsEntry(
+                        "variableName",
                         "[{\"name\":\"Administrator\"},{\"username\":\"root\"},\"a simple string\",33333,{\"a number\":\"a value\"},\"another simple string\",66666,{\"another number\":\"another value\"}]");
     }
 
     @Test
-    public void testJSONPathGetNullValues() throws Exception {
+    void testJSONPathGetNullValues() {
         final Map<String, String> variables =
                 this.getJsonPathVariablesFromContent("$", "{\"a\": null,\"b\": \"value\"}");
 
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("{\"a\": null,\"b\": \"value\"}");
+        assertThat(variables) //
+                .containsEntry("variableName", "{\"a\": null,\"b\": \"value\"}");
     }
 
     @Test
-    public void testJSONPathGetAllVariable() throws Exception {
+    void testJSONPathGetAllVariable() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final String postContent = this.getContent(resourceName);
 
@@ -150,14 +137,12 @@ public class VariablesResolverJsonPathTest {
                 .containsEntry("reqp1_1", "b") //
                 .containsEntry("reqp2", "just one") //
                 .containsEntry("reqp2_0", "just one") //
-                .hasSize(8);
-
-        assertThat(variables.get("ids")) //
-                .isEqualTo("[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]");
+                .hasSize(8)
+                .containsEntry("ids", "[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]");
     }
 
     @Test
-    public void testJSONPathGetAllVariable_not_flat() throws Exception {
+    void testJSONPathGetAllVariable_not_flat() {
         this.shouldNotFlatten = true;
 
         final String resourceName = "gitlab-mergerequest-comment.json";
@@ -169,30 +154,25 @@ public class VariablesResolverJsonPathTest {
                 new GenericVariable("userName", "$.user.name"));
         final Map<String, String> variables = new VariablesResolver(
                         this.headers,
-                        new HashMap<String, String[]>(),
+                        new HashMap<>(),
                         postContent,
                         genericVariables,
-                        new ArrayList<GenericRequestVariable>(),
+                        new ArrayList<>(),
                         this.genericHeaderVariables,
                         this.shouldNotFlatten)
                 .getVariables();
 
         assertThat(variables) //
-                .containsOnlyKeys("ids", "user", "userName");
-
-        assertThat(variables.get("ids")) //
-                .isEqualTo("[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]");
-
-        assertThat(variables.get("user")) //
-                .isEqualTo(
-                        "{\"name\":\"Administrator\",\"username\":\"root\",\"avatar_url\":\"http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s\\u003d80\\u0026d\\u003didenticon\"}");
-
-        assertThat(variables.get("userName")) //
-                .isEqualTo("Administrator");
+                .containsOnlyKeys("ids", "user", "userName")
+                .containsEntry("ids", "[28,1,\"1c3e5deb451353c34264b98c77836012a2106515\"]")
+                .containsEntry(
+                        "user",
+                        "{\"name\":\"Administrator\",\"username\":\"root\",\"avatar_url\":\"http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s\\u003d80\\u0026d\\u003didenticon\"}")
+                .containsEntry("userName", "Administrator");
     }
 
     @Test
-    public void testGenericRequestParameters() throws Exception {
+    void testGenericRequestParameters() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -236,7 +216,7 @@ public class VariablesResolverJsonPathTest {
     }
 
     @Test
-    public void testJSONPathGetZeroMatchingVariables() throws Exception {
+    void testJSONPathGetZeroMatchingVariables() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final String postContent = this.getContent(resourceName);
 
@@ -255,14 +235,12 @@ public class VariablesResolverJsonPathTest {
                 .getVariables();
 
         assertThat(variables) //
-                .hasSize(1);
-
-        assertThat(variables.get("ids")) //
-                .isEqualTo("[]");
+                .hasSize(1)
+                .containsEntry("ids", "[]");
     }
 
     @Test
-    public void testJSONPathGetOneVariable() throws Exception {
+    void testJSONPathGetOneVariable() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final String postContent = this.getContent(resourceName);
 
@@ -286,7 +264,7 @@ public class VariablesResolverJsonPathTest {
     }
 
     @Test
-    public void testJSONPathGetTwoVariables() throws Exception {
+    void testJSONPathGetTwoVariables() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final String postContent = this.getContent(resourceName);
 
@@ -314,7 +292,7 @@ public class VariablesResolverJsonPathTest {
     }
 
     @Test
-    public void testJSONPathGetNodeVariable() throws Exception {
+    void testJSONPathGetNodeVariable() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.user");
 
@@ -323,7 +301,7 @@ public class VariablesResolverJsonPathTest {
     }
 
     @Test
-    public void testJSONPathGetPayloadVariable() throws Exception {
+    void testJSONPathGetPayloadVariable() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final String postContent = this.getContent(resourceName);
 
@@ -346,7 +324,7 @@ public class VariablesResolverJsonPathTest {
     }
 
     @Test
-    public void testJSONPathGetPayloadVariableDefault() throws Exception {
+    void testJSONPathGetPayloadVariableDefault() {
         final String resourceName = "gitlab-mergerequest-comment.json";
         final String postContent = this.getContent(resourceName);
 
@@ -371,30 +349,26 @@ public class VariablesResolverJsonPathTest {
     }
 
     @Test
-    public void testStarOperator() throws Exception {
+    void testStarOperator() {
         final String resourceName = "github-push-event.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.commits[*].modified[*]");
 
-        assertThat(variables.keySet()) //
-                .containsOnly("variableName", "variableName_0");
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("[\"README.md\"]");
-        assertThat(variables.get("variableName_0")) //
-                .isEqualTo("README.md");
+        assertThat(variables) //
+                .containsOnlyKeys("variableName", "variableName_0")
+                .containsEntry("variableName", "[\"README.md\"]")
+                .containsEntry("variableName_0", "README.md");
     }
 
     @Test
-    public void testCommaOperator() throws Exception {
+    void testCommaOperator() {
         final String resourceName = "github-push-event.json";
         final Map<String, String> variables =
                 this.getJsonPathVariables(resourceName, "$.commits[*].['modified','added','removed'][*]");
 
-        assertThat(variables.keySet()) //
-                .containsOnly("variableName", "variableName_0");
-        assertThat(variables.get("variableName")) //
-                .isEqualTo("[\"README.md\"]");
-        assertThat(variables.get("variableName_0")) //
-                .isEqualTo("README.md");
+        assertThat(variables) //
+                .containsOnlyKeys("variableName", "variableName_0")
+                .containsEntry("variableName", "[\"README.md\"]")
+                .containsEntry("variableName_0", "README.md");
     }
 
     private Map<String, String> getJsonPathVariables(final String resourceName, final String jsonPath) {

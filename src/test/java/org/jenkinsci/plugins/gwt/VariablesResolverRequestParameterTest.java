@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jenkinsci.plugins.gwt.resolvers.VariablesResolver;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VariablesResolverRequestParameterTest {
+class VariablesResolverRequestParameterTest {
     private final Map<String, List<String>> headers = new HashMap<>();
     private final List<GenericHeaderVariable> genericHeaderVariables = new ArrayList<>();
     private final boolean shouldNotFlatten = false;
 
     @Test
-    public void testGenericRequestParametersWithFilters() throws Exception {
+    void testGenericRequestParametersWithFilters() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();
@@ -60,7 +60,7 @@ public class VariablesResolverRequestParameterTest {
     }
 
     @Test
-    public void testGenericRequestParameters() throws Exception {
+    void testGenericRequestParameters() {
         final String postContent = null;
 
         final List<GenericVariable> genericVariables = newArrayList();

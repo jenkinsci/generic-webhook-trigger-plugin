@@ -16,10 +16,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import jenkins.model.ParameterizedJobMixIn.ParameterizedJob;
 import org.jenkinsci.plugins.gwt.FoundJob;
 import org.jenkinsci.plugins.gwt.GenericTrigger;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class JobFinderTest {
+class JobFinderTest {
+
     private final AtomicInteger atomicInteger = new AtomicInteger(0);
     private List<ParameterizedJob> allParameterizedJobsByImpersonation;
     private final ParameterizedJob job1WithNoToken = this.createJob("", "");
@@ -30,8 +31,8 @@ public class JobFinderTest {
     private final ParameterizedJob job6WithGenericTokenDef = this.createJob("", "DEF");
     private Boolean didImpersonate;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         this.didImpersonate = null;
         this.allParameterizedJobsByImpersonation = new ArrayList<>();
         final JobFinderImpersonater jobFinderImpersonater = new JobFinderImpersonater() {
@@ -80,7 +81,7 @@ public class JobFinderTest {
     }
 
     @Test
-    public void testThatJobsWithoutTokenIsNotFoundWhenTokenSupplied() {
+    void testThatJobsWithoutTokenIsNotFoundWhenTokenSupplied() {
         final String givenToken = "some-token";
 
         final List<String> actual = this.findAllJobs(givenToken);
@@ -92,7 +93,7 @@ public class JobFinderTest {
     }
 
     @Test
-    public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesABC() {
+    void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesABC() {
         final String givenToken = "ABC";
 
         final List<String> actual = this.findAllJobs(givenToken);
@@ -104,7 +105,7 @@ public class JobFinderTest {
     }
 
     @Test
-    public void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesDEF() {
+    void testThatJobsWithTokenIsFoundWhenTokenSuppliedAndMatchesDEF() {
         final String givenToken = "DEF";
 
         final List<String> actual = this.findAllJobs(givenToken);
@@ -116,7 +117,7 @@ public class JobFinderTest {
     }
 
     @Test
-    public void testThatJobsWithoutTokenIsFoundWhenTokenNotSupplied() {
+    void testThatJobsWithoutTokenIsFoundWhenTokenNotSupplied() {
         final String givenToken = "";
 
         final List<String> actual = this.findAllJobs(givenToken);
@@ -132,7 +133,7 @@ public class JobFinderTest {
     }
 
     @Test
-    public void testThatNoJobsAreFoundWhenTokenSuppliedButDoesNotMatch() {
+    void testThatNoJobsAreFoundWhenTokenSuppliedButDoesNotMatch() {
         final String givenToken = "QWE";
 
         final List<String> actual = this.findAllJobs(givenToken);
