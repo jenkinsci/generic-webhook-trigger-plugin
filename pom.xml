@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>5.13</version>
+    <version>5.19</version>
   </parent>
 
   <artifactId>generic-webhook-trigger</artifactId>
@@ -57,7 +57,7 @@
   <properties>
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
     <jenkins.baseline>2.479</jenkins.baseline>
-    <jenkins.version>${jenkins.baseline}.1</jenkins.version>
+    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     <violations.version>2.2.0</violations.version>
     <changelog>2.2.4</changelog>
     <spotless.check.skip>false</spotless.check.skip>
@@ -130,16 +130,24 @@
       <version>7.20.1</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <!-- TODO: Remove when mockito upgrades to support Java 25 -->
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.17.6</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>3.27.3</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
+      <version>5.18.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

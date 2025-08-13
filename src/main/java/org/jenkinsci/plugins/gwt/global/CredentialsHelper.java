@@ -10,7 +10,6 @@ import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.google.common.base.Optional;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.model.Item;
 import hudson.model.Queue;
 import hudson.model.queue.Tasks;
@@ -25,7 +24,6 @@ import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 public class CredentialsHelper {
 
-    @SuppressFBWarnings("NP_NULL_PARAM_DEREF")
     public static ListBoxModel doFillCredentialsIdItems(final Item item, final String credentialsId) {
         final StandardListBoxModel result = new StandardListBoxModel();
         if (item == null) {
