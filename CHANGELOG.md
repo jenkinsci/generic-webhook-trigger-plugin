@@ -2,6 +2,21 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.4.1 (2025-08-13)
+
+### Bug Fixes
+
+-  trigger new version to fix faulty release ([84b01](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/84b01ab666ce447) Tomas Bjerre)  
+
+## 2.4.0 (2025-08-13)
+
+### Features
+
+-  prepare for Java 25 (#367) ([96487](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/964872952966f0b) Mark Waite)  
+
+### Dependency updates
+
+- bump se.bjurr.gitchangelog:git-changelog-maven-plugin (#355) ([4665d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/4665d8e1875d120) dependabot[bot])  
 ## 2.3.1 (2025-02-09)
 
 ### Dependency updates
