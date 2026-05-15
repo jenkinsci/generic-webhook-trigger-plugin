@@ -12,9 +12,12 @@ import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterValue;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class ParameterActionUtil {
+
+    private static final String UUID_PARAMETER_NAME = "jenkins-generic-webhook-trigger-plugin_uuid";
 
     public static ParametersAction createParameterAction(
             final ParametersDefinitionProperty parametersDefinitionProperty,
@@ -25,11 +28,9 @@ public class ParameterActionUtil {
         final boolean triggerOneBuildPerInvocation = !allowSeveralTriggersPerBuild;
         if (triggerOneBuildPerInvocation) {
             parameterList.add(new StringParameterValue(
-                    "jenkins-generic-webhook-trigger-plugin_uuid",
-                    UUID.randomUUID().toString(),
-                    null));
+                    UUID_PARAMETER_NAME, UUID.randomUUID().toString(), null));
         }
-        return new ParametersAction(parameterList);
+        return new ParametersAction(parameterList, Set.of(UUID_PARAMETER_NAME));
     }
 
     /** To keep any default values set there. */

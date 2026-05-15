@@ -2,14 +2,19 @@ package org.jenkinsci.plugins.gwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jenkinsci.plugins.gwt.ParameterActionUtil.createParameterAction;
+import static org.mockito.Mockito.mock;
 
 import com.google.common.collect.ImmutableMap;
 import hudson.model.BooleanParameterDefinition;
+import hudson.model.FreeStyleBuild;
+import hudson.model.FreeStyleProject;
 import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 class ParameterActionUtilTest {
@@ -112,5 +117,22 @@ class ParameterActionUtilTest {
                 .hasSize(1);
         assertThat(actualWithFalse.getAllParameters().get(0).getValue()) //
                 .isNotNull();
+    }
+
+    @Test
+    void testThatParameterIsAccessible() throws IOException {
+        final ParametersDefinitionProperty parametersDefinitionProperty = new ParametersDefinitionProperty();
+        final ParametersAction actualWithFalse = createParameterAction(parametersDefinitionProperty, Map.of(), false);
+        FreeStyleBuild mockBuild = new FreeStyleBuild(mock(FreeStyleProject.class));
+        actualWithFalse.onAttached(mockBuild);
+        assertThat(actualWithFalse.getParameters()) //
+                .hasSize(1);
+        assertThat(actualWithFalse.getParameters().get(0).getValue()) //
+                .isNotNull();
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.clearProperty(ParametersAction.KEEP_UNDEFINED_PARAMETERS_SYSTEM_PROPERTY_NAME);
     }
 }
