@@ -2,6 +2,12 @@
 
 Changelog of generic-webhook-trigger-plugin.
 
+## 2.4.3 (2026-08-31)
+
+### Bug Fixes
+
+-  default genericVariable to empty string when missing from payload (#392) ([5c75d](https://github.com/jenkinsci/generic-webhook-trigger-plugin/commit/5c75d30de9fb4b3) Arnesh)  
+
 ## 2.4.2 (2026-05-16)
 
 ### Bug Fixes
