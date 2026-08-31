@@ -349,6 +349,29 @@ class VariablesResolverJsonPathTest {
     }
 
     @Test
+    void testJSONPathGetPayloadVariableDefaultsToEmptyStringWhenMissingFromPayload() {
+        final String resourceName = "gitlab-mergerequest-comment.json";
+        final String postContent = this.getContent(resourceName);
+
+        final List<GenericVariable> genericVariables = newArrayList( //
+                new GenericVariable("payload", "$.doesnotexist"));
+        final Map<String, String[]> parameterMap = new HashMap<>();
+        final List<GenericRequestVariable> genericRequestVariables = new ArrayList<>();
+        final Map<String, String> variables = new VariablesResolver(
+                        this.headers,
+                        parameterMap,
+                        postContent,
+                        genericVariables,
+                        genericRequestVariables,
+                        this.genericHeaderVariables,
+                        this.shouldNotFlatten)
+                .getVariables();
+
+        assertThat(variables) //
+                .containsEntry("payload", "");
+    }
+
+    @Test
     void testStarOperator() {
         final String resourceName = "github-push-event.json";
         final Map<String, String> variables = this.getJsonPathVariables(resourceName, "$.commits[*].modified[*]");
