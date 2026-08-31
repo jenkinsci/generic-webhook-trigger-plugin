@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.gwt.resolvers;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Maps.newHashMap;
 import static java.util.logging.Level.INFO;
 import static org.jenkinsci.plugins.gwt.ExpressionType.JSONPath;
@@ -44,8 +45,8 @@ public class PostContentParameterResolver {
                 final boolean notResolved = resolvedMap.isEmpty()
                         || resolvedMap.containsKey(gv.getVariableName())
                                 && resolvedMap.get(gv.getVariableName()).isEmpty();
-                if (notResolved && gv.getDefaultValue() != null) {
-                    resolvedMap.put(gv.getVariableName(), gv.getDefaultValue());
+                if (notResolved) {
+                    resolvedMap.put(gv.getVariableName(), nullToEmpty(gv.getDefaultValue()));
                 }
                 resolvedVariables.putAll(resolvedMap);
             }
